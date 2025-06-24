@@ -1,21 +1,13 @@
 $(document).ready(function () {
 	
-	//obtenerProvincia();
-	//obtenerProvinciaReintegro();
-	//obtenerDatosUbigeoReintegro();
-	//obtenerDistritoReintegro();
-
 	obtenerSolicitud();
 	obtenerPropietario_();
-	//calculoVistaPrevia();
 	$('#solicitante_solicitud').hide();
 	$('#denegar_liquidacion').hide();
 
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
 		obtenerUbigeoReintegro();
-		//obtenerDatosUbigeo();
-		
 	}
 
 	$('#fecha_registro_bus').datepicker({
@@ -583,8 +575,8 @@ function obtenerSolicitante(){
 
 }
 
-function obtenerProyectista(obj){
-		//alert(obj);
+function obtenerProyectistaAsociado(obj){
+	//alert(obj);
 	//var numero_cap = $(obj).parent().parent().find("#numero_cap_row").val();	
 	var numero_cap = $(obj).val();
 	console.log(numero_cap);
@@ -2758,7 +2750,7 @@ function AddProyectistaAsociado() {
 
 	var numeroCapInput = newRow.querySelector('[id^="numero_cap_row"]');
     if (numeroCapInput) {
-        numeroCapInput.setAttribute("onchange", "obtenerProyectista(this)");
+        numeroCapInput.setAttribute("onchange", "obtenerProyectistaAsociado(this)");
     }
 
     var removeButton = document.createElement('button');
@@ -3060,6 +3052,14 @@ function imprimirSolicitudPdf(){
 function activarBotonDenegar(){
 
 	$('#denegar_liquidacion').show();
+	//console.log("Mostrar denegar_liquidacion");
+
+}
+
+function activarAprobarLiquidacion(){
+
+	$('#aprobar_liquidacion').show();
+	//console.log("Mostrar denegar_liquidacion");
 
 }
 
@@ -3073,6 +3073,7 @@ function save_denegacion_solicitud(){
         message: "&iquest;Deseas denegar esta solicitud de derecho de revision?", 
         callback: function(result){
             if (result==true) {
+				
                 fn_denegar_solicitud(id_solicitud, observaciones);
             }
         }
@@ -3081,7 +3082,10 @@ function save_denegacion_solicitud(){
 }
 
 function fn_denegar_solicitud(id_solicitud, observaciones){
-	
+	//alert(observaciones);
+
+	var _token = $('#_token').val();
+
 	$.ajax({
 		url: "/derecho_revision/denegar_solicitud",
 		type: "POST",
@@ -3093,7 +3097,11 @@ function fn_denegar_solicitud(id_solicitud, observaciones){
 		success: function (result) {
 			//window.location.reload();
 			window.location.href ="/derecho_revision/consulta_derecho_revision/"
-		}
+		},
+		error: function(xhr, status, error) {
+        console.error("Error AJAX:", xhr.responseText);
+        alert("Ocurrió un error al denegar la solicitud");
+    }
 	});
 }
 
@@ -3183,5 +3191,23 @@ function actualizarDistrito(){
 			}
 			
 		});
+
+}
+
+function visualizarObservacion(){
+
+	var id = $('#id').val();
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_observaciones_solicitud/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
 
 }

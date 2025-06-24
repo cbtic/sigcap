@@ -89,8 +89,10 @@ class ParametrosController extends Controller
 
 		if($request->id == 0){
 			$parametro = new Parametro;
+			$parametro->id_usuario_inserta = $id_user;
 		}else{
 			$parametro = Parametro::find($request->id);
+			$parametro->id_usuario_actualiza = $id_user;
 		}
 		
 		$parametro->anio = $request->anio;
@@ -102,14 +104,16 @@ class ParametrosController extends Controller
 		$parametro->valor_maximo_hu = $request->valor_maximo_hu;
         $parametro->igv = $request->igv;
 		$parametro->monto_minimo_rh = $request->valor_rh;
-		$parametro->id_usuario_inserta = $id_user;
 		$parametro->save();
     }
 
 	public function eliminar_parametro($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$parametro = Parametro::find($id);
 		$parametro->estado = $estado;
+		$parametro->id_usuario_actualiza = $id_user;
 		$parametro->save();
 
 		echo $parametro->id;

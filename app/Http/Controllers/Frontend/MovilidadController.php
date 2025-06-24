@@ -247,9 +247,11 @@ class MovilidadController extends Controller
 		if($request->id == 0){
 			$comision_movilidades = new ComisionMovilidade;
 			//$codigo = $movilidad_model->getCodigoConcepto();
+			$comision_movilidades->id_usuario_inserta = $id_user;
 		}else{
 			$comision_movilidades = ComisionMovilidade::find($request->id);
 			//$codigo = $request->codigo;
+			$comision_movilidades->id_usuario_actualiza = $id_user;
 		}
 		
 		$comision_movilidades->id_municipalidad_integrada = $request->comision;
@@ -258,14 +260,16 @@ class MovilidadController extends Controller
 		$comision_movilidades->monto = $request->monto;
 		$comision_movilidades->id_tipo_comision = $request->tipo_comision;
 		//$comision_movilidades->estado = 1;
-		$comision_movilidades->id_usuario_inserta = $id_user;
 		$comision_movilidades->save();
     }
 
     public function eliminar_movilidad($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$comision_movilidades = ComisionMovilidade::find($id);
 		$comision_movilidades->estado = $estado;
+		$comision_movilidades->id_usuario_actualiza = $id_user;
 		$comision_movilidades->save();
 
 		echo $comision_movilidades->id;

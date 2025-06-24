@@ -50,10 +50,9 @@ class AdelantoController extends Controller
 	
 		$adelanto_model = new Adelanto;
 		$p[]=$request->numero_cap;
-		$p[]=$request->agremiado;//$request->numero_documento;
+		$p[]=$request->agremiado;
 		$p[]=$request->periodo;
 		$p[]=$request->mes_reintegro;
-		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -182,10 +181,11 @@ class AdelantoController extends Controller
 			$adelanto_detalle = new Adelanto_detalle;
 			$adelanto->id_agremiado = $request->delegado;
 			$adelanto->fecha = Carbon::now()->format('Y-m-d');
+			$adelanto->id_usuario_inserta = $id_user;
 		}else{
 			$adelanto = Adelanto::find($request->id);
 			$adelanto->id_agremiado = $request->id_delegado_;
-			
+			$adelanto->id_usuario_actualiza = $id_user;
 		}
 		
         //$id_agremiado = buscar_numero_cap($numero_cap);
@@ -196,15 +196,12 @@ class AdelantoController extends Controller
         $adelanto->total_adelanto = $request->monto;
 		$adelanto->id_tiene_recibo = $request->id_tiene_recibo;
 		//$profesion->estado = 1;
-		$adelanto->id_usuario_inserta = $id_user;
 		$adelanto->save();
 
 		$pago_mes=$request->monto/$request->numero_cuota;
 		
 		$fechaActual = Carbon::now();
 
-		
-			
 			if($request->id == 0){
 				for ($i = 1; $i <= $request->numero_cuota; $i++) {
 				$adelanto_detalle = new Adelanto_detalle;
@@ -222,7 +219,7 @@ class AdelantoController extends Controller
 			}
 			}else{
 
-				$adelanto_detalle = Adelanto_detalle::where("id_adelento",$adelanto->id)->update(['estado'=>0]);
+				$adelanto_detalle = Adelanto_detalle::where("id_adelento",$adelanto->id)->update(['estado'=>0,'id_usuario_actualiza' => $id_user]);
 
 				for ($i = 1; $i <= $request->numero_cuota; $i++) {
 
@@ -280,8 +277,12 @@ class AdelantoController extends Controller
 
 	public function eliminar_adelanto($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$adelanto = Adelanto::find($id);
 		$adelanto->estado = $estado;
+		$adelanto->id_usuario_actualiza = $id_user;
 		$adelanto->save();
 
 		$adelanto_detalle = Adelanto_detalle::where('id_adelento', $id)->get();
@@ -289,6 +290,7 @@ class AdelantoController extends Controller
 		foreach($adelanto_detalle as $key => $row){
 			$detalle = Adelanto_detalle::find($row->id);
 			$detalle->estado = $estado;
+			$detalle->id_usuario_actualiza = $id_user;
 			$detalle->save();
 		}
 
@@ -317,7 +319,6 @@ class AdelantoController extends Controller
 		$p[]=$agremiado;
 		$p[]=$periodo;
 		$p[]=$mes_reintegro;
-		$p[]="";
         $p[]=$estado;
 		$p[]=1;
 		$p[]=10000;

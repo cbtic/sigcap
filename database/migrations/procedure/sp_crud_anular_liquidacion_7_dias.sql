@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_crud_anular_liquidacion_7_dias();
+
 CREATE OR REPLACE FUNCTION public.sp_crud_anular_liquidacion_7_dias()
  RETURNS character varying
  LANGUAGE plpgsql
@@ -25,12 +27,14 @@ begin
 		select l.id AS id_liquidacion, v.id AS id_valorizacion
 		from liquidaciones l
 		inner join valorizaciones v on l.id = v.pk_registro and v.id_modulo = '7'
+		inner join solicitudes s on l.id_solicitud = s.id
 		where l.estado = '1'
 		and v.estado = '1'
 		and v.pagado = '0'
 		and v.exonerado = '0'
 		and l.id_situacion = '1'
 		and l.fecha::date < date_trunc('month', current_date)
+		and s.id_tipo_solicitud ='123'
 		order by l.id desc
 		
 	loop

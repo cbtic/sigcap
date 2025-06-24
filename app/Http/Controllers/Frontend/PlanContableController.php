@@ -118,22 +118,27 @@ class PlanContableController extends Controller
 
 		if($request->id == 0){
 			$plan_contable = new PlanContable;
+			$plan_contable->id_usuario_inserta = $id_user;
 		}else{
 			$plan_contable = PlanContable::find($request->id);
+			$plan_contable->id_usuario_actualiza = $id_user;
 		}
 		
 		$plan_contable->denominacion = $request->denominacion;
 		$plan_contable->cuenta = $request->cuenta;
 		$plan_contable->id_tipo = $request->tipo_plan_contable;
 		//$profesion->estado = 1;
-		$plan_contable->id_usuario_inserta = $id_user;
 		$plan_contable->save();
     }
 
 	public function eliminar_plan_contable($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$plan_contable = PlanContable::find($id);
 		$plan_contable->estado = $estado;
+		$plan_contable->id_usuario_actualiza = $id_user;
 		$plan_contable->save();
 
 		echo $plan_contable->id;

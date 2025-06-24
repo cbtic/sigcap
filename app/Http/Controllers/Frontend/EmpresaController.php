@@ -146,7 +146,7 @@ class EmpresaController extends Controller
 			$empresa->email = $request->email;
 			$empresa->telefono = $request->telefono;
 			$empresa->representante = $request->representante;
-			$empresa->id_usuario_inserta = $id_user;
+			$empresa->id_usuario_actualiza = $id_user;
 			$empresa->save();
 		}	
 		$array["sw"] = $sw;
@@ -157,8 +157,12 @@ class EmpresaController extends Controller
 
 	public function eliminar_empresa($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$empresa = Empresa::find($id);
 		$empresa->estado = $estado;
+		$empresa->id_usuario_actualiza = $id_user;
 		$empresa->save();
 
 		echo $empresa->id;

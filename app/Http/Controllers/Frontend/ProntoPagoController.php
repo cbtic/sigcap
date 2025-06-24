@@ -101,8 +101,10 @@ class ProntoPagoController extends Controller
 
 		if($request->id == 0){
 			$prontoPago = new ProntoPago;
+			$prontoPago->id_usuario_inserta = $id_user;
 		}else{
 			$prontoPago = ProntoPago::find($request->id);
+			$prontoPago->id_usuario_actualiza = $id_user;
 		}
 		$periodo1 = date("Y", strtotime($request->fecha_inicio));
 		$periodo2 = date("Y", strtotime($request->fecha_fin));
@@ -130,14 +132,17 @@ class ProntoPagoController extends Controller
 		}else{
 			$prontoPago->estado = 2;}
 		
-		$prontoPago->id_usuario_inserta = $id_user;
 		$prontoPago->save();
     }
 
 	public function eliminar_prontoPago($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$prontoPago = ProntoPago::find($id);
 		$prontoPago->estado = $estado;
+		$prontoPago->id_usuario_actualiza = $id_user;
 		$prontoPago->save();
 
 		echo $prontoPago->id;

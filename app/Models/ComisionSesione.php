@@ -19,8 +19,8 @@ inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
-where t0.id_aprobar_pago=2
-And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+where --t0.id_aprobar_pago=2 And 
+to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
 and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 		$data = DB::select($cad);
@@ -50,7 +50,7 @@ and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 	
 	public static function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){ 
 
-        $cad = "select distinct case when cd.id_puesto=12 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap,tmp.denominacion,tmp.orden 
+        $cad = "select distinct case when cd.id_puesto=12 or cd.id_puesto=30 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap,tmp.denominacion,tmp.orden 
 from comision_sesiones t1 
 inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
 inner join solicitudes s2 on s2.id=csd.id_solicitud
@@ -108,7 +108,7 @@ and t1.id_periodo_comisione=".$id_periodo;
         $cad = "select case 
 		when id_tipo_sesion='401' then
 			case 
-				when t1.id_estado_aprobacion=2 then 'O' 
+				when t1.id_estado_aprobacion=2 and t0.id_aprobar_pago=2 then 'O' 
 				else 'X'
 			end
 		when id_tipo_sesion='402' then 
@@ -117,26 +117,26 @@ and t1.id_periodo_comisione=".$id_periodo;
 				else 'X'
 			end 
 		end tipo_sesion 
-from comision_sesiones t1 
-inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
-inner join solicitudes s2 on s2.id=csd.id_solicitud
-inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
-inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
-left join comision_delegados cd on t0.id_delegado=cd.id  
-left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
-inner join personas p on a.id_persona=p.id 
-where 1=1
---And t0.id_aprobar_pago=2
---And t1.id_estado_aprobacion=2 
-And t1.id_estado_sesion=290  
-And t0.estado='1' 
-And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
-And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-and u.id_ubigeo = '".$id_ubigeo."' 
-and t1.id_comision=".$id_comision."
-and a.id=".$id_agremiado."
-and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
+		from comision_sesiones t1 
+		inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+		inner join solicitudes s2 on s2.id=csd.id_solicitud
+		inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+		inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+		inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
+		left join comision_delegados cd on t0.id_delegado=cd.id  
+		left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
+		inner join personas p on a.id_persona=p.id 
+		where 1=1
+		--And t0.id_aprobar_pago=2
+		--And t1.id_estado_aprobacion=2 
+		And t1.id_estado_sesion=290  
+		And t0.estado='1' 
+		And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+		And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+		and u.id_ubigeo = '".$id_ubigeo."' 
+		and t1.id_comision=".$id_comision."
+		and a.id=".$id_agremiado."
+		and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];
@@ -176,6 +176,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada=".$id_municipalidad_integrada." 
 and a.id=".$id_agremiado."
+and t0.id_aprobar_pago =2
 and case 
 	when id_tipo_sesion='401' then
 		case 
@@ -442,6 +443,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 And t1.id_estado_sesion=290 
 and t1.id_estado_aprobacion=2
+and t0.id_aprobar_pago=2
 and t1.id in (select id_comision_sesion from comision_sesion_dictamenes)";
 
 		$data = DB::select($cad);

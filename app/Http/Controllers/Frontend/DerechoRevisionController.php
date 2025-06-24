@@ -23,6 +23,7 @@ use App\Models\NumeracionDocumento;
 use App\Models\UsoEdificacione;
 use App\Models\Presupuesto;
 use App\Models\SolicitudDocumento;
+use App\Models\SolicitudObservacione;
 use App\Models\User;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -108,13 +109,17 @@ class DerechoRevisionController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		
         $estado_solicitud = $tablaMaestra_model->getMaestroByTipo(118);
+		$departamento = $ubigeo_model->getDepartamento();
         $distrito = $ubigeo_model->getDistritoLima();
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
 		$situacion_credipago = $tablaMaestra_model->getMaestroByTipo(125);
+		$sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto','situacion_credipago'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto','situacion_credipago','sitio','zona','tipo','departamento'));
     }
 
 	public function listar_derecho_revision_ajax(Request $request){
@@ -122,7 +127,6 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model = new DerechoRevision;
 		$p[]=$request->anio;
 		$p[]=$request->nombre_proyecto;
-        $p[]=$request->distrito;
         $p[]=$request->numero_cap;
         $p[]=$request->proyectista;
         $p[]=$request->numero_documento;
@@ -131,7 +135,6 @@ class DerechoRevisionController extends Controller
         $p[]=$request->tipo_solicitud;
         $p[]=$request->credipago;
 		$p[]=$request->municipalidad;
-        $p[]=$request->direccion;
 		$p[]=$request->n_solicitud;
 		$p[]=$request->codigo;
 		$p[]=$request->fecha_inicio_bus;
@@ -139,6 +142,17 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->situacion_credipago;
 		$p[]=$request->estado_proyecto;
 		$p[]=$request->estado;
+		$p[]=$request->departamento;
+		$p[]=$request->provincia;
+		$p[]=$request->distrito;
+		$p[]=$request->sitio;
+		$p[]=$request->direccion_sitio;
+		$p[]=$request->zona;
+		$p[]=$request->direccion_zona;
+		$p[]=$request->tipo;
+		$p[]=$request->direccion;
+		$p[]=$request->lote;
+		$p[]=$request->sublote;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);
@@ -161,7 +175,6 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model = new DerechoRevision;
 		$p[]=$request->anio;
 		$p[]=$request->nombre_proyecto;
-        $p[]=$request->distrito;
         $p[]=$request->numero_cap;
         $p[]=$request->proyectista;
         $p[]=$request->numero_documento;
@@ -174,6 +187,16 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->situacion_credipago;
 		$p[]=$request->estado_proyecto;
 		$p[]="1";
+		$p[]=$request->departamento;
+		$p[]=$request->provincia;
+		$p[]=$request->distrito;
+		$p[]=$request->sitio;
+		$p[]=$request->direccion_sitio;
+		$p[]=$request->zona;
+		$p[]=$request->direccion_zona;
+		$p[]=$request->tipo;
+		$p[]=$request->lote;
+		$p[]=$request->sublote;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_HU_ajax($p);
@@ -763,12 +786,18 @@ class DerechoRevisionController extends Controller
 
 		if($request->id_solicitud == 0){
 			$derecho_revision = new DerechoRevision;
+			$derecho_revision->id_usuario_inserta = $id_user;
 			$proyecto = new Proyecto;
+			$proyecto->id_usuario_inserta = $id_user;
 			$proyectista = new Proyectista;
+			$proyectista->id_usuario_inserta = $id_user;
 		}else{
 			$derecho_revision = DerechoRevision::find($request->id_solicitud);
+			$derecho_revision->id_usuario_actualiza = $id_user;
 			$proyecto = Proyecto::find($derecho_revision->id_proyecto);
+			$proyecto->id_usuario_actualiza = $id_user;
 			$proyectista = Proyectista::find($derecho_revision->id_proyectista);
+			$proyectista->id_usuario_actualiza = $id_user;
 		}
 		
 		$derecho_revision->id_regional = 5;
@@ -782,9 +811,6 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_tipo_solicitud = 124;
 		//$derecho_revision->id_proyectista = $agremiado->id;
 		
-		$derecho_revision->id_usuario_inserta = $id_user;
-		
-
 		$proyecto->id_ubigeo = $ubigeo;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->parcela = $request->parcela;
@@ -802,7 +828,6 @@ class DerechoRevisionController extends Controller
 		$proyecto->codigo = $codigoHU;
 		$proyecto->zonificacion = $request->zonificacion;
 		$proyecto->sub_lote = $request->sublote;
-		$proyecto->id_usuario_inserta = $id_user;
 		$proyecto->save();
 		
 
@@ -816,7 +841,6 @@ class DerechoRevisionController extends Controller
 		
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
-		$proyectista->id_usuario_inserta = $id_user;
 		$proyectista->save();
 		$derecho_revision->id_proyecto = $proyecto->id;
 		$derecho_revision->id_proyectista = $proyectista->id;
@@ -2756,6 +2780,10 @@ class DerechoRevisionController extends Controller
 				$datos_propietario_array[] = $item;
 			}
 		}
+
+		$observaciones = SolicitudObservacione::where("id_solicitud",$derechoRevision->id)->where("estado","1")->orderBy('id','desc')->first();
+
+		$liquidacion = Liquidacione::where("id_solicitud",$derechoRevision->id)->where("estado","1")->where("id_situacion","!=", 3)->orderBy('id','desc')->first();
 		
 		//$proyectista_asociado = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',212)->where("estado","1")->orderBy('id')->get();
 
@@ -2773,7 +2801,7 @@ class DerechoRevisionController extends Controller
 		$distrito = $ubigeo_model->obtenerDistrito(substr($id_ubigeo, 0, 2),substr($id_ubigeo, 2, 2),substr($id_ubigeo, 4, 2));
 		//dd($datos_proyectista_asociado);
 
-        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado','datos_derecho_revision','departamento','provincia','distrito','datos_proyectista_principal','datos_proyectista_asociado','datos_uso_edificacion','datos_presupuesto_array','datos_propietario_array'));
+        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado','datos_derecho_revision','departamento','provincia','distrito','datos_proyectista_principal','datos_proyectista_asociado','datos_uso_edificacion','datos_presupuesto_array','datos_propietario_array','observaciones','liquidacion'));
     }
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
@@ -3330,14 +3358,25 @@ class DerechoRevisionController extends Controller
 		
 	}
 
-	public function denegar_solicitud($request)
+	public function denegar_solicitud(Request $request)
     {
+		//dd("ok");
+		$id_user = Auth::user()->id;
+
 		$derecho_revision = DerechoRevision::find($request->id_solicitud);
 		$derecho_revision->id_resultado = 3;
-		$derecho_revision->observacion = $request->observaciones;
+		//$derecho_revision->observacion = $request->observaciones;
 		$derecho_revision->save();
 
-		echo $derecho_revision->id;
+		$solicitud_observacion = new SolicitudObservacione;
+		$solicitud_observacion->id_usuario = $id_user;
+		$solicitud_observacion->observacion = $request->observaciones;
+		$solicitud_observacion->id_solicitud = $request->id_solicitud;
+		$solicitud_observacion->estado = 1;
+		$solicitud_observacion->id_usuario_inserta = $id_user;
+		$solicitud_observacion->save();
+
+		return response()->json(['id' => $derecho_revision->id]);
     }
 
 	public function obtener_ubigeo_municipalidad($municipalidad){
@@ -3361,6 +3400,22 @@ class DerechoRevisionController extends Controller
         $liquidacion_model = new Liquidacione;
 
 		$liquidacion_model->anular_liquidacion_7_dias();
+
+    }
+
+	public function modal_observaciones_solicitud($id){
+		
+        return view('frontend.derecho_revision.modal_observaciones_solicitud',compact('id'));
+		
+    }
+
+	public function obtener_observaciones($id){
+
+        $observacionDerechoRevision = new SolicitudObservacione;
+        //$sw = true;
+        $observacion_lista = $observacionDerechoRevision->listar_observaciones_solicitud($id);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.derecho_revision.lista_observacion',compact('observacion_lista'));
 
     }
 

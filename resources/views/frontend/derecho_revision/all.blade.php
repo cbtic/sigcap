@@ -448,11 +448,11 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <input type="hidden" name="id_ubigeo_nacimiento" id="id_ubigeo_nacimiento" value="<?php echo $persona->id_ubigeo_nacimiento?>">
-                        <select name="departamento" id="departamento" class="form-control form-control-sm" onchange="obtenerProvincia()">
+                        <select name="departamento_bus" id="departamento_bus" class="form-control form-control-sm" onchange="obtenerProvinciaBus()">
                             <option value="">--Todos--</option>
                             <?php
                             foreach ($departamento as $row) {?>
-                            <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($persona->id_ubigeo_nacimiento,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+                            <option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
                             <?php 
                             }
                             ?>
@@ -462,7 +462,7 @@
                         Provincia
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <select name="provincia" id="provincia" class="form-control form-control-sm" onchange="obtenerDistrito()">
+                    <select name="provincia_bus" id="provincia_bus" class="form-control form-control-sm" onchange="obtenerDistritoBus()">
                         <option value="">--Todos--</option>
                     </select>
                     </div>
@@ -470,7 +470,7 @@
                         Distrito
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <select name="distrito" id="distrito" class="form-control form-control-sm" onchange="">
+                    <select name="distrito_bus" id="distrito_bus" class="form-control form-control-sm" onchange="">
                         <option value="">--Todos--</option>
                     </select>
                     </div>
@@ -479,7 +479,7 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <!--<label class="control-label form-control-sm color-letra">Sitio</label>-->
-                        <select name="sitio" id="sitio" class="form-control form-control-sm" onChange="">
+                        <select name="sitio_bus" id="sitio_bus" class="form-control form-control-sm" onChange="">
                             <option value="">--Todos--</option>
                             <?php
                             foreach ($sitio as $row) {?>
@@ -493,14 +493,14 @@
                         Detalle Sitio
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="" type="text" placeholder="Detalle Sitio">
+                        <input id="direccion_sitio_bus" name="direccion_sitio_bus" on class="form-control form-control-sm"  value="" type="text" placeholder="Detalle Sitio">
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                         Zona
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <!--<label class="control-label form-control-sm color-letra">Zona</label>-->
-                        <select name="zona" id="zona" class="form-control form-control-sm" onChange="">
+                        <select name="zona_bus" id="zona_bus" class="form-control form-control-sm" onChange="">
                             <option value="">--Todos--</option>
                             <?php
                             foreach ($zona as $row) {?>
@@ -515,14 +515,14 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <!--<label class="control-label form-control-sm color-letra">Detalle Zona</label>-->
-                        <input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="" type="text" placeholder="Detalle Zona">
+                        <input id="direccion_zona_bus" name="direccion_zona_bus" on class="form-control form-control-sm"  value="" type="text" placeholder="Detalle Zona">
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                         Tipo
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <!--<label class="control-label form-control-sm color-letra">Tipo</label>-->
-                        <select name="tipo" id="tipo" class="form-control form-control-sm" onChange="">
+                        <select name="tipo_bus" id="tipo_bus" class="form-control form-control-sm" onChange="">
                             <option value="">--Todos--</option>
                             <?php
                             foreach ($tipo as $row) {?>
@@ -544,14 +544,14 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <!--<label class="control-label form-control-sm color-letra">Lote</label>-->
-                        <input id="lote" name="lote" on class="form-control form-control-sm"  value="" type="text" placeholder="Lote">
+                        <input id="lote_bus" name="lote_bus" on class="form-control form-control-sm"  value="" type="text" placeholder="Lote">
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                         SubLote
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <!--<label class="control-label form-control-sm color-letra">SubLote</label>-->
-                        <input id="sublote" name="sublote" on class="form-control form-control-sm"  value="" type="text" placeholder="Sub Lote">
+                        <input id="sublote_bus" name="sublote_bus" on class="form-control form-control-sm"  value="" type="text" placeholder="Sub Lote">
                     </div>
                 </div>
                 

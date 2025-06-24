@@ -470,9 +470,8 @@ class OperacionController extends Controller
 		return response()->json($data , $responsecode, $header, JSON_UNESCAPED_UNICODE);
 	
 	}
+
 	
-
-
 	public function req_pago(Request $request){
 	
 		return $this->operacion("pg",$request);
@@ -485,6 +484,17 @@ class OperacionController extends Controller
 		
 	}
 
+	public function ext_pago(Request $request){
+	
+		return $this->operacion("ep",$request);
+		
+	}
+
+	public function ext_anulacion(Request $request){
+	
+		return $this->operacion("ea",$request);
+		
+	}
 
 	//public function req_pago(Request $request){ 
 	public function operacion($opcion,Request $request){ 
