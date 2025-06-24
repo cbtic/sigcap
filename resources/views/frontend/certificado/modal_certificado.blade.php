@@ -979,6 +979,7 @@ function valida_pago() {
 		function generarCuotas() {
 			
 			var idagremiado = $("#idagremiado_").val();
+			var vigencia = $("#vigencia_").val();
 			
 			//alert(idagremiado);return false;
 
@@ -989,7 +990,7 @@ function valida_pago() {
 			$('.loader').show();
 			
 			$.ajax({
-					url: "/comision/send_generar_cuotas/"+idagremiado,
+					url: "/certificado/send_generar_cuotas/"+idagremiado+"/"+vigencia,
 					type: "GET",
 					//data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
 					//data : $("#frmComision").serialize(),

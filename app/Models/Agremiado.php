@@ -26,6 +26,10 @@ class Agremiado extends Model
 		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_fecha_individual',$p);
     }
 
+	public function crud_automatico_agremiado_cuota_fecha_rango_individual($p){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_fecha_rango_individual',$p);
+    }
+
 	public function crud_automatico_agremiado_cuota_fecha_inicio_individual($p){
 		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_fecha_inicio_individual',$p);
     }
