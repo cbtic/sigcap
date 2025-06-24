@@ -1112,6 +1112,23 @@ class CertificadoController extends Controller
 
 	}
 
+	public function send_generar_cuotas($id_agremiado,$vigencia){
+	
+		$agremiado_model = new Agremiado;
+
+		$id_user = Auth::user()->id;
+		$fecha_desde = Carbon::now()->format('Y-m-d');
+		$fecha_hasta = Carbon::parse($fecha_desde)->addMonths($vigencia)->format('Y-m-d');
+		
+		$p[]=$fecha_desde;
+		$p[]=$fecha_hasta;
+		$p[]=$id_agremiado;
+		$p[]=strval($id_user);
+		$data = $agremiado_model->crud_automatico_agremiado_cuota_fecha_rango_individual($p);
+		
+	}
+
+
 }
 
 
