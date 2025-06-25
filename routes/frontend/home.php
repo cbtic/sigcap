@@ -865,3 +865,6 @@ Route::get('derecho_revision/obtener_ubigeo_municipalidad/{municipalidad}', [Der
 Route::get('ingreso/validar_estado_liquidacion/{numero_documento}', [IngresoController::class, 'validar_estado_liquidacion'])->name('ingreso.validar_estado_liquidacion');
 Route::get('derecho_revision/modal_observaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_observaciones_solicitud'])->name('derecho_revision.modal_observaciones_solicitud');
 Route::get('derecho_revision/obtener_observaciones/{id}', [DerechoRevisionController::class, 'obtener_observaciones'])->name('derecho_revision.obtener_observaciones');
+Route::post('derecho_revision/aprobar_solicitud', [DerechoRevisionController::class, 'aprobar_solicitud'])->name('derecho_revision.aprobar_solicitud');
+Route::get('derecho_revision/modal_aprobaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_aprobaciones_solicitud'])->name('derecho_revision.modal_aprobaciones_solicitud');
+Route::get('derecho_revision/obtener_aprobaciones/{id}', [DerechoRevisionController::class, 'obtener_aprobaciones'])->name('derecho_revision.obtener_aprobaciones');

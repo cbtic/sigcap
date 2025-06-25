@@ -4,7 +4,8 @@ $(document).ready(function () {
 	obtenerPropietario_();
 	$('#solicitante_solicitud').hide();
 	$('#denegar_liquidacion').hide();
-
+	$('#aprobar_liquidacion').hide();
+	
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
 		obtenerUbigeoReintegro();
@@ -3052,6 +3053,7 @@ function imprimirSolicitudPdf(){
 function activarBotonDenegar(){
 
 	$('#denegar_liquidacion').show();
+	$('#aprobar_liquidacion').hide();
 	//console.log("Mostrar denegar_liquidacion");
 
 }
@@ -3059,6 +3061,7 @@ function activarBotonDenegar(){
 function activarAprobarLiquidacion(){
 
 	$('#aprobar_liquidacion').show();
+	$('#denegar_liquidacion').hide();
 	//console.log("Mostrar denegar_liquidacion");
 
 }
@@ -3093,6 +3096,48 @@ function fn_denegar_solicitud(id_solicitud, observaciones){
 			_token:_token,
 			id_solicitud: id_solicitud,
 			observaciones: observaciones
+		},
+		success: function (result) {
+			//window.location.reload();
+			window.location.href ="/derecho_revision/consulta_derecho_revision/"
+		},
+		error: function(xhr, status, error) {
+        console.error("Error AJAX:", xhr.responseText);
+        alert("Ocurrió un error al denegar la solicitud");
+    }
+	});
+}
+
+function save_aprobar_solicitud(){
+
+	var id_solicitud = $('#id').val();
+	var nota_liquidacion = $('#nota_liquidacion').val();
+
+	bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas denegar esta solicitud de derecho de revision?", 
+        callback: function(result){
+            if (result==true) {
+				
+                fn_aprobar_solicitud(id_solicitud, nota_liquidacion);
+            }
+        }
+    }).find('.modal-dialog').css("width", "30%");
+
+}
+
+function fn_aprobar_solicitud(id_solicitud, nota_liquidacion){
+	//alert(observaciones);
+
+	var _token = $('#_token').val();
+
+	$.ajax({
+		url: "/derecho_revision/aprobar_solicitud",
+		type: "POST",
+		data: {
+			_token:_token,
+			id_solicitud: id_solicitud,
+			nota_liquidacion: nota_liquidacion
 		},
 		success: function (result) {
 			//window.location.reload();
@@ -3203,6 +3248,24 @@ function visualizarObservacion(){
 
 	$.ajax({
 			url: "/derecho_revision/modal_observaciones_solicitud/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function visualizarAprobacion(){
+
+	var id = $('#id').val();
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_aprobaciones_solicitud/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

@@ -634,5 +634,18 @@ class DerechoRevision extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    public function listar_aprobaciones_solicitud($id){
+
+        $cad = "select s.id, u.name usuario, to_char(s.fecha_aprobado,'dd-mm-yyyy') fecha_aprobacion, s.observacion nota from solicitudes s 
+        inner join users u on s.id_usuario_aprueba = u.id
+        where s.id = '".$id."'
+        and s.estado = '1' 
+        order by s.id desc";
+    	//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+
+    }
     
 }
