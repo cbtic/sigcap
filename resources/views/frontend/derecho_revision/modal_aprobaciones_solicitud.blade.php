@@ -219,7 +219,7 @@ function datatableAprobacion(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Observaciones
+				Historial Aprobaci&oacute;n
 			</div>
 
 			<div class="card-body">
