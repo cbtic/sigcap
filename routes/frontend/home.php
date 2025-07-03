@@ -265,6 +265,7 @@ Route::get('comprobante/edit', [ComprobanteController::class, 'edit_'])->name('c
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
+Route::post('comprobante/send_secuencia', [ComprobanteController::class, 'send_secuencia'])->name('comprobante.send_secuencia');
 Route::get('comprobante/ver/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
 Route::post('comprobante/send_nc', [ComprobanteController::class, 'send_nc'])->name('comprobante.send_nc');

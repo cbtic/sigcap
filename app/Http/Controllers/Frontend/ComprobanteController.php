@@ -1314,7 +1314,7 @@ class ComprobanteController extends Controller
 			$p_detalle.="}";
 
 
-            //echo($p_detalle); exit();
+            echo($p_detalle); exit();
             //echo($tipoF); exit();
 
             
