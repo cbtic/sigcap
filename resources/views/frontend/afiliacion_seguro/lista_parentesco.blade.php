@@ -30,7 +30,13 @@ foreach($parentesco_lista as $key=>$row):
 	<td class="text-left"><?php echo $row->monto?> </td>
 	<td class="text-left"><?php echo $row->moneda?> </td>
 	
-
+	<td class="text-left">
+		<?php if($row->id_seguro_afiliado_parentesco>0){ ?>
+		<a href="javascript:void(0)" onclick="desafiliar(<?php echo $row->id_seguro_afiliado_parentesco ?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Desafiliar</a>
+		<?php }else{ ?>
+		<button class="btn btn-sm btn-danger" disabled="disabled" style="font-size:12px;margin-left:10px">Desafiliar</button>
+		<?php } ?>
+	</td>
 
 </tr>
 <?php 

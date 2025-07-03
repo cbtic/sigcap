@@ -501,6 +501,38 @@ function fn_save_fila(id,idfamilia){
 	
 }
 
+function desafiliar(id){
+	var act_estado = "";
+	act_estado = "Desafiliar";
+	estado_=0;
+
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas "+act_estado+" el seguro de esta persona?", 
+        callback: function(result){
+            if (result==true) {
+                fn_desafiliar(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_desafiliar(id){
+	
+    $.ajax({
+            url: "/afiliacion_seguro/desafiliar_seguro/"+id,
+            type: "GET",
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);
+				//datatablenew();
+				$('#openOverlayOpc').modal('hide');
+				datatablenew();
+				location.reload();
+            }
+    });
+}
+
 
 </script>
 
@@ -618,7 +650,7 @@ function fn_save_fila(id,idfamilia){
 							<th>Plan</th>
 							<th>Monto</th>
 							<th>Moneda</th>
-                            
+                            <th>Desafiliar</th>
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
