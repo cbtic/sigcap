@@ -41,7 +41,7 @@ class Seguro_afiliado extends Model
         and extract(year from Age(ap.fecha_nacimiento)) between edad_minima and edad_maxima 
         and id_parentesco=ps.id_parentesco_seguro 
         order by 1 desc limit 1) 
-		left join seguro_afiliado_parentescos sap on ap.id=sap.id_familia and sap.id_afiliacion=".$id_afiliacion." 
+		left join seguro_afiliado_parentescos sap on ap.id=sap.id_familia and sap.id_afiliacion=".$id_afiliacion." and sap.estado='1' 
         inner join seguros s on sp.id_seguro = s.id
         inner join conceptos c on s.id_concepto::int = c.id 
         inner join tabla_maestras tm2 on c.id_moneda = tm2.codigo::int and  tm2.tipo ='1'
@@ -49,7 +49,7 @@ class Seguro_afiliado extends Model
         and (select fecha from seguro_afiliados sa where id=".$id_afiliacion.") between sp.fecha_inicio and sp.fecha_fin 
         Order By id_familia ";
         
-    	//echo $cad;
+    	//echo $cad;exit();
 		$data = DB::select($cad);
         return $data;
 

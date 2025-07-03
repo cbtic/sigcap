@@ -63,9 +63,9 @@ class seguro_afiliado_parentesco extends Model
         where sa.id=" .$id. "";
     
 		$data = DB::select($cad);
-        
+        //echo $cad;exit();
 
-        return $data[0];
+        if(isset($data[0]))return $data[0];
 
     }
     
@@ -81,6 +81,13 @@ class seguro_afiliado_parentesco extends Model
         $cad = "Select sp_eliminar_afiliado_seguro_cuota(?)";
         $data = DB::select($cad, array($id_afiliacion));
         return $data[0]->sp_eliminar_afiliado_seguro_cuota;
+    }
+
+    public function desafiliar_afiliado_seguro_cuota($id_afiliacion) {
+		
+        $cad = "Select sp_eliminar_seguro_agremiado_cuota(?)";
+        $data = DB::select($cad, array($id_afiliacion));
+        return $data[0]->sp_eliminar_seguro_agremiado_cuota;
     }
 	
 	
