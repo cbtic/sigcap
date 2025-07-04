@@ -220,7 +220,7 @@ class ReporteController extends Controller
 				//print_r($venta);exit();
 		
 				$caja_ingreso_model = new CajaIngreso();
-				//$tipo= '';			
+				//$tipo= '';
 				$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 
 				$caja_ingreso_model = new CajaIngreso();
@@ -228,8 +228,7 @@ class ReporteController extends Controller
 				$movimiento_comprobante = $caja_ingreso_model->getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
 				//print_r($venta);exit();
 				$movimiento_comprobante_noafecta = $caja_ingreso_model->getAllMovimientoComprobantes_noafecta($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
-		
-		
+				
 				$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio','movimiento_comprobante_noafecta'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				

@@ -1338,22 +1338,23 @@ function descargarReporte(id, por_usuario, tipo){
 	
 	var fechaIni = document.getElementById('fecha_ini').value;
 	var partesFecha = fechaIni.split('-');
-	var dia = partesFecha[0];
-	var mes = partesFecha[1];
-	var anio = partesFecha[2];
-	var fechaFormateada = anio + '-' + mes + '-' + dia;
-	var date = new Date(fechaFormateada); // Or your date here
-	$fini= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
+	var dia = parseInt(partesFecha[0], 10);
+	var mes = parseInt(partesFecha[1], 10)-1;
+	var anio = parseInt(partesFecha[2], 10);
+	//var fechaFormateada = anio + '-' + mes + '-' + dia;
+	var date = new Date(anio, mes, dia); // Or your date here
+	//$fini= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
+	$fini= (anio + '-' + (mes + 1).toString().padStart(2, '0')  + '-' + dia.toString().padStart(2, '0'));
 
 	var fechaFin = document.getElementById('fecha_fin').value;
 	var partesFechaf = fechaFin.split('-');
-	 dia = partesFechaf[0];
-	 mes = partesFechaf[1];
-	 anio = partesFechaf[2];
-	 fechaFormateada = anio + '-' + mes + '-' + dia;
-	 date = new Date(fechaFormateada); // Or your date here
-	$ffin= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
-
+	dia = parseInt(partesFechaf[0], 10);
+	mes = parseInt(partesFechaf[1], 10)-1;
+	anio = parseInt(partesFechaf[2], 10);
+	//fechaFormateada = anio + '-' + mes + '-' + dia;
+	date = new Date(anio, mes, dia); // Or your date here
+	//$ffin= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
+	$ffin= (anio + '-' + (mes + 1).toString().padStart(2, '0')  + '-' + dia.toString().padStart(2, '0'));
 	
 	if(tipo=='1'){
 		$opc1 = $('#id_usuario').val();
