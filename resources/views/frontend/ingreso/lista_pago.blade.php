@@ -64,7 +64,7 @@ foreach($pago as $row){?>
 	</td>
 	<td class="text-left">
 		@hasanyrole('Administrator|Caja|Caja Jefe')
-                                        
+        
 		<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">		
 		
 		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
