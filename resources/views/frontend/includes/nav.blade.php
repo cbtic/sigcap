@@ -108,6 +108,15 @@
 						   		@can('Licencias')
 								<a href="/derecho_revision/create_solicitud" class="dropdown-item">Registrar Solicitud de Derecho de Revisi&oacute;n</a>
 								@endcan
+								@can('Encuesta')
+								
+								<a href="/encuestas/1" class="dropdown-item">Registrar Encuesta</a>
+
+
+								@endcan
+
+
+
 						   </div>
 					</li>
 					@endif

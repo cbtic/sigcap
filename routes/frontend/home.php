@@ -65,6 +65,11 @@ use App\Http\Controllers\Frontend\TipoCambioController;
 use App\Http\Controllers\Frontend\CorreoController;
 use App\Http\Controllers\Frontend\SuspensionController;
 use App\Http\Controllers\Frontend\CarritoController;
+
+use App\Http\Controllers\Frontend\EncuestaController;
+
+use App\Models\Expediente;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -870,3 +875,43 @@ Route::get('derecho_revision/obtener_observaciones/{id}', [DerechoRevisionContro
 Route::post('derecho_revision/aprobar_solicitud', [DerechoRevisionController::class, 'aprobar_solicitud'])->name('derecho_revision.aprobar_solicitud');
 Route::get('derecho_revision/modal_aprobaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_aprobaciones_solicitud'])->name('derecho_revision.modal_aprobaciones_solicitud');
 Route::get('derecho_revision/obtener_aprobaciones/{id}', [DerechoRevisionController::class, 'obtener_aprobaciones'])->name('derecho_revision.obtener_aprobaciones');
+
+
+// routes/web.php
+
+/*
+Route::get('/encuesta/{id}', [EncuestaController::class, 'mostrar'])->name('encuesta.all');
+Route::post('/buscar.expediente', [EncuestaController::class, 'buscarExpediente'])->name('buscar.expediente');
+Route::post('/guardar.encuesta', [EncuestaController::class, 'guardarEncuesta'])->name('guardar.encuesta');
+Route::post('/encuesta.guardar', [EncuestaController::class, 'guardarEncuesta'])->name('encuesta.guardar');
+*/
+
+/*
+Route::prefix('/encuesta')->group(function() {
+    Route::get('/{id}', [EncuestaController::class, 'mostrar'])->name('encuesta.mostrar');
+    Route::post('/buscar-expediente', [EncuestaController::class, 'buscarExpediente'])->name('encuesta.buscar-expediente');
+    Route::post('/{id}/guardar', [EncuestaController::class, 'guardarRespuestas'])->name('encuesta.guardar');
+});
+*/
+
+/*
+Route::prefix('encuesta')->group(function() {
+    Route::get('/', [EncuestaController::class, 'create'])->name('encuesta.crear');
+    Route::post('/', [EncuestaController::class, 'store'])->name('encuesta.guardar');
+    Route::post('/', [EncuestaController::class, 'buscarExpediente'])->name('encuesta.buscar-expediente');
+    Route::get('/completada', function() {
+        return view('encuestas.completada');
+    })->name('encuesta.completada');
+});
+*/
+
+Route::prefix('encuestas')->group(function() {
+    Route::get('/{id}', [EncuestaController::class, 'mostrar'])->name('encuesta.all');
+    Route::post('/{id}/guardar', [EncuestaController::class, 'guardarRespuestas'])->name('encuesta.dinamica.guardar');
+    
+    // API para obtener fecha de expediente
+    Route::get('/expediente/{numero}/fecha', function($numero) {
+        $expediente = Expediente::where('numero_expediente', $numero)->first();
+        return response()->json(['fecha' => $expediente ? $expediente->fecha_entrevista : '']);
+    });
+});
