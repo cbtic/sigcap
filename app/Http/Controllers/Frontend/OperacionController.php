@@ -363,7 +363,7 @@ class OperacionController extends Controller
 		$p[]=(int)$data_input["NumConsulta"];
 		$p[]="";
 		$p[]="5";
-		print_r($data_input);exit();
+		//print_r($data_input);exit();
 		$deuda_pendiente = $comprobante_model->lista_deuda_pendiente($p);
 		//print_r($deuda_pendiente);
 		
