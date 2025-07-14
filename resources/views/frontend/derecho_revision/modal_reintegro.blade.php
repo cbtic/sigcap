@@ -406,6 +406,7 @@ function fn_save_requisito(){
 
 function valida(){
     var id_solicitud=$("#id").val();
+    $('#btnGenerarCredipago').hide();
 
     $.ajax({
             url: "/derecho_revision/obtener_numero_revision/" + id_solicitud,
@@ -1109,7 +1110,7 @@ function fn_save_credipago(){
                             </div>
                         </div>
 						
-						<div style="margin-top:15px" class="form-group">
+						<div style="margin-top:15px" class="form-group" id="btnGenerarCredipago">
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 									
