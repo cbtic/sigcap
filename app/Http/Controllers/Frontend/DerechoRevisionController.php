@@ -1686,6 +1686,11 @@ class DerechoRevisionController extends Controller
 		$solicitud->id_resultado = 3;
 		$solicitud->save();
 
+		$valorizacion = Valorizacione::where('pk_registro',$liquidacion->id)->where('id_modulo',7)->where('estado',1)->first();
+		//dd($valorizacion);exit();
+		$valorizacion->estado = 0;
+		$valorizacion->save();
+
 		echo $liquidacion->id;
     }
 
