@@ -852,7 +852,7 @@ class DerechoRevisionController extends Controller
     }
 
 	public function modal_nuevo_proyectista($id){
-		 
+		
 		$proyectista = new Proyectista();
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
@@ -1685,6 +1685,11 @@ class DerechoRevisionController extends Controller
 		$solicitud = DerechoRevision::find($liquidacion->id_solicitud);
 		$solicitud->id_resultado = 3;
 		$solicitud->save();
+
+		$valorizacion = Valorizacione::where('pk_registro',$liquidacion->id)->where('id_modulo',7)->where('estado',1)->first();
+		//dd($valorizacion);exit();
+		$valorizacion->estado = 0;
+		$valorizacion->save();
 
 		echo $liquidacion->id;
     }
@@ -3379,6 +3384,21 @@ class DerechoRevisionController extends Controller
 		return response()->json(['id' => $derecho_revision->id]);
     }
 
+	public function aprobar_solicitud(Request $request)
+    {
+		//dd("ok");
+		$id_user = Auth::user()->id;
+
+		$derecho_revision = DerechoRevision::find($request->id_solicitud);
+		$derecho_revision->id_resultado = 2;
+		$derecho_revision->observacion = $request->nota_liquidacion;
+		$derecho_revision->fecha_aprobado = Carbon::now()->format('Y-m-d');
+		$derecho_revision->id_usuario_aprueba = $id_user;
+		$derecho_revision->save();
+
+		return response()->json(['id' => $derecho_revision->id]);
+    }
+
 	public function obtener_ubigeo_municipalidad($municipalidad){
 
 		$ubigeo_model = new Ubigeo;
@@ -3416,6 +3436,22 @@ class DerechoRevisionController extends Controller
         $observacion_lista = $observacionDerechoRevision->listar_observaciones_solicitud($id);
         //print_r($parentesco_lista);exit();
         return view('frontend.derecho_revision.lista_observacion',compact('observacion_lista'));
+
+    }
+
+	public function modal_aprobaciones_solicitud($id){
+		
+        return view('frontend.derecho_revision.modal_aprobaciones_solicitud',compact('id'));
+		
+    }
+
+	public function obtener_aprobaciones($id){
+
+        $derechoRevision_model = new DerechoRevision;
+        //$sw = true;
+        $aprobacion_lista = $derechoRevision_model->listar_aprobaciones_solicitud($id);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.derecho_revision.lista_aprobacion',compact('aprobacion_lista'));
 
     }
 

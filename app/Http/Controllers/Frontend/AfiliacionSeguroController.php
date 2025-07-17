@@ -229,6 +229,15 @@ class AfiliacionSeguroController extends Controller
 
     }
     
+
+	public function desafiliar_seguro($id)
+	{
+		$seguro_afiliado_parentesco_model = new seguro_afiliado_parentesco;
+		
+		$seguro_afiliado_parentesco_model->desafiliar_afiliado_seguro_cuota($id);
+
+	}
+
     public function eliminar_afiliacion($id,$estado)
     {
 		$afiliacionSeguro = AfiliacionSeguro::find($id);

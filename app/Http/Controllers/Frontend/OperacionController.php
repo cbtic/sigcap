@@ -363,6 +363,7 @@ class OperacionController extends Controller
 		$p[]=(int)$data_input["NumConsulta"];
 		$p[]="";
 		$p[]="5";
+		//print_r($data_input);exit();
 		$deuda_pendiente = $comprobante_model->lista_deuda_pendiente($p);
 		//print_r($deuda_pendiente);
 		
@@ -393,7 +394,7 @@ class OperacionController extends Controller
 		$nombreEmpresa = "COLEGIO ARQ PERU";
 		$nombreCliente = $deuda_pendiente[0]->destinatario;//"GINOCCHIO MENDOZA PATRICIA MON";
 		$numDocs = count($deuda_pendiente);
-		$suma_importes = 5000;
+		$suma_importes = 0;
 		$correlativo = 301;
 		$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
 		
@@ -452,9 +453,15 @@ class OperacionController extends Controller
 			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que est� expresado los importes de la deuda, 2
 			$data_output_detalle[$key]["Filler"] = "                              ";//30 - Campo libre no usado, completar con espacios
 			
+			//print_r($data_output_detalle[$key]);
+			$suma_importes += $data_output_detalle[$key]["ImporteTotal"];
 			$output_detalle .= implode('',$data_output_detalle[$key]);
 			
 		}
+
+		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
+
+		//print_r($data_output);exit();	
 		
 		$output = implode('',$data_output);
 		

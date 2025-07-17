@@ -613,10 +613,16 @@ function calcularReintegro(){
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
 
-							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 120px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
-								<i class="fas fa-clipboard"> Observaciones</i>
+							@hasanyrole('Administrator|Asuntos_tecnicos')
+							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 160px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
+								<i class="fas fa-clipboard"> Historial Observaciones</i>
 							</a>
 
+							<a onclick="visualizarAprobacion()" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-left:10px; width: 160px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnAprobacion">
+								<i class="fas fa-clipboard"> Historial Aprobaci&oacute;n</i>
+							</a>
+							@endhasanyrole
+							
 							@endif
 
 							@if ($datos_derecho_revision[0]->id_resultado == 2)
@@ -645,9 +651,15 @@ function calcularReintegro(){
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
 
-							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 120px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
-								<i class="fas fa-clipboard"> Observaciones</i>
+							@hasanyrole('Administrator|Asuntos_tecnicos')
+							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 160px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
+								<i class="fas fa-clipboard"> Historial Observaciones</i>
 							</a>
+
+							<a onclick="visualizarAprobacion()" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-left:10px; width: 160px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnAprobacion">
+								<i class="fas fa-clipboard"> Historial Aprobaci&oacute;n</i>
+							</a>
+							@endhasanyrole
 
 							@endif
 
@@ -677,9 +689,15 @@ function calcularReintegro(){
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
 
-							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 120px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
-								<i class="fas fa-clipboard"> Observaciones</i>
+							@hasanyrole('Administrator|Asuntos_tecnicos')
+							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 160px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
+								<i class="fas fa-clipboard"> Historial Observaciones</i>
 							</a>
+							
+							<a onclick="visualizarAprobacion()" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-left:10px; width: 160px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnAprobacion">
+								<i class="fas fa-clipboard"> Historial Aprobaci&oacute;n</i>
+							</a>
+							@endhasanyrole
 
 							@endif
 
@@ -780,7 +798,7 @@ function calcularReintegro(){
 					</div>
 				</div>
 			</div>
-
+			<?php if(isset($liquidacion->credipago)){?>
 			<div class="col col-sm-12 align-self-left" id="aprobar_liquidacion">
 				<h4 style="color:rgb(0, 0, 255)">Aprobar Liquidaci&oacute;n</h4>
 				<div class="row">
@@ -813,7 +831,7 @@ function calcularReintegro(){
 					</div>
 				</div>
 			</div>
-        
+			<?php }?>
 			<div class="col col-sm-12 align-self-center" style="padding-top:15px">
 
 				<div class="card">

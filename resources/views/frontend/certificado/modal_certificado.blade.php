@@ -491,11 +491,11 @@ function validarFecha(){
 	var fecha_actual = new Date();
 
     var fecha_con_vigencia = new Date(fecha_actual);
-	//alert(fecha_con_vigencia.getMonth()+1+1);
+
     fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia));
 	
     var mismo_anio = fecha_actual.getFullYear() == fecha_con_vigencia.getFullYear();
-
+	
 	if (mismo_anio) {
         $('#boton_agregar_cuotas button').attr('disabled', true);
     }else {
@@ -507,8 +507,9 @@ function validarFecha(){
 				var fecha_ultima_cuota = new Date(result.fecha);
 				var mes_ultima_cuota = fecha_ultima_cuota.getMonth() +1;
 				var anio_ultima_cuota = fecha_ultima_cuota.getFullYear();
+				var mes_con_vigencia = fecha_con_vigencia.getMonth() +1;
 
-				if(fecha_con_vigencia.getFullYear()==parseInt(anio_ultima_cuota)){
+				if(fecha_ultima_cuota >= fecha_con_vigencia){
 					$('#boton_agregar_cuotas button').attr('disabled', true);
 				}else{
 					if(categoria=='VITALICIO'){
@@ -521,10 +522,8 @@ function validarFecha(){
 
 					}
 				}
-
 			}
 		});
-        
     }
 }
 
@@ -946,70 +945,65 @@ function valida_pago() {
 	<!-- /.row -->
 	</section>
 	<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
-	<script type="text/javascript">
-		$(document).ready(function() {
+<script type="text/javascript">
+	$(document).ready(function() {
 
-			$('#ruc_').blur(function() {
-				var id = $('#id').val();
-				if (id == 0) {
-					validaRuc(this.value);
-				}
-				//validaRuc(this.value);
-			});
-
-
-
-
-		});
-	</script>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//$('#numero_placa').focus();
-			//$('#numero_placa').mask('AAA-000');
-			//$('#vehiculo_numero_placa').mask('AAA-000');
-
-
+		$('#ruc_').blur(function() {
+			var id = $('#id').val();
+			if (id == 0) {
+				validaRuc(this.value);
+			}
+			//validaRuc(this.value);
 		});
 
 
-		function generarCuotas() {
-			
-			var idagremiado = $("#idagremiado_").val();
-			var vigencia = $("#vigencia_").val();
-			
-			//alert(idagremiado);return false;
-
-			var msgLoader = "";
-			msgLoader = "Procesando, espere un momento por favor";
-			var heightBrowser = $(window).width()/2;
-			$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-			$('.loader').show();
-			
-			$.ajax({
-					url: "/certificado/send_generar_cuotas/"+idagremiado+"/"+vigencia,
-					type: "GET",
-					//data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
-					//data : $("#frmComision").serialize(),
-					//data : {idagremiado:idagremiado}
-					success: function (result) {  
-						/*
-						bootbox.alert("Se cerro correctamente la asignaci&oacute;n de plaza"); 
-						cargarMunicipalidades();
-						cargarMunicipalidadesIntegradas();
-						cargarComisiones();
-						*/
-						$('#openOverlayOpc').modal('hide');
-						$('.loader').hide();
-						return false;
-					}
-			});
 
 
-		}
+	});
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+});
+
+function generarCuotas() {
+	
+	var idagremiado = $("#idagremiado_").val();
+	var vigencia = $("#vigencia_").val();
+	
+	//alert(idagremiado);return false;
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+			url: "/certificado/send_generar_cuotas/"+idagremiado+"/"+vigencia,
+			type: "GET",
+			//data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+			//data : $("#frmComision").serialize(),
+			//data : {idagremiado:idagremiado}
+			success: function (result) {  
+				/*
+				bootbox.alert("Se cerro correctamente la asignaci&oacute;n de plaza"); 
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
+				*/
+				$('#openOverlayOpc').modal('hide');
+				$('.loader').hide();
+				return false;
+			}
+	});
+
+}
 
 
-	</script>
+</script>

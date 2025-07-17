@@ -560,6 +560,7 @@ Route::get('comision/eliminar_municipalidad_detalle/{id}', [ComisionController::
 Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');
 
 Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion'])->name('afiliacion_seguro.eliminar_afiliacion');
+Route::get('afiliacion_seguro/desafiliar_seguro/{id}', [AfiliacionSeguroController::class, 'desafiliar_seguro'])->name('afiliacion_seguro.desafiliar_seguro');
 
 Route::get('municipalidad/obtener_provincia/{idDepartamento}', [MunicipalidadController::class, 'obtener_provincia'])->name('municipalidad.obtener_provincia');
 Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [MunicipalidadController::class, 'obtener_distrito'])->name('municipalidad.obtener_distrito');
@@ -865,3 +866,6 @@ Route::get('derecho_revision/obtener_ubigeo_municipalidad/{municipalidad}', [Der
 Route::get('ingreso/validar_estado_liquidacion/{numero_documento}', [IngresoController::class, 'validar_estado_liquidacion'])->name('ingreso.validar_estado_liquidacion');
 Route::get('derecho_revision/modal_observaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_observaciones_solicitud'])->name('derecho_revision.modal_observaciones_solicitud');
 Route::get('derecho_revision/obtener_observaciones/{id}', [DerechoRevisionController::class, 'obtener_observaciones'])->name('derecho_revision.obtener_observaciones');
+Route::post('derecho_revision/aprobar_solicitud', [DerechoRevisionController::class, 'aprobar_solicitud'])->name('derecho_revision.aprobar_solicitud');
+Route::get('derecho_revision/modal_aprobaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_aprobaciones_solicitud'])->name('derecho_revision.modal_aprobaciones_solicitud');
+Route::get('derecho_revision/obtener_aprobaciones/{id}', [DerechoRevisionController::class, 'obtener_aprobaciones'])->name('derecho_revision.obtener_aprobaciones');
