@@ -384,7 +384,8 @@ function fn_save(){
 	$('#guardar').hide();
 	
     $.ajax({
-			url: "/comprobante/send",
+			//url: "/comprobante/send",
+			url: "/comprobante/send_secuencia",
             type: "POST",
 
 			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
