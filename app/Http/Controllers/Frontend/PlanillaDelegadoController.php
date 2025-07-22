@@ -214,6 +214,19 @@ class PlanillaDelegadoController extends Controller
 		echo $delegadoReintegro->id;
     }
 
+	public function eliminar_reintegro_detalle($id)
+    {
+		$delegadoReintegroDetalle = DelegadoReintegroDetalle::find($id);
+		$delegadoReintegroDetalle->estado = 0;
+		$delegadoReintegroDetalle->save();
+		
+		$delegadoReintegro_model = new DelegadoReintegro;
+		$delegadoReintegro_model->actualizaImporteTotalReintegro($delegadoReintegroDetalle->id_delegado_reintegro);
+
+		echo $delegadoReintegroDetalle->id;
+		
+    }
+
 	public function obtener_datos_reintegro_detalle($id_agremiado){
 
         $reintegroDetalle_model = new DelegadoReintegroDetalle;
