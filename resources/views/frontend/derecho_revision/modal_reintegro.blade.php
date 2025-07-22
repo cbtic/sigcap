@@ -548,7 +548,7 @@ function fn_save_credipago(){
                         bootbox.alert({
                             message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
                             //className: "alert_style"
-                    
+                            
                         });
                         $('#openOverlayOpc').modal('hide');
                         //datatablenew();

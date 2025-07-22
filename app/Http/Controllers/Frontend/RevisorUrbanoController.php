@@ -164,6 +164,11 @@ class RevisorUrbanoController extends Controller
 		$revisorUrbano = RevisorUrbano::find($id);
 		$revisorUrbano->estado = $estado;
 		$revisorUrbano->save();
+		$idRevisorUrbano = $revisorUrbano->id; 
+
+		$valorizacion = Valorizacione::where('pk_registro',$idRevisorUrbano)->where('id_modulo',8)->where('estado',1)->first();
+		$valorizacion->estado = 0;
+		$valorizacion->save();
 
 		echo $revisorUrbano->id;
     }
