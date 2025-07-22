@@ -6,6 +6,8 @@ use App\Models\Encuesta;
 use App\Models\Expediente;
 use App\Models\Evaluadore;
 use App\Models\RespuestaEncuesta;
+use App\Models\EvaluacionDesempeno;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -202,7 +204,7 @@ class EncuestaController extends Controller
 
 
 
-    public function mostrar($idEncuesta)
+    public function mostrar_ant($idEncuesta)
     {
         //exit();
         $encuesta = Encuesta::with(['secciones.preguntas' => function($query) {
@@ -215,6 +217,20 @@ class EncuestaController extends Controller
         
         return view('frontend.encuesta.all', compact('encuesta', 'expedientes', 'evaluadores','especialistas'));
     }
+
+    public function mostrar($idEncuesta)
+{
+    $encuesta = Encuesta::with(['secciones.preguntas'])->findOrFail($idEncuesta);
+    
+    return view('frontend.encuesta.all', [
+        'encuesta' => $encuesta,
+        'expedientes' => Expediente::all(),
+        'presidentes' => Evaluadore::where('tipo', 'presidente')->get(),
+        'delegados' => Evaluadore::where('tipo', 'delegado')->get(),
+        'especialistas' => Evaluadore::where('tipo', 'especialista')->get(),
+        'ad_hocs' => Evaluadore::where('tipo', 'ad_hoc')->get()
+    ]);
+}
 
     public function guardarRespuestas(Request $request, $idEncuesta)
     {
@@ -246,5 +262,27 @@ class EncuestaController extends Controller
 
         return redirect()->back()->with('success', 'Encuesta enviada correctamente');
     }
+
+    public function guardarEvaluacionDesempeno(Request $request, $idEncuesta)
+{
+    $validated = $request->validate([
+        'delegado_id' => 'required|exists:evaluadores,id',
+        'comision_tecnica' => 'required|string',
+        'periodo_evaluacion' => 'required|string',
+        'respuestas' => 'required|array'
+    ]);
+
+    $evaluacion = EvaluacionDesempeno::create([
+        'delegado_id' => $request->delegado_id,
+        'comision_tecnica' => $request->comision_tecnica,
+        'periodo_evaluacion' => $request->periodo_evaluacion,
+        'evaluador_id' => auth()->id(),
+        'respuestas' => json_encode($request->respuestas),
+        'comentarios' => $request->comentarios
+    ]);
+
+    return redirect()->route('encuesta.completada')
+                    ->with('success', 'Evaluación de desempeño guardada correctamente');
+}
 }
 

@@ -121,6 +121,47 @@
 .flex-wrap {
     flex-wrap: wrap;
 }
+
+/* Estilo para campos de texto */
+.form-control {
+    transition: all 0.3s ease;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Contador de caracteres */
+.text-muted {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Para campos requeridos */
+label.required:after {
+    content: " *";
+    color: #dc3545;
+}
+
+/* Estilo para selects */
+.select2-container--default .select2-selection--single {
+    height: 38px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+}
+
+/* Para selects requeridos */
+select[required] {
+    background-color: #fff;
+    background-image: none;
+}
+
 </style>
 
 @extends('frontend.layouts.app')
@@ -150,6 +191,24 @@
             @csrf
             
             <div class="card-body">
+                <!-- Búsqueda de Expediente -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Municipalidad de Trámite:</label>
+                            <select class="form-control select2" name="municipalidad_tramite" required>
+                                <option value="">Seleccione Municipalidad...</option>
+                                @foreach($expedientes as $expediente)
+                                    <option value="{{ $expediente->numero_expediente }}">
+                                        {{ $expediente->numero_expediente }} - {{ $expediente->municipalidad_tramite }}
+                                    </option>
+                                @endforeach
+                            </select>                       
+                         </div>
+                    </div>
+
+                </div>
+
                 <!-- Búsqueda de Expediente -->
                 <div class="row mb-4">
                     <div class="col-md-8">
@@ -189,28 +248,10 @@
                                     <label class="{{ $pregunta->requerida ? 'font-weight-bold required' : '' }}">
                                         {{ $pregunta->pregunta }}
                                     </label>
+
+                                     @include('frontend.encuesta.tipos-respuesta', ['pregunta' => $pregunta])
                                     
-                                    @if($pregunta->evaluador_asociado)
-                                        <div class="row">
-                                            <div class="col-md-4 mb-2">
-                                                <select class="form-control select2" 
-                                                        name="evaluadores[{{ $pregunta->id }}]"
-                                                        {{ $pregunta->requerida ? 'required' : '' }}>
-                                                    <option value="">Seleccione evaluador...</option>
-                                                    @foreach($evaluadores as $evaluador)
-                                                        <option value="{{ $evaluador->id }}">
-                                                            {{ $evaluador->nombre }} ({{ $evaluador->numero_cap }})
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-8">
-                                                @include('frontend.encuesta.tipos-respuesta', ['pregunta' => $pregunta])
-                                            </div>
-                                        </div>
-                                    @else
-                                        @include('frontend.encuesta.tipos-respuesta', ['pregunta' => $pregunta])
-                                    @endif
+
                                 </div>
                             @endforeach
                         </div>
@@ -268,6 +309,13 @@ $(document).ready(function() {
             });
         }
     });
+
+    $('.select2').select2({
+        placeholder: 'Seleccione una opción',
+        allowClear: true,
+        width: '100%'
+    });
+
 });
 </script>
 @endpush
