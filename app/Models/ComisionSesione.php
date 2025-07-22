@@ -106,17 +106,60 @@ and t1.id_periodo_comisione=".$id_periodo;
 		
 		//select case when id_tipo_sesion='401' and t0.id_delegado>0 then 'O' when id_tipo_sesion='402' and t0.id_delegado>0 then 'E'  else 'AE' end tipo_sesion
         $cad = "select case 
-		when id_tipo_sesion='401' then
-			case 
-				when t1.id_estado_aprobacion=2 and t0.id_aprobar_pago=2 then 'O' 
-				else 'X'
-			end
-		when id_tipo_sesion='402' then 
-			case 
-				when t1.id_estado_aprobacion=2 then 'E' 
-				else 'X'
-			end 
-		end tipo_sesion 
+						when id_tipo_sesion='401' then
+							case 
+								when t1.id_estado_aprobacion=2 and t1.id_estado_sesion=290 then 'O' 
+								else 'X'
+							end
+						when id_tipo_sesion='402' then 
+							case 
+								when t1.id_estado_aprobacion=2 and t1.id_estado_sesion=290 then 'E' 
+								else 'X'
+							end 
+						end tipo_sesion 
+						from comision_sesiones t1 				
+						inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+						inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1'
+						inner join municipalidad_integradas mi on mi.id=t4.id_municipalidad_integrada														   	
+						inner join mucipalidad_detalles md on md.id_municipalidad_integrada=mi.id
+						inner join municipalidades m on md.id_municipalidad =m.id
+						inner join ubigeos u on  m.id_ubigeo=u.id_ubigeo
+						left join comision_delegados cd on t0.id_delegado=cd.id  
+						left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
+						inner join personas p on a.id_persona=p.id
+						
+						where 1=1
+						--And t0.id_aprobar_pago=2
+						--And t1.id_estado_aprobacion=2 
+						--And t1.id_estado_sesion=290  
+						And t0.estado='1' 
+						And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+						And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+						and u.id_ubigeo = '".$id_ubigeo."' 
+						and t1.id_comision=".$id_comision."
+						and a.id=".$id_agremiado."
+						and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
+
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+	
+	public static function getFechaDelegadoComisionDistritoSesionTemp($anio,$mes,$id_municipalidad_integrada,$id_agremiado){
+		
+		//select case when id_tipo_sesion='401' and t0.id_delegado>0 then 'O' when id_tipo_sesion='402' and t0.id_delegado>0 then 'E'  else 'AE' end tipo_sesion
+        $cad = "select distinct t1.fecha_ejecucion,
+						case 
+				when id_tipo_sesion='401' then
+					case 
+						when t1.id_estado_aprobacion=2 and t1.id_estado_sesion=290 then 'O' 
+						else 'X'
+					end
+				when id_tipo_sesion='402' then 
+					case 
+						when t1.id_estado_aprobacion=2 and t1.id_estado_sesion=290 then 'E' 
+						else 'X'
+					end 
+				end tipo_sesion 
 		from comision_sesiones t1 
 		inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
 		inner join solicitudes s2 on s2.id=csd.id_solicitud
@@ -133,62 +176,21 @@ and t1.id_periodo_comisione=".$id_periodo;
 		And t0.estado='1' 
 		And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 		And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-		and u.id_ubigeo = '".$id_ubigeo."' 
-		and t1.id_comision=".$id_comision."
+		and t4.id_municipalidad_integrada=".$id_municipalidad_integrada." 
 		and a.id=".$id_agremiado."
-		and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
-
-		$data = DB::select($cad);
-        if(isset($data[0]))return $data[0];
-    }
-	
-	public static function getFechaDelegadoComisionDistritoSesionTemp($anio,$mes,$id_municipalidad_integrada,$id_agremiado){
-		
-		//select case when id_tipo_sesion='401' and t0.id_delegado>0 then 'O' when id_tipo_sesion='402' and t0.id_delegado>0 then 'E'  else 'AE' end tipo_sesion
-        $cad = "select distinct t1.fecha_ejecucion,
-						case 
-		when id_tipo_sesion='401' then
-			case 
-				when t1.id_estado_aprobacion=2 then 'O' 
+		--and t0.id_aprobar_pago =2
+		and case 
+				when id_tipo_sesion='401' then
+					case 
+				when t1.id_estado_aprobacion=2 and t1.id_estado_sesion=290 then 'O' 
 				else 'X'
 			end
-		when id_tipo_sesion='402' then 
-			case 
-				when t1.id_estado_aprobacion=2 then 'E' 
-				else 'X'
-			end 
-		end tipo_sesion 
-from comision_sesiones t1 
-inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
-inner join solicitudes s2 on s2.id=csd.id_solicitud
-inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
-inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
-left join comision_delegados cd on t0.id_delegado=cd.id  
-left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
-inner join personas p on a.id_persona=p.id 
-where 1=1
---And t0.id_aprobar_pago=2
---And t1.id_estado_aprobacion=2 
-And t1.id_estado_sesion=290  
-And t0.estado='1' 
-And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
-And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-and t4.id_municipalidad_integrada=".$id_municipalidad_integrada." 
-and a.id=".$id_agremiado."
-and t0.id_aprobar_pago =2
-and case 
-	when id_tipo_sesion='401' then
-		case 
-			when t1.id_estado_aprobacion=2 then 'O' 
-			else 'X'
-		end
-	when id_tipo_sesion='402' then 
-		case 
-			when t1.id_estado_aprobacion=2 then 'E' 
-			else 'X'
-		end 
-	end!='X'";
+				when id_tipo_sesion='402' then 
+					case 
+						when t1.id_estado_aprobacion=2 and t1.id_estado_sesion=290 then 'E' 
+						else 'X'
+					end
+			end!='X'";
 
 		$data = DB::select($cad);
         //if(isset($data[0]))return $data[0];
@@ -232,8 +234,8 @@ from comision_sesiones t1
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
-where t0.id_aprobar_pago=2
-And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+where --t0.id_aprobar_pago=2 And 
+to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
 And t1.id_periodo_comisione = ".$id_periodo." 
 and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
@@ -430,21 +432,21 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 	public function getCalendarioSesion($id_periodo,$anio,$mes){
 
         $cad = "select count(*) cantidad
-from comision_sesiones t1 
-inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion and t0.estado='1' 
-inner join comisiones t4 on t1.id_comision=t4.id
-inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
-left join comision_delegados cd on t0.id_delegado=cd.id  
-left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
-inner join personas p on a.id_persona=p.id 
-where 1=1
-and t1.id_periodo_comisione=".$id_periodo."
-And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
-And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-And t1.id_estado_sesion=290 
-and t1.id_estado_aprobacion=2
-and t0.id_aprobar_pago=2
-and t1.id in (select id_comision_sesion from comision_sesion_dictamenes)";
+				from comision_sesiones t1 
+				inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion and t0.estado='1' 
+				inner join comisiones t4 on t1.id_comision=t4.id
+				inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+				left join comision_delegados cd on t0.id_delegado=cd.id  
+				left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
+				inner join personas p on a.id_persona=p.id 
+				where 1=1
+				and t1.id_periodo_comisione=".$id_periodo."
+				And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+				And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+				And t1.id_estado_sesion=290 
+				and t1.id_estado_aprobacion=2
+				--and t0.id_aprobar_pago=2
+				and t1.id in (select id_comision_sesion from comision_sesion_dictamenes)";
 
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0]->cantidad;

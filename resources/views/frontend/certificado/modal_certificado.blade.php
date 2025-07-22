@@ -509,7 +509,7 @@ function validarFecha(){
 				var anio_ultima_cuota = fecha_ultima_cuota.getFullYear();
 				var mes_con_vigencia = fecha_con_vigencia.getMonth() +1;
 
-				if(fecha_con_vigencia.getFullYear()==parseInt(anio_ultima_cuota) && mes_con_vigencia < mes_ultima_cuota){
+				if(fecha_ultima_cuota >= fecha_con_vigencia){
 					$('#boton_agregar_cuotas button').attr('disabled', true);
 				}else{
 					if(categoria=='VITALICIO'){

@@ -656,6 +656,7 @@ class CajaIngreso extends Model
         /*and v2.id_modulo = 6*/
         and v2.fecha < now()
         and v2.estado ='1'
+        and v2.exonerado !='1' 
         ".$concepto." 
         order by v2.fecha asc";
 

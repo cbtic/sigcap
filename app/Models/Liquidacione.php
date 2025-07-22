@@ -48,7 +48,8 @@ class Liquidacione extends Model
 
       $cad = "select l.id, l.credipago, l.id_situacion from liquidaciones l 
       where l.credipago ='".$numero_documento."'
-      and l.estado ='1'";
+      and l.estado ='1'
+      order by id_situacion asc";
     
 		  $data = DB::select($cad);
       return $data;
