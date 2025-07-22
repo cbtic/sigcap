@@ -59,16 +59,38 @@
         @break
 
     @case('select')
-        <!-- Lista desplegable -->
-        <select class="form-control" 
-                name="{{ $nombreCampo }}"
-                {{ $pregunta->requerida ? 'required' : '' }}>
-            <option value="">Seleccione...</option>
-            @foreach($opciones as $valor => $texto)
-                <option value="{{ $valor }}">{{ $texto }}</option>
-            @endforeach
-        </select>
-        @break
+        @php
+            $opciones = json_decode($pregunta->opciones, true) ?? [];
+            $tipoEvaluador = $opciones['tipo_evaluador'] ?? null;
+        @endphp
+
+        @if($tipoEvaluador)
+            <!-- Select para evaluadores filtrados por tipo -->
+            <select class="form-control select2" 
+                    name="{{ $nombreCampo }}"
+                    {{ $pregunta->requerida ? 'required' : '' }}>
+                <option value="">Seleccione evaluador...</option>
+                @foreach(${$tipoEvaluador} as $evaluador)
+                    <option value="{{ $evaluador->id }}">
+                        {{ $evaluador->nombre }} ({{ $evaluador->numero_cap }})
+                        @if($evaluador->especialidad)
+                            - {{ $evaluador->especialidad }}
+                        @endif
+                    </option>
+                @endforeach
+            </select>
+        @else
+            <!-- Select genérico para opciones normales -->
+            <select class="form-control" 
+                    name="{{ $nombreCampo }}"
+                    {{ $pregunta->requerida ? 'required' : '' }}>
+                <option value="">Seleccione...</option>
+                @foreach($opciones as $valor => $texto)
+                    <option value="{{ $valor }}">{{ $texto }}</option>
+                @endforeach
+            </select>
+        @endif
+    @break
 
     @case('checkbox')
         <!-- Múltiple selección -->
@@ -125,6 +147,44 @@
                max="{{ $opciones['max'] ?? '' }}"
                {{ $pregunta->requerida ? 'required' : '' }}>
         @break
+
+    @case('texto')
+        @php
+            $opciones = json_decode($pregunta->opciones, true) ?? [];
+            $multilinea = $opciones['multilinea'] ?? false;
+            $filas = $opciones['filas'] ?? 3;
+            $maxlength = $opciones['maxlength'] ?? null;
+            $placeholder = $opciones['placeholder'] ?? '';
+        @endphp
+
+        @if($multilinea)
+            <!-- Textarea para respuestas largas -->
+            <textarea class="form-control" 
+                    name="{{ $nombreCampo }}"
+                    rows="{{ $filas }}"
+                    placeholder="{{ $placeholder }}"
+                    @if($maxlength) maxlength="{{ $maxlength }}" @endif
+                    {{ $pregunta->requerida ? 'required' : '' }}></textarea>
+        @else
+            <!-- Input para texto simple -->
+            <input type="text" class="form-control" 
+                name="{{ $nombreCampo }}"
+                placeholder="{{ $placeholder }}"
+                @if($maxlength) maxlength="{{ $maxlength }}" @endif
+                {{ $pregunta->requerida ? 'required' : '' }}>
+        @endif
+
+        @if($maxlength)
+            <small class="text-muted d-block text-end">
+                <span id="contador_{{ $pregunta->id }}">0</span>/{{ $maxlength }} caracteres
+            </small>
+            <script>
+                document.querySelector('[name="{{ $nombreCampo }}"]').addEventListener('input', function() {
+                    document.getElementById('contador_{{ $pregunta->id }}').textContent = this.value.length;
+                });
+            </script>
+        @endif
+    @break
 
     @default
         <!-- Texto libre -->
