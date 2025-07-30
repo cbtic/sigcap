@@ -550,7 +550,8 @@ class Valorizacione extends Model
                 from valorizaciones v
                 group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto
                 having v.id_persona =  ".$id_persona."
-                and v.estado = '1'            
+                and v.estado = '1'
+                and v.exonerado = '0'            
                 and v.pagado = '0'
                 and v.fecha < now() 
                 and v.id_concepto in(26411, 26461)
@@ -570,7 +571,8 @@ class Valorizacione extends Model
                 group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto
                 having v.id_persona =  ".$id_persona."
                 and v.estado = '1'            
-                and v.pagado = '0'                
+                and v.pagado = '0'  
+                and v.exonerado = '0'              
                 and v.id_concepto in (26461)
             ) AS total;
 
