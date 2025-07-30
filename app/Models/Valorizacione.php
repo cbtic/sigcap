@@ -548,7 +548,7 @@ class Valorizacione extends Model
             select  count(*) total from (
                 select  count(*)  total          
                 from valorizaciones v
-                group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto
+                group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto,v.exonerado
                 having v.id_persona =  ".$id_persona."
                 and v.estado = '1'
                 and v.exonerado = '0'            
@@ -568,7 +568,7 @@ class Valorizacione extends Model
             select  count(*) total from (
                 select  count(*)  total          
                 from valorizaciones v
-                group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto
+                group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto,v.exonerado
                 having v.id_persona =  ".$id_persona."
                 and v.estado = '1'            
                 and v.pagado = '0'  
