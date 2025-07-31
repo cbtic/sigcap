@@ -251,6 +251,8 @@ function importarDatalicenciaDictamenes(){
 	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
 	$('.loader').show();
 
+	//fecha_ejecucion="2025-15-02";
+	
 	$.ajax({
 		url: "/sesion/importar_dataLicencia_dictamenes/"+fecha_ejecucion+"/"+id_comision+"/"+id_sesion,
 		type: "GET",
@@ -268,6 +270,11 @@ function importarDatalicenciaDictamenes(){
 			cargarDictamenNuevo(id_sesion);
 			bootbox.alert("Se import&oacute; exitosamente los datos"); 
 			
+		},
+		error: function(xhr, status, error) {
+			$('.loader').hide();
+			console.error("Error en la importación:", status, error);
+			bootbox.alert("Ocurrió un error al importar los datos. Por favor, intente nuevamente, si el erro persiste comuniquese con sistemas.");
 		}
 	});
 }
