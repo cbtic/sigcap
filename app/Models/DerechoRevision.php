@@ -396,6 +396,12 @@ class DerechoRevision extends Model
 
     }
 
+    public function importar_solicitudes_dataLicenciaIndividual($codigo_solicitud){
+
+        return $this->readFuntionPostgres_("copia_datalicencia_solicitud_codgo(?)", [$codigo_solicitud]);
+
+    }
+
     public function importar_empresas_dataLicencia(){
 
         return $this->readFuntionPostgres_('copia_datalicencia_empresa()');

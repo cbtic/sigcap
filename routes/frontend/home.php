@@ -870,3 +870,4 @@ Route::get('derecho_revision/obtener_observaciones/{id}', [DerechoRevisionContro
 Route::post('derecho_revision/aprobar_solicitud', [DerechoRevisionController::class, 'aprobar_solicitud'])->name('derecho_revision.aprobar_solicitud');
 Route::get('derecho_revision/modal_aprobaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_aprobaciones_solicitud'])->name('derecho_revision.modal_aprobaciones_solicitud');
 Route::get('derecho_revision/obtener_aprobaciones/{id}', [DerechoRevisionController::class, 'obtener_aprobaciones'])->name('derecho_revision.obtener_aprobaciones');
+Route::get('derecho_revision/importar_dataLicenciaIndividual/{codigo_solicitud}', [DerechoRevisionController::class, 'importar_dataLicenciaIndividual'])->name('derecho_revision.importar_dataLicenciaIndividual');

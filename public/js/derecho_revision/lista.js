@@ -1204,7 +1204,12 @@ function datatablenew(){
 					}else{
 						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;">'+estado+'</a>';
 					}*/
-
+					if(row.codigo_solicitud){
+						html += '<a href="javascript:void(0)" onclick=importarDataLicenciaIndividual('+row.codigo_solicitud+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Importar Individual</a>';
+					}else{
+						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-danger" disabled>Importar Individual</button>';
+					}
+					
 					html += '</div>';
 					return html;
 					},
@@ -1993,6 +1998,28 @@ function importarDatalicencia(){
 		}
 	});
 }
+
+function importarDataLicenciaIndividual(codigo_solicitud){
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+	$.ajax({
+		url: "/derecho_revision/importar_dataLicenciaIndividual/"+codigo_solicitud,
+		type: "GET",
+		success: function(result){
+
+			$('.loader').hide();
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			datatablenew();
+
+		}
+	});
+}
+
 
 function validarProyectistaPrincipal(id){
 

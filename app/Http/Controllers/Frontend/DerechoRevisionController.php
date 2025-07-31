@@ -1723,6 +1723,20 @@ class DerechoRevisionController extends Controller
 	
 	}
 
+	function importar_dataLicenciaIndividual($codigo_solicitud){
+			
+		$derecho_revision_model = new DerechoRevision;
+
+		$data = [];
+		
+		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicenciaIndividual($codigo_solicitud);
+		
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+
 	public function eliminar_solicitud_edificaciones($id,$estado)
     {
 		$derecho_revision = DerechoRevision::find($id);
