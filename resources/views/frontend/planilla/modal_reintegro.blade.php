@@ -578,6 +578,7 @@ function activarPorcentaje(){
 								<th>Mes Ejecuta Reintegro</th>
 								<th>Cantidad</th>
 								<th>Importe</th>
+								<th>Eliminar</th>
 							</tr>
 							</thead>
 							<tbody>

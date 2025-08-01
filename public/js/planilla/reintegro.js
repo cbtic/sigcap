@@ -614,6 +614,33 @@ function fn_eliminarReintegro(id,estado){
     });
 }
 
+function eliminarReintegroDetalle(id){
+	var act_estado = "";
+	act_estado = "Eliminar";
+
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas "+act_estado+" el Detalle del Reintegro?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminarReintegroDetalle(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminarReintegroDetalle(id){
+	
+    $.ajax({
+            url: "/planilla/eliminar_reintegro_detalle/"+id,
+            type: "GET",
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);
+				datatablenew();
+            }
+    });
+}
 
 function obtenerDelegadoPerido(){
 	

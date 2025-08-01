@@ -396,6 +396,10 @@ class DerechoRevision extends Model
 
     }
 
+    public function importar_solicitudes_dataLicenciaIndividual($codigo_solicitud){
+        return $this->readFuntionPostgres2_("copia_datalicencia_solicitud_codgo(?)", [$codigo_solicitud]);
+    }
+
     public function importar_empresas_dataLicencia(){
 
         return $this->readFuntionPostgres_('copia_datalicencia_empresa()');
@@ -432,6 +436,13 @@ class DerechoRevision extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    public function readFuntionPostgres2_($function, $parameters = [])
+{
+    $cad = "select " . $function;
+    $data = DB::select($cad, $parameters); // ← aquí pasamos los parámetros
+    return $data;
+}
 
     public function getProvinciaDistritoByIdSolicitud($id){
 

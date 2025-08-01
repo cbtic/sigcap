@@ -1723,6 +1723,20 @@ class DerechoRevisionController extends Controller
 	
 	}
 
+	function importar_dataLicenciaIndividual($codigo_solicitud){
+			
+		$derecho_revision_model = new DerechoRevision;
+
+		$data = [];
+		
+		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicenciaIndividual($codigo_solicitud);
+		
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+
 	public function eliminar_solicitud_edificaciones($id,$estado)
     {
 		$derecho_revision = DerechoRevision::find($id);
@@ -1838,8 +1852,6 @@ class DerechoRevisionController extends Controller
 
 	public function send_nuevo_reintegro(Request $request){
 		
-		//dd($request->id_tipo_documento);exit();
-
 		$tipo_uso = $request->tipo_uso;
 		$sub_tipo_uso = $request->sub_tipo_uso;
 		$area_techada = $request->area_techada;
@@ -1847,21 +1859,16 @@ class DerechoRevisionController extends Controller
 		$area_techada_presupuesto = $request->area_techada_presupuesto;
 		$valor_unitario = $request->valor_unitario;
 		$presupuesto_ = $request->presupuesto;
-		//$numero_cap_row = $request->numero_cap_row;
-		//var_dump($request->numero_cap_row);exit();
 		$tipo_proyectista_row = $request->tipo_proyectista_row;
-		//var_dump($tipo_proyectista_row);exit();
 		$tipo_colegiatura_row = $request->tipo_colegiatura_row;
 		
 		$id_user = Auth::user()->id;
 		$id_solicitud = $request->id_solicitud_reintegro;
-		//dd($id_solicitud).exit();
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$ubigeo = $request->distrito;
 		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
-		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$solicitud_matriz = Solicitude::find($request->id_solicitud);
-		//dd($solicitud_matriz).exit();
+
 		if($id_solicitud == 0){
 			$derecho_revision = new DerechoRevision;
 			$proyecto = new Proyecto;
@@ -1874,8 +1881,6 @@ class DerechoRevisionController extends Controller
 			$proyectista = Proyectista::find($derecho_revision->id_proyectista);
 		}
 		
-		//$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
-
 		$derecho_revision->id_regional = 5;
 		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');
 		$derecho_revision->numero_revision = $request->n_revision;
@@ -1907,7 +1912,7 @@ class DerechoRevisionController extends Controller
 		$proyecto->save();
 
 		if($request->tipo_colegiatura=="CAP"){
-		
+			
 			$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 	
 			$proyectista->id_tipo_profesional = $request->tipo_proyectista;

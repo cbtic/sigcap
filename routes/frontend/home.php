@@ -763,6 +763,7 @@ Route::get('agremiado/obtener_datos_agremiado_id/{id}', [AgremiadoController::cl
 Route::get('delegadoTributo/validar_delegado/{id_delegado}', [DelegadoTributoController::class, 'validar_delegado'])->name('delegadoTributo.validar_delegado');
 Route::get('derecho_revision/importar_dataLicencia', [DerechoRevisionController::class, 'importar_dataLicencia'])->name('derecho_revision.importar_dataLicencia');
 Route::get('planilla/eliminar_reintegro/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_reintegro'])->name('planilla.eliminar_reintegro');
+Route::get('planilla/eliminar_reintegro_detalle/{id}', [PlanillaDelegadoController::class, 'eliminar_reintegro_detalle'])->name('planilla.eliminar_reintegro_detalle');
 Route::get('planilla/obtener_datos_reintegro_detalle/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_datos_reintegro_detalle'])->name('planilla.obtener_datos_reintegro_detalle');
 Route::get('adelanto/obtener_datos_adelanto/{id_agremiado}', [AdelantoController::class, 'obtener_datos_adelanto'])->name('adelanto.obtener_datos_adelanto');
 Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_edificaciones'])->name('derecho_revision.eliminar_solicitud_edificaciones');
@@ -875,6 +876,7 @@ Route::get('derecho_revision/obtener_observaciones/{id}', [DerechoRevisionContro
 Route::post('derecho_revision/aprobar_solicitud', [DerechoRevisionController::class, 'aprobar_solicitud'])->name('derecho_revision.aprobar_solicitud');
 Route::get('derecho_revision/modal_aprobaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_aprobaciones_solicitud'])->name('derecho_revision.modal_aprobaciones_solicitud');
 Route::get('derecho_revision/obtener_aprobaciones/{id}', [DerechoRevisionController::class, 'obtener_aprobaciones'])->name('derecho_revision.obtener_aprobaciones');
+<<<<<<< HEAD
 
 
 // routes/web.php
@@ -915,3 +917,6 @@ Route::prefix('encuestas')->group(function() {
         return response()->json(['fecha' => $expediente ? $expediente->fecha_entrevista : '']);
     });
 });
+=======
+Route::get('derecho_revision/importar_dataLicenciaIndividual/{codigo_solicitud}', [DerechoRevisionController::class, 'importar_dataLicenciaIndividual'])->name('derecho_revision.importar_dataLicenciaIndividual');
+>>>>>>> 84b20046fadd29e7ae0b282d9db161d9adaa0e87
