@@ -370,7 +370,7 @@ function guardarnc(){
 
 }
  
-
+/*
 function fn_save(){
 	 //var fecha_atencion_original = $('#fecha_atencion').val();
 	//var id_user = $('#id_user').val();
@@ -384,8 +384,8 @@ function fn_save(){
 	$('#guardar').hide();
 	
     $.ajax({
-			//url: "/comprobante/send",
-			url: "/comprobante/send_secuencia",
+			url: "/comprobante/send",
+			//url: "/comprobante/send_secuencia",
             type: "POST",
 
 			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
@@ -411,10 +411,51 @@ function fn_save(){
             }
     });
 }
+*/
+// Función JavaScript fn_save (mejorada)
+function fn_save() {
+    var msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    
+    $('.loader').css("opacity","0.8").css("height",heightBrowser)
+               .html(`<div id='Grd1_wrapper' class='dataTables_wrapper'>
+                      <div id='Grd1_processing' class='dataTables_processing panel-default'>
+                      ${msgLoader}</div></div>`);
+    $('.loader').show();
+    $('#guardar').hide();
+    
+    $.ajax({
+        url: "/comprobante/send",
+        type: "POST",
+        data: $("#frmFacturacion").serialize(),
+        dataType: 'json',
+        success: function (result) {
+            $('.loader').hide();
+            if(result.sw) {
+                $('#numerof').val(result.id_factura);
+                $('#divNumeroF').show();
+                enviar_comprobante(result.id_factura);
+                location.href = urlApp+"/comprobante/ver/"+result.id_factura;
+            } else {
+                alert(result.msg);
+                $('#guardar').show();
+            }
+        },
+        error: function() {
+            $('.loader').hide();
+            alert("Error en la comunicación con el servidor");
+            $('#guardar').show();
+        }
+    });
+}
+
+
+
+
 
 
 /*
-function fn_save() {
+function fn_savexxxxxxxxxxxxxxx(){
     var id_factura = 0;
 	var conf = "";
     var msgLoader = "Procesando, espere un momento por favor";

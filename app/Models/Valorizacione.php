@@ -10,6 +10,18 @@ use DB;
 
 class Valorizacione extends Model
 {
+
+    protected $fillable = [
+    'id_comprobante',
+    'pagado',
+    // Añade aquí todos los campos que necesites asignar en masa
+    'valor_unitario',
+    'monto',
+    'cantidad',
+    'id_pronto_pago',
+    // ... otros campos
+    ];
+
     function getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$cuota,$concepto, $filas,$exonerado,$numero_documento_b){  
         
         if($filas!="")$filas="limit ".$filas;

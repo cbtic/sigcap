@@ -9,6 +9,17 @@ use DB;
 class Agremiado extends Model
 {
     use HasFactory;
+
+	protected $fillable = [
+        'direccion',
+        'email1',
+        // Añade aquí todos los campos que necesites asignar en masa
+        'nombre',
+        'apellido',
+        'telefono',
+		'id_situacion',
+        // ... otros campos
+    ];
 	
 	public function listar_agremiado_ajax($p){
 		return $this->readFunctionPostgres('sp_listar_agremiado_paginado',$p);

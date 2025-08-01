@@ -12,6 +12,17 @@ class Comprobante extends Model
 		return $this->readFuntionPostgres('sp_listar_comprobante_paginado',$p);
     }
  
+    protected $fillable = [
+        'tipo_cambio',
+        'estado_pago',
+        // Añade aquí todos los campos que necesites asignar en masa
+        'id_forma_pago',
+        'tipo_operacion',
+        'observacion',
+        'valor_venta_bruto',
+        // ... otros campos
+    ];
+
 
     function fecha_hora_actual(){
 		
@@ -21,20 +32,51 @@ class Comprobante extends Model
         return $data[0]->fecha_actual;
 		
 	}
-
-	public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$id_nc) {
-                                          //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-           // print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
-        $cad = "Select sp_crud_factura_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.",".$id_nc.")";
-
-		$data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda,$id_nc));
-                                    //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-       // print_r($data); 
-        return $data[0]->sp_crud_factura_moneda;
-    }                   
-
     
+    // Función registrar_factura_moneda (optimizada y segura)
+    public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion, $id_user, $id_moneda, $id_nc)
+    {
+        try {
+            $cad = "Select sp_crud_factura_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $data = DB::select($cad, [
+                $serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, 
+                $cod_contable, $id_v, $id_caja, $descuento, $accion, $id_user, 
+                $id_moneda, $id_nc
+            ]);
+            
+            return $data[0]->sp_crud_factura_moneda;
+        } catch (\Exception $e) {
+            Log::error('Error en registrar_factura_moneda: ' . $e->getMessage(), [
+                'params' => func_get_args(),
+                'exception' => $e
+            ]);
+            throw $e;
+        }
+    }
+/*
+    public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda, $id_nc)
+    {
+        try {
+            //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+            // print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
+            $cad = "Select sp_crud_factura_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.",".$id_nc.")";
+
+            $data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda, $id_nc));
+            //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+            // print_r($data); 
+            return $data[0]->sp_crud_factura_moneda;
+        } catch (\Exception $e) {
+            Log::error('Error en registrar_factura_moneda: ' . $e->getMessage(), [
+                'params' => func_get_args(),
+                'exception' => $e
+            ]);
+            throw $e; // Relanzamos la excepción para que sea manejada por la transacción principal
+        }
+    }
+    */
+
+
     public function registrar_factura_moneda_v2($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$id_nc,$p_detalle) {
                                           //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
            // print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
@@ -46,6 +88,30 @@ class Comprobante extends Model
        // print_r($data); 
         return $data[0]->sp_crud_factura_moneda_secuencia;
     }  
+
+    public function registrar_factura_moneda_v2_secu($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion, $id_user, $id_moneda, $id_nc, $p_detalle) 
+    {
+        try {
+             /*print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",
+             ".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",
+             ".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
+             */
+            $cad = "Select sp_crud_factura_moneda_secuencia(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $data = DB::select($cad, [
+                $serie, $numero, $tipo, $ubicacion, $persona, $total, 
+                $descripcion, $cod_contable, $id_v, $id_caja, $descuento, 
+                $accion, $id_user, $id_moneda, $id_nc, $p_detalle
+            ]);
+            
+            return $data[0]->sp_crud_factura_moneda_secuencia;
+        } catch (\Exception $e) {
+            Log::error('Error en registrar_factura_moneda_v2: ' . $e->getMessage(), [
+                'params' => func_get_args(),
+                'exception' => $e
+            ]);
+            throw $e; // Relanzamos la excepción para que sea manejada por la transacción principal
+        }
+    }
 
     public function registrar_comprobante($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
