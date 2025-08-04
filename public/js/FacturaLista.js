@@ -419,7 +419,38 @@ function datatablenew(){
                     "bSortable": false,
                     "aTargets": [17],
                 },
-                
+
+				{
+                    "mRender": function (data, type, row) {	
+                        /*	
+                        var html = '<form class="form-horizontal" method="post" action="{{route("frontend.comprobante.nc_edita")}}" id="frmListaComprobante" name="frmListaComprobante" autocomplete="off"></form>';		
+                        html += '<input type="hidden" name="id_comprobante" id="id_comprobante" value="">';
+                        html += '<input type="hidden" name="id_comprobante_origen" id="id_comprobante_origen" value='+row.id+'>';
+                        html += '<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">';                        
+                        html += '<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc('+row.id+',)">';
+                        html += '</form>'
+                        return html; */
+                        if (row.tipo=="FT" || row.tipo=="BV"){
+                             var tiene_nc = "";
+                             if(row.tiene_nc!= null)tiene_nc = row.tiene_nc;
+
+                            if(tiene_nc=== ""){
+                                html = '<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc('+row.id+',)"></input>';                        
+                            }else{
+                                html = '<input class="btn btn-primary pull-light" value="NC" type="button" id="btnBoleta" onclick="fn_nc_nd('+tiene_nc+')"></input>';
+                            }
+                                
+                            return html; 
+                        }else{                  
+                            var id_comprobante_ncnd = "";
+                            //if(row.id_comprobante_ncnd!= null)id_comprobante_ncnd = row.id_comprobante_ncnd;
+                            return id_comprobante_ncnd;
+                        }
+                    },
+                    "bSortable": false,
+                    "aTargets": [18],
+                },                
+
 
             ]
 
@@ -427,6 +458,31 @@ function datatablenew(){
     });
 
 }
+
+function nc(id,id_ncnd){
+	//$('#id_comprobante_nc').val(id);
+	$('#id_comprobante_origen').val(id);
+	$('#id_comprobante').val(id_ncnd);
+	
+	document.forms["frmListaComprobante"].submit();
+	return false;
+};
+
+function nd(id,id_ncnd){
+	//$('#id_comprobante_nd').val(id);
+	$('#id_comprobante_origen_nd').val(id);
+	$('#id_comprobante').val(id_ncnd);
+
+	document.forms["frmPagos_nd"].submit();
+	return false;
+};
+
+	function fn_nc_nd(id) {
+		if (id == "")id = 0;
+		var href = '/comprobante/ver/' + id;
+		window.open(href, '_blank');
+
+	}
 
 function fn_ListarBusqueda() {
     datatablenew();
