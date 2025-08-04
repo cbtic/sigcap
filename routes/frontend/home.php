@@ -916,3 +916,4 @@ Route::prefix('encuestas')->group(function() {
         return response()->json(['fecha' => $expediente ? $expediente->fecha_entrevista : '']);
     });
 });
+Route::get('derecho_revision/importar_dataLicenciaIndividual/{codigo_solicitud}', [DerechoRevisionController::class, 'importar_dataLicenciaIndividual'])->name('derecho_revision.importar_dataLicenciaIndividual');
