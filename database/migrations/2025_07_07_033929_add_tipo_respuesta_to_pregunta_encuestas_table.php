@@ -14,7 +14,7 @@ class AddTipoRespuestaToPreguntaEncuestasTable extends Migration
     public function up()
     {
         Schema::table('pregunta_encuestas', function (Blueprint $table) {
-            $table->enum('tipo_respuesta', ['radio', 'checkbox', 'text', 'select', 'numero', 'fecha', 'rango', 'si_no']);
+            //$table->enum('tipo_respuesta', ['radio', 'checkbox', 'text', 'select', 'numero', 'fecha', 'rango', 'si_no']);
         });
     }
 
