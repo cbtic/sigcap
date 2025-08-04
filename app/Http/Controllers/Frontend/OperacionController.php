@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\BancoInterconexione;
 use App\Models\BancoInterconexionDetalle;
 use App\Models\Comprobante;
+use App\Models\Agremiado;
 use Auth;
 
 class OperacionController extends Controller
@@ -390,9 +391,18 @@ class OperacionController extends Controller
 		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
 		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
 		
+		$destinatario = "";
+		
+		if($data_input["TipoConsulta"]==0){
+			$agremiado_model = new Agremiado;
+			$agremiado_data = $agremiado_model->getAgremiado('85',(int)$data_input["NumConsulta"]);
+			$destinatario = $agremiado_data->apellido_paterno." ".$agremiado_data->apellido_materno." ".$agremiado_data->nombres;
+		}
+		//echo $destinatario;exit();
 		//BASE DE DATOS
 		$nombreEmpresa = "COLEGIO ARQ PERU";
-		$nombreCliente = $deuda_pendiente[0]->destinatario;//"GINOCCHIO MENDOZA PATRICIA MON";
+		//$nombreCliente = (count($deuda_pendiente)>0)?$deuda_pendiente[0]->destinatario:"";//"GINOCCHIO MENDOZA PATRICIA MON";
+		$nombreCliente = $destinatario;
 		$numDocs = count($deuda_pendiente);
 		$suma_importes = 0;
 		$correlativo = 301;
