@@ -876,7 +876,6 @@ Route::get('derecho_revision/obtener_observaciones/{id}', [DerechoRevisionContro
 Route::post('derecho_revision/aprobar_solicitud', [DerechoRevisionController::class, 'aprobar_solicitud'])->name('derecho_revision.aprobar_solicitud');
 Route::get('derecho_revision/modal_aprobaciones_solicitud/{id}', [DerechoRevisionController::class, 'modal_aprobaciones_solicitud'])->name('derecho_revision.modal_aprobaciones_solicitud');
 Route::get('derecho_revision/obtener_aprobaciones/{id}', [DerechoRevisionController::class, 'obtener_aprobaciones'])->name('derecho_revision.obtener_aprobaciones');
-<<<<<<< HEAD
 
 
 // routes/web.php
@@ -917,6 +916,3 @@ Route::prefix('encuestas')->group(function() {
         return response()->json(['fecha' => $expediente ? $expediente->fecha_entrevista : '']);
     });
 });
-=======
-Route::get('derecho_revision/importar_dataLicenciaIndividual/{codigo_solicitud}', [DerechoRevisionController::class, 'importar_dataLicenciaIndividual'])->name('derecho_revision.importar_dataLicenciaIndividual');
->>>>>>> 84b20046fadd29e7ae0b282d9db161d9adaa0e87

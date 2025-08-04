@@ -122,6 +122,13 @@
                             </strong>
                         </div><!--card-header-->
 
+                        <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmListaComprobante" name="frmListaComprobante" autocomplete="off">
+                            <input type="hidden" name="id_comprobante" id="id_comprobante" value="">
+                            <input type="hidden" name="id_comprobante_origen" id="id_comprobante_origen" value="">
+                            <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">                              
+                        </form>
+                      
+
                         <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.send')}}" id="frmAfiliacion" autocomplete="off">
 
 
@@ -312,6 +319,7 @@
                                                 <th>Sunat</th>
                                                 <th class="text-left">Credito</th>
                                                 <th class="text-left">Factura</th>
+                                                <th class="text-left">N.C.</th>
                                             </tr>
                                         </thead>
                                         <tbody style="font-size:13px">
