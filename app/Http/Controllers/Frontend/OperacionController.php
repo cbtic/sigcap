@@ -446,6 +446,12 @@ class OperacionController extends Controller
 			$pagoMinimo = $row->pago_minimo;//17689;
 			$importeTotal = $row->importe_total;//17689;
 			
+			$deuda = str_replace('.', '', $deuda);
+			$sinPmoraunto = str_replace('.', '', $mora);
+			$gastosAdm = str_replace('.', '', $gastosAdm);
+			$pagoMinimo = str_replace('.', '', $pagoMinimo);
+			$importeTotal = str_replace('.', '', $importeTotal);
+
 			$periodo = $row->periodo;//9;
 			$anio = $row->anio;//2024;
 			$cuota = $row->cuota;//1;
