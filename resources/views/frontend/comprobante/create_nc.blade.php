@@ -287,7 +287,7 @@
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Serie</label>
-                                                            <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
+                                                            <select  name="serieF" id="serieF" class="form-control form-control-sm">
                                                                 <?php if ($trans == 'FA' ) { ?>
                                                                     <?php foreach ($serie as $row) : ?>
                                                                         <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
