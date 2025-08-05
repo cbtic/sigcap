@@ -392,7 +392,7 @@ class OperacionController extends Controller
 		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
 		
 		$destinatario = "";
-		
+
 		if($data_input["TipoConsulta"]==0){
 			$agremiado_model = new Agremiado;
 			$agremiado_data = $agremiado_model->getAgremiado('85',(int)$data_input["NumConsulta"]);
@@ -418,8 +418,14 @@ class OperacionController extends Controller
 		//RESPUESTA
 		$descRespuesta = "TRANSACCION PROCESADA OK";
 		$data_output["CodigoErrorOriginal"] = "000"; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
-		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
 		
+		if(count($deuda_pendiente)==0){
+			$descRespuesta = "CLIENTE SIN DEUDA PENDIENTE";
+			$data_output["CodigoErrorOriginal"] = "022";
+		}
+
+		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
+
 		$data_output_detalle = array();
 		$output_detalle = "";
 		
