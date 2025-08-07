@@ -743,7 +743,7 @@ class CajaIngreso extends Model
 
         $cad = "select  distinct(c.denominacion)
         from agremiado_cuotas ac 
-        inner join valorizaciones v on ac.id =v.pk_registro
+        inner join valorizaciones v on ac.id =v.pk_registro and v.id_modulo = '2'
         inner join conceptos c on ac.id_concepto =c.id
         inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tipo='11' 
         where  id_agremiado = ".$id."
