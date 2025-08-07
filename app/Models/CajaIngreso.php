@@ -706,7 +706,7 @@ class CajaIngreso extends Model
         $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe , to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
         tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
         from agremiado_cuotas ac 
-        inner join valorizaciones v on ac.id =v.pk_registro
+        inner join valorizaciones v on ac.id =v.pk_registro and v.id_modulo = '2'
         inner join conceptos c on ac.id_concepto =c.id
         inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tm.tipo='11' 
         left join comprobantes c2 on c2.id=v.id_comprobante
