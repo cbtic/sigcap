@@ -25,6 +25,10 @@ class Agremiado extends Model
 		return $this->readFunctionPostgres('sp_listar_agremiado_paginado',$p);
     }
 	
+	public function crud_automatico_agremiado_inhabilita_tresm(){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_inhabilita_tresm',[]);
+    }
+
 	public function crud_automatico_agremiado_cuota($p){
 		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota',$p);
     }

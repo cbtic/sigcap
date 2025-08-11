@@ -801,6 +801,13 @@ class AgremiadoController extends Controller
 
     }
 	
+	public function automatico_agremiado_inhabilita_tresm(){
+		
+		$agremiado_model = new Agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_inhabilita_tresm();
+		
+	}
+
 	public function importar_agremiado_cuota(){
 		
 		$agremiado_model = new Agremiado;

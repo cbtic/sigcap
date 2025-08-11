@@ -21,7 +21,8 @@ class Kernel extends ConsoleKernel
         Commands\periodoComisionAutomaticoCron::class,
 	Commands\suspensionAgremiadoAutomaticoCron::class,
 	Commands\envioAgremiadoAutomaticoFraccionamientoCron::class,
-	Commands\anularLiquidacion7DiasAutomaticoCron::class
+	Commands\anularLiquidacion7DiasAutomaticoCron::class,
+        Commands\envioAgremiadoInhabilitaTresmAutomaticoCron::class
     ];
 
     protected function schedule(Schedule $schedule)
@@ -63,7 +64,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('16:57');
         //$schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('17:00');
 
-        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('11:50');
+        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('23:50');
         //$schedule->command('envioAgremiadoCuotaAutomatico:cron')->dailyAt('22:32');
         $schedule->command('envioAgremiadoCuotaFechaAutomatico:cron')->dailyAt('23:50');
         
@@ -76,6 +77,8 @@ class Kernel extends ConsoleKernel
 	$schedule->command('suspensionAgremiadoAutomatico:cron')->dailyAt('00:07');
 		
 	$schedule->command('envioAgremiadoAutomaticoFraccionamiento:cron')->dailyAt('22:55');
+
+        $schedule->command('envioAgremiadoInhabilitaTresmAutomatico:cron')->dailyAt('23:00');
 
 	/*$schedule->call(function () {
             \Log::info('Tarea de prueba ejecutada cada minuto: ' . now());
