@@ -285,24 +285,32 @@
                                             <div id="fsFiltro" class="card-body">
                                                 <div id="" class="row">
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Serie</label>
-                                                            <select  name="serieF" id="serieF" class="form-control form-control-sm">
-                                                                <?php if ($trans == 'FA' ) { ?>
-                                                                    <?php foreach ($serie as $row) : ?>
-                                                                        <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
-                                                                    <?php endforeach; ?>
-                                                                <?php } ?>
-                                                                <?php if ($trans == 'FE') { ?>
-                                                                    <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
-                                                                <?php } ?>
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Serie</label>
+                                                        <input type="text" name="serieF"  id="serieF" value="<?php if ($trans == 'FE' || $trans == 'FN') {
+                                                                    echo $comprobante->serie;
+                                                                } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                                
+<!--
+                                                        <select name="serieF" id="serieF" class="form-control form-control-sm">
+                                                            <//?php if ($trans == 'FA') : ?>
+                                                                <//?php foreach ($serie as $row) : ?>
+                                                                    <option value="<//?php echo $row->denominacion ?>" <//?php echo (isset($comprobante->serie) && $comprobante->serie == $row->denominacion) ? 'selected' : '' ?>>
+                                                                        <//?php echo $row->denominacion ?>
+                                                                    </option>
+                                                                <//?php endforeach; ?>
+                                                            <//?php elseif ($trans == 'FE' || $trans == 'FN') : ?>
+                                                                <option value="<//?php echo $comprobante->serie ?>" selected>
+                                                                    <//?php echo $comprobante->serie ?>
+                                                                </option>
+                                                            <//?php endif; ?>
+                                                        </select>
+                                                            -->
+                                                    </div>
 
-                                                                <?php if ($trans == 'FN') { ?>
-                                                                    <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
-                                                                <?php } ?>
 
-                                                            </select>
-                                                        </div>
+
+
                                                     </div>
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                         <div class="form-group">
@@ -427,8 +435,8 @@
                                             <div id="" class="row">
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
-                                                        <label class="form-control-sm">Serie</label>
-                                                        <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
+                                                        <label class="form-control-sm">Serie_</label>
+                                                        <select readonly name="serieF1" id="serieF1" class="form-control form-control-sm">
                                                             <?php if ($trans == 'FA') { ?>
                                                                 <?php foreach ($serie as $row) : ?>
                                                                     <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
@@ -448,7 +456,7 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                     <div class="form-group">
-                                                        <label class="form-control-sm">Número</label>
+                                                        <label class="form-control-sm">Número_</label>
                                                         <input type="text" name="numerof1" readonly id="numerof1" value="<?php if ($trans == 'FN') {
                                                                                                                             echo $comprobante->numero;
                                                                                                                         }  
