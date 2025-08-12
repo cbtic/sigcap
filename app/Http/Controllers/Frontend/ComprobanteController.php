@@ -3726,6 +3726,10 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
         $id_caja = $request->id_caja_;
         
         $id = $request->id_comprobante;
+
+        $numero_peronalizado = $request->numero_peronalizado;  
+
+
         //echo($id);
         //echo("-");
 
@@ -3893,7 +3897,7 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
 
         //print_r($facturad); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe','tipo_cambio'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe','tipo_cambio','numero_peronalizado'));
         
     }
 
@@ -5081,6 +5085,7 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
  
             $total = $request->totalP;
             $serieF = $request->serieF;
+            $numeroF = $request->numerof;
             $tipoF = $request->tipoF;
             $ubicacion_id = $request->ubicacion;
             $cod_tributario = $request->numero_documento;
@@ -5122,8 +5127,13 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
                 
                 $id_moneda=1;
                 $descuento = $value['descuento'];
+                 
+                if($numeroF=="") {
+                    $numeroF = 0;
+                }   
+
                 
-                $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',      $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso,$devolucion_nc,0,0,0);
+                $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     $numeroF, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',      $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso,$devolucion_nc,0,0,0);
                 //$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
  
                 //print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)

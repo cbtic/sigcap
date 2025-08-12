@@ -125,6 +125,7 @@
                         <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmListaComprobante" name="frmListaComprobante" autocomplete="off">
                             <input type="hidden" name="id_comprobante" id="id_comprobante" value="">
                             <input type="hidden" name="id_comprobante_origen" id="id_comprobante_origen" value="">
+                            <input type="hidden" name="numero_peronalizado" id="numero_peronalizado" value="">
                             <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">                              
                         </form>
                       

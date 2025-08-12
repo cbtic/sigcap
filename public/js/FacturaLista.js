@@ -463,6 +463,8 @@ function nc(id,id_ncnd){
 	//$('#id_comprobante_nc').val(id);
 	$('#id_comprobante_origen').val(id);
 	$('#id_comprobante').val(id_ncnd);
+    $('#numero_peronalizado').val("S");
+    
 	
 	document.forms["frmListaComprobante"].submit();
 	return false;
