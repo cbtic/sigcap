@@ -118,12 +118,14 @@ and t1.id_periodo_comisione=".$id_periodo;
 							end 
 						end tipo_sesion 
 						from comision_sesiones t1 				
-						inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+						inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion
+						inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+						inner join solicitudes s2 on s2.id=csd.id_solicitud
 						inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1'
-						inner join municipalidad_integradas mi on mi.id=t4.id_municipalidad_integrada														   	
-						inner join mucipalidad_detalles md on md.id_municipalidad_integrada=mi.id
-						inner join municipalidades m on md.id_municipalidad =m.id
-						inner join ubigeos u on  m.id_ubigeo=u.id_ubigeo
+--						inner join municipalidad_integradas mi on mi.id=t4.id_municipalidad_integrada														   	
+	--					inner join mucipalidad_detalles md on md.id_municipalidad_integrada=mi.id
+						--inner join municipalidades m on md.id_municipalidad =m.id
+						inner join ubigeos u on  s2.id_ubigeo=u.id_ubigeo
 						left join comision_delegados cd on t0.id_delegado=cd.id  
 						left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 						inner join personas p on a.id_persona=p.id
