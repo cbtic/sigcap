@@ -467,11 +467,13 @@ class ReporteController extends Controller
 			//array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
 			array_push($variable, array("N°","Numero CAP","Apellidos y Nombres","Monto"));
 			foreach ($data as $r) {
+				
 				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
 				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, number_format($r->monto_total, 2,'.','')));
 
 				$total_monto+=$r->monto_total;
 			}
+			
 
 			array_push($variable,array('','','Total',$total_monto));
 			

@@ -337,8 +337,13 @@ class OperacionController extends Controller
 		return response()->json($data , $responsecode, $header, JSON_UNESCAPED_UNICODE);
 		
 	}
-	
-	
+		
+	function generarCodigoUnico6() {
+		list($micro, $seg) = explode(" ", microtime());
+		$horaMicro = date('His', $seg) . substr($micro, 2, 2); // HHMMSS + 2 dígitos de microsegundos
+		return substr($horaMicro, -6); // Solo 6 dígitos
+	}
+
 	public function req_consulta(Request $request){
 		
 		/**********REQ CONSULTA************/
@@ -405,7 +410,7 @@ class OperacionController extends Controller
 		$nombreCliente = $destinatario;
 		$numDocs = count($deuda_pendiente);
 		$suma_importes = 0;
-		$correlativo = 301;
+		$correlativo = $this->generarCodigoUnico6();
 		$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
 		
 		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
@@ -640,7 +645,16 @@ class OperacionController extends Controller
 		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
 		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
 		
+		$destinatario = "";
+
+		if($data_input["TipoConsulta"]==0){
+			$agremiado_model = new Agremiado;
+			$agremiado_data = $agremiado_model->getAgremiado('85',(int)$data_input["NumConsulta"]);
+			$destinatario = $agremiado_data->apellido_paterno." ".$agremiado_data->apellido_materno." ".$agremiado_data->nombres;
+		}
+		
 		//BASE DE DATOS
+		/*
 		$nombreEmpresa = "COLEGIO ARQ PERU";
 		$nombreCliente = "GINOCCHIO MENDOZA PATRICIA MON";
 		$numDocs = "3";
@@ -648,7 +662,17 @@ class OperacionController extends Controller
 		$correlativo = 301;
 		$suma_longitud = 634;
 		$numOperacionERP = 89063;
+		*/ 
 		
+		$nombreEmpresa = "COLEGIO ARQ PERU";
+		$nombreCliente = $destinatario;
+		$numDocs = count($actualiza_pago);
+		$suma_importes = 0;
+		$correlativo = $this->generarCodigoUnico6();
+		//$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
+		$suma_longitud = 634;
+		$numOperacionERP = 89063;
+
 		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
 		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-C�digo creado por la Empresa,c�digo �nico por transacci�n, codigo generado 
 		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las l�neas desde P01 hasta el final
@@ -660,6 +684,12 @@ class OperacionController extends Controller
 		//RESPUESTA
 		$descRespuesta = "TRANSACCION PROCESADA OK";
 		$data_output["CodigoErrorOriginal"] = "000"; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
+		
+		if(count($actualiza_pago)==0){
+			$descRespuesta = "CLIENTE SIN DEUDA PENDIENTE";
+			$data_output["CodigoErrorOriginal"] = "022";
+		}
+
 		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
 		
 		$data_output_detalle = array();
@@ -681,6 +711,12 @@ class OperacionController extends Controller
 			$pagoMinimo = $row->pago_minimo;//17689;
 			$importeTotal = $row->importe_total;//17689;
 			
+			$deuda = str_replace('.', '', $deuda);
+			$mora = str_replace('.', '', $mora);
+			$gastosAdm = str_replace('.', '', $gastosAdm);
+			$pagoMinimo = str_replace('.', '', $pagoMinimo);
+			$importeTotal = str_replace('.', '', $importeTotal);
+
 			$periodo = $row->periodo;//9;
 			$anio = $row->anio;//2024;
 			$cuota = $row->cuota;//1;
@@ -704,15 +740,19 @@ class OperacionController extends Controller
 			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que est� expresado los importes de la deuda, 2
 			$data_output_detalle[$key]["Filler"] = "                              ";//30 - Campo libre no usado, completar con espacios
 			
+			//print_r($data_output_detalle[$key]);
+			$suma_importes += $data_output_detalle[$key]["ImporteTotal"];
 			$output_detalle .= implode('',$data_output_detalle[$key]);
 			
 		}
+
+		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
 		
 		$output = implode('',$data_output);
 		
 		$output .= $output_detalle;
 		
-		$data["output"] = $output;
+		$data["output"] = $output; 
 		
 		$responsecode = 200;
         $header = array (
