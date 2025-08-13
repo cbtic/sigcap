@@ -150,7 +150,7 @@ function guardarnd(){
 	
 
 }
-
+/*
 function guardarnc(){
 
 	
@@ -175,6 +175,7 @@ function guardarnc(){
 	
 
 }
+*/
 
 
 function fn_save(){
@@ -1216,6 +1217,18 @@ function fn_save_nc(){
             data : $("#frmNC").serialize(),
 			dataType: 'json',
             success: function (result) {
+
+				//alert(result);
+				
+				if(result.sw==false){
+					bootbox.alert(result.msg);
+					$('.loader').hide();
+					$('#divNumeroF').show();
+					$('#guardar').show();
+
+
+					return false;
+				}
 				
 				$('.loader').hide();
 				

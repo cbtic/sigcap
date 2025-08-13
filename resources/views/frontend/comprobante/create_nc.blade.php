@@ -287,7 +287,7 @@
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Serie</label>
-                                                        <input type="text" name="serieF"  id="serieF" value="<?php if ($trans == 'FE' || $trans == 'FN') {
+                                                        <input type="text" name="serieF"  id="serieF" <?php if ($numero_peronalizado == '') { ?> readonly <?php } ?> value="<?php if ($trans == 'FE' || $trans == 'FN') {
                                                                     echo $comprobante->serie;
                                                                 } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                                 
@@ -309,13 +309,13 @@
                                                     </div>
 
 
-
+                                                    
 
                                                     </div>
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Número</label>
-                                                            <input type="text" name="numerof" readonly id="numerof" value="<?php if ($trans == 'FE') {
+                                                            <input type="text" name="numerof" <?php if ($numero_peronalizado == '') { ?> readonly <?php } ?>id="numerof" value="<?php if ($trans == 'FE') {
                                                                                                                                 echo $comprobante->numero;
                                                                                                                             } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                         </div>
