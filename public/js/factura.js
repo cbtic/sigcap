@@ -429,8 +429,7 @@ function fn_save() {
         type: "POST",
         data: $("#frmFacturacion").serialize(),
         dataType: 'json',
-        success: function (result) {
-            $('.loader').hide();
+        success: function (result) {           
             if(result.sw) {
                 $('#numerof').val(result.id_factura);
                 $('#divNumeroF').show();
@@ -440,6 +439,8 @@ function fn_save() {
                 alert(result.msg);
                 $('#guardar').show();
             }
+
+			$('.loader').hide();
         },
         error: function() {
             $('.loader').hide();
