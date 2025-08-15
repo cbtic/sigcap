@@ -2107,8 +2107,8 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
                 */
 
                 $multaPendiente = "N";
-
-                $existeMulta = Valorizacione::where('id_concepto', '26461')->where('pagado', '0')->where('exonerado', '0')->where('id_persona', $id_persona_act)->first();
+/*
+                $existeMulta = Valorizacione::where('id_concepto', '26461')->where('pagado', '0')->where('exonerado', '0')->where('estado', '1')->where('id_persona', $id_persona_act)->first();
                 
                 if (isset($existeMulta->id)) { 
                     $multaPendiente = "S";               
@@ -2120,6 +2120,7 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
                         }
                     }
                 }
+                */
 
                 //$existeMulta = Valorizacione::where('id_concepto', '26461')->where('pagado', '0')->where('exonerado', '0')->where('id_persona', $id_persona_act)->first();
                 //if (!isset($existeMulta->id)) {
@@ -2419,6 +2420,7 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
                             $tarifa[999] = $items1;
                         }
 
+                     
 
                         foreach ($tarifa as $key => $value) {
                             //echo "denominacion=>".$value['denominacion']."<br>";
@@ -2447,6 +2449,8 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
                                 $facturaDet_upd->save();
                             }
 
+
+
                             //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 
                             /*
@@ -2473,6 +2477,11 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
 
                                 $credipago = $valorizaciones_model->ActualizaValorizacionCredipago($id_val);
                             }
+
+                            $tipo_documento_b = $request->tipo_documento_b;
+                            if ($tipo_documento_b == "87") {
+                                //$liquidacion = $valorizaciones_model->ActualizaCredipagoLiqudacion($id_val);
+                            }   
                         }
 
                         $Concepto = Concepto::where('id', $id_concepto)->get()[0];
@@ -2585,6 +2594,8 @@ protected function processPayments(Request $request, int $id_factura, int $id_us
                                 $agremiado->save();
                             }
                         }
+
+
 
 
 

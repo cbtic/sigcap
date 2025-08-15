@@ -303,6 +303,8 @@
                                                     <input type="hidden" readonly name="mes_deuda" id="mes_deuda" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="anio_deuda" id="anio_deuda" value="" class="form-control form-control-sm">
 
+                                                    <input type="hidden" readonly name="liquidacion_num_credipago" id="liquidacion_num_credipago" value="" class="form-control form-control-sm">
+
                                                 </div>
                                             </div>
                                         </div>

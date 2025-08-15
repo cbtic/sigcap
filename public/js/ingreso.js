@@ -814,8 +814,8 @@ function validaTipoDocumento(){
 	$('#nombre_').val("");
 
 	$('#categoria').val("");
+	$('#liquidacion_num_credipago').val("");
 
-	
 	
 
 	//$("#btnBoleta").prop('disabled', false);
@@ -831,12 +831,16 @@ function validaTipoDocumento(){
 	$("#cboTipoCuota_b").prop('disabled', false);
 
 	if(tipo_documento == "87"){
+		
+		var numero_documento = $("#numero_documento_b").val();
 
 		$("#chkExonerado").prop('disabled', true);
 		$("#cboTipoConcepto_b").prop('disabled', true);
 		$("#cboPeriodo_b").prop('disabled', true);
 		$("#cboMes_b").prop('disabled', true);
 		$("#cboTipoCuota_b").prop('disabled', true);
+
+		$('#liquidacion_num_credipago').val(numero_documento);
 
 	}else if(tipo_documento == "79"){ //RUC
 		$('#divNombreApellido').hide();
