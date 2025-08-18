@@ -1546,7 +1546,7 @@ function ValidarDeudasVencidas(tipo){
 			dataType: 'json',
 			success: function (result) {
 
-				 if (result && result.length > 0) {ñ
+				 if (result && result.length > 0) {
 
 				//alert(result);
 				//console.log(result);
