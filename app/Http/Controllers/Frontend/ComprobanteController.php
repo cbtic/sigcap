@@ -99,9 +99,6 @@ class ComprobanteController extends Controller
         }else{
             $tipo_cambio = "";
         }
-
-
-
         
         //print_r($id_tipo_afectacion_pp); exit();
 
