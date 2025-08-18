@@ -847,6 +847,8 @@ function validaTipoDocumento(){
 
 		$('#liquidacion_num_credipago').val(numero_documento);
 
+		//alert(numero_documento);
+
 	}else if(tipo_documento == "79"){ //RUC
 		$('#divNombreApellido').hide();
 		$('#divCodigoAfliado').hide();
@@ -1089,6 +1091,7 @@ function obtenerBeneficiario(){
 				var numero_documento_buscar = $("#numero_documento_b").val();
 
 				if(tipo_documento_buscar==87){
+
 					$.ajax({
 						url: '/ingreso/validar_estado_liquidacion/' + numero_documento_buscar,
 						dataType: "json",
@@ -1107,6 +1110,10 @@ function obtenerBeneficiario(){
 							}
 						}
 					})
+
+					$('#liquidacion_num_credipago').val(numero_documento_buscar);
+
+					//alert(numero_documento_buscar);
 				}else{
 					cargarValorizacion();
 					cargarPagos();
@@ -1529,7 +1536,7 @@ function ValidarDeudasVencidas(tipo){
 	id_concepto_actual = $('#id_concepto_actual').val();
 	//alert(id_concepto_actual);
 
-	if (id_concepto_actual=="26411"){
+	if (id_concepto_actual=="26411" || id_concepto_actual=="26412"){
 
 		$.ajax({
 			//url: "/ingreso/listar_valorizacion_concepto",
@@ -1539,7 +1546,7 @@ function ValidarDeudasVencidas(tipo){
 			dataType: 'json',
 			success: function (result) {
 
-				 if (result && result.length > 0) {
+				 if (result && result.length > 0) {ñ
 
 				//alert(result);
 				//console.log(result);

@@ -142,7 +142,6 @@ class Valorizacione extends Model
 
 
         //echo $cad;
-        //exit();
 
 		$data = DB::select($cad);
         return $data;
@@ -608,6 +607,20 @@ class Valorizacione extends Model
         
       //  echo $cad;
 
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function ActualizaCredipagoLiqudacion($id_val){        
+       
+        $cad = "
+            update liquidaciones set id_situacion=2
+            from liquidaciones l 
+            inner join valorizaciones v on l.id = v.pk_registro and v.id_modulo = 7
+            where v.id = ".$id_val.";
+        ";
+            
+      //  echo $cad;
 		$data = DB::select($cad);
         return $data;
     }
