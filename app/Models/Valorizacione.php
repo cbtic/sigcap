@@ -142,6 +142,7 @@ class Valorizacione extends Model
 
 
         //echo $cad;
+        //exit();
 
 		$data = DB::select($cad);
         return $data;
