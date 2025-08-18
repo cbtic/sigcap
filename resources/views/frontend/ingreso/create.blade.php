@@ -282,7 +282,9 @@
                                                     <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_concepto" id="id_concepto" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_concepto_sel" id="id_concepto_sel" value="" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="id_concepto_actual" id="id_concepto_actual" value="" class="form-control form-control-sm">
 
+                                                    
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="texto_detalle" id="texto_detalle" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="cantidad_descuento" id="cantidad_descuento" value="" class="form-control form-control-sm">

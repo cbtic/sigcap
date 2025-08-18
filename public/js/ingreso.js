@@ -476,6 +476,8 @@ function calcular_total(obj){
 //$("#btnFactura").prop('disabled', false);
 
 	//alert(tipo_factura_actual);
+
+	$('#id_concepto_actual').val("");
 	
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
@@ -504,6 +506,9 @@ function calcular_total(obj){
 		//alert(id_tipo_afectacion);
 
 	});
+
+	$('#id_concepto_actual').val(id_concepto_actual);
+
 	descuento = 0;
 
 	//alert(id_tipo_afectacion);
@@ -1403,58 +1408,6 @@ function cargarDudoso(){
 
 }
 
-function ValidarDeudasVencidas(tipo){
-    //alert("ok");
-
-	$.ajax({
-		//url: "/ingreso/listar_valorizacion_concepto",
-		url: "/ingreso/valida_deuda_vencida",
-		type: "POST",
-		data : $("#frmValorizacion").serialize(),
-		dataType: 'json',
-		success: function (result) {
-
-			//alert(result);
-			//console.log(result);
-
-			//var id = result[0].id;
-			
-			
-			//alert(result[0].anio);
-			
-			$('#anio_deuda').val(result[0].anio);
-			$('#mes_deuda').val(result[0].mes);
-
-			validar(tipo);
-
-
-	}
-		
-	
-
-
-			//$('#empresa_razon_social').val(result.agremiado.razon_social);
-
-
-
-/*			
-			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
-			var option;
-			$('#cboTipoConcepto_b').html("");
-			
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
-			});
-			$('#cboTipoConcepto_b').html(option);
-			$('#cboTipoConcepto_b').select2();
-*/			
-			//$('.loader').hide();			
-		
-		
-	});
-
-
-}
 
 
 
@@ -1485,11 +1438,9 @@ function enviarTipo(tipo){
 	if(tipo == 6)$('#NDFT').val("NDFT"); //'Nueva Nota Dévito Factura'
 	if(tipo == 7)$('#NDBV').val("NDBV"); //'Nueva Nota Dévito Boleta de Venta'
 
-	
+	ValidarDeudasVencidas(tipo);
 
-
-
-/*
+	/*
 	$('#DescuentoPP').val("N");
 
 	Swal.fire({
@@ -1510,12 +1461,123 @@ function enviarTipo(tipo){
 		  validar(tipo);
 		}
 	  });
-*/
+	*/
+	/*
+		var id_concepto_sel = "";
+		id_concepto_sel = $('#id_concepto_sel').val();
+		alert(id_concepto_sel);
 
-ValidarDeudasVencidas(tipo);
-//validar(tipo);
+		var cboTipoConcepto_b = "";	
+		cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+		alert(cboTipoConcepto_b);	
+	*/
+
+	/*
+		var id_concepto_actual = "";	
+		id_concepto_actual = $('#id_concepto_actual').val();
+		//alert(id_concepto_actual);
+
+		
+		var anio = $('#anio_deuda').val();
+		var mes = $('#mes_deuda').val();
+
+		if (id_concepto_actual=="26411"){
+			//alert(id_concepto_actual);
+			ValidarDeudasVencidas();
+		}
+
+	*/
+
+	//alert(anio);
+
+	//	var cboPeriodo_b = $('#cboPeriodo_b').val();
+	//	var cboMes_b = $('#cboMes_b').val();
+	/*
+	if(cboPeriodo_b!="" ){
+		if(anio!=cboPeriodo_b){
+			msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
+		}
+	}
+
+	if(cboMes_b!=""){
+		if(mes!=cboMes_b){
+			msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
+		}
+	}
+	*/
+
+	//var anio_deuda = $('#anio_deuda').val();
+
+	//exit();
+
+	/*
+	if (anio==""){
+		validar(tipo);
+	}else{
+
+		bootbox.alert("Tiene Deudas Vencidas en el periodo " + anio + " y mes " + mes + " que tiene que cancelar para continuar <br>");
+		
+	}
+	*/
+
 	
 }
+function ValidarDeudasVencidas(tipo){
+    //alert("ok");
+
+	var id_concepto_actual = "";	
+	id_concepto_actual = $('#id_concepto_actual').val();
+	//alert(id_concepto_actual);
+
+	if (id_concepto_actual=="26411"){
+
+		$.ajax({
+			//url: "/ingreso/listar_valorizacion_concepto",
+			url: "/ingreso/valida_deuda_vencida",
+			type: "POST",
+			data : $("#frmValorizacion").serialize(),
+			dataType: 'json',
+			success: function (result) {
+
+				 if (result && result.length > 0) {
+
+				//alert(result);
+				//console.log(result);
+
+				//var id = result[0].id;
+				
+				
+				//alert(result[0].anio);
+					var anio = result[0].anio;
+					//alert(anio);
+				
+					if (!anio) {
+						validar(tipo);
+					} else {
+						
+						$('#anio_deuda').val(result[0].anio);
+						$('#mes_deuda').val(result[0].mes);
+						bootbox.alert("Tiene Deudas Vencidas en el periodo " + result[0].anio + " y mes " + result[0].mes + " que tiene que cancelar para continuar <br>");
+						//mostrarAlertaDeuda(result[0].anio, result[0].mes);
+					}
+				 }else{
+					validar(tipo);
+				 }
+		},
+				        error: function() {
+            // Manejar errores de la petición AJAX
+           // console.error("Error al validar deudas vencidas");
+            validar(tipo); // Continuar con validación en caso de error
+        }
+					
+		});
+		
+	}
+	else{
+		validar(tipo);
+	}
+}
+
 
 function validar(tipo) {
 	
@@ -1538,26 +1600,6 @@ function validar(tipo) {
 	//alert("id_persona-->"+ id_persona);
 	//alert("empresa_id-->"+ empresa_id);
 
-	//ValidarDeudasVencidas();
-	//exit();
-
-	var anio = $('#anio_deuda').val();
-	var mes = $('#mes_deuda').val();
-
-	var cboPeriodo_b = $('#cboPeriodo_b').val();
-	var cboMes_b = $('#cboMes_b').val();
-
-	if(cboPeriodo_b!="" ){
-		if(anio!=cboPeriodo_b){
-			msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
-		}
-	}
-
-	if(cboMes_b!=""){
-		if(mes!=cboMes_b){
-			msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
-		}
-	}
 
 	
 
@@ -1594,6 +1636,7 @@ function validar(tipo) {
 
 	return false;
 }
+
 
 
 function modalLiquidacion(id){

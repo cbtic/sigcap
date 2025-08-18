@@ -165,7 +165,9 @@ class IngresoController extends Controller
         $tipo_documento = $request->tipo_documento;
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
-        $concepto = $request->cboTipoConcepto_b;
+        //$concepto = $request->cboTipoConcepto_b;
+        $concepto = "26461";
+
         $resultado = $valorizaciones_model->getValidaValorizacion($tipo_documento,$id_persona,$concepto);
 
         echo json_encode($resultado);
