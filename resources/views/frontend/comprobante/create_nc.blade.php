@@ -244,6 +244,9 @@
 
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
                         <input type="hidden" name="_afecta" id="_afecta" value="<?php echo $afectacion; ?>">
+                        <input type="hidden" name="numero_peronalizado" id="numero_peronalizado" value="<?php echo $numero_peronalizado; ?>">
+
+                        
                         
                         <input type="hidden" name="tipoF" value="NC">
                         <input type="hidden" name="vestab" value="1">
