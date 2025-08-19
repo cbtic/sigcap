@@ -917,3 +917,5 @@ Route::prefix('encuestas')->group(function() {
     });
 });
 Route::get('derecho_revision/importar_dataLicenciaIndividual/{codigo_solicitud}', [DerechoRevisionController::class, 'importar_dataLicenciaIndividual'])->name('derecho_revision.importar_dataLicenciaIndividual');
+
+Route::get('reporte/validar_reporte_deuda/{fecha_cierre}/{fecha_consulta}', [ReporteController::class, 'validar_reporte_deuda'])->name('ingreso.validar_reporte_deuda');

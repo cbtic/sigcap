@@ -1320,8 +1320,27 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 	}
 }
 
+function validaReporte(id, por_usuario, tipo){
+
+	var fecha_cierre = $('#fecha_cierre').val();
+	var fecha_consulta = $('#fecha_consulta').val();
+
+	$.ajax({
+		url: '/reporte/validar_reporte_deuda/'+fecha_cierre+'/'+fecha_consulta,
+		dataType: "json",
+		success: function(result){
+			
+			if(result.reporte_deuda_total!=""){
+				alert(result.reporte_deuda_total);
+			}else{
+				descargarExcel(id, por_usuario, tipo);
+			}
+		}
+	})
+}
+
 function descargarExcel(id, por_usuario, tipo){
-		
+	
 	var fecha_cierre = $('#fecha_cierre').val();
 	var fecha_consulta = $('#fecha_consulta').val();
 	var id_concepto = $('#id_concepto').val();
