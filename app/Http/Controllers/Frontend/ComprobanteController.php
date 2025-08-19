@@ -3905,6 +3905,7 @@ class ComprobanteController extends Controller
         $formapago = $tabla_model->getMaestroByTipo('104');
 
         $serie = $serie_model->getMaestro('95');
+        
 
        // $serie = $serie_model->getMaestroC('95',$TipoF); 
         //print_r($tipoF); exit();
@@ -5157,7 +5158,12 @@ class ComprobanteController extends Controller
                 $factura_upd = Comprobante::find($id_factura);
                 if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 
-                //print_r($tarifa); exit();
+                $numero_peronalizado = $request->numero_peronalizado;
+
+                $trans = $request->trans;
+                if ($numero_peronalizado=='S'){
+                    $factura_upd->estado_sunat = "TERCERO";
+                }
 
                 $factura_upd->save();
 
