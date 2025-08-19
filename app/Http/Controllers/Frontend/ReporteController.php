@@ -7,6 +7,7 @@ use App\Models\CajaIngreso;
 use App\Models\Concepto;
 use App\Models\TablaMaestra;
 use App\Models\Valorizacione;
+use App\Models\ReporteDeudaTotal;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -1062,6 +1063,16 @@ class ReporteController extends Controller
 	
 		return $pdf->stream('reporte.pdf');
 	}
+
+	public function validar_reporte_deuda($fecha_cierre, $fecha_consulta){
+ 
+        $reporte_deuda_total_model = new ReporteDeudaTotal;
+        $reporte_deuda_total = $reporte_deuda_total_model->getReporteDeudaTotalByFechaCierreConsulta($fecha_cierre, $fecha_consulta);
+        //dd($liquidacion);exit();
+
+        return response()->json(['reporte_deuda_total' => $reporte_deuda_total]);
+
+    }
 }
 
 class InvoicesExport implements FromArray, WithHeadings, WithStyles
