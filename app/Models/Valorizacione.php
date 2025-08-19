@@ -797,4 +797,20 @@ class Valorizacione extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    public function generarReporteDeuda($fecha_cierre, $fecha_consulta, $id_concepto)
+    {
+        $cursorName = "resultado_cursor";
+
+        DB::statement("BEGIN;");
+        DB::statement("select sp_listar_deuda_caja_paginado('$fecha_cierre', '$fecha_consulta', " . ($id_concepto !== "" ? $id_concepto : 'null') . ", '1', '1', '20000', '$cursorName');");
+
+
+        $resultado = DB::select("FETCH ALL FROM \"$cursorName\";");
+
+        DB::statement("CLOSE \"$cursorName\";");
+        DB::statement("COMMIT;");
+
+        return $resultado;
+    }
 }

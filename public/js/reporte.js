@@ -1320,7 +1320,7 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 	}
 }
 
-function validaReporte(id, por_usuario, tipo){
+/*function validaReporte(id, por_usuario, tipo){
 
 	var fecha_cierre = $('#fecha_cierre').val();
 	var fecha_consulta = $('#fecha_consulta').val();
@@ -1337,7 +1337,7 @@ function validaReporte(id, por_usuario, tipo){
 			}
 		}
 	})
-}
+}*/
 
 function descargarExcel(id, por_usuario, tipo){
 	

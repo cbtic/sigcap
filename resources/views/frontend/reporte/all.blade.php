@@ -371,7 +371,7 @@
 												<?php }else{ ?>
 													<td class="text-left" style="vertical-align:middle">
 														<a href="javascript:void(0);"  
-															onclick="validaReporte('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
+															onclick="descargarExcel('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
 															<?php if($row->funcion=='rt' || $row->funcion=='ra' ){?>
 															Descargar Excel

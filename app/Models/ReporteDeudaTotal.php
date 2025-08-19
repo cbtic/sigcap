@@ -10,6 +10,14 @@ class ReporteDeudaTotal extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'fecha_cierre',
+        'fecha_consulta',
+        'id_agremiado',
+        'monto_total',
+        'id_usuario_inserta',
+    ];
+
     protected $table = 'reporte_deuda_total';
 
     function getReporteDeudaTotalByFechaCierreConsulta($fecha_cierre, $fecha_consulta){
@@ -29,4 +37,10 @@ class ReporteDeudaTotal extends Model
 
         return "";
     }
+
+    public function agremiado()
+    {
+        return $this->belongsTo(Agremiado::class, 'id_agremiado');
+    }
 }
+

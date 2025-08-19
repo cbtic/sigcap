@@ -404,6 +404,8 @@ class ReporteController extends Controller
 
 	public function exportar_lista_deuda($id, $fecha_cierre, $fecha_consulta, $id_concepto) {
 		
+		$id_user = Auth::user()->id;
+
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
@@ -451,32 +453,46 @@ class ReporteController extends Controller
 			
 		}else if($funcion=='rt'){
 			
-			$valorizacion_model = new Valorizacione;
-			$p[]=$fecha_cierre;
-			$p[]=$fecha_consulta;
-			$p[]=$id_concepto;
-			$p[]=1;
-			$p[]=1;
-			$p[]=20000;
-			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
-		
-			$variable = [];
-			$total_monto=0;
-			$n = 1;
-			//array_push($variable, array("SISTEMA CAP"));
-			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-			//array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
-			array_push($variable, array("N°","Numero CAP","Apellidos y Nombres","Monto"));
-			foreach ($data as $r) {
-				
-				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, number_format($r->monto_total, 2,'.','')));
+			$reportes = ReporteDeudaTotal::where('fecha_consulta', $fecha_consulta)->where('fecha_cierre', $fecha_cierre)->where('estado', 1)->get();
 
-				$total_monto+=$r->monto_total;
+			if ($reportes->isEmpty()) {
+				$valorizacion_model = new Valorizacione;
+				$resultado = $valorizacion_model->generarReporteDeuda($fecha_cierre, $fecha_consulta, $id_concepto);
+				//dd($resultado);exit();
+				foreach ($resultado as $row) {
+					ReporteDeudaTotal::create([
+						'fecha_cierre'=> $fecha_cierre,
+						'fecha_consulta'=> $fecha_consulta,
+						'id_agremiado'=> $row->id_agremiado,
+						'monto_total'=> $row->monto_total,
+						'estado'=> 1,
+						'id_usuario_inserta'=> $id_user,
+					]);
+				}
+
+				$reportes = ReporteDeudaTotal::where('fecha_cierre', $fecha_cierre)->where('fecha_consulta', $fecha_consulta)->where('estado', 1)->get();
 			}
-			
 
-			array_push($variable,array('','','Total',$total_monto));
+			$n = 1;
+			$total_monto = 0;
+			$variable = [];
+
+			array_push($variable, ["N°","Numero CAP","Apellidos y Nombres","Monto"]);
+
+			foreach ($reportes as $r) {
+				array_push($variable, [
+					$n++,
+					$r->agremiado->numero_cap,
+					$r->agremiado->persona->apellido_paterno . ' ' .
+					$r->agremiado->persona->apellido_materno . ' ' .
+					$r->agremiado->persona->nombres,
+					(float) $r->monto_total
+				]);
+
+				$total_monto += (float) $r->monto_total;
+			}
+
+			array_push($variable, ['', '', 'Total', $total_monto]);
 			
 			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
