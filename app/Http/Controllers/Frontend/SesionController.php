@@ -16,6 +16,7 @@ use App\Models\ProfesionalesOtro;
 use App\Models\ComputoSesione;
 use App\Models\ComisionSesionDictamene;
 use App\Models\ComisionSesionDelegadosHistoriale;
+use App\Models\ConcursoInscripcione;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -726,17 +727,20 @@ class SesionController extends Controller
 			
 		}
 		
-		if($request->flag_titular_suplente == 2){ //SUPLENTE
+		if($request->flag_titular_suplente == 2){ //SUPLENTE 
 		
 			$comisionDelegadoOld = ComisionDelegado::find($comisionSesionDelegado->id_delegado);
 			
+			$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+			$id_puesto = $concursoInscripcion->puesto;
+
 			$comisionDelegado = new ComisionDelegado;
 			$comisionDelegado->id_regional = $comisionDelegadoOld->id_regional;
 			$comisionDelegado->id_comision = $comisionDelegadoOld->id_comision;
 			$comisionDelegado->coordinador = $comisionDelegadoOld->coordinador;
-			$comisionDelegado->id_agremiado = $request->id_delegado;
+			$comisionDelegado->id_agremiado = $request->id_delegado; 
 			//$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
-			$comisionDelegado->id_puesto = 12;
+			$comisionDelegado->id_puesto = $id_puesto;//12;
 			$comisionDelegado->estado = 2;
 			$comisionDelegado->id_usuario_inserta = $id_user;
 			$comisionDelegado->save();
@@ -855,12 +859,18 @@ class SesionController extends Controller
 		//$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
 		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
 		$id_comision = $comisionSesion->id_comision;
+		$fecha_inicio_sesion = $comisionSesion->fecha_programado;
+		$id_periodo_comision = $comisionSesion->id_periodo_comisione;
+		$periodoComision = PeriodoComisione::find($id_periodo_comision);
+		$fecha_fin_sesion = $periodoComision->fecha_fin;
+		//echo $fecha_inicio_sesion;
+		//echo $fecha_fin_sesion;
 		$comision_=Comisione::find($id_comision);
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAllNuevo($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
 		
 		//print_r($concurso_inscripcion);
 		
-		return view('frontend.sesion.modal_asignar_delegado_sesion',compact('id','concurso_inscripcion'));
+		return view('frontend.sesion.modal_asignar_delegado_sesion',compact('id','concurso_inscripcion','fecha_inicio_sesion','fecha_fin_sesion'));
 
     }
 	
@@ -950,6 +960,14 @@ class SesionController extends Controller
 		$periodoComision = PeriodoComisione::find($id_periodo);
 		$anio = $periodoComisione_model->getAnioByFecha($periodoComision->fecha_inicio,$periodoComision->fecha_fin);
 		echo json_encode($anio);
+		
+	}
+
+	public function obtener_comision_agremiado($id_agremiado){
+			
+		$comisionDelegado_model = new ComisionDelegado;
+		$comision = $comisionDelegado_model->getComisionDelegadoByAgremiado($id_agremiado);
+		echo json_encode($comision);
 		
 	}
 

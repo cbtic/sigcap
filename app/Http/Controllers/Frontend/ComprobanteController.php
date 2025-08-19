@@ -98,6 +98,9 @@ class ComprobanteController extends Controller
             $tipo_cambio = "";
         }
 
+
+
+        
         //print_r($id_tipo_afectacion_pp); exit();
 
 		if($id_caja==""){
@@ -2467,7 +2470,7 @@ class ComprobanteController extends Controller
 
                             $tipo_documento_b = $request->tipo_documento_b;
                             if ($tipo_documento_b == "87") {
-                                //$liquidacion = $valorizaciones_model->ActualizaCredipagoLiqudacion($id_val);
+                                $liquidacion_ = $valorizaciones_model->ActualizaCredipagoLiqudacion($id_val);
                             }   
                         }
 
@@ -4250,7 +4253,7 @@ class ComprobanteController extends Controller
 		$data["esFicticio"] = false;
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
-        $data["formaPago"] = "CONTADO";        		
+        $data["formaPago"] =  ($factura->id_forma_pago=="1")?"CONTADO":"CREDITO"; //"CONTADO";        		
         $data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
