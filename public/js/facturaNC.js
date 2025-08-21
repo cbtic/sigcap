@@ -42,7 +42,7 @@ $(document).ready(function () {
 		$("#afecta_ingreso").val('D');
 		$("#afecta_ingreso").prop('disabled', true);
 		
-		$("#devolucion_nc").val('N');
+		$("#devolucion_nc").val('S');
 		$("#devolucion_nc").prop('disabled', true);
 
 		$("#tiponota_").prop('disabled', true);
