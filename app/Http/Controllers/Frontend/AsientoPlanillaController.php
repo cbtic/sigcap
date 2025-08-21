@@ -14,6 +14,8 @@ use App\Models\PartidaPresupuestale;
 use App\Models\PeriodoComisione;
 use App\Models\PeriodoComisionDetalle;
 
+use PDO;
+
 
 //use App\Models\CondicionLaborale;
 
@@ -216,7 +218,244 @@ class AsientoPlanillaController extends Controller
 	
 	}
 
+	public function importar_vou_siscont($anio, $mes){ 
+		
+		$ch = curl_init('http://190.119.30.106:9090/planillas.php');
+		
+		$postData = [
+					'mes' => $mes,
+					'anio' => $anio
+				];
+		
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_POST, true); // Habilitar método POST
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postData); // Enviar los datos del formulario
+		
+		curl_setopt($ch, CURLOPT_HTTPHEADER, []);
 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+		
+		$resultWebApi = curl_exec($ch);
+		
+		if($errno = curl_errno($ch)) {
+			$error_message = curl_strerror($errno);
+			echo "cURL error ({$errno}):\n {$error_message}";
+		}
+		
+		$dataWebApi = json_decode($resultWebApi);
+
+		//print_r($dataWebApi);
+		foreach($dataWebApi as $row){
+			
+
+			$asiento_planilla_model = new AsientoPlanilla;
+			$VouExiste = $asiento_planilla_model->getVouporID($row->MESV ,$row->T, $row->VOU,$row->RUT);
+			
+			if(count($VouExiste)==0){
+				$asiento_planilla_model->InsertaVou(
+					$row->MESV,
+					$row->T,
+					$row->VOU,
+					$row->NUMERO,
+					$row->RUT
+				);
+			}
+
+				
+			
+		}
+
+		
+		
+	}
+
+	public function enviar_planilla_siscont($fecha_inicio, $fecha_fin){ 
+		
+		
+	$tipoodocumentofact='02';
+	$tipoodocumentofactcancela='13';
+
+
+		$asiento_planilla_model = new AsientoPlanilla;
+		$sentencia = $asiento_planilla_model->ListarAsientoExportar($fecha_inicio ,$fecha_fin,1);
+
+		//print_r($sentencia); exit();
+		//$planilla = $sentencia->fetchAll(PDO::FETCH_OBJ);
+
+					foreach($sentencia as $siscont){
+
+
+					$tipoodocumento='6';
+
+					$moneda='D';
+					if($siscont->id_moneda=='1'){ $moneda='S'; }
+
+					$tipoodocumentofact='01';
+					if($siscont->id_tipo_documento=='1'){ $tipoodocumentofact='03'; }
+
+					$origen='06';
+
+
+					$centrocostos=$siscont->centro_costo;
+					$controlpresupuestos=$siscont->presupuesto;
+
+					$tipoodocumentofactcancela='02';
+
+					if($siscont->tipo=='CANCELACION'){
+					$origen='09';
+					$centrocostos='';
+					$controlpresupuestos='';
+					$tipoodocumentofactcancela='13';
+					}
+
+					$data[]=array(
+					'origen'=>$origen,
+					'vou'=>''.$siscont->vou,
+					'fecha'=>date("d/m/Y", strtotime($siscont->fecha_documento)),
+					'cuenta'=>$siscont->cuenta,
+					'debe'=>''.round($siscont->debe, 2),
+					'haber'=>''.round($siscont->haber, 2),
+					'moneda'=>$moneda,
+					'tc'=>$siscont->tipo_cambio,
+					'doc'=>$tipoodocumentofactcancela,
+					'numero'=>$siscont->numero_comprobante,
+					'fechad'=>date("d/m/Y", strtotime($siscont->fecha_documento)),
+					'fechav'=>date("d/m/Y", strtotime($siscont->fecha_vencimiento)),
+					'codigo'=>$siscont->numero_ruc,
+					'cc'=>$centrocostos,
+					'pre'=>$controlpresupuestos,
+					'fe'=>'',
+					'glosa'=>$siscont->glosa,
+					'tl'=>'',
+					'neto1'=>'',
+					'neto2'=>'',
+					'neto3'=>'',
+					'neto4'=>'',
+					'neto5'=>'',
+					'neto6'=>'',
+					'neto7'=>'',
+					'neto8'=>'',
+					'neto9'=>'',
+					'igv'=>'',
+					'rdoc'=>'',
+					'rnum'=>'',
+					'rfec'=>'',
+					'snum'=>'',	
+					'sfec'=>'',
+					'ruc'=>$siscont->numero_ruc,
+					'rs'=>$siscont->desc_cliente_sunat,
+					'tipo'=>'5',
+					'tdoci'=>$tipoodocumento,
+					'mpago'=>'',
+					'ape1'=>'',
+					'ape2'=>'',
+					'nombre'=>'',
+					'tbien'=>'',
+					'refmonto'=>'0.00'
+					);
+					
+					
+
+					}
+
+		$asiento_planilla_model = new AsientoPlanilla;
+		$sentencia = $asiento_planilla_model->ListarAsientoExportar($fecha_inicio ,$fecha_fin,2);
+		//print_r($sentencia); exit();
+		//$planilla = $sentencia->fetchAll(PDO::FETCH_OBJ);
+
+		foreach($sentencia as $siscont){
+
+
+
+			$tipoodocumento='6';
+
+			$moneda='D';
+			if($siscont->id_moneda=='1'){ $moneda='S'; }
+
+			$tipoodocumentofact='01';
+			if($siscont->id_tipo_documento=='1'){ $tipoodocumentofact='03'; }
+
+			$origen='06';
+
+
+			$centrocostos=$siscont->centro_costo;
+			$controlpresupuestos=$siscont->presupuesto;
+
+			$formapago='';
+			$mediopago='';
+
+
+			$tipoodocumentofact='13';
+			if($siscont->cuenta=='1692'){
+				$origen='09';
+				$centrocostos='';
+				$controlpresupuestos='';
+				
+				$formapago=$siscont->codigo_financiero;
+				$mediopago=$siscont->medio_pago;
+				$tipoodocumentofact='02';
+				
+				}
+
+				
+			//$siscont->glosa.$siscont->tipo,
+
+				$data[]=array(
+				'origen'=>$origen,
+				'vou'=>''.$siscont->vou.'|'.$siscont->tipo,
+				'fecha'=>date("d/m/Y", strtotime($siscont->fecha_documento)),
+				'cuenta'=>$siscont->cuenta,
+				'debe'=>''.round($siscont->debe, 2),
+				'haber'=>''.round($siscont->haber, 2),
+				'moneda'=>$moneda,
+				'tc'=>$siscont->tipo_cambio,
+				'doc'=>$tipoodocumentofact,
+				'numero'=>$siscont->numero_comprobante,
+				'fechad'=>date("d/m/Y", strtotime($siscont->fecha_documento)),
+				'fechav'=>date("d/m/Y", strtotime($siscont->fecha_vencimiento)),
+				'codigo'=>$siscont->numero_ruc,
+				'cc'=>$centrocostos,
+				'pre'=>$controlpresupuestos,
+				'fe'=>''.$formapago,
+				'glosa'=>$siscont->glosa,
+				'tl'=>'',
+				'neto1'=>'',
+				'neto2'=>'',
+				'neto3'=>'',
+				'neto4'=>'',
+				'neto5'=>'',
+				'neto6'=>'',
+				'neto7'=>'',
+				'neto8'=>'',
+				'neto9'=>'',
+				'igv'=>'',
+				'rdoc'=>'',
+				'rnum'=>'',
+				'rfec'=>'',
+				'snum'=>'',	
+				'sfec'=>'',
+				'ruc'=>$siscont->numero_ruc,
+				'rs'=>$siscont->desc_cliente_sunat,
+				'tipo'=>'5',
+				'tdoci'=>$tipoodocumento,
+				'mpago'=>''.$mediopago,
+				'ape1'=>'',
+				'ape2'=>'',
+				'nombre'=>'',
+				'tbien'=>'',
+				'refmonto'=>'0.00'
+				);	
+					
+
+		}
+		
+					$databuild_string = json_encode($data);
+        			print_r($databuild_string."<br>");
+		
+		
+	}
 
 
 }

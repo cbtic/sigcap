@@ -1564,7 +1564,7 @@ function ValidarDeudasVencidas(tipo){
 						
 						$('#anio_deuda').val(result[0].anio);
 						$('#mes_deuda').val(result[0].mes);
-						bootbox.alert("Tiene Deudas Vencidas en el periodo " + result[0].anio + " y mes " + result[0].mes + " que tiene que cancelar para continuar <br>");
+						bootbox.alert("Tiene Deudas Vencidas en el periodo " + result[0].anio + " y mes " + result[0].mes + " (Multas). Tiene que cancelar para continuar <br>");
 						//mostrarAlertaDeuda(result[0].anio, result[0].mes);
 					}
 				 }else{
