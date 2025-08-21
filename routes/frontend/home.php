@@ -710,6 +710,7 @@ Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [Coordi
 
 Route::get('planillaDelegado/consulta_planilla_recibos_honorario', [PlanillaDelegadoController::class, 'consulta_planilla_recibos_honorario'])->name('planillaDelegado.consulta_planilla_recibos_honorario');
 Route::get('sesion/obtener_anio_periodo/{id_periodo}', [SesionController::class, 'obtener_anio_periodo'])->name('sesion.obtener_anio_periodo');
+Route::get('sesion/obtener_comision_agremiado/{id_agremiado}', [SesionController::class, 'obtener_comision_agremiado'])->name('sesion.obtener_comision_agremiado');
 Route::post('planillaDelegado/listar_recibo_honorario_ajax', [PlanillaDelegadoController::class, 'listar_recibo_honorario_ajax'])->name('planillaDelegado.listar_recibo_honorario_ajax');
 Route::get('planillaDelegado/obtener_datos_recibo/{id}', [PlanillaDelegadoController::class, 'obtener_datos_recibo'])->name('planillaDelegado.obtener_datos_recibo');
 Route::post('planillaDelegado/send_recibo_honorario', [PlanillaDelegadoController::class, 'send_recibo_honorario'])->name('planillaDelegado.send_recibo_honorario');

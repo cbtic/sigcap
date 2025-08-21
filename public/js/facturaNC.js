@@ -1,5 +1,24 @@
  //alert("ok");
 //jQuery.noConflict(true);
+/*
+$(document).ready(function () {
+
+	$('#fechaF').datepicker({
+		autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+	});
+
+	$('#f_venci_01').datepicker({
+		autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+	});
+	*/
+		//alert("ok");
+		//jQuery.noConflict(true);
 
 $(document).ready(function () {
 
@@ -16,25 +35,19 @@ $(document).ready(function () {
 		changeMonth: true,
 		changeYear: true,
 	});
- //alert("ok");
-//jQuery.noConflict(true);
 
-$(document).ready(function () {
+	var numero_peronalizado = $('#numero_peronalizado').val();
+	if (numero_peronalizado=='S'){
+		//$("#afecta_ingreso").hide();
+		$("#afecta_ingreso").val('D');
+		$("#afecta_ingreso").prop('disabled', true);
+		
+		$("#devolucion_nc").val('N');
+		$("#devolucion_nc").prop('disabled', true);
 
-	$('#fechaF').datepicker({
-		autoclose: true,
-		dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-	});
+		$("#tiponota_").prop('disabled', true);
 
-	$('#f_venci_01').datepicker({
-		autoclose: true,
-		dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-	});
-
+	}
 
 	
 });
@@ -247,9 +260,8 @@ function fn_save_nd(){
     });
 }
 
+/*
 function fn_save_nc(){
-
-    
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
 	var heightBrowser = $(window).width()/2;
@@ -273,11 +285,15 @@ function fn_save_nc(){
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 
-				enviar_comprobante(result.id_factura);
-
+				var numero_peronalizado = $('#numero_peronalizado').val();
+				if (numero_peronalizado==''){
+					alert("numero_peronalizado");
+					enviar_comprobante(result.id_factura);
+				}
             }
     });
 }
+*/
 
 function ActualizaDetalle(){
 	
@@ -1043,7 +1059,7 @@ function obtenerTitular(){
 
 
 	
-});
+//});
 
 function calculoDetraccion(){
 	
@@ -1139,12 +1155,24 @@ function guardarnc(){
     var tiponota = $('#tiponota_').val();
 	var motivo = $('#motivo_').val();
 	var tipo_cambio = $('#tipo_cambio').val();
+	var numero_peronalizado = $('#numero_peronalizado').val();
+
+	var serieF = $('#serieF').val();
+	var numerof = $('#numerof').val();
+
 	
 	if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
 	
 	if(motivo=="")msg+="Debe ingresar el motivo<br>";	
 
 	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}		
+
+	
+	if (numero_peronalizado=='S'){
+		if (serieF==""){msg+="Debe ingresar la serie<br>";	}
+		if (numerof==""){msg+="Debe ingresar el numero<br>";	}
+	}
+
 
     if(msg!=""){
 		
@@ -1157,6 +1185,55 @@ function guardarnc(){
 	}
 	
 
+}
+
+function fn_save_nc(){
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	$('#guardar').hide();
+
+    $.ajax({
+			url: "/comprobante/send_nc",
+            type: "POST",
+
+			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
+            data : $("#frmNC").serialize(),
+			dataType: 'json',
+            success: function (result) {
+
+				//alert(result);
+				
+				if(result.sw==false){
+					bootbox.alert(result.msg);
+					$('.loader').hide();
+					$('#divNumeroF').show();
+					$('#guardar').show();
+
+
+					return false;
+				}
+				
+				$('.loader').hide();
+				
+				$('#numerof').val(result.id_factura);
+				$('#divNumeroF').show();
+
+				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
+
+				var numero_peronalizado = $('#numero_peronalizado').val();
+				if (numero_peronalizado==''){
+					//alert("numero_peronalizado");
+					enviar_comprobante(result.id_factura);
+				}
+
+				//enviar_comprobante(result.id_factura);
+
+            }
+    });
 }
  
 
@@ -1200,48 +1277,7 @@ function fn_save(){
     });
 }
 
-function fn_save_nc(){
 
-	var msgLoader = "";
-	msgLoader = "Procesando, espere un momento por favor";
-	var heightBrowser = $(window).width()/2;
-	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-	$('#guardar').hide();
-
-    $.ajax({
-			url: "/comprobante/send_nc",
-            type: "POST",
-
-			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
-            data : $("#frmNC").serialize(),
-			dataType: 'json',
-            success: function (result) {
-
-				//alert(result);
-				
-				if(result.sw==false){
-					bootbox.alert(result.msg);
-					$('.loader').hide();
-					$('#divNumeroF').show();
-					$('#guardar').show();
-
-
-					return false;
-				}
-				
-				$('.loader').hide();
-				
-				$('#numerof').val(result.id_factura);
-				$('#divNumeroF').show();
-
-				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
-
-				enviar_comprobante(result.id_factura);
-
-            }
-    });
-}
 
 function validaTipoDocumento(){
 	var tipo_documento = $("#tipo_documento").val();
@@ -1928,7 +1964,7 @@ function obtenerTitular(){
 			$("#monto"+fila).val(Total_.toFixed(2));
 
 
-/*
+			/*
 			$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_.toFixed(2));
 			$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_.toFixed(2));
 			$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_.toFixed(2));
@@ -1940,7 +1976,7 @@ function obtenerTitular(){
 			$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_.toFixed(2));
 			$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_.toFixed(2));
 
-*/
+			*/
 
 
 		} 

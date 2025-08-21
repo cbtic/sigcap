@@ -430,14 +430,17 @@ function datatablenew(){
                         html += '<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc('+row.id+',)">';
                         html += '</form>'
                         return html; */
-                        if (row.tipo=="FT" || row.tipo=="BV"){
+                        var fecha = "";
+                        if(row.fecha!= null)fecha = row.fecha;
+
+                        if ((row.tipo=="FT" || row.tipo=="BV")&&fecha<"2025-04-03"){
                              var tiene_nc = "";
                              if(row.tiene_nc!= null)tiene_nc = row.tiene_nc;
 
-                            if(tiene_nc=== ""){
+                            if(tiene_nc=== "" ){
                                 html = '<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc('+row.id+',)"></input>';                        
-                            }else{
-                                html = '<input class="btn btn-primary pull-light" value="NC" type="button" id="btnBoleta" onclick="fn_nc_nd('+tiene_nc+')"></input>';
+                            }else{                                
+                                html = '<input class="btn btn-primary pull-light" value="NC" type="button" id="btnBoleta" onclick="fn_nc_nd('+tiene_nc+')"></input>';                                                                
                             }
                                 
                             return html; 
