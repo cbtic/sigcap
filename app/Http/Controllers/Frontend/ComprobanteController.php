@@ -4128,12 +4128,13 @@ class ComprobanteController extends Controller
         $comprobante=$comprobante_model->getComprobanteById($id);
 
         //print_r($comprobante);
-
         if($comprobante){
             $total=$comprobante->total;
             $total_credito=$comprobante->total_credito;
         }
         if (isset($variable))$total_credito="0";
+        
+        //dd($id);exit();
 
 		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago','total','total_credito'));
 
@@ -4151,10 +4152,9 @@ class ComprobanteController extends Controller
         */
 
     public function listar_credito_pago(Request $request){
-	
+	    //dd($request->id);exit();
 		//$puesto_model = new Concurso();
         $comprobante_model = new Comprobante;
-
 		$p[]=$request->id;
 		$p[]=1;
 		$p[]=$request->NumeroPagina;

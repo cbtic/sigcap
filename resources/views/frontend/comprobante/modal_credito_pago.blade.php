@@ -146,7 +146,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 });
 
 $(document).ready(function() {
-	 
+	
 	datatablenewPago();
 
 	var pago_total = $('#pago_total').val();
@@ -188,7 +188,7 @@ function datatablenewPago(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id_comprobante').val();
+			var id = $('#id').val();
 			//var denominacion = $('#nombre').val();
 			var estado = $('#estado').val();
 			
@@ -399,7 +399,7 @@ function fn_save(id_caja){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();	
-	var id_comprobante = $('#id_comprobante').val();
+	var id_comprobante = $('#id').val();
 	var id_medio = $('#id_medio').val();	
 	var fecha = $('#fecha').val();
 	var nro_operacion = $('#nro_operacion').val();	
@@ -480,8 +480,8 @@ function fn_save(id_caja){
             	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id_comprobante" id="id_comprobante" value="<?php echo $id?>">
-					<input type="hidden" name="id" id="id" value="0">
+					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
+					<!--<input type="hidden" name="id" id="id" value="0">-->
 
 					<div class="row">
 						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -533,7 +533,7 @@ function fn_save(id_caja){
 								<a href="javascript:void(0)" onClick="validarCajaAbierta()" class="btn btn-sm btn-primary">Guardar</a>
 								
 								<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-sm btn-warning" style="margin-left:10px">Limpiar</a>
-								
+																
 							</div>
 												
 						</div>
