@@ -5295,7 +5295,7 @@ class ComprobanteController extends Controller
             
 		}else{
 			$cuotaPago = ComprobanteCuotaPago::find($request->id);
-            $cuotaPago->id_usuario_actualiza = $id_user;            
+            $cuotaPago->id_usuario_actualiza = $id_user;
 		}
 		
 		
