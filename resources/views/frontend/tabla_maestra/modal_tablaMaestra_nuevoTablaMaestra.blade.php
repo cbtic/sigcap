@@ -319,11 +319,11 @@ function datatableTablaMaestraTipo(){
 	
     $("#tblTablaMaestraTipo tbody").html("");
 	$.ajax({
-			url: "/tabla_maestra/obtener_datos_tabla_maestra/"+tipo_nombre,
-			type: "GET",
-			success: function (result) {  
-					$("#tblTablaMaestraTipo tbody").html(result);
-			}
+		url: "/tabla_maestra/obtener_datos_tabla_maestra/"+tipo_nombre,
+		type: "GET",
+		success: function (result) {  
+			$("#tblTablaMaestraTipo tbody").html(result);
+		}
 	});
 }
 
