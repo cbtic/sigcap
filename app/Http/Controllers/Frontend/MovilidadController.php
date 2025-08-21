@@ -106,7 +106,7 @@ class MovilidadController extends Controller
 		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras','mes','meses','id_periodo','periodo'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
-		$pdf->setPaper('A4', 'landscape'); // Tama�o de papel (puedes cambiarlo seg�n tus necesidades)
+		$pdf->setPaper('A3', 'landscape'); // Tama�o de papel (puedes cambiarlo seg�n tus necesidades)
     	$pdf->setOption('margin-top', 20); // M�rgen superior en mil�metros
    		$pdf->setOption('margin-right', 50); // M�rgen derecho en mil�metros
     	$pdf->setOption('margin-bottom', 20); // M�rgen inferior en mil�metros

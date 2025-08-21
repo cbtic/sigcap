@@ -13,12 +13,12 @@ class PlanillaDelegado extends Model
 	function getPlanillaDelegadoDetalleByIdPlanilla($id){
 
         $cad = "select p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,c.denominacion municipalidad,pdd.*
-from planilla_delegados pd
-inner join planilla_delegado_detalles pdd on pd.id=pdd.id_planilla  
-inner join agremiados a on pdd.id_agremiado=a.id
-inner join personas p on a.id_persona=p.id 
-inner join comisiones c on pdd.id_comision=c.id
-where pd.id=".$id;
+				from planilla_delegados pd
+				inner join planilla_delegado_detalles pdd on pd.id=pdd.id_planilla  
+				inner join agremiados a on pdd.id_agremiado=a.id
+				inner join personas p on a.id_persona=p.id 
+				inner join comisiones c on pdd.id_comision=c.id
+				where pd.id=".$id;
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;

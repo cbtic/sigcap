@@ -418,7 +418,7 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->cancelado = $request->cancelado;
 
 		//echo($planillaDelegadoDetalle->secuencua_vou);
-
+		/*
 
 		if ($planillaDelegadoDetalle->secuencua_vou==Null){			
 			$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
@@ -427,7 +427,7 @@ class PlanillaDelegadoController extends Controller
 			//echo($data[0]->secuencia);
 			$planillaDelegadoDetalle->secuencua_vou = $data[0]->secuencia;
 			
-		}
+		}*/
 		//exit();
 
 
@@ -578,9 +578,9 @@ class PlanillaDelegadoController extends Controller
 
 		$pdf->setPaper('A4', 'landscape'); // Tama�o de papel (puedes cambiarlo seg�n tus necesidades)
     	$pdf->setOption('margin-top', 20); // M�rgen superior en mil�metros
-   		$pdf->setOption('margin-right', 50); // M�rgen derecho en mil�metros
+   		$pdf->setOption('margin-right', 1); // M�rgen derecho en mil�metros
     	$pdf->setOption('margin-bottom', 20); // M�rgen inferior en mil�metros
-    	$pdf->setOption('margin-left', 100); // M�rgen izquierdo en mil�metros
+    	$pdf->setOption('margin-left', 1); // M�rgen izquierdo en mil�metros
 
 		return $pdf->stream('ver_planilla_delegado.pdf');
 

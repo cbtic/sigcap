@@ -5,6 +5,9 @@
         <title>CAP</title>
         <link rel="stylesheet" type="text/css" href="css/pdf.css"  />
         <style>
+			@page {
+						margin: 10mm 2mm 10mm 2mm; /* Arriba, Derecha, Abajo, Izquierda */
+					}
             .td_left{
                 text-align: left !important;
             }
@@ -68,7 +71,7 @@
 				line-height:60px;
 				text-align:left;
 				border:0px;
-				margin-left:10px;
+				margin-left:1px;
 				font-size: 7px !important;
 				font-family:Arial, Helvetica, sans-serif;
 				color:#000000!important
@@ -77,14 +80,14 @@
 			header {
                 position: fixed;
                 top: 0px;
-                left: 10px;
+                left: 1px;
                 right: 10px;
                 height: 50px;
             }
         </style>
     </head>
 	
-    <body style="font-size: 11px; font-family: arial;border:1px solid #A4A4A4;padding:90px 10px 10px 10px">
+    <body style="font-size: 11px; font-family: arial;border:1px solid #A4A4A4;padding:90px 1px 1px 1px">
 		<header>
             
 			<table style="margin:0px;padding:0px;padding-bottom:10px" width="100%">
@@ -129,12 +132,12 @@
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center">N°</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="25%">Delegado</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Municipio</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">Sesiones</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="8%">Sesiones</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">Sub Total</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">Adelanto  
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Adelanto  
 			<br />Con Rec. 
 			<br />Hon.</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">(+) 
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">(+) 
 			<br />Reintegro</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">(+) 
 			<br />Adicional 
@@ -238,7 +241,7 @@
 				
 			</tbody>
 			<tfoot>
-				<tr style="font-size:13px">
+				<tr style="font-size:10px">
 					<th class="text-left" style="vertical-align:middle" colspan="3">Totales Generales</th>
 					<th class="text-center" style="vertical-align:middle"><?php echo $sesiones?></th>
 					<th class="text-right" style="vertical-align:middle"><?php echo number_format($sub_total,2)?></th>
