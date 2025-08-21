@@ -4155,7 +4155,7 @@ class ComprobanteController extends Controller
 		//$puesto_model = new Concurso();
         $comprobante_model = new Comprobante;
 
-		$p[]=$request->id;
+		$p[]=$request->id_comprobante;
 		$p[]=1;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
