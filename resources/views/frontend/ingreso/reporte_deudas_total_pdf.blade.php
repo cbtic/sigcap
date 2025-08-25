@@ -175,7 +175,7 @@
                 $total_monto_pagado = 0;
                 $total_monto_pendiente = 0;
 				foreach($datos_reporte_deudas as $key=>$r){
-                    if ($k->denominacion == $r->denominacion):
+                    //if ($k->denominacion == $r->denominacion):
                         $total_deuda +=  $r->importe;
                         if($r->estado_pago=='PENDIENTE'){
                             $total_monto_pendiente += $r->importe;
@@ -187,17 +187,17 @@
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo $r->row_num?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->descripcion?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($r->importe, 2, '.', ',')?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo date('d/m/Y', strtotime($r->fecha_vencimiento)); ?>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo date('d/m/Y', strtotime($r->fecha_pago)); ?>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comprobante?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->forma_pago?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($r->importe ?? 0, 2, '.', ',') ?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->fecha_vencimiento ? date('d/m/Y', strtotime($r->fecha_vencimiento)) : ''; ?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->fecha_pago ? date('d/m/Y', strtotime($r->fecha_pago)) : ''; ?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comprobante ?? '' ?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->forma_pago ?? '' ?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->condicion?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->nro_operacion?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->estado_pago?></td>
 				</tr>
 				<?php
-                    endif;
+                    //endif;
 				} 
 				?>
 				
