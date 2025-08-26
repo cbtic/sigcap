@@ -450,9 +450,10 @@ class AsientoPlanillaController extends Controller
 					
 
 		}
-		
+					
 					$databuild_string = json_encode($data);
-        			print_r($databuild_string."<br>");
+					header('Content-Type: application/json');
+        			echo $databuild_string;
 		
 		
 	}
