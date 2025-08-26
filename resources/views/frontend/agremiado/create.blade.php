@@ -591,8 +591,12 @@ label.form-control-sm{
 													</div>
 													-->
 												</div>
-														
+														@can('Guardar Agremiado')
+								
+								
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+
+														@endcan
 														
 													</div>
 												</div>

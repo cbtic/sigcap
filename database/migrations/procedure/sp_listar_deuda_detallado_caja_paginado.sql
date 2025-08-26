@@ -20,7 +20,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' v.id, a.numero_cap, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres apellidos_nombre, v.monto, c.denominacion concepto, v.descripcion , EXTRACT(YEAR FROM v.fecha) periodo, to_char(v.fecha,''dd-mm-yyyy'') fecha_vencimiento ';
+	v_campos=' v.id, a.numero_cap, a.id id_agremiado, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres apellidos_nombre, v.monto, c.denominacion concepto, v.id_concepto, v.descripcion , EXTRACT(YEAR FROM v.fecha) periodo, to_char(v.fecha,''dd-mm-yyyy'') fecha_vencimiento ';
 
 	v_tabla=' from valorizaciones v 
     inner join conceptos c on v.id_concepto = c.id 
@@ -31,8 +31,7 @@ begin
 	v_where = ' Where 1=1 
 	and v.id_modulo in (''2'',''6'') 
 	and a.id_regional =''5''
-	and a.id_situacion not in(''83'',''266'',''267'')
-	and a.id_ubicacion =''334''
+	and a.id_situacion not in(''83'',''265'',''266'',''267'')
 	and v.exonerado = ''0'' ';
 	
 	If p_fecha_fin<>'' Then

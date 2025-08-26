@@ -1049,8 +1049,10 @@ class IngresoController extends Controller
         $numero_cap=$datos_agremiado->numero_cap;
         $nombre_completo=$datos_agremiado->nombre_completo;
         //var_dump($datos_agremiado);exit();
+        //dd($datos_agremiado->id, $id_concepto);exit();
 		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id, $id_concepto);
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id, $id_concepto);
+        //dd($denominacion_reporte_deudas);exit();
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
         //var_dump($tipo_cambio);exit();
         $tipo_cambio_fecha=$tipo_cambio->fecha;  
@@ -1067,7 +1069,7 @@ class IngresoController extends Controller
 		//$carbonDate = new Carbon($fecha_actual);
 	
 		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
-		
+		//dd($denominacion_reporte_deudas);exit();
 		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_total_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio_fecha','tipo_cambio_valor_venta'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
