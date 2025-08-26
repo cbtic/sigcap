@@ -24591,37 +24591,31 @@ a {
 
 			
 			<ul class="nav menu-ope">
-				
+				<!--
 				<li class="nav-item">
 					<span class="link opcion-buscar" id="navItemSearch" title="" data-toggle="tooltip" data-original-title="Buscar">
-						<!--<i class="icon icon-pagalo-menu-search" aria-hidden="true"></i>-->
 						<i class="icon fas fa-search"></i>
-							<span class="label">Buscar</span>
-						
+							<span class="label">Buscar</span>	
 					</span>
 				</li>
-				
-				
-					<li class="nav-item">
-						<a class="link" href="/sistema/inicioElegirOperacion">
-							<!--<i class="icon icon-pagalo-menu-tickets" aria-hidden="true"></i>-->
-							<i class="icon fas fa-receipt"></i>
-							<span class="label">Mis Tickets</span>
-						</a>
-					</li>
-				
-				
+                -->
+                <li class="nav-item">
+                    <a class="link" href="/carrito">
+                        <!--<i class="icon icon-pagalo-menu-tickets" aria-hidden="true"></i>-->
+                        <i class="icon fas fa-receipt"></i>
+                        <span class="label">Mi Estado de Cuenta</span>
+                    </a>
+                </li>
+            
 				<li class="nav-item nav-item-carrito">
-					<a class="link" href="/operaciones/iniciarDetalleCarrito" title="" data-toggle="tooltip" data-original-title="Carrito">
+					<a class="link" href="/carrito/detalle" title="" data-toggle="tooltip" data-original-title="Carrito">
 						<span class="cart-num oculto"></span>
 						<i class="icon fas fa-shopping-cart"></i>
+                        <span class="label">Mi Carrito</span>
 					</a>
 				</li>
 				
-				
 			</ul>
-
-			
 			
 				<ul class="nav menu-user">
 					<li class="nav-item avatar-item dropdown">

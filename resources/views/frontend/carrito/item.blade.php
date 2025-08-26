@@ -138,9 +138,9 @@
 				<div class="item"><i class="icon fas fa-receipt" aria-hidden="true" title="Resumen de pago"></i></div>
 			</div>
 			
-			<span class="titulo-entidad">RENIEC</span>
+			<span class="titulo-entidad">Detalle de Deuda</span>
 			
-			<small class="descriptivo">00521 - Emisión primera vez DNI electrónico</small>
+			<small class="descriptivo">Información seleccionada</small>
 			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
 
@@ -148,7 +148,11 @@
 			<div class="card-body">
 				
 
-				<form id="formulario-din" name="formulario-din" action="/operaciones/guardarFormulario.action" method="post" autocomplete="off" novalidate="">
+				<form id="formulario-din" name="formulario-din" action="{{ url('carrito/agregar') }}" method="POST" autocomplete="off" novalidate="">
+
+                @csrf
+                <input type="hidden" name="valorizacion_id" value="{{ $valorizacion_id }}">
+                <!--<input type="number" name="cantidad" value="1" min="1">-->
 
 				<input type="hidden" name="entidad.codigo" value="3">
 				<input type="hidden" name="entidad.agrupacion" value="">
@@ -162,235 +166,65 @@
 				<input class="form2" type="hidden" name="operacion.accionBoton" id="accionBoton">
 
 				
-				
-					
-						
-						<div class="form-section current">
-						
-					
-					
-					
-					
-					
-					
-					
+						<div class="form-section current">		
 						<div class="input-group mb-3 flex-100">
 							<input type="hidden" name="fieldsForm[0].datoEnvio" value="codConcepto" data-parsley-group="block-0">
 							<div class="floating-label has-value">
-								
-								
-									<label for="codConcepto">Concepto</label>
-								
-								
-
-								
-									<select class="custom-select parsley-success" id="codConcepto" name="fieldsForm[0].valor" required="" data-tipohijo="IV" data-idcampohijo="1031" data-id="1030" data-dato-boton="0" data-value="001" data-parsley-id="9" data-parsley-group="block-0">
-										
-											<option value="001" data-valueaux="41.00" selected="">
-												Emisión primera vez DNI electrónico
-											</option>
-										
-									</select>
-								
-								
-								
+                                <label for="codConcepto">Concepto</label>
+                                <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$valorizacion->descripcion}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
 							</div>
-							
 						</div>
-					
-					
-				
-					
-					
-					
-					
-					
-					
 					
 						<div class="input-group mb-3 flex-100">
 							<input type="hidden" name="fieldsForm[1].datoEnvio" value="costoTasa" data-parsley-group="block-0">
-							<div class="floating-label has-value">
-								
-								
-									<label for="costoTasa">Costo</label>
-								
-								
-									<input class="form-control parsley-success" pattern="(:?^|\s)(?=.)((?:0|(?:[1-9](?:\d*|\d{0,2}(?:,\d{3})*)))?(?:\.\d{1,2})?)(?!\S)" data-is-decimal="1" id="costoTasa" name="fieldsForm[1].valor" required="" readonly="" value="41.0" data-id="1031" data-dato-boton="0" data-parsley-id="11" data-parsley-group="block-0">
-									
-
-									
-									
-									
-									
-									
-								
-
-								
-								
-								
-							</div>
-							
+							<div class="floating-label has-value">	
+                                <label for="costoTasa">Fecha de Vencimiento</label>
+                                <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{ date('d-m-Y',strtotime($valorizacion->fecha)) }}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+							</div>		
 						</div>
-					
-					
-				
-					
-					
-					
-					
-					
-					
 					
 						<div class="input-group mb-3">
 							<input type="hidden" name="fieldsForm[2].datoEnvio" value="tipoDocumento" data-parsley-group="block-0">
-							<div class="floating-label has-value">
-								
-								
-									<label for="tipoDocumento">Tipo de documento</label>
-								
-								
-
-								
-									<select class="custom-select parsley-success" id="tipoDocumento" name="fieldsForm[2].valor" required="" data-tipohijo="IT" data-idcampohijo="834" data-id="833" data-dato-boton="0" data-value="1" data-parsley-id="13" data-parsley-group="block-0">
-										
-											<option value="1" data-valueaux="1" selected="">
-												DNI
-											</option>
-										
-									</select>
-								
-								
-								
+							<div class="floating-label has-value">								
+                                <label for="tipoDocumento">Precio Unitario</label>
+								<input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$valorizacion->valor_unitario}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
 							</div>
-							
 						</div>
-					
-					
-				
-					
-					
-					
-					
-					
-					
-					
-						<div class="input-group mb-3">
-							<input type="hidden" name="fieldsForm[3].datoEnvio" value="nroDocumento" data-parsley-group="block-0">
-							<div class="floating-label has-value">
-								
-								
-									<label for="nroDocumento">Número de documento</label>
-								
-								
-									<input class="form-control" type="text" id="nroDocumento" name="fieldsForm[3].valor" required="" value="11111111" data-id="834" data-dato-boton="0" data-parsley-group="block-0" maxlength="8" minlength="8" data-parsley-length-message="La longitud de este valor debe ser de 8 caracteres" data-parsley-type="digits">
-									
-
-									
-									
-									
-									
-									
-								
-
-								
-								
-								
-							</div>
-							
-						</div>
-					
-					
-				
-					
-					
-					
-					
-					
-					
-					
+										
 						<div class="input-group mb-3">
 							<input type="hidden" name="fieldsForm[4].datoEnvio" value="cantidadTasa" data-parsley-group="block-0">
 							<div class="floating-label has-value">
-								
-								
-									<label for="cantidadTasa">Cantidad</label>
-								
-								
-									<input class="form-control" type="text" id="cantidadTasa" name="fieldsForm[4].valor" required="" readonly="" value="1" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
-									
-
-									
-									
-									
-									
-									
-								
-
-								
-								
-								
+								<label for="cantidadTasa">Cantidad</label>
+								<input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$valorizacion->cantidad}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
 							</div>
-							
 						</div>
-					
-					
-				
-					
-					
-					
-					
-					
-					
 					
 						<div class="input-group mb-3">
 							<input type="hidden" name="fieldsForm[5].datoEnvio" value="totalImporte" data-parsley-group="block-0">
-							<div class="floating-label has-value">
-								
-								
-									<label for="totalImporte">Importe total</label>
-								
-								
-									<input class="form-control" pattern="(:?^|\s)(?=.)((?:0|(?:[1-9](?:\d*|\d{0,2}(?:,\d{3})*)))?(?:\.\d{1,2})?)(?!\S)" data-is-decimal="1" id="totalImporte" name="fieldsForm[5].valor" required="" readonly="" value="0.00" data-formula="{costoTasa}*{cantidadTasa}" data-id="1032" data-dato-boton="0" data-parsley-group="block-0">
-									
-
-									
-									
-									
-									
-									
+							<div class="floating-label has-value">								
+									<label for="totalImporte">Total</label>
+									<input class="form-control" pattern="(:?^|\s)(?=.)((?:0|(?:[1-9](?:\d*|\d{0,2}(?:,\d{3})*)))?(?:\.\d{1,2})?)(?!\S)" data-is-decimal="1" 
+                                    id="totalImporte" name="fieldsForm[5].valor" required="" readonly="" value="{{$valorizacion->valor_unitario}}" data-formula="{costoTasa}*{cantidadTasa}" data-id="1032" data-dato-boton="0" data-parsley-group="block-0">
 										<div id="mensajePagoParcial">
 										<div class="alert alert-success mb-3" style="display: none;"><p>El importe no se encuentra cargado en la base de datos.</p></div>
-										</div>
-									
-								
-
-								
-								
-								
+										</div>									
 							</div>
-							
 						</div>
-					
-					
-				
 				</div>
-
 				
 				<div class="form-group form-group-btn form-navigation">
 					<button type="button" class="previous btn btn-secondary pull-left" style="display: none;">ANTERIOR</button>
 					<button type="button" class="next btn btn-secondary pull-right" style="display: none;">SIGUIENTE <i class="fa fa-spinner fa-spin d-none"></i></button>
 					<button type="submit" class="btn btn-secondary pull-right">
-						
 							AGREGAR A CARRITO
-						
-						
 					</button>
+                    <!--
+                    <button type="submit" class="btn btn-primary">
+                        🛒 Agregar al carrito
+                    </button>
+                    -->
 				</div>
 			</form>
-
-
-
-
 
 			</div>
 		</div>

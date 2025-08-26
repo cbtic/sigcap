@@ -97,6 +97,9 @@
 
 /***************************/
 
+.btn-linear:hover {
+    color:#FFFFFF!important
+}
 
 </style>
 
@@ -243,7 +246,7 @@ const iziConfig = {
 					<div class="col col-costo">Precio</div>
                     <div class="col col-costo">Cantidad</div>
 					<div class="col col-documento">Total</div>
-					<div class="col col-opciones">Opciones</div>
+					<div class="col col-opciones">Eliminar</div>
 				</div>
 			</div>
 			<input type="hidden" name="toRedirect" value="" id="toRedirect">
@@ -268,16 +271,20 @@ const iziConfig = {
 								<button type="button" class="opciones-carrito close">
 									<i class="item-cerrar icon icon-pagalo-close"></i>
 									<i class="item-menu icon icon-pagalo-options"></i>
-									<span class="sr-only">Opciones</span>
+									<span class="sr-only">Eliminar</span>
 								</button>
 							</div>
 							<div class="acciones">
+                                <!--
 								<a href="javascript:void(0)" onclick="faccionItem(0,'editar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Editar">
 									<i class="icon icon-pagalo-edit" aria-hidden="true"></i></a>
+                                -->
 								<a href="javascript:void(0)" onclick="faccionItem(0,'eliminar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Eliminar">
-									<i class="icon icon-pagalo-trash" aria-hidden="true"></i></a>
-								<a href="javascript:void(0)" onclick="faccionItem(0,'duplicar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Duplicar">
+									<i class="icon fa fa-trash" aria-hidden="true"></i></a>
+								<!--
+                                <a href="javascript:void(0)" onclick="faccionItem(0,'duplicar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Duplicar">
 									<i class="icon icon-pagalo-duplicate" aria-hidden="true"></i></a>
+                                -->
 							</div>
 						</div>
 						<div class="col col-id">0</div>
@@ -298,22 +305,18 @@ const iziConfig = {
 
 	<p class="alert alert-sm alert-info alert-horario">Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente.</p>
 
-	
+	<!--
 	<div class="carrito-terminos">
 		<div id="alertTerminos" class="alert alert-sm alert-warning alert-terminos" style="display: none;">Debes aceptar los términos y condiciones para continuar con el pago.</div>
 		<div id="terminos">
 			<label class="chk-label"><input type="checkbox" id="chk-terminos" data-parsley-multiple="chk-terminos" data-parsley-id="10"> <div class="chk-terminos-text">Aceptar los <span class="link" data-toggle="modal" data-target="#modalTerminos">Términos y Condiciones</span></div></label>
 		</div>
 	</div>
-
+    -->
 	
 	<h6 class="total-carrito">
 		Total a pagar: S/ <?php echo $carrito_items[0]->total_general?>
 	</h6>
-
-
-
-
 
 <script type="text/javascript">
     /*
@@ -341,29 +344,33 @@ const iziConfig = {
 					</div>
 				</form>
 
-
-
-
-
-				<form id="fGenTicket" name="fGenTicket" action="/operaciones/genTicketGlobal.action" method="post" novalidate="">
-				
+                <a class="btn btn-linear" href="/carrito" id="add-pay">Agregar otra pago</a>
+                
+                <!--
+				<form id="fGenTicket" name="fGenTicket" action="/operaciones/genTicketGlobal.action" method="post" novalidate="">				
 				<div class="botones-carrito">
 					<div class="form-group-btn">
-						<button type="button" class="btn btn-linear" id="add-pay">
-							
-							
-								Agregar otro pago
-							
-						</button>
-						
-						<button type="button" class="btn btn-primary" id="btnGenTicket">
-							Pagar
-						</button>
-						
+						<button type="button" class="btn btn-primary" id="btnGenTicket">Pagar</button>
 					</div>
 				</div>
 				</form>
+                -->
+                <br><br>
+                <input type="checkbox" name="ckbTerms" id="ckbTerms" onclick="visaNetEc3()"> 
+                <label for="ckbTerms">Acepto los <a href="#" target="_blank">Términos y condiciones</a></label>
 
+                <form id="frmVisaNet" action="http://localhost/PagoWebPhp/finalizar.php?amount=<?php echo $total_general;?>&purchaseNumber=<?php echo $purchaseNumber?>">
+                    <script src="<?php echo $urlJs?>" 
+                        data-sessiontoken="<?php echo $sesion;?>"
+                        data-channel="web"
+                        data-merchantid="<?php echo $merchantId?>"
+                        data-merchantlogo="http://localhost/PagoWebPhp/assets/img/logo.png"
+                        data-purchasenumber="<?php echo $purchaseNumber;?>"
+                        data-amount="<?php echo $total_general; ?>"
+                        data-expirationminutes="5"
+                        data-timeouturl="http://localhost/PagoWebPhp/"
+                    ></script>
+                </form>
 
 
 
@@ -1007,5 +1014,20 @@ const iziConfig = {
 @push('after-scripts')
 
 <script src="{{ asset('js/agremiado/lista.js') }}"></script>
+<script>
+
+var frmVisa = document.getElementById('frmVisaNet');
+
+if (document.body.contains(frmVisa)) {
+    document.getElementById('frmVisaNet').setAttribute("style", "display:none");
+}
+function visaNetEc3() {
+    if (document.getElementById('ckbTerms').checked) {
+        document.getElementById('frmVisaNet').setAttribute("style", "display:auto");
+    } else {
+        document.getElementById('frmVisaNet').setAttribute("style", "display:none");
+    }
+}
+</script>
 
 @endpush

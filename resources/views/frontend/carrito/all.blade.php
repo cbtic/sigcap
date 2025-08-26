@@ -8,6 +8,11 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
+
+
+<link href="https://plantillashtmlgratis.com/wp-content/themes/helium-child/vista_previa/page280/multishop/css/style.css" rel="stylesheet">
+    
+
 <style>
 	#tblAfiliado tbody tr{
 		font-size:13px
@@ -95,9 +100,147 @@
 }
 
 /***************************/
+/*
+.pb-1, .py-1 {
+    padding-bottom: 0.25rem !important;
+}
+
+@media (min-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+@media (min-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+    }
+}
+@media (min-width: 576px) {
+    .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
 
 
 
+
+.product-item {
+    transition: .5s;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+}
+.bg-light {
+    background-color: #FFFFFF !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+
+.position-relative {
+    position: relative !important;
+}
+.overflow-hidden {
+    overflow: hidden !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+.text-center {
+    text-align: center !important;
+}
+.pb-4, .py-4 {
+    padding-bottom: 1.5rem !important;
+}
+.pt-4, .py-4 {
+    padding-top: 1.5rem !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+h6, .h6 {
+    font-size: 1rem;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #3D464D;
+}
+a {
+    color: #FFD333;
+    text-decoration: none;
+    background-color: transparent;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.text-center {
+    text-align: center !important;
+}
+
+.mt-2, .my-2 {
+    margin-top: 0.5rem !important;
+}
+.align-items-center {
+    align-items: center !important;
+}
+.justify-content-center {
+    justify-content: center !important;
+}
+.d-flex {
+    display: flex !important
+;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+.text-center {
+    text-align: center !important;
+}
+*/
 </style>
 
 @extends('frontend.layouts.app_carrito')
@@ -132,8 +275,8 @@
 	<section class="seccion-principal seccion-tickets" style="height: 707.984px;">
 		<h1 class="titulo">
 			
-			Mis Tickets
-			<small class="descriptivo">Constancias</small>
+			Estado de Cuenta
+			<small class="descriptivo">Deudas</small>
 			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
 		<div class="card">
@@ -208,10 +351,62 @@
 
 
 	<div class="row no-tickets">
-		<p>No existen tickets de pago generados.</p>
+		<!--<p>No existen tickets de pago generados.</p>-->
+
+        <div class="container-fluid pt-0 pb-3">
+        <form id="form-agregar-carrito" action="{{ url('carrito/item') }}" method="POST">
+        @csrf
+        <input type="hidden" name="item_id" id="item-id-input">
+
+        <div class="row px-xl-0">        
+            <?php foreach($carrito_deuda as $row){?>
+            <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
+                <div class="product-item bg-light mb-3">
+                    <div class="product-img position-relative overflow-hidden">                        
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href="" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="">{{$row->descripcion}}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>S/. {{$row->valor_unitario}}</h5>
+                            </div>
+                            <small class="text-body">Vence: {{ date('d-m-Y',strtotime($row->fecha)) }} </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php }?>
+        </div>
+        </form>
+    </div>
+
+<script>
+    function agregarAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.submit();
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!--
 		<div class="form-group-btn">
 			<button type="button" class="btn btn-secondary" id="add-pay">Agregar un pago</button>
 		</div>
+        -->
+
 	</div>
 
 
