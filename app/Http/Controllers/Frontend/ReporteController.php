@@ -8,6 +8,7 @@ use App\Models\Concepto;
 use App\Models\TablaMaestra;
 use App\Models\Valorizacione;
 use App\Models\ReporteDeudaTotal;
+use App\Models\ReporteDeudaTotalDetalle;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -424,24 +425,64 @@ class ReporteController extends Controller
 
 		if($funcion=='rd'){
 
-			$valorizacion_model = new Valorizacione;
-			$p[]=$fecha_cierre;
-			$p[]=$fecha_consulta;
-			$p[]=$id_concepto;
-			$p[]=1;
-			$p[]=1;
-			$p[]=500000;
-			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
+			//$fecha_consulta = Carbon::createFromFormat('d-m-Y', $fecha_consulta)->format('Y-m-d');
+			//$fecha_cierre   = Carbon::createFromFormat('d-m-Y', $fecha_cierre)->format('Y-m-d');
+
+			$reporte_detalle = ReporteDeudaTotalDetalle::where('fecha_consulta', $fecha_consulta)->where('fecha_cierre', $fecha_cierre)->where('estado', 1)->orderBy('id', 'asc')->get();
+
+			if ($reporte_detalle->isEmpty()) {
+				$valorizacion_model = new Valorizacione;
+				$resultado = $valorizacion_model->generarReporteDeudaDetalle($fecha_cierre, $fecha_consulta, $id_concepto);
+				//dd($resultado);exit();
+				$rows = [];
+				foreach ($resultado as $row) {
+					$rows[] = [
+						'fecha_cierre'=> $fecha_cierre,
+						'fecha_consulta'=> $fecha_consulta,
+						'id_agremiado'=> $row->id_agremiado,
+						'numero_cap'=> $row->numero_cap,
+						'apellidos_nombre'=> $row->apellidos_nombre,
+						'monto'=> $row->monto,
+						'id_concepto'=> $row->id_concepto,
+						'concepto'=> $row->descripcion,
+						'periodo'=> $row->periodo,
+						'fecha_vencimiento'=> $row->fecha_vencimiento,
+						'estado'=> 1,
+						'id_usuario_inserta'=> $id_user,
+					];
+
+					/*ReporteDeudaTotalDetalle::create([
+						'fecha_cierre'=> $fecha_cierre,
+						'fecha_consulta'=> $fecha_consulta,
+						'id_agremiado'=> $row->id_agremiado,
+						'numero_cap'=> $row->numero_cap,
+						'apellidos_nombre'=> $row->apellidos_nombre,
+						'monto'=> $row->monto,
+						'id_concepto'=> $row->id_concepto,
+						'concepto'=> $row->descripcion,
+						'periodo'=> $row->periodo,
+						'fecha_vencimiento'=> $row->fecha_vencimiento,
+						'estado'=> 1,
+						'id_usuario_inserta'=> $id_user,
+					]);*/
+				}
+
+				foreach (array_chunk($rows, 1000) as $chunk) {
+					ReporteDeudaTotalDetalle::insert($chunk);
+				}
+
+				$reporte_detalle = ReporteDeudaTotalDetalle::where('fecha_cierre', $fecha_cierre)->where('fecha_consulta', $fecha_consulta)->where('estado', 1)->orderBy('id', 'asc')->get();
+			}
 			
 			$output='';
 			$output.="N;Numero_CAP;Apellidos_Nombres;Monto;Concepto;Periodo;Fecha_Vencimiento\n";
 			$n = 1;
 			$total_monto=0;
 
-			foreach($data as $r){
+			foreach($reporte_detalle as $r){
 
-				$output.= $n++.";".$r->numero_cap.";".$r->apellidos_nombre.";". $r->monto.";".$r->descripcion.";".$r->periodo.";".$r->fecha_vencimiento."\n";
-				$total_monto+=$r->monto;
+				$output.= $n++.";".$r->agremiado->numero_cap.";". $r->apellidos_nombre . ";". (float) $r->monto.";".$r->concepto.";".$r->periodo.";".$r->fecha_vencimiento."\n";
+				$total_monto += (float) $r->monto;
 			}
 
 			$output.=";;TOTAL;".$total_monto.";;;";
