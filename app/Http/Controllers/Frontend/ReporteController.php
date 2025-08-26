@@ -474,14 +474,14 @@ class ReporteController extends Controller
 				$reporte_detalle = ReporteDeudaTotalDetalle::where('fecha_cierre', $fecha_cierre)->where('fecha_consulta', $fecha_consulta)->where('estado', 1)->orderBy('id', 'asc')->get();
 			}
 			
-			$output='';
+			/*$output='';
 			$output.="N;Numero_CAP;Apellidos_Nombres;Monto;Concepto;Periodo;Fecha_Vencimiento\n";
 			$n = 1;
 			$total_monto=0;
 
 			foreach($reporte_detalle as $r){
 
-				$output.= $n++.";".$r->agremiado->numero_cap.";". $r->apellidos_nombre . ";". (float) $r->monto.";".$r->concepto.";".$r->periodo.";".$r->fecha_vencimiento."\n";
+				$output.= $n++.";".$r->numero_cap.";". $r->apellidos_nombre . ";". (float) $r->monto.";".$r->concepto.";".$r->periodo.";".$r->fecha_vencimiento."\n";
 				$total_monto += (float) $r->monto;
 			}
 
@@ -490,6 +490,46 @@ class ReporteController extends Controller
 			return Response::make("\xEF\xBB\xBF" . $output,200,[
 				'Content-Type' => 'text/csv; charset=UTF-8',
 				'Content-Disposition' =>'attachment; filename="Lista Deuda Detallado.csv"',
+			]);*/
+
+			return response()->stream(function() use ($reporte_detalle) {
+				$handle = fopen('php://output', 'w');
+
+				// Cabecera
+				fputcsv($handle, [
+					'N',
+					'Numero_CAP',
+					'Apellidos_Nombres',
+					'Monto',
+					'Concepto',
+					'Periodo',
+					'Fecha_Vencimiento'
+				], ';');
+
+				$n = 1;
+				$total_monto = 0;
+
+				foreach ($reporte_detalle as $r) {
+					fputcsv($handle, [
+						$n++,
+						$r->numero_cap,         // ⚠️ evitar $r->agremiado->numero_cap
+						$r->apellidos_nombre,
+						(float)$r->monto,
+						$r->concepto,
+						$r->periodo,
+						$r->fecha_vencimiento,
+					], ';');
+
+					$total_monto += (float) $r->monto;
+				}
+
+				// Línea de total
+				fputcsv($handle, ['', '', 'TOTAL', $total_monto, '', '', ''], ';');
+
+				fclose($handle);
+			}, 200, [
+				"Content-Type" => "text/csv; charset=UTF-8",
+				"Content-Disposition" => 'attachment; filename="Lista_Deuda_Detallado.csv"',
 			]);
 			
 		}else if($funcion=='rt'){
