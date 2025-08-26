@@ -238,25 +238,12 @@ const iziConfig = {
 						#
 						
 					</div>
-					<div class="col col-entidad">
-						Entidad
-					</div>
-					
-					<div class="col col-tasa">
-						Tasa - Descripción
-						
-					</div>
-					<div class="col col-costo">
-						Costo
-						
-					</div>
-					<div class="col col-documento">
-						Documento
-						
-					</div>
-					<div class="col col-opciones">
-						Opciones
-					</div>
+					<div class="col col-tasa">Concepto</div>
+                    <div class="col col-entidad">Vencimiento</div>
+					<div class="col col-costo">Precio</div>
+                    <div class="col col-costo">Cantidad</div>
+					<div class="col col-documento">Total</div>
+					<div class="col col-opciones">Opciones</div>
 				</div>
 			</div>
 			<input type="hidden" name="toRedirect" value="" id="toRedirect">
@@ -267,16 +254,15 @@ const iziConfig = {
 
 				
 				
-					
+					<?php foreach($carrito_items as $key=>$row){?>
 					
 					<div class="row">
-						<div class="col col-num">1</div>
-						
-						
-						<div class="col col-entidad"><span class="tag tag-list" title="" data-toggle="tooltip" data-original-title="RENIEC">RENIEC</span></div>
-						<div class="col col-tasa">00521 - Emisión primera vez DNI electrónico</div>
-						<div class="col col-costo">S/ 41.0</div>
-						<div class="col col-documento">DNI-11111111</div>
+						<div class="col col-num">{{$key+1}}</div>
+						<div class="col col-tasa">{{$row->nombre}}</div>
+                        <div class="col col-entidad"><span class="tag tag-list" style="width:100%" title="" data-toggle="tooltip" data-original-title="RENIEC">{{$row->fecha_vencimiento}}</span></div>
+						<div class="col col-costo">{{$row->precio_unitario}}</div>
+						<div class="col col-documento">{{$row->cantidad}}</div>
+                        <div class="col col-documento">{{$row->total}}</div>
 						<div class="col col-opciones">
 							<div class="responsive">
 								<button type="button" class="opciones-carrito close">
@@ -296,7 +282,8 @@ const iziConfig = {
 						</div>
 						<div class="col col-id">0</div>
 					</div>
-					
+					<?php }?>
+
 				
 			</div>
 			<!-- <div class="thead">
@@ -321,7 +308,7 @@ const iziConfig = {
 
 	
 	<h6 class="total-carrito">
-		Total a pagar: S/ 41.00
+		Total a pagar: S/ <?php echo $carrito_items[0]->total_general?>
 	</h6>
 
 
