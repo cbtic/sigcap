@@ -682,12 +682,15 @@ class OperacionController extends Controller
 		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
 		
 		//RESPUESTA
-		$descRespuesta = "TRANSACCION PROCESADA OK";
-		$data_output["CodigoErrorOriginal"] = "000"; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
+		//$descRespuesta = "TRANSACCION PROCESADA OK";
+		//$data_output["CodigoErrorOriginal"] = "000"; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
 		
 		if(count($actualiza_pago)==0){
 			$descRespuesta = "CLIENTE SIN DEUDA PENDIENTE";
 			$data_output["CodigoErrorOriginal"] = "022";
+		}else{
+			$descRespuesta = $actualiza_pago[0]->desc_respuesta;
+			$data_output["CodigoErrorOriginal"] = $actualiza_pago[0]->codigo_error_original; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
 		}
 
 		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
