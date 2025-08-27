@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\Frontend\ComprobanteController;
+use App\Http\Controllers\Frontend\AsientoPlanillaController;
 
 /*
  * Global Routes
@@ -31,4 +32,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprobante', [ComprobanteController::class, 'index']);
     Route::post('/comprobante', [ComprobanteController::class, 'create']);
+});
+             
+Route::post('enviar_planilla', 
+    [AsientoPlanillaController::class, 'enviar_planilla_siscont']);
+    
+
+Route::post('test-ruta', function () {
+    return response()->json(['message' => 'Ruta de prueba funciona']);
 });

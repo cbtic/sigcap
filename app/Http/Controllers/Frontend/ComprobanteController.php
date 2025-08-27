@@ -2576,11 +2576,13 @@ class ComprobanteController extends Controller
 
                                 if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
                                     $agremiado->id_situacion = "73"; //habilitado
+                                    $agremiado->id_usuario_modifica = $id_user;
                                     $agremiado->save();
                                 }
                             } else {
                                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                                 $agremiado->id_situacion = "74"; //inhabilitado
+                                $agremiado->id_usuario_modifica = $id_user;
                                 $agremiado->save();
                             }
                         }

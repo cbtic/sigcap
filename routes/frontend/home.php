@@ -593,8 +593,8 @@ Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupu
 Route::get('plan_contable/importar_plan_contable', [PlanContableController::class, 'importar_plan_contable'])->name('plan_contable.importar_plan_contable');
 
 Route::get('asiento_planilla/importar_vou_siscont/{anio}/{mes}', [AsientoPlanillaController::class, 'importar_vou_siscont'])->name('asiento_planilla.importar_vou_siscont');
-Route::post('asiento_planilla/enviar_planilla_siscont/{fecha_inicio}/{fecha_fin}', [AsientoPlanillaController::class, 'enviar_planilla_siscont'])->name('asiento_planilla.enviar_planilla_siscont');
-
+//Route::post('asiento_planilla/enviar_planilla_siscont/{fecha_inicio}/{fecha_fin}', [AsientoPlanillaController::class, 'enviar_planilla_siscont'])->name('asiento_planilla.enviar_planilla_siscont');
+//Route::post('asiento_planilla/enviar_planilla_siscont/{fecha_inicio}/{fecha_fin}', [AsientoPlanillaController::class, 'enviar_planilla_siscont']);
 Route::get('centro_costo/test', [CentroCostoController::class, 'test'])->name('centro_costo.test');
 
 Route::get('plan_contable/consulta_plan_contable', [PlanContableController::class, 'consulta_plan_contable'])->name('plan_contable.consulta_plan_contable');
