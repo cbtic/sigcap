@@ -14,7 +14,7 @@ class CarritoController extends Controller
     
     public function index(){
         
-		$id_persona = 291290;
+		$id_persona = 291535;
 		$tipo_documento = 85;
 		$periodo = "";
         $mes = "";
