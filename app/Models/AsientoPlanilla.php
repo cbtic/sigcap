@@ -33,11 +33,21 @@ class AsientoPlanilla extends Model
         return $data;
     }
 
+    function AsignarVou( $id_periodo, $anio, $mes) {
+
+        $cad = "Select  sp_actualizar_secuencia_vou(?, ?, ?)";
+      
+		$data = DB::select($cad, array( $id_periodo, $anio, $mes ));
+        return $data[0]->sp_actualizar_secuencia_vou;
+        
+        
+    }
+
     function ListarAsientoPlanilla($anio, $mes, $periodo, $tipo){
 
         $mes= intval($mes);
 
-        $cad = "select a.id, a.id_persona, c.denominacion  cuenta_den, p.numero_ruc, 
+        $cad = "select case when a.id_tipo =1 then pdd.secuencua_vou else pdd.secuencua_vou_canc end  vou,  a.id, a.id_persona, c.denominacion  cuenta_den, p.numero_ruc, 
                     case when p.desc_cliente_sunat is null then p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres else p.desc_cliente_sunat end desc_cliente_sunat, a.cuenta, 
                     case when a.debe = 0 then 0 else a.debe end debe, 
                     case when a.haber = 0 then 0 else a.haber end haber,
@@ -48,12 +58,15 @@ class AsientoPlanilla extends Model
                 from asiento_planillas a
                     inner join personas p on p.id = a.id_persona
                     inner join plan_contables c on c.cuenta = a.cuenta
-                where EXTRACT(YEAR FROM fecha_documento)::varchar = '".$anio."'
-                    And EXTRACT(MONTH FROM fecha_documento)::varchar = '".$mes."'
+                    inner join planilla_delegado_detalles pdd on a.id_planilla_delegado_detalle  =pdd.id
+                    inner join planilla_delegados pd on pd.id=pdd.id_planilla 
+                where  pd.periodo = '".$anio."'
+         				AND pd.mes ='".$mes."'
+                
                     And a.id_periodo_comision = '".$periodo."'
                     And a.id_tipo = '".$tipo."'
 
-                order by numero_comprobante, orden
+                order by  desc_cliente_sunat,numero_comprobante,orden
                     
                     ";
 

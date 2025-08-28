@@ -220,6 +220,9 @@ class AsientoPlanillaController extends Controller
 
 	public function importar_vou_siscont($anio, $mes){ 
 		
+		
+		$periodo = 1054;
+		
 		$ch = curl_init('http://190.119.30.106:9090/planillas.php');
 		
 		$postData = [
@@ -263,7 +266,9 @@ class AsientoPlanillaController extends Controller
 				);
 			}
 
-				
+			$asiento_planilla_model = new AsientoPlanilla;
+			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$anio, $mes);
+
 			
 		}
 
@@ -271,8 +276,11 @@ class AsientoPlanillaController extends Controller
 		
 	}
 
-	public function enviar_planilla_siscont($fecha_inicio, $fecha_fin){ 
-		
+	public function enviar_planilla_siscont(Request $request){ 
+	
+		$fecha_inicio=$request->fecha_inicio;
+		$fecha_fin=$request->fecha_fin;
+		 
 		
 	$tipoodocumentofact='02';
 	$tipoodocumentofactcancela='13';

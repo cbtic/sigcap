@@ -1,6 +1,7 @@
 <table id="tblPlanilla" class="table table-hover table-sm">
 	<thead>
 		<tr style="font-size:13px">
+			<th>Vou</th>
 			<th>Cuenta</th>
 			<th>Nom. Cuenta</th>                            
 			<th class="text-right">Debe</th>
@@ -44,7 +45,7 @@
 					<input type="hidden" name="asiento[<?php echo $key?>][fecha_documento]" value="<?php echo $row->fecha_documento?>" />
 					<input type="hidden" name="asiento[<?php echo $key?>][fecha_vencimiento]" value="<?php echo $row->fecha_vencimiento?>" />
 					
-
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->vou ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta_den ?></td>
 					<td class="text-right" style="vertical-align:middle"><?php echo round($row->debe,3) ?></td>

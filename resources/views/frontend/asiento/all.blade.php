@@ -219,15 +219,23 @@
                                 <input type="hidden" name="medio_pago_b" id="medio_pago_b" value="">
                                 <input type="hidden" name="origen_b" id="origen_b" value="">
                                             
-                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="col-lg-1 col-md-1 col-sm-10 col-xs-10">
                                     <select name="estado_b" id="estado_b" class="form-control form-control-sm">
                                         <option value="">Todos</option>
                                         <option value="1" selected="selected">Activo</option>
                                         <option value="0">Eliminado</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
                                     <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                    
+                                    <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
+                                    <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                    <input class="btn btn-success" value="Asignar VOU" type="button" id="btnVou" />
                                     
                                     <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
                                     <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
@@ -240,7 +248,7 @@
                                     <table id="tblPlanilla" class="table table-hover table-sm">
                                         <thead>
                                             <tr style="font-size:13px">
-                                        
+                                                <th>Vou</th>
                                                 <th>Cuenta</th>
                                                 <th>Nombre</th>                            
                                                 <th>Debe</th>

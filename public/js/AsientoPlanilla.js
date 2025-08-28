@@ -4,6 +4,10 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+
+	$('#btnVou').click(function () {
+		fn_importar_Vou();
+	});
 	
 	$('#btnNuevo').click(function () {
 		modalAsignacion(0);
@@ -165,7 +169,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						cuenta:cuenta,denominacion:denominacion,tipo_cuenta:tipo_cuenta,centro_costo:centro_costo,
+						vou:vou,cuenta:cuenta,denominacion:denominacion,tipo_cuenta:tipo_cuenta,centro_costo:centro_costo,
 						partida_presupuestal:partida_presupuestal,codigo_financiero:codigo_financiero,medio_pago:medio_pago,origen:origen,estado:estado,
 						_token:_token
                        },
@@ -182,12 +186,23 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
+                	var vou = "";
+					if(row.vou!= null)vou = row.vou;
+					return vou;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+				//"className": 'control'
+                },
+				{
+                "mRender": function (data, type, row) {
                 	var cuenta = "";
 					if(row.cuenta!= null)cuenta = row.cuenta;
 					return cuenta;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [1],
 				"className": "dt-center",
 				//"className": 'control'
                 },
@@ -297,6 +312,9 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
+
+
+
 function modalAsignacion(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -313,6 +331,23 @@ function modalAsignacion(id){
 
 }
 
+
+function fn_importar_Vou(){
+	
+	//$(".modal-dialog").css("width","85%");
+	//$('#openOverlayOpc .modal-body').css('height', 'auto');
+	var anio = $("#anio").val();
+	var mes = $("#mes").val();
+	$.ajax({
+			url: "/asiento_planilla/importar_vou_siscont/"+anio+"/"+mes,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 
 

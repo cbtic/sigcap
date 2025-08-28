@@ -27,7 +27,6 @@ class VerifyCsrfToken extends Middleware
         'operacion/extorno_pago',
         'operacion/anulacion',
         'operacion/extorno_anulacion',
-
         'operacion/req_consulta',
         'operacion/req_pago',
         'operacion/req_anulacion',
@@ -36,6 +35,8 @@ class VerifyCsrfToken extends Middleware
         'asiento_planilla/enviar_planilla_siscont',
 
         'carrito/finalizar',
+        'test-ruta',
+        'enviar_planilla',
          
     ];
 }
