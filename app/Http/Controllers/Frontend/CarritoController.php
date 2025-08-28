@@ -70,7 +70,8 @@ class CarritoController extends Controller
 
     public function item(Request $request){
 
-		$valorizacion_id = $request->item_id;
+		$valorizacion_id = $request->valorizacion_id;
+		//echo $valorizacion_id;exit();
         $carrito_model = new Carrito;
 		$valorizacion = $carrito_model->getCarritoDeudaById($valorizacion_id)[0];
 		//print_r($valorizacion);exit();

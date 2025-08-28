@@ -221,21 +221,25 @@ const iziConfig = {
 			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
 		<div class="card">
+            
+            <!--
+            <div class="form-group" style="margin-bottom:0px">
+                <a class="btn btn-secondary" style="display:block;float:right" href="/carrito" id="add-pay">Agregar otro pago</a>
+            </div>
+            -->
+
 			<div class="card-body">
-				
-				
+					
 				<form id="fEditarItem" name="fEditarItem" action="/operaciones/editarItemCarrito.action" method="post" novalidate="">
 					<input type="hidden" name="idItem" value="" id="idItem">
 					<input type="hidden" name="accionItem" value="insertar" id="accionItem">
 					<div id="divTablaCarrito">
-						
-						
-
-
-
-	<div class="container">
-		<div class="tablaflex tablaflex-carrito" id="tablaCarrito">
-			<div class="thead">
+    
+    <div class="container">
+		
+        <div class="tablaflex tablaflex-carrito" id="tablaCarrito">
+			
+        <div class="thead">
 				<div class="row">
 					<div class="col col-num">
 						#
@@ -354,9 +358,10 @@ const iziConfig = {
 					</div>
 				</form>
 
-                <a class="btn btn-linear" href="/carrito" id="add-pay">Agregar otro pago</a>
+                <a class="btn btn-secondary" href="/carrito" id="add-pay">AGREGAR OTRO PAGO</a>
                 
                 <!--
+                btn-linear
 				<form id="fGenTicket" name="fGenTicket" action="/operaciones/genTicketGlobal.action" method="post" novalidate="">				
 				<div class="botones-carrito">
 					<div class="form-group-btn">
