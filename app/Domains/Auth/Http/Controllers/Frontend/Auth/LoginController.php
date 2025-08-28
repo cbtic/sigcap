@@ -59,7 +59,8 @@ class LoginController
     {
         $request->validate([
             $this->username() => ['required', 'max:255', 'string'],
-            'password' => array_merge(['max:100'], PasswordRules::login()),
+            //'password' => array_merge(['max:100'], PasswordRules::login()),
+            'password' => ['required', 'string', 'max:100'],
             'g-recaptcha-response' => ['required_if:captcha_status,true', new Captcha],
         ], [
             'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),

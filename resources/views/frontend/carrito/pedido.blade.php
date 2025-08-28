@@ -8,11 +8,6 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
-
-
-<link href="https://plantillashtmlgratis.com/wp-content/themes/helium-child/vista_previa/page280/multishop/css/style.css" rel="stylesheet">
-    
-
 <style>
 	#tblAfiliado tbody tr{
 		font-size:13px
@@ -99,148 +94,10 @@
 	color: #FFFFFF;
 }
 
+
 /***************************/
-/*
-.pb-1, .py-1 {
-    padding-bottom: 0.25rem !important;
-}
-
-@media (min-width: 992px) {
-    .col-lg-3 {
-        flex: 0 0 25%;
-        max-width: 25%;
-    }
-}
-@media (min-width: 768px) {
-    .col-md-4 {
-        flex: 0 0 33.33333%;
-        max-width: 33.33333%;
-    }
-}
-@media (min-width: 576px) {
-    .col-sm-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
 
 
-
-
-.product-item {
-    transition: .5s;
-}
-.mb-4, .my-4 {
-    margin-bottom: 1.5rem !important;
-}
-.bg-light {
-    background-color: #FFFFFF !important;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-div {
-    display: block;
-    unicode-bidi: isolate;
-}
-
-
-
-.position-relative {
-    position: relative !important;
-}
-.overflow-hidden {
-    overflow: hidden !important;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-div {
-    display: block;
-    unicode-bidi: isolate;
-}
-
-
-.text-center {
-    text-align: center !important;
-}
-.pb-4, .py-4 {
-    padding-bottom: 1.5rem !important;
-}
-.pt-4, .py-4 {
-    padding-top: 1.5rem !important;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-div {
-    display: block;
-    unicode-bidi: isolate;
-}
-
-.text-decoration-none {
-    text-decoration: none !important;
-}
-.text-truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-h6, .h6 {
-    font-size: 1rem;
-}
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    line-height: 1.2;
-    color: #3D464D;
-}
-a {
-    color: #FFD333;
-    text-decoration: none;
-    background-color: transparent;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-a:-webkit-any-link {
-    color: -webkit-link;
-    cursor: pointer;
-    text-decoration: underline;
-}
-.text-center {
-    text-align: center !important;
-}
-
-.mt-2, .my-2 {
-    margin-top: 0.5rem !important;
-}
-.align-items-center {
-    align-items: center !important;
-}
-.justify-content-center {
-    justify-content: center !important;
-}
-.d-flex {
-    display: flex !important
-;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-div {
-    display: block;
-    unicode-bidi: isolate;
-}
-.text-center {
-    text-align: center !important;
-}
-*/
 </style>
 
 @extends('frontend.layouts.app_carrito')
@@ -269,213 +126,110 @@ div {
 
 
 
-
-<div id="pageTickets" class="container">
+<div id="pageFormularios" class="container">
 	
-	<section class="seccion-principal seccion-tickets" style="height: 707.984px;">
+	<section class="seccion-principal seccion-formularios">
 		<h1 class="titulo">
+			<div class="wizard">
+				<div class="item active"><i class="icon fas fa-search" aria-hidden="true" title="Buscar"></i></div>
+				<div class="item active"><i class="icon fas fa-edit" aria-hidden="true" title="Completar datos"></i></div>
+				<div class="item"><i class="icon fas fa-shopping-cart" aria-hidden="true" title="Carrito"></i></div>
+				<div class="item"><i class="icon fa-money-bill" aria-hidden="true" title="Medios de Pago"></i></div>
+				<div class="item"><i class="icon fas fa-receipt" aria-hidden="true" title="Resumen de pago"></i></div>
+			</div>
 			
-			Estado de Cuenta
-			<small class="descriptivo">Deudas</small>
-			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
+			<span class="titulo-entidad">Detalle de Deuda</span>
+			
+			<small class="descriptivo">Información seleccionada</small>
+			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
+
 		<div class="card">
 			<div class="card-body">
-				<div id="divUltimosTicket" class="elegirOpeDer boxInfo">
-					
+				
+                <?php 
+                //print_r($data);
 
+            if (isset($data->dataMap)) { //echo "entra 1";
+                if ($data->dataMap->STATUS == "Authorized") { //echo "entra 2";
+                    $c = preg_split('//', $data->dataMap->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
+                    ?>
 
-
-
-
-<div id="confirmarEliminar">
-	<div class="alert alert-success mb-3" style="display: none;">El ticket se eliminó correctamente.</div>
-</div>
-
-
-
-
-
-<div class="tickets-desktop">
-	<div class="container">
-		<div class="tablaflex tablaflex-tickets">
-			<div id="selEstadoHist">
-				<form id="filtrar" name="filtrar" action="sistema/inicioElegirOperacion.action" method="post" novalidate="">
-					
-					<input type="hidden" name="numPagina" value="1" id="num_pagina">
-				</form>
-
-
-
-
-			</div>
-			
-			<div class="tbody">
-			
-			</div>
-
-<div id="dialog-confirm" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<div class="modal-header">
-				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
-					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
-				</button>
-				<h4 class="modal-title">¿Está seguro de eliminar el ticket?</h4>
-			</div>
-			<div class="modal-body">
-				Recuerda que una vez <span id="s_accion">eliminado</span> el ticket, el pago que efectúes no generará constancia y no podrás realizar el trámite ante la entidad correspondiente
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-linear" data-dismiss="modal">No</button>
-				<button id="btn-del-item-carrito" type="button" class="btn btn-primary" data-dismiss="modal">Si, eliminar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="tickets-mobile">
-	
-</div>
-
-
-
-
-
-
-
-	<div class="row no-tickets">
-		<!--<p>No existen tickets de pago generados.</p>-->
-
-        <div class="container-fluid pt-0 pb-3">
-        <form id="form-agregar-carrito" action="{{ url('carrito/item') }}" method="POST">
-        @csrf
-        <input type="hidden" name="item_id" id="item-id-input">
-
-        <div class="row px-xl-0">        
-            <?php foreach($carrito_deuda as $row){?>
-            <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
-                <div class="product-item bg-light mb-3">
-                    <div class="product-img position-relative overflow-hidden">                        
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href="" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $data->dataMap->ACTION_DESCRIPTION;?>
                         </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">{{$row->descripcion}}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>S/. {{$row->valor_unitario}}</h5>
-                            </div>
-                            <small class="text-body">Vence: {{ date('d-m-Y',strtotime($row->fecha)) }} </small>
+
+						<div class="form-section current">		
+						<div class="input-group mb-3 flex-100">
+							<input type="hidden" name="fieldsForm[0].datoEnvio" value="codConcepto" data-parsley-group="block-0">
+							<div class="floating-label has-value">
+                                <label for="codConcepto">Número de pedido</label>
+                                <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$purchaseNumber}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+							</div>
+						</div>
+					
+						<div class="input-group mb-3 flex-100">
+							<input type="hidden" name="fieldsForm[1].datoEnvio" value="costoTasa" data-parsley-group="block-0">
+							<div class="floating-label has-value">	
+                                <label for="costoTasa">Fecha y hora del pedido</label>
+                                <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $c[4].$c[5]."/".$c[2].$c[3]."/".$c[0].$c[1]." ".$c[6].$c[7].":".$c[8].$c[9].":".$c[10].$c[11]; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+							</div>		
+						</div>
+					
+                        <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 pb-0">
+						<div class="input-group mb-3">
+                            
+							<input type="hidden" name="fieldsForm[2].datoEnvio" value="tipoDocumento" data-parsley-group="block-0">
+							<div class="floating-label has-value">								
+                                <label for="tipoDocumento">Tarjeta</label>
+								<input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $data->dataMap->CARD." (".$data->dataMap->BRAND.")"; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+							</div>
+						</div>
+						</div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 pb-0">
+						<div class="input-group mb-3">
+							<input type="hidden" name="fieldsForm[4].datoEnvio" value="cantidadTasa" data-parsley-group="block-0">
+							<div class="floating-label has-value">
+								<label for="cantidadTasa">Importe pagado</label>
+								<input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $data->order->amount. " ".$data->order->currency; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+							</div>
+						</div>
+					    </div>
+
                         </div>
-                    </div>
-                </div>
-            </div>
-            <?php }?>
-        </div>
-        </form>
-    </div>
-
-<script>
-    function agregarAlCarrito(itemId) {
-        const form = document.getElementById('form-agregar-carrito');
-        const input = document.getElementById('item-id-input');
-        input.value = itemId;
-        form.submit();
-    }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-        <!--
-		<div class="form-group-btn">
-			<button type="button" class="btn btn-secondary" id="add-pay">Agregar un pago</button>
-		</div>
-        -->
-
-	</div>
-
-
-
 
 				</div>
-			</div>
+				
+                        <?php
+                }
+                } else {
+                //$c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
+                ?>
 
-		</div>
-	</section>
-	
-	<section class="seccion-sidebar" style="visibility: visible;">
-		<div class="card" style="position: absolute; top: 173.203px;">
-			<h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
-				Información
-			</h4>
-			<div class="card-body">
-				<h6 class="subtitulo">¿Cómo pagar mis deudas?</h6>
-				<p>Si tu deuda aún está pendiente de pago, puedes continuar con el proceso haciendo clic sobre el botón.</p>
-				<p>Recuerda, se muestran en este listado todas las deudas generados.</p>
-				<!-- dinamico -->
-				<h6 class="subtitulo">¿Que deudas aparecen?</h6>
-				<p>Debido a que el concepto seleccionado es un servicio solo se podrá pagar por esta opción las deudas como CUOTA GREMIAL, FRACCIONAMIENTO y MULTAS.</p>
+
+                <?php
+                    }
+                ?>
+
+
 			</div>
 		</div>
 	</section>
-</div>
-
-<div class="modal modal-ticket fade" id="detalleHistorico" tabindex="-1" role="dialog" aria-hidden="true">
 	
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" id="dialog-detalleHistorico">
-		</div>
-	</div>
+	<section class="seccion-sidebar">
+		
+	</section>
 </div>
-<form id="historico" name="historico" action="/sistema/detalleHistorico.action" method="post" novalidate="">
-	<input type="hidden" name="codHistorico" value="" id="codHistorico">
-	<input type="hidden" name="numTicket" value="" id="numTicket">
-	<input type="hidden" name="estadoOperacion" value="" id="estado">
-	<input type="hidden" name="codEstadoOperacion" value="" id="codEstado">
-	<input type="hidden" name="importeTotal" value="" id="importeTotal">
-	<input type="hidden" name="simboloMoneda" value="" id="simboloMoneda">
-</form>
 
-
-
-
-
-<form id="carrito" name="carrito" action="/operaciones/iniciarDetalleCarrito.action" method="post" novalidate="">
-	<input type="hidden" name="idEntidad" value="" id="idEntidad">
-	<input type="hidden" name="abrirBuscador" value="1" id="carrito_abrirBuscador">
-</form>
-
-
-
-
-
-
-
-
-
-		</main>
+</main>
 		<div class="fondo-curva">
 			<img src="https://pagalo.pe/imagenes/new/curva.svg" class="curva"></div>
 		</div>
-	
 
-	
-	<div class="btn-sidebar" id="btn-sidebar" data-toggle="modal" data-target="#modalSidebar" style="display: none;"><i class="icon icon-pagalo-info" aria-hidden="true" title="Informacion"></i></div>
+<div class="btn-sidebar" id="btn-sidebar" data-toggle="modal" data-target="#modalSidebar" style="display: none;"><i class="icon icon-pagalo-info" aria-hidden="true" title="Informacion"></i></div>
 	<div class="modal-sidebar modal fade" id="modalSidebar" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">

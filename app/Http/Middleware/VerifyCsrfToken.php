@@ -33,7 +33,9 @@ class VerifyCsrfToken extends Middleware
         'operacion/req_anulacion',
         'operacion/ext_pago',
         'operacion/ext_anulacion',
-        'asiento_planilla/enviar_planilla_siscont'
+        'asiento_planilla/enviar_planilla_siscont',
+
+        'carrito/finalizar',
          
     ];
 }

@@ -14,7 +14,10 @@ class CarritoController extends Controller
     
     public function index(){
         
-		$id_persona = 291535;
+		$usuario = Auth::user();
+		$id_persona = $usuario->id_persona;
+
+		//$id_persona = 291290;
 		$tipo_documento = 85;
 		$periodo = "";
         $mes = "";
@@ -39,16 +42,27 @@ class CarritoController extends Controller
 		$urlSession = config("visa.$env.url_session");
 		$urlJs = config("visa.$env.url_js");
 
+		$total_general=0;
 		$usuario = Auth::user();
     	$carrito = Carrito::where('usuario_id', $usuario->id)->with('items')->first();
+		//print_r($carrito);exit();
 		$carrito_model = new Carrito;
-		$carrito_items = $carrito_model->getCarritoDetalle($carrito->id);
-
-		$total_general = $carrito_items[0]->total_general;
+		if($carrito){
+			$carrito_items = $carrito_model->getCarritoDetalle($carrito->id);
+			$total_general = $carrito_items[0]->total_general;
+		}else{
+			$carrito_items = NULL;
+		}
 
 		$token = $visa->generateToken();
 		$sesion = $visa->generateSession($total_general, $token);
 		$purchaseNumber = $visa->generatePurchaseNumber();
+		
+		// guardo en sesión
+		session([
+			'purchaseNumber' => $purchaseNumber,
+			'amount' => $total_general
+		]);
 		
 		return view('frontend.carrito.all_detalle',compact('carrito_items','total_general','purchaseNumber','merchantId','sesion','urlJs'));
 
@@ -144,5 +158,39 @@ class CarritoController extends Controller
         $carrito->total_general  = $subtotal;
         $carrito->save();
     }
+
+	public function finalizar(Request $request,VisaService $visa)
+    {
+		$transactionToken = $request->transactionToken;
+		$email = $request->customerEmail;
+		//$amount = $request->amount;
+		//$purchaseNumber = $request->purchaseNumber;
+		$channel = $request->channel;
+
+		// recupero desde la sesión
+		$amount = session('amount');
+		$purchaseNumber = session('purchaseNumber');
+		
+		$env = config('visa.development') ? 'dev' : 'prd';
+		$merchantId = config("visa.$env.merchant_id");
+		$user       = config("visa.$env.user");
+		$password   = config("visa.$env.pwd");
+		$urlSession = config("visa.$env.url_session");
+		$urlJs = config("visa.$env.url_js");
+
+		if ($channel == "pagoefectivo") {
+			//$url = $_POST["url"];
+			//header('Location: '.$url);
+			exit;
+		} else {   
+			$token = $visa->generateToken();
+			//echo $amount;
+			$data = $visa->generateAuthorization($amount, $purchaseNumber, $transactionToken, $token);
+		}
+		
+		//print_r($data);exit();
+		return view('frontend.carrito.pedido',compact('data','purchaseNumber'));
+
+	}
 
 }

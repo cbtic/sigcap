@@ -87,8 +87,16 @@ Route::get('terms', [TermsController::class, 'index'])
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
 
-Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
-Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
+Route::middleware(['auth'])->group(function () {
+    Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+    Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
+    //Route::get('checkout', [PagoController::class, 'checkout'])->name('checkout');
+    //Route::post('checkout/pagar', [PagoController::class, 'pagar'])->name('checkout.pagar');
+    Route::post('carrito/finalizar', [CarritoController::class, 'finalizar'])->name('carrito.finalizar');
+});
+
+//Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+//Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
 //Route::get('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');
 Route::post('carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 Route::post('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');

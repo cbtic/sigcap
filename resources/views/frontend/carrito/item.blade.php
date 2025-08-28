@@ -183,14 +183,20 @@
 							</div>		
 						</div>
 					
+                        <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
 						<div class="input-group mb-3">
+                            
 							<input type="hidden" name="fieldsForm[2].datoEnvio" value="tipoDocumento" data-parsley-group="block-0">
 							<div class="floating-label has-value">								
                                 <label for="tipoDocumento">Precio Unitario</label>
 								<input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$valorizacion->valor_unitario}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
 							</div>
 						</div>
-										
+						</div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
 						<div class="input-group mb-3">
 							<input type="hidden" name="fieldsForm[4].datoEnvio" value="cantidadTasa" data-parsley-group="block-0">
 							<div class="floating-label has-value">
@@ -198,7 +204,9 @@
 								<input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$valorizacion->cantidad}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
 							</div>
 						</div>
-					
+					    </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
 						<div class="input-group mb-3">
 							<input type="hidden" name="fieldsForm[5].datoEnvio" value="totalImporte" data-parsley-group="block-0">
 							<div class="floating-label has-value">								
@@ -210,6 +218,10 @@
 										</div>									
 							</div>
 						</div>
+                        </div>
+
+                        </div>
+
 				</div>
 				
 				<div class="form-group form-group-btn form-navigation">

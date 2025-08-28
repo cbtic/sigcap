@@ -257,7 +257,9 @@ const iziConfig = {
 
 				
 				
-					<?php foreach($carrito_items as $key=>$row){?>
+					<?php 
+                    if($carrito_items){
+                    foreach($carrito_items as $key=>$row){?>
 					
 					<div class="row">
 						<div class="col col-num">{{$key+1}}</div>
@@ -289,7 +291,14 @@ const iziConfig = {
 						</div>
 						<div class="col col-id">0</div>
 					</div>
-					<?php }?>
+					<?php 
+                        }
+                        }else{
+                            ?>
+                            <p>No existen items de pago generados.</p>
+                            <?php 
+                        }
+                    ?>
 
 				
 			</div>
@@ -303,8 +312,9 @@ const iziConfig = {
 		</div>
 	</div>
 
-	<p class="alert alert-sm alert-info alert-horario">Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente.</p>
+	<!--<p class="alert alert-sm alert-info alert-horario">Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente.</p>-->
 
+    <p class="alert alert-sm alert-info alert-horario">Todos los pagos son realizados a través de un servicio de pago en línea confiable con los diferentes metodos de pago.</p>
 	<!--
 	<div class="carrito-terminos">
 		<div id="alertTerminos" class="alert alert-sm alert-warning alert-terminos" style="display: none;">Debes aceptar los términos y condiciones para continuar con el pago.</div>
@@ -315,7 +325,7 @@ const iziConfig = {
     -->
 	
 	<h6 class="total-carrito">
-		Total a pagar: S/ <?php echo $carrito_items[0]->total_general?>
+		Total a pagar: S/ <?php echo $total_general?>
 	</h6>
 
 <script type="text/javascript">
@@ -344,7 +354,7 @@ const iziConfig = {
 					</div>
 				</form>
 
-                <a class="btn btn-linear" href="/carrito" id="add-pay">Agregar otra pago</a>
+                <a class="btn btn-linear" href="/carrito" id="add-pay">Agregar otro pago</a>
                 
                 <!--
 				<form id="fGenTicket" name="fGenTicket" action="/operaciones/genTicketGlobal.action" method="post" novalidate="">				
@@ -356,22 +366,27 @@ const iziConfig = {
 				</form>
                 -->
                 <br><br>
+                <?php if($total_general>0){?>
                 <input type="checkbox" name="ckbTerms" id="ckbTerms" onclick="visaNetEc3()"> 
                 <label for="ckbTerms">Acepto los <a href="#" target="_blank">Términos y condiciones</a></label>
 
-                <form id="frmVisaNet" action="http://localhost/PagoWebPhp/finalizar.php?amount=<?php echo $total_general;?>&purchaseNumber=<?php echo $purchaseNumber?>">
+                <!--<form id="frmVisaNet" action="http://localhost/PagoWebPhp/finalizar.php?amount=<?php //echo $total_general;?>&purchaseNumber=<?php //echo $purchaseNumber?>">-->
+                <form id="frmVisaNet" action="{{ url('carrito/finalizar') }}" method="POST">    
+                    @csrf
                     <script src="<?php echo $urlJs?>" 
                         data-sessiontoken="<?php echo $sesion;?>"
                         data-channel="web"
                         data-merchantid="<?php echo $merchantId?>"
-                        data-merchantlogo="http://localhost/PagoWebPhp/assets/img/logo.png"
+                        data-merchantlogo="http://127.0.0.1:8000/img/logo-sin-fondo2.png"
                         data-purchasenumber="<?php echo $purchaseNumber;?>"
                         data-amount="<?php echo $total_general; ?>"
                         data-expirationminutes="5"
-                        data-timeouturl="http://localhost/PagoWebPhp/"
+                        data-timeouturl="http://127.0.0.1:8000/carrito"
                     ></script>
+                    <input type="hidden" name="amount" value="{{ $total_general }}">
+                    <input type="hidden" name="purchaseNumber" value="{{ $purchaseNumber }}">
                 </form>
-
+                <?php }?>
 
 
 			</div>
@@ -384,7 +399,7 @@ const iziConfig = {
 			<div class="card-body">
 				<h6 class="subtitulo">¿Algo más que deba saber?</h6>
 				<p>Recuerda revisar bien los datos ingresados y aceptar los términos y condiciones antes de proceder con el pago.</p>
-				<p class="alert alert-sm alert-info alert-horario">Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente.</p>
+				<p class="alert alert-sm alert-info alert-horario">Todos los pagos son realizados a través de un servicio de pago en línea confiable con los diferentes metodos de pago.</p>
 			</div>
 		</div>
 	</section>
