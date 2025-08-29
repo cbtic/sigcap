@@ -29,7 +29,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' a.numero_cap, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres AS apellidos_nombre, SUM(v.monto) AS monto_total  ';
+	v_campos=' a.numero_cap, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres AS apellidos_nombre, SUM(v.monto) AS monto_total, a.id id_agremiado  ';
 
 	v_tabla=' from valorizaciones v 
     inner JOIN conceptos c ON v.id_concepto = c.id 
@@ -40,8 +40,7 @@ begin
 	v_where = ' Where 1=1 
 	and v.id_modulo in (''2'',''6'')
 	and a.id_regional = ''5'' 
-	and a.id_situacion not in(''83'',''266'',''267'')
-	and a.id_ubicacion =''334''
+	and a.id_situacion not in(''83'',''265'',''266'',''267'')
 	and v.exonerado = ''0'' ';
 	
 	If p_fecha_fin<>'' Then

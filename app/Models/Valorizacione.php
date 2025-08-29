@@ -614,11 +614,11 @@ class Valorizacione extends Model
     function ActualizaCredipagoLiqudacion($id_val){        
        
         $cad = "
-            update liquidaciones set id_situacion=2
-            from liquidaciones l 
-            inner join valorizaciones v on l.id = v.pk_registro and v.id_modulo = 7
-            where v.id = ".$id_val.";
-        ";
+                update liquidaciones l set id_situacion=2
+                where l.id= (select pk_registro
+            			    from valorizaciones v 
+            			    where v.id = ".$id_val." and v.id_modulo = 7)
+              ";
             
       //  echo $cad;
 		$data = DB::select($cad);
@@ -820,6 +820,22 @@ class Valorizacione extends Model
 
         DB::statement("BEGIN;");
         DB::statement("select sp_listar_deuda_detallado_caja_paginado('$fecha_cierre', '$fecha_consulta', " . ($id_concepto !== "" ? $id_concepto : 'null') . ", '1', '1', '500000', '$cursorName');");
+
+
+        $resultado = DB::select("FETCH ALL FROM \"$cursorName\";");
+
+        DB::statement("CLOSE \"$cursorName\";");
+        DB::statement("COMMIT;");
+
+        return $resultado;
+    }
+
+    public function generarReporteDeudaAnual($fecha_cierre, $fecha_consulta, $id_concepto)
+    {
+        $cursorName = "resultado_cursor";
+
+        DB::statement("BEGIN;");
+        DB::statement("select sp_listar_deuda_caja_anual_paginado('$fecha_cierre', '$fecha_consulta', " . ($id_concepto !== "" ? $id_concepto : 'null') . ", '1', '1', '500000', '$cursorName');");
 
 
         $resultado = DB::select("FETCH ALL FROM \"$cursorName\";");

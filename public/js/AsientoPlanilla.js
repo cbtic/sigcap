@@ -336,10 +336,11 @@ function fn_importar_Vou(){
 	
 	//$(".modal-dialog").css("width","85%");
 	//$('#openOverlayOpc .modal-body').css('height', 'auto');
+	var id_periodo = $("#id_periodo").val();
 	var anio = $("#anio").val();
 	var mes = $("#mes").val();
 	$.ajax({
-			url: "/asiento_planilla/importar_vou_siscont/"+anio+"/"+mes,
+			url: "/asiento_planilla/importar_vou_siscont/" +id_periodo+"/"+anio+"/"+mes,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

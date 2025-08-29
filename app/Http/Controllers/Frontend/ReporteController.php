@@ -9,6 +9,7 @@ use App\Models\TablaMaestra;
 use App\Models\Valorizacione;
 use App\Models\ReporteDeudaTotal;
 use App\Models\ReporteDeudaTotalDetalle;
+use App\Models\ReporteDeudaAnuale;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -425,9 +426,6 @@ class ReporteController extends Controller
 
 		if($funcion=='rd'){
 
-			//$fecha_consulta = Carbon::createFromFormat('d-m-Y', $fecha_consulta)->format('Y-m-d');
-			//$fecha_cierre   = Carbon::createFromFormat('d-m-Y', $fecha_cierre)->format('Y-m-d');
-
 			$reporte_detalle = ReporteDeudaTotalDetalle::where('fecha_consulta', $fecha_consulta)->where('fecha_cierre', $fecha_cierre)->where('estado', 1)->orderBy('id', 'asc')->get();
 
 			if ($reporte_detalle->isEmpty()) {
@@ -450,21 +448,6 @@ class ReporteController extends Controller
 						'estado'=> 1,
 						'id_usuario_inserta'=> $id_user,
 					];
-
-					/*ReporteDeudaTotalDetalle::create([
-						'fecha_cierre'=> $fecha_cierre,
-						'fecha_consulta'=> $fecha_consulta,
-						'id_agremiado'=> $row->id_agremiado,
-						'numero_cap'=> $row->numero_cap,
-						'apellidos_nombre'=> $row->apellidos_nombre,
-						'monto'=> $row->monto,
-						'id_concepto'=> $row->id_concepto,
-						'concepto'=> $row->descripcion,
-						'periodo'=> $row->periodo,
-						'fecha_vencimiento'=> $row->fecha_vencimiento,
-						'estado'=> 1,
-						'id_usuario_inserta'=> $id_user,
-					]);*/
 				}
 
 				foreach (array_chunk($rows, 1000) as $chunk) {
@@ -474,28 +457,9 @@ class ReporteController extends Controller
 				$reporte_detalle = ReporteDeudaTotalDetalle::where('fecha_cierre', $fecha_cierre)->where('fecha_consulta', $fecha_consulta)->where('estado', 1)->orderBy('id', 'asc')->get();
 			}
 			
-			/*$output='';
-			$output.="N;Numero_CAP;Apellidos_Nombres;Monto;Concepto;Periodo;Fecha_Vencimiento\n";
-			$n = 1;
-			$total_monto=0;
-
-			foreach($reporte_detalle as $r){
-
-				$output.= $n++.";".$r->numero_cap.";". $r->apellidos_nombre . ";". (float) $r->monto.";".$r->concepto.";".$r->periodo.";".$r->fecha_vencimiento."\n";
-				$total_monto += (float) $r->monto;
-			}
-
-			$output.=";;TOTAL;".$total_monto.";;;";
-			
-			return Response::make("\xEF\xBB\xBF" . $output,200,[
-				'Content-Type' => 'text/csv; charset=UTF-8',
-				'Content-Disposition' =>'attachment; filename="Lista Deuda Detallado.csv"',
-			]);*/
-
 			return response()->stream(function() use ($reporte_detalle) {
 				$handle = fopen('php://output', 'w');
 
-				// Cabecera
 				fputcsv($handle, [
 					'N',
 					'Numero_CAP',
@@ -512,7 +476,7 @@ class ReporteController extends Controller
 				foreach ($reporte_detalle as $r) {
 					fputcsv($handle, [
 						$n++,
-						$r->numero_cap,         // ⚠️ evitar $r->agremiado->numero_cap
+						$r->numero_cap,
 						$r->apellidos_nombre,
 						(float)$r->monto,
 						$r->concepto,
@@ -523,8 +487,23 @@ class ReporteController extends Controller
 					$total_monto += (float) $r->monto;
 				}
 
-				// Línea de total
 				fputcsv($handle, ['', '', 'TOTAL', $total_monto, '', '', ''], ';');
+
+				fputcsv($handle, [''], ';');
+				fputcsv($handle, ['CONCEPTO'], ';');
+				fputcsv($handle, ['CUOTA GREMIAL','INCLUIDO'], ';');
+				fputcsv($handle, ['FRACCIONAMIENTO','INCLUIDO'], ';');
+				fputcsv($handle, [''], ';');
+				fputcsv($handle, ['SITUACION'], ';');
+				fputcsv($handle, ['HABILITADO','INCLUIDO'], ';');
+				fputcsv($handle, ['INHABILITADO','INCLUIDO'], ';');
+				fputcsv($handle, ['FALLECIDO','EXCLUIDO'], ';');
+				fputcsv($handle, ['REGIONAL','EXCLUIDO'], ';');
+				fputcsv($handle, ['PROVINCIA','EXCLUIDO'], ';');
+				fputcsv($handle, ['EXTRANJERO','EXCLUIDO'], ';');
+				fputcsv($handle, [''], ';');
+				fputcsv($handle, ['EXCLUSIONES'], ';');
+				fputcsv($handle, ['CUOTA EXONERADA','EXCLUIDO'], ';');
 
 				fclose($handle);
 			}, 200, [
@@ -574,6 +553,22 @@ class ReporteController extends Controller
 			}
 
 			array_push($variable, ['', '', 'Total', $total_monto]);
+
+			$variable[] = [''];
+			$variable[] = ['CONCEPTO'];
+			$variable[] = ['CUOTA GREMIAL','INCLUIDO'];
+			$variable[] = ['FRACCIONAMIENTO','INCLUIDO'];
+			$variable[] = [''];
+			$variable[] = ['SITUACION'];
+			$variable[] = ['HABILITADO','INCLUIDO'];
+			$variable[] = ['INHABILITADO','INCLUIDO'];
+			$variable[] = ['FALLECIDO','EXCLUIDO'];
+			$variable[] = ['REGIONAL','EXCLUIDO'];
+			$variable[] = ['PROVINCIA','EXCLUIDO'];
+			$variable[] = ['EXTRANJERO','EXCLUIDO'];
+			$variable[] = [''];
+			$variable[] = ['EXCLUSIONES'];
+			$variable[] = ['COUTA EXONERADA','EXCLUIDO'];
 			
 			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
@@ -582,28 +577,51 @@ class ReporteController extends Controller
 
 			$titulo = "DEUDA INSTITUCIONAL";
 
-			$valorizacion_model = new Valorizacione;
-			$p[]=$fecha_cierre;
-			$p[]=$fecha_consulta;
-			$p[]=$id_concepto;
-			$p[]=1;
-			$p[]=1;
-			$p[]=0;
-			$data = $valorizacion_model->listar_deuda_caja_anual_ajax($p);
+			$reporte_anual = ReporteDeudaAnuale::where('fecha_consulta', $fecha_consulta)->where('fecha_cierre', $fecha_cierre)->where('estado', 1)->orderBy('id', 'asc')->get();
 			
-			$variable = [];
-			$total_monto=0;
-			$n = 1;
-			
-			array_push($variable, array("N°","Numero CAP","Apellidos y Nombres","Monto"));
-			
-			foreach ($data as $r) {
-				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, (float)$r->monto_total));
+			if ($reporte_anual->isEmpty()) {
+				$valorizacion_model = new Valorizacione;
+				$resultado = $valorizacion_model->generarReporteDeudaAnual($fecha_cierre, $fecha_consulta, $id_concepto);
+				$rows = [];
+				$total_monto = 0;
 
-				$total_monto += (float) $r->monto_total;
+				foreach ($resultado as $row) {
+					$rows[] = [
+						'fecha_cierre'=> $fecha_cierre,
+						'fecha_consulta'=> $fecha_consulta,
+						'id_agremiado'=> $row->id_agremiado,
+						'numero_cap'=> $row->numero_cap,
+						'apellidos_nombre'=> $row->apellidos_nombre,
+						'monto'=> $row->monto_total,
+						'estado'=> 1,
+						'id_usuario_inserta'=> $id_user,
+					];
+					$total_monto += (float) $row->monto_total;
+				}
+
+				foreach (array_chunk($rows, 1000) as $chunk) {
+					ReporteDeudaAnuale::insert($chunk);
+				}
+
+				$reporte_anual = ReporteDeudaAnuale::where('fecha_cierre', $fecha_cierre)->where('fecha_consulta', $fecha_consulta)->where('estado', 1)->orderBy('id', 'asc')->get();
 			}
 
-			array_push($variable,array('','','Total',$total_monto));
+			$variable = [];
+			$n = 1;
+			$total_monto = 0;
+			$variable[] = ['N°','Numero CAP','Apellidos y Nombres','Monto'];
+			foreach ($reporte_anual as $r) {
+				
+				$variable[] = [
+					$n++,
+					$r->numero_cap,
+					$r->apellidos_nombre,
+					(float)$r->monto,
+				];
+				$total_monto += (float)$r->monto;
+			}
+
+			$variable[] = ['', '', 'TOTAL', $total_monto];
 			
 			$export = new InvoicesExport7([$variable], $titulo, $fecha_cierre);
 			return Excel::download($export, 'lista_deuda_anual.xlsx');
