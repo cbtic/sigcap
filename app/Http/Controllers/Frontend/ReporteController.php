@@ -489,6 +489,22 @@ class ReporteController extends Controller
 
 				fputcsv($handle, ['', '', 'TOTAL', $total_monto, '', '', ''], ';');
 
+				fputcsv($handle, [''], ';');
+				fputcsv($handle, ['CONCEPTO'], ';');
+				fputcsv($handle, ['CUOTA GREMIAL','INCLUIDO'], ';');
+				fputcsv($handle, ['FRACCIONAMIENTO','INCLUIDO'], ';');
+				fputcsv($handle, [''], ';');
+				fputcsv($handle, ['SITUACION'], ';');
+				fputcsv($handle, ['HABILITADO','INCLUIDO'], ';');
+				fputcsv($handle, ['INHABILITADO','INCLUIDO'], ';');
+				fputcsv($handle, ['FALLECIDO','EXCLUIDO'], ';');
+				fputcsv($handle, ['REGIONAL','EXCLUIDO'], ';');
+				fputcsv($handle, ['PROVINCIA','EXCLUIDO'], ';');
+				fputcsv($handle, ['EXTRANJERO','EXCLUIDO'], ';');
+				fputcsv($handle, [''], ';');
+				fputcsv($handle, ['EXCLUSIONES'], ';');
+				fputcsv($handle, ['CUOTA EXONERADA','EXCLUIDO'], ';');
+
 				fclose($handle);
 			}, 200, [
 				"Content-Type" => "text/csv; charset=UTF-8",
@@ -537,6 +553,22 @@ class ReporteController extends Controller
 			}
 
 			array_push($variable, ['', '', 'Total', $total_monto]);
+
+			$variable[] = [''];
+			$variable[] = ['CONCEPTO'];
+			$variable[] = ['CUOTA GREMIAL','INCLUIDO'];
+			$variable[] = ['FRACCIONAMIENTO','INCLUIDO'];
+			$variable[] = [''];
+			$variable[] = ['SITUACION'];
+			$variable[] = ['HABILITADO','INCLUIDO'];
+			$variable[] = ['INHABILITADO','INCLUIDO'];
+			$variable[] = ['FALLECIDO','EXCLUIDO'];
+			$variable[] = ['REGIONAL','EXCLUIDO'];
+			$variable[] = ['PROVINCIA','EXCLUIDO'];
+			$variable[] = ['EXTRANJERO','EXCLUIDO'];
+			$variable[] = [''];
+			$variable[] = ['EXCLUSIONES'];
+			$variable[] = ['COUTA EXONERADA','EXCLUIDO'];
 			
 			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
