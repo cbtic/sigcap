@@ -6,8 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Carrito;
 use App\Models\CarritoItem;
+use App\Models\Pedido;
+use App\Models\PedidoItem;
+use App\Models\User;
+use App\Models\Comprobante;
+use App\Models\Valorizacione;
 use Auth;
 use App\Services\VisaService;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Illuminate\Support\Facades\Log;
 
 class CarritoController extends Controller
 {
@@ -162,6 +170,7 @@ class CarritoController extends Controller
 
 	public function finalizar(Request $request,VisaService $visa)
     {
+		
 		$transactionToken = $request->transactionToken;
 		$email = $request->customerEmail;
 		//$amount = $request->amount;
@@ -182,16 +191,112 @@ class CarritoController extends Controller
 		if ($channel == "pagoefectivo") {
 			//$url = $_POST["url"];
 			//header('Location: '.$url);
-			exit;
-		} else {   
-			$token = $visa->generateToken();
-			//echo $amount;
-			$data = $visa->generateAuthorization($amount, $purchaseNumber, $transactionToken, $token);
-		}
+			return redirect()->away($request->url);
+			//exit;
+		} 
+
+		$token = $visa->generateToken();
+		$data = $visa->generateAuthorization($amount, $purchaseNumber, $transactionToken, $token);
 		
+		$carrito = Carrito::where('usuario_id', auth()->id())->first();
+
+		$pedido = Pedido::create([
+			'purchase_number' => $purchaseNumber,
+			'amount'          => $amount,
+			'email'           => $email,
+			'usuario_id'      => auth()->id(),
+			'token_invitado'  => $carrito->token_invitado,
+			'subtotal'        => $carrito->subtotal,
+			'descuento_total' => $carrito->descuento_total,
+			'impuesto_total'  => $carrito->impuesto_total,
+			'envio_total'     => $carrito->envio_total,
+			'total_general'   => $carrito->total_general,
+			'estado'          => 'pagado', // o pendiente, según respuesta de Visa
+			'response'        => json_encode($data),
+		]);
+
+		// 4. Guardar los ítems del carrito en pedido_items
+		foreach ($carrito->items as $item) {
+			PedidoItem::create([
+				'pedido_id'        => $pedido->id,
+				'valorizacion_id'  => $item->valorizacion_id,
+				'nombre'           => $item->nombre,
+				'fecha_vencimiento'=> $item->fecha_vencimiento,
+				'precio_unitario'  => $item->precio_unitario,
+				'cantidad'         => $item->cantidad,
+				'total'            => $item->total,
+			]);
+		}
+
+		// 5. Eliminar carrito
+		$carrito->delete();
+
+		$this->factura($pedido);
 		//print_r($data);exit();
-		return view('frontend.carrito.pedido',compact('data','purchaseNumber'));
+		return view('frontend.carrito.pedido',compact('data','purchaseNumber','pedido'));
 
 	}
+
+
+	public function factura($pedido)
+	{
+
+		$facturas_model = new Comprobante;
+		$usuario_id=$pedido->usuario_id;
+		$usuario = User::find($usuario_id);
+
+		$serieF="B040";
+		$id_tipo_afectacion_pp=30;
+		$tipoF="BV";
+		$ubicacion_id=$usuario->id_persona;
+		$id_persona_act=$usuario->id_persona;
+		$total = $pedido->total_general;
+		$ubicacion_id2="0";
+		$id_persona2="0";
+		$id_caja=3;
+		$descuento=0;
+		$id_user=$usuario_id;
+		$id_moneda=1;
+		$id_nc=0;
+
+		//echo $serieF.",".$id_tipo_afectacion_pp.",".$tipoF.",".$ubicacion_id.",". 
+		//$id_persona_act.",".round($total, 2).",".$ubicacion_id2.",".$id_persona2.",0,".$id_caja.",".$descuento.",'f',".$id_user.",".$id_moneda.",".$id_nc;
+
+		$id_factura = $facturas_model->registrar_factura_moneda($serieF,$id_tipo_afectacion_pp,$tipoF,$ubicacion_id, 
+		$id_persona_act, round($total, 2),$ubicacion_id2,$id_persona2,0, $id_caja,$descuento,'f',$id_user, $id_moneda, $id_nc);
+
+		$factura = Comprobante::find($id_factura);
+		$fac_serie = $factura->serie;
+		$fac_numero = $factura->numero;
+
+		
+		$pedido_item = PedidoItem::where("pedido_id",$pedido->id)->get();
+		foreach ($pedido_item as $key => $value) {
+			
+			$total = $value->total;
+			$pu_   = $value->precio_unitario;
+			$id_concepto=26411;
+			$cod_contable="";
+			$descuento = 0;
+			$item = $key + 1;
+
+			$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, 
+			$value->cantidad, $id_concepto, $pu_, $value->nombre, $cod_contable, $item, 
+			$id_factura, $descuento,'d',$id_user,$id_moneda, 0);
+
+			$valoriza_upd = Valorizacione::find($value->valorizacion_id);                       
+			$valoriza_upd->id_comprobante = $id_factura;
+			$valoriza_upd->pagado = "1";
+			$valoriza_upd->valor_unitario = $value->precio_unitario;
+			$valoriza_upd->cantidad = $value->cantidad;
+			$valoriza_upd->save();
+			
+        }
+		
+
+	}
+
+                    
+	
 
 }

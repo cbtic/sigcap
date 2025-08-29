@@ -138,9 +138,9 @@
 				<div class="item"><i class="icon fas fa-receipt" aria-hidden="true" title="Resumen de pago"></i></div>
 			</div>
 			
-			<span class="titulo-entidad">Detalle de Deuda</span>
+			<span class="titulo-entidad">Pedido</span>
 			
-			<small class="descriptivo">Información seleccionada</small>
+			<small class="descriptivo">Información del pago</small>
 			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
 
