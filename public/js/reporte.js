@@ -33,7 +33,7 @@ $(document).ready(function () {
 	else if(tipo_reporte=="3"){
 		$("#div_fecha_cierre").show();
 		$("#div_fecha_consulta").show();
-		$("#div_concepto").show();
+		$("#div_concepto").hide();
 		$("#div_forma_pago").hide();
 	}
 
