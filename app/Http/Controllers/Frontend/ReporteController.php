@@ -584,7 +584,7 @@ class ReporteController extends Controller
 				$resultado = $valorizacion_model->generarReporteDeudaAnual($fecha_cierre, $fecha_consulta, $id_concepto);
 				$rows = [];
 				$total_monto = 0;
-
+				//dd($resultado);
 				foreach ($resultado as $row) {
 					$rows[] = [
 						'fecha_cierre'=> $fecha_cierre,
