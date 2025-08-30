@@ -575,6 +575,7 @@ legend.scheduler-border {
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona ?>">
 												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
+																								
 												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar ?>">
 
 
