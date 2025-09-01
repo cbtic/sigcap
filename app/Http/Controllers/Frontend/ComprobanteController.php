@@ -4233,8 +4233,8 @@ class ComprobanteController extends Controller
                 "valorUnitarioSinIgv" => str_replace(",", "", $row->pu), //"42.3728813559",
                 "precioUnitarioConIgv" => str_replace(",", "", $row->precio_venta), //"50.0000000000",
                 "unidadMedidaComercial" => "SERV",
-                "codigoAfectacionIGVItem" => $row->afect_igv,
-                "porcentajeDescuentoItem" => str_replace(",", "", ($row->descuento * 100) / $row->pu),
+                "codigoAfectacionIGVItem" => $row->afect_igv,                
+                "porcentajeDescuentoItem" => ($row->pu==0)?str_replace(",", "", $row->descuento):str_replace(",", "", ($row->descuento * 100) / $row->pu),    //str_replace(",", "", ($row->descuento * 100) / $row->pu),
                 "codTipoPrecioVtaUnitarioItem" => "01"
 
 
