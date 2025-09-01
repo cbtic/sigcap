@@ -4181,7 +4181,8 @@ class ComprobanteController extends Controller
 	}
 
 	
-    public function firmar($id_factura){
+    public function firmar($id_factura){        
+    $afect_igv="";
 
         //echo $this->getTipoDocumento("BV");exit();
 		$factura = Comprobante::where('id', $id_factura)->get()[0];
@@ -4200,25 +4201,6 @@ class ComprobanteController extends Controller
 
         foreach ($factura_detalles as $index => $row) {
             $items1 = array(
-                /*
-							"ordenItem"=> $row->item, //"2",
-							"adicionales"=> [],
-							"cantidadItem"=> $row->cantidad, //"1",
-							"descuentoItem"=> $row->descuento,
-							"importeIGVItem"=> str_replace(",","",number_format($row->igv_total,2)),//"7.63",
-							"montoTotalItem"=> str_replace(",","",number_format($row->importe,2)), //"50.00",
-							"valorVentaItem"=> str_replace(",","",number_format($row->importe,2)), //"42.37",
-							"descripcionItem"=> $row->descripcion,//"TRANSBORDO",
-							"unidadMedidaItem"=> $row->unidad,
-							"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
-                            "codigoDescuentoItem"=> "00",
-							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu,2)), //"42.3728813559",
-							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"50.0000000000",
-							"unidadMedidaComercial"=> "SERV",
-							"codigoAfectacionIGVItem"=> $row->afect_igv,
-							"porcentajeDescuentoItem"=> str_replace(",","",number_format(($row->descuento*100)/$row->pu,2)),
-							"codTipoPrecioVtaUnitarioItem"=> "01"
-                            */
                 "ordenItem" => $row->item, //"2",
                 "adicionales" => [],
                 "cantidadItem" => $row->cantidad, //"1",
@@ -4235,9 +4217,13 @@ class ComprobanteController extends Controller
                 "unidadMedidaComercial" => "SERV",
                 "codigoAfectacionIGVItem" => $row->afect_igv,                
                 "porcentajeDescuentoItem" => ($row->pu==0)?str_replace(",", "", $row->descuento):str_replace(",", "", ($row->descuento * 100) / $row->pu),    //str_replace(",", "", ($row->descuento * 100) / $row->pu),
-                "codTipoPrecioVtaUnitarioItem" => "01"
+            );
 
-
+            $items2 = array(                     
+                "codTipoPrecioVtaUnitarioItem" => "01",
+                "montoReferenciaItem" => "1",
+                "codigoTipoPrecioReferencial" => "02",
+                "montoReferencialUnitarioItem" => "1"
             );
 
             if ($row->afect_igv == '10') {
@@ -4246,9 +4232,22 @@ class ComprobanteController extends Controller
                 $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",", "", $row->valor_venta);
             }
 
-            $items[$index] = $items1;
+            // Combinar arrays cuando afect_igv es 21
+            if ($row->afect_igv == '21') {
+                $items[$index] = array_merge($items1, $items2);
+            } else {
+                $items[$index] = $items1;
+            }
+
+             $afect_igv = $row->afect_igv;
         }
- 
+  
+        if ($row->afect_igv == '21') {
+            $data["totalOPGratuitas"] = "1";
+            $data["codigoLeyenda"] = "1002";            
+            $data["descripcionLeyenda"] = "TRANSFERENCIA GRATUITA DE UN BIEN Y/O SERVICIO PRESTADO GRATUITAMENTE";
+        }
+  
 		$data["items"] = $items;
 		$data["anulado"] = false;
 		$data["declare"] = "0"; // 0->dechlare 1>declare instante
