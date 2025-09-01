@@ -25,11 +25,11 @@ begin
     v_anio := substring(p_fecha_fin from 7 for 4);
     
 	v_fecha_desde='01-01-'||v_anio;
-	v_fecha_hasta='31-12-'||v_anio;
+	--v_fecha_hasta='31-12-'||v_anio;
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' a.numero_cap, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres AS apellidos_nombre, SUM(v.monto) AS monto_total  ';
+	v_campos=' a.numero_cap, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres AS apellidos_nombre, SUM(v.monto) AS monto_total, a.id id_agremiado ';
 
 	v_tabla=' from valorizaciones v 
     inner JOIN conceptos c ON v.id_concepto = c.id 
@@ -40,12 +40,11 @@ begin
 	v_where = ' Where 1=1 
 	and v.id_modulo in (''2'',''6'')
 	and a.id_regional = ''5'' 
-	and a.id_situacion not in(''83'',''266'',''267'')
-	and a.id_ubicacion =''334''
+	and a.id_situacion not in(''83'',''265'',''266'',''267'')
 	and v.exonerado = ''0'' ';
 	
 	If p_fecha_fin<>'' Then
-	 v_where:=v_where||' and v.fecha >= '''||v_fecha_desde||''' and v.fecha <= '''||v_fecha_hasta||''' ';
+	 v_where:=v_where||' and v.fecha >= '''||v_fecha_desde||''' and v.fecha <= '''||p_fecha_fin||''' ';
 	End If;
 
 	If p_fecha_consulta<>'' Then
@@ -63,13 +62,13 @@ begin
 	EXECUTE (
 	    'SELECT count(*) FROM (
 	        SELECT 1 ' || v_tabla || v_where || 
-	        ' GROUP BY a.numero_cap, p.apellido_paterno, p.apellido_materno, p.nombres
+	        ' GROUP BY a.numero_cap, p.apellido_paterno, p.apellido_materno, p.nombres, a.id
 	    ) AS subquery'
 	) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 	
 	v_scad := 'SELECT ' || v_campos || v_col_count || v_tabla || v_where || 
-          ' GROUP BY a.numero_cap, apellidos_nombre ' || 
+          ' GROUP BY a.numero_cap, apellidos_nombre, a.id ' || 
           ' ORDER BY apellidos_nombre ASC ' ||
           CASE WHEN p_limit::Integer > 0 THEN 
                ' LIMIT ' || p_limit || ' OFFSET ' || p_pagina 

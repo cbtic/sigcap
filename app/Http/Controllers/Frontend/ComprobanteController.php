@@ -2466,12 +2466,14 @@ class ComprobanteController extends Controller
                                 $valorizaciones_model = new Valorizacione;
 
                                 $credipago = $valorizaciones_model->ActualizaValorizacionCredipago($id_val);
+
+                                $tipo_documento_b = $request->tipo_documento_b;
+                                if ($tipo_documento_b == "87") {
+                                    $liquidacion_ = $valorizaciones_model->ActualizaCredipagoLiqudacion($id_val);
+                                }
                             }
 
-                            $tipo_documento_b = $request->tipo_documento_b;
-                            if ($tipo_documento_b == "87") {
-                                $liquidacion_ = $valorizaciones_model->ActualizaCredipagoLiqudacion($id_val);
-                            }   
+                               
                         }
 
                         $Concepto = Concepto::where('id', $id_concepto)->get()[0];
@@ -2519,7 +2521,7 @@ class ComprobanteController extends Controller
 
 
 
-                            if ($codigo_concepto == '00006') {
+                            if ($codigo_concepto == '00006' && $pk_registro != "0") {
 
                                 $agremiado_cuota_upd = AgremiadoCuota::find($pk_registro);
 
@@ -2576,13 +2578,13 @@ class ComprobanteController extends Controller
 
                                 if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
                                     $agremiado->id_situacion = "73"; //habilitado
-                                    //$agremiado->id_usuario_modifica = $id_user;
+                                    $agremiado->id_usuario_actualiza = $id_user;
                                     $agremiado->save();
                                 }
                             } else {
                                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                                 $agremiado->id_situacion = "74"; //inhabilitado
-                                //$agremiado->id_usuario_modifica = $id_user;
+                                $agremiado->id_usuario_actualiza = $id_user;
                                 $agremiado->save();
                             }
                         }

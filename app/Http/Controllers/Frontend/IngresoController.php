@@ -374,6 +374,8 @@ class IngresoController extends Controller
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
         $total_fraccionar = $request->total;
+      
+        
         //print_r($total_fraccionar); exit();
 
         $comprobante_detalle = $request->comprobante_detalle;
@@ -498,6 +500,7 @@ class IngresoController extends Controller
         $id_user = Auth::user()->id;
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
+        $pk_registro = 0;
 
         $id_concepto = $request->id_concepto;
         $Exonerado = $request->Exonerado;
@@ -583,7 +586,7 @@ class IngresoController extends Controller
 
                 $valorizacion = new Valorizacione;
                 $valorizacion->id_modulo = 6;
-                $valorizacion->pk_registro = 0;
+                $valorizacion->pk_registro = $pk_registro;
                 $valorizacion->id_concepto = $id_concepto; //26412;
                 $valorizacion->id_agremido = $id_agremiado;
                 $valorizacion->id_persona = $id_persona;
