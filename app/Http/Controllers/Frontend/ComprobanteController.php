@@ -4219,6 +4219,7 @@ class ComprobanteController extends Controller
                 "porcentajeDescuentoItem" => ($row->pu==0)?str_replace(",", "", $row->descuento):str_replace(",", "", ($row->descuento * 100) / $row->pu),    //str_replace(",", "", ($row->descuento * 100) / $row->pu),
             );
 
+        
             $items2 = array(                     
                 "codTipoPrecioVtaUnitarioItem" => "01",
                 "montoReferenciaItem" => "1",
