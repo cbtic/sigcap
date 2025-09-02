@@ -4217,11 +4217,11 @@ class ComprobanteController extends Controller
                 "unidadMedidaComercial" => "SERV",
                 "codigoAfectacionIGVItem" => $row->afect_igv,                
                 "porcentajeDescuentoItem" => ($row->pu==0)?str_replace(",", "", $row->descuento):str_replace(",", "", ($row->descuento * 100) / $row->pu),    //str_replace(",", "", ($row->descuento * 100) / $row->pu),
+                "codTipoPrecioVtaUnitarioItem" => "01",
             );
 
         
-            $items2 = array(                     
-                "codTipoPrecioVtaUnitarioItem" => "01",
+            $items2 = array(                                     
                 "montoReferenciaItem" => "1",
                 "codigoTipoPrecioReferencial" => "02",
                 "montoReferencialUnitarioItem" => "1"
