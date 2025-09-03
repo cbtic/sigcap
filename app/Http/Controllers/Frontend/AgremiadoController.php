@@ -23,6 +23,7 @@ use App\Models\ConcursoInscripcione;
 use App\Models\Locale;
 use App\Models\Suspensione;
 use App\Models\Concepto;
+use App\Models\Empresa;
 use App\Models\Valorizacione;
 use Carbon\Carbon;
 use Auth;
@@ -1790,6 +1791,55 @@ class AgremiadoController extends Controller
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
         $agremiado = $agremiado_model->getRepresentante($tipo_documento,$numero_documento);
+
+		if(!$agremiado && $tipo_documento=="79"){
+/*
+			$persona_buscar = Persona::where("numero_ruc",$numero_documento)->where("estado","1")->first();
+            $dni = $persona_buscar->numero_documento;
+
+			if($dni){
+				$empresa = new Empresa;				
+				$empresa->ruc = $persona_buscar->numero_ruc ;
+				$empresa->nombre_comercial = $persona_buscar->desc_cliente_sunat;
+				$empresa->razon_social = $persona_buscar->desc_cliente_sunat;
+				$empresa->telefono = $persona_buscar->numero_celular;
+				$empresa->correo = $persona_buscar->correo;
+				$empresa->direccion = $persona_buscar->direccion;
+				$empresa->id_usuario_inserta = 1;
+				$empresa->save();				
+			}
+*/
+			$persona_buscar = Persona::where("numero_ruc", $numero_documento)->where("estado", "1")->first();
+
+			if ($persona_buscar) {
+				$dni = $persona_buscar->numero_documento ?? null;
+				
+				if ($dni) {
+					$empresa = new Empresa;                
+					$empresa->ruc = $persona_buscar->numero_ruc;
+					$empresa->nombre_comercial = $persona_buscar->desc_cliente_sunat ?? '';
+					$empresa->razon_social = $persona_buscar->desc_cliente_sunat ?? '';
+					$empresa->telefono = $persona_buscar->numero_celular ?? '';
+					$empresa->email = $persona_buscar->correo ?? '';
+					$empresa->direccion = $persona_buscar->direccion ?? '';
+					$empresa->id_usuario_inserta = 1;
+					$empresa->save();                
+				}
+			}
+
+			$agremiado = $agremiado_model->getRepresentante($tipo_documento,$numero_documento);
+			
+		}
+		//print_r($agremiado);
+		//exit();
+		
+
+		/*
+		if( $agremiado && $tipo_documento=="79"){  //RUC
+			echo($agremiado)
+		}
+			*/
+
         $array["sw"] = $sw;
         $array["agremiado"] = $agremiado;
         echo json_encode($array);
