@@ -421,7 +421,8 @@ class OperacionController extends Controller
 		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
 		
 		//RESPUESTA
-		$descRespuesta = "TRANSACCION PROCESADA OK";
+		//$descRespuesta = "TRANSACCION PROCESADA OK";
+		$descRespuesta = "TRANSACCIÓN PROCESADA OK";
 		$data_output["CodigoErrorOriginal"] = "000"; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
 		
 		if(count($deuda_pendiente)==0){
@@ -429,7 +430,8 @@ class OperacionController extends Controller
 			$data_output["CodigoErrorOriginal"] = "022";
 		}
 
-		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
+		//$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
+		$data_output["DescRespuesta"] = $this->mb_sprintf_pad($descRespuesta, 30);
 
 		$data_output_detalle = array();
 		$output_detalle = "";
@@ -528,6 +530,34 @@ class OperacionController extends Controller
 	
 		return $this->operacion("ea",$request);
 		
+	}
+
+	function mb_sprintf_pad($string, $length, $padType = STR_PAD_RIGHT, $encoding = "UTF-8") {
+		// cantidad de caracteres visibles
+		$lenChars = mb_strlen($string, $encoding);
+
+		// cantidad de bytes reales
+		$lenBytes = strlen($string);
+
+		// diferencia por caracteres multibyte
+		$diff = $lenBytes - $lenChars;
+
+		// ancho ajustado para sprintf
+		$adjustedLength = $length + $diff;
+
+		switch ($padType) {
+			case STR_PAD_LEFT:
+				return sprintf("%" . $adjustedLength . "s", $string);
+			case STR_PAD_BOTH:
+				// centrado: calculamos manualmente
+				$totalPad = $length - $lenChars;
+				$left  = floor($totalPad / 2);
+				$right = $totalPad - $left;
+				return str_repeat(" ", $left) . $string . str_repeat(" ", $right);
+			case STR_PAD_RIGHT:
+			default:
+				return sprintf("%-" . $adjustedLength . "s", $string);
+		}
 	}
 
 	//public function req_pago(Request $request){ 
@@ -669,7 +699,7 @@ class OperacionController extends Controller
 		$numDocs = count($actualiza_pago);
 		$suma_importes = 0;
 		$correlativo = $this->generarCodigoUnico6();
-		//$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
+		//$suma_longitud = (174*count($actualiza_pago))+112;//982//634;
 		$suma_longitud = 634;
 		$numOperacionERP = 89063;
 
@@ -696,8 +726,12 @@ class OperacionController extends Controller
 			}
 		}
 
-		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
-		
+		//$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripci�n del c�digo en la l�nea anterior (P04)
+		//$data_output["DescRespuesta"] = $this->mb_str_pad($descRespuesta, 30, " "); //30-descripci�n del c�digo en la l�nea anterior (P04)
+		//$data_output["DescRespuesta"] = sprintf("%-30s", $descRespuesta);
+		$data_output["DescRespuesta"] = $this->mb_sprintf_pad($descRespuesta, 30);
+
+		//print_r($data_output);exit();
 		$data_output_detalle = array();
 		$output_detalle = "";
 		//print_r($actualiza_pago);exit();
