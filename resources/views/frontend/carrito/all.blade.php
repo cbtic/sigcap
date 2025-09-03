@@ -250,6 +250,35 @@ div {
     color:#FFFFFF!important
 }
 
+.tit_1{
+    font-weight: 300;
+    /*line-height: 110%;*/
+    line-height: 220%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 20px;
+    padding-top:30px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+
+}
+
+.tit_2{
+    font-weight: 300;
+    line-height: 110%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 42px;
+    padding-top:30px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+}
 
 </style>
 
@@ -469,8 +498,14 @@ div {
 	</section>
 	
 	<section class="seccion-sidebar" style="visibility: visible;">
+
+            <div class="tit_1">Situacion : </div>
+            <div class="tit_2">Habilitado</div>
+            <br>
+
 		<div class="card" style="position: absolute; top: 173.203px;">
-			<h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+			
+            <h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
 				Información
 			</h4>
 			<div class="card-body">

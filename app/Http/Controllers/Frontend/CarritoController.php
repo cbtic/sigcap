@@ -334,14 +334,16 @@ class CarritoController extends Controller
 
 		if($valorizacion_id==0){
 			$usuario = User::find($pedido->usuario_id);
-			$carrito_model = new Carrito;
+			$carrito_model = new Valorizacione;
 			
 			$p[]=$usuario->id_persona;
 			$p[]="c";
-			$prontopago = $carrito_model->genera_prontopago($p);
+			$prontopago = $carrito_model->genera_prontopago($p)[0];
+			$id_factura = $prontopago->id_comprobante;
+			//echo $id_factura;exit();
 
 		}else{
-			$this->factura($pedido);
+			$id_factura = $this->factura($pedido);
 		}
 		
 		//$id_factura = $this->factura($pedido);
