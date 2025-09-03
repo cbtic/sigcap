@@ -144,7 +144,7 @@
 			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
 
-		<div class="row" style="width: 100%;">
+        <div class="row" style="width: 100%;">
             <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
                 <div class="card">
                     <div class="card-body">

@@ -93,6 +93,8 @@ Route::middleware(['auth'])->group(function () {
     //Route::get('checkout', [PagoController::class, 'checkout'])->name('checkout');
     //Route::post('checkout/pagar', [PagoController::class, 'pagar'])->name('checkout.pagar');
     Route::post('carrito/finalizar', [CarritoController::class, 'finalizar'])->name('carrito.finalizar');
+    Route::get('carrito/show/{id}', [CarritoController::class, 'show'])->name('carrito.show');
+    Route::get('carrito/ver_comprobante_pdf/{id}', [CarritoController::class, 'ver_comprobante_pdf'])->name('carrito.ver_comprobante_pdf');
 });
 
 //Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
