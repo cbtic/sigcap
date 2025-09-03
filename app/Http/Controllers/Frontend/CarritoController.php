@@ -37,7 +37,12 @@ class CarritoController extends Controller
 
 		$carrito_model = new Carrito;
 		$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
-		return view('frontend.carrito.all',compact('carrito_deuda'));
+		
+		$p[]=$id_persona;
+		$p[]="v";
+		$prontopago = $carrito_model->genera_prontopago($p);
+
+		return view('frontend.carrito.all',compact('carrito_deuda','prontopago','id_persona'));
 
     }
 
@@ -153,6 +158,83 @@ class CarritoController extends Controller
 		return redirect('/carrito/detalle')->with('success', 'Producto agregado al carrito');
     }
 
+	public function agregar_prontopago(Request $request)
+    {
+		
+        $request->validate([
+            'valorizacion_id' => 'required|exists:valorizaciones,id',
+            'cantidad'    => 'required|integer|min:1',
+        ]);
+		
+        $usuario = Auth::user();
+				
+		$carrito_model = new Valorizacione;
+
+		$p[]=$request->valorizacion_id;
+		$p[]="v";
+		$prontopago = $carrito_model->genera_prontopago($p)[0];
+		
+		//print_r($prontopago);
+		//exit();
+		
+        // 1. Buscar o crear carrito del usuario (o token invitado)
+        $carrito = Carrito::firstOrCreate(
+            ['usuario_id' => $usuario->id],
+            [
+                'subtotal'       => 0,
+                'descuento_total'=> $prontopago->descuento,
+                'impuesto_total' => 0,
+                'envio_total'    => 0,
+                'total_general'  => 0,
+            ]
+        );
+		//exit();
+        // 2. Obtener producto y precio
+
+		//$valorizacion = $carrito_model->getCarritoDeudaById($request->valorizacion_id)[0];
+        $precio   = $prontopago->pu;
+		
+        // 3. Verificar si ya existe item en el carrito (misma variante)
+        $item = CarritoItem::where('carrito_id', $carrito->id)
+            	->where('valorizacion_id', 0)
+            	->first();
+
+        if ($item) {
+            // Si ya existe, actualizar cantidad y total
+            /*
+			$item->cantidad += $request->cantidad;
+            $item->total = $item->cantidad * $item->precio_unitario;
+            $item->save();
+			*/
+			
+        } else {
+            // Si no existe, crear nuevo item
+            $item = CarritoItem::create([
+                'carrito_id'          => $carrito->id,
+                'valorizacion_id'     => 0,
+                'fecha_vencimiento'	  => $prontopago->fecha,
+                'nombre'              => $prontopago->descripcion,
+                'precio_unitario'     => $precio,
+                'cantidad'            => $prontopago->cantidad,
+                'total'         	  => $prontopago->total,
+            ]);
+			//print_r($item);
+        }
+		//exit();
+        // 4. Recalcular totales del carrito
+        $this->recalcularTotalesProntoPago($carrito);
+
+		/*
+        return response()->json([
+            'mensaje' => 'Producto agregado al carrito',
+            'carrito' => $carrito->load('items'),
+        ]);
+		*/
+		
+		// Redirigir al detalle del carrito con un mensaje
+		return redirect('/carrito/detalle')->with('success', 'Producto agregado al carrito');
+    }
+
     /**
      * Recalcular totales del carrito
      */
@@ -162,6 +244,18 @@ class CarritoController extends Controller
 
         $carrito->subtotal       = $subtotal;
         $carrito->descuento_total= 0; // luego se aplica cupón
+        $carrito->impuesto_total = 0; // si manejas IGV
+        $carrito->envio_total    = 0; // si hay costo de envío
+        $carrito->total_general  = $subtotal;
+        $carrito->save();
+    }
+
+	private function recalcularTotalesProntoPago(Carrito $carrito)
+    {
+        $subtotal = $carrito->items()->sum('total');
+
+        $carrito->subtotal       = $subtotal;
+        //$carrito->descuento_total= 0; // luego se aplica cupón
         $carrito->impuesto_total = 0; // si manejas IGV
         $carrito->envio_total    = 0; // si hay costo de envío
         $carrito->total_general  = $subtotal;
@@ -226,12 +320,24 @@ class CarritoController extends Controller
 				'cantidad'         => $item->cantidad,
 				'total'            => $item->total,
 			]);
+			$valorizacion_id = $item->valorizacion_id;
 		}
 
 		// 5. Eliminar carrito
 		$carrito->delete();
 
-		$this->factura($pedido);
+		if($valorizacion_id==0){
+			$usuario = User::find($pedido->usuario_id);
+			$carrito_model = new Carrito;
+			
+			$p[]=$usuario->id_persona;
+			$p[]="c";
+			$prontopago = $carrito_model->genera_prontopago($p);
+
+		}else{
+			$this->factura($pedido);
+		}
+		
 		//print_r($data);exit();
 		return view('frontend.carrito.pedido',compact('data','purchaseNumber','pedido'));
 

@@ -367,6 +367,11 @@ div {
 
 
         <div class="form-group form-group-btn form-navigation">
+            
+            @if($prontopago[0]->msg=='ok')
+            <a href="javascript:void(0);" class="btn btn-secondary pull-left" style="float:left" onclick="agregarProntoPagoAlCarrito({{ $id_persona }})">GENERAR PRONTOPAGO</a>
+            @endif
+
             <a href="/carrito/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
         </div>
         
@@ -424,6 +429,15 @@ div {
         form.action = '/carrito/agregar'; 
         form.submit();
     }
+
+    function agregarProntoPagoAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.action = '/carrito/agregar_prontopago'; 
+        form.submit();
+    }
+
 
 </script>
 

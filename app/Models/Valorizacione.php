@@ -798,6 +798,10 @@ class Valorizacione extends Model
         return $data;
     }
 
+    public function genera_prontopago($p){
+		return $this->readFunctionPostgres('sp_genera_prontopago',$p);
+    }
+
     public function generarReporteDeuda($fecha_cierre, $fecha_consulta, $id_concepto)
     {
         $cursorName = "resultado_cursor";
