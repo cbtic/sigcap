@@ -677,13 +677,13 @@ class OperacionController extends Controller
 			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
 		}
 		if($opcion=="an"){
-			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0200";//4
+			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
 		}
 		if($opcion=="ep"){
 			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0410";//4
 		}	
 		if($opcion=="ea"){
-			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
+			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0410";//4
 		}
 
 		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
@@ -715,7 +715,8 @@ class OperacionController extends Controller
 		$correlativo = $this->generarCodigoUnico6();
 		//$suma_longitud = (174*count($actualiza_pago))+112;//982//634;
 		$suma_longitud = 634;
-		$numOperacionERP = 89063;
+		//$numOperacionERP = 89063;
+		$numOperacionERP = 0;
 
 		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
 		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-C�digo creado por la Empresa,c�digo �nico por transacci�n, codigo generado 
