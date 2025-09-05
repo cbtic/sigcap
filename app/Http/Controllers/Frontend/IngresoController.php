@@ -1042,6 +1042,12 @@ class IngresoController extends Controller
 
     public function reporte_deudas_total_pdf($numero_cap, $id_concepto){
 
+        ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '300');
+        
         if($id_concepto==0){$id_concepto='';}
 		
 		$caja_ingreso_model=new CajaIngreso;
