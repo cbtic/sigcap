@@ -421,8 +421,8 @@ class OperacionController extends Controller
 		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
 		
 		//RESPUESTA
-		//$descRespuesta = "TRANSACCION PROCESADA OK";
-		$descRespuesta = "TRANSACCIÓN PROCESADA OK";
+		$descRespuesta = "TRANSACCION PROCESADA OK";
+		//$descRespuesta = "TRANSACCIÓN PROCESADA OK";
 		$data_output["CodigoErrorOriginal"] = "000"; //3-C�digo de respuesta, utilizar los c�digos de la hoja "RESPONSE CODE".
 		
 		if(count($deuda_pendiente)==0){
@@ -672,6 +672,20 @@ class OperacionController extends Controller
 		
 		//CONSTANTES
 		$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
+
+		if($opcion=="pg"){
+			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
+		}
+		if($opcion=="an"){
+			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0200";//4
+		}
+		if($opcion=="ep"){
+			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0410";//4
+		}	
+		if($opcion=="ea"){
+			$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
+		}
+
 		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
 		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
 		
