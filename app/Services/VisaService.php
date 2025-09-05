@@ -81,9 +81,10 @@ class VisaService
         $response = Http::withHeaders([
             'Authorization' => $token,
             'Content-Type' => 'application/json',
-        ])->post($this->config['url_auth'] . $this->config['merchant_id'], $data);
+        ])->post($this->config['url_authorization'] /*. $this->config['merchant_id']*/, $data);
 
-        return $response->json();
+        //return $response->json();
+        return json_decode($response->body());
     }
 
     public function generatePurchaseNumber()

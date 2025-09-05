@@ -97,78 +97,8 @@
 
 /***************************/
 
-.btn-linear:hover {
-    color:#FFFFFF!important
-}
 
 </style>
-
-<script type="text/javascript">
-
-const transactionId = '123456789';
-const merchantCode = 'MERCHANT123';
-const orderNumber = 'ORDER001';
-const merchantBuyerId = 'mc1991'; 
-const dateTimeTransaction = '1670258741603000'; 
-
-const iziConfig = {
-  config: {
-    transactionId: transactionId,//'{TRANSACTION_ID}',
-    action: 'pay',
-    merchantCode: merchantCode,//'{MERCHANT_CODE}',
-    order: {
-      orderNumber: orderNumber,//'{ORDER_NUMBER}',
-      currency: 'PEN',
-      amount: '1.50',
-      processType: 'AT',
-      merchantBuyerId: merchantBuyerId,//'{MERCHANT_CODE}',
-      dateTimeTransaction: dateTimeTransaction,//'1670258741603000',
-    },
-    billing: {
-      firstName: 'Juan',
-      lastName: 'Wick Quispe',
-      email: 'jwickq@izi.com',
-      phoneNumber: '958745896',
-      street: 'Av. Jorge Chávez 275',
-      city: 'Lima',
-      state: 'Lima',
-      country: 'PE',
-      postalCode: '15038',
-      documentType: 'DNI',
-      document: '21458796',
-    },
-    render: {
-      typeForm: 'pop-up'
-   },
-  },
-};
-
-    try {
-
-        const checkout = new Izipay({ config: iziConfig });
-
-    } catch ({Errors, message, date}) {
-
-        console.log({Errors, message, date});
-
-    }
-
-    
-    const callbackResponsePayment = (response) => console.log(response);
-
-    try {
-    checkout &&
-        checkout.LoadForm({
-        authorization: 'TU_TOKEN_SESSION',
-        keyRSA: 'KEY_RSA',
-        callbackResponse: callbackResponsePayment,
-        });
-    } catch ({Errors, message, date}) {
-    console.log({Errors, message, date});
-    }
-    
-
-</script>
 
 @extends('frontend.layouts.app_carrito')
 
@@ -194,219 +124,437 @@ const iziConfig = {
 
 
 
-<div id="pageCarrito" class="container">
+
+
+<div id="pageFormularios" class="container">
 	
-	<section class="seccion-principal seccion-carrito">
+	<section class="seccion-principal seccion-formularios">
 		<h1 class="titulo">
-			
 			<div class="wizard">
 				<div class="item active"><i class="icon fas fa-search" aria-hidden="true" title="Buscar"></i></div>
 				<div class="item active"><i class="icon fas fa-edit" aria-hidden="true" title="Completar datos"></i></div>
-				<div class="item active"><i class="icon fas fa-shopping-cart" aria-hidden="true" title="Carrito"></i></div>
-				<div class="item"><i class="icon fas fa-money-bill" aria-hidden="true" title="Medios de Pago"></i></div>
+				<div class="item"><i class="icon fas fa-shopping-cart" aria-hidden="true" title="Carrito"></i></div>
+				<div class="item"><i class="icon fa-money-bill" aria-hidden="true" title="Medios de Pago"></i></div>
 				<div class="item"><i class="icon fas fa-receipt" aria-hidden="true" title="Resumen de pago"></i></div>
 			</div>
 			
+			<span class="titulo-entidad">Pedido</span>
 			
-			Carrito de compras
-			<small class="descriptivo">
-				<span class="carrito-cantidad">1</span>
-				<span class="carrito-descripcion">
-				
-					artículo seleccionado
-				
-				
-				</span>
-			</small>
-			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
+			<small class="descriptivo">Información del pago</small>
+			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
-		<div class="card">
-            
-            <!--
-            <div class="form-group" style="margin-bottom:0px">
-                <a class="btn btn-secondary" style="display:block;float:right" href="/carrito" id="add-pay">Agregar otro pago</a>
-            </div>
-            -->
 
-			<div class="card-body">
-					
-				<form id="fEditarItem" name="fEditarItem" action="/operaciones/editarItemCarrito.action" method="post" novalidate="">
-					<input type="hidden" name="idItem" value="" id="idItem">
-					<input type="hidden" name="accionItem" value="insertar" id="accionItem">
-					<div id="divTablaCarrito">
-    
-    <div class="container">
-		
-        <div class="tablaflex tablaflex-carrito" id="tablaCarrito">
-			
-        <div class="thead">
-				<div class="row">
-					<div class="col col-num">
-						#
-						
-					</div>
-					<div class="col col-tasa">Concepto</div>
-                    <div class="col col-entidad">Vencimiento</div>
-					<div class="col col-costo">Precio</div>
-                    <div class="col col-costo">Cantidad</div>
-					<div class="col col-documento">Total</div>
-					<div class="col col-opciones">Eliminar</div>
-				</div>
-			</div>
-			<input type="hidden" name="toRedirect" value="" id="toRedirect">
-			<input type="hidden" name="idItemToRedirect" value="" id="idItemToRedirect">
-			
-			
-			<div class="tbody">
+        <div class="row" style="width: 100%;">
+            <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <?php 
 
-				
-				
-					<?php 
-                    if($carrito_items){
-                    foreach($carrito_items as $key=>$row){?>
-					
-					<div class="row">
-						<div class="col col-num">{{$key+1}}</div>
-						<div class="col col-tasa">{{$row->nombre}}</div>
-                        <div class="col col-entidad"><span class="tag tag-list" style="width:100%" title="" data-toggle="tooltip" data-original-title="RENIEC">{{$row->fecha_vencimiento}}</span></div>
-						<div class="col col-costo">{{$row->precio_unitario}}</div>
-						<div class="col col-documento">{{$row->cantidad}}</div>
-                        <div class="col col-documento">{{$row->total}}</div>
-						<div class="col col-opciones">
-							<div class="responsive">
-								<button type="button" class="opciones-carrito close">
-									<i class="item-cerrar icon icon-pagalo-close"></i>
-									<i class="item-menu icon icon-pagalo-options"></i>
-									<span class="sr-only">Eliminar</span>
-								</button>
-							</div>
-							<div class="acciones">
-                                <!--
-								<a href="javascript:void(0)" onclick="faccionItem(0,'editar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Editar">
-									<i class="icon icon-pagalo-edit" aria-hidden="true"></i></a>
-                                -->
-								<a href="javascript:void(0)" onclick="faccionItem(0,'eliminar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Eliminar">
-									<i class="icon fa fa-trash" aria-hidden="true"></i></a>
-								<!--
-                                <a href="javascript:void(0)" onclick="faccionItem(0,'duplicar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Duplicar">
-									<i class="icon icon-pagalo-duplicate" aria-hidden="true"></i></a>
-                                -->
-							</div>
-						</div>
-						<div class="col col-id">0</div>
-					</div>
-					<?php 
-                        }
-                        }else{
+                        if (isset($data->dataMap)) { //echo "entra 1";
+                            if ($data->dataMap->STATUS == "Authorized") { //echo "entra 2";
+                                $c = preg_split('//', $data->dataMap->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
+                                ?>
+
+                                    <div class="alert alert-success" role="alert">
+                                        <?php echo $data->dataMap->ACTION_DESCRIPTION;?>
+                                    </div>
+
+                                    <div class="form-section current">		
+                                    <div class="input-group mb-3 flex-100">
+                                        <input type="hidden" name="fieldsForm[0].datoEnvio" value="codConcepto" data-parsley-group="block-0">
+                                        <div class="floating-label has-value">
+                                            <label for="codConcepto">Número de pedido</label>
+                                            <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$purchaseNumber}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="input-group mb-3 flex-100">
+                                        <input type="hidden" name="fieldsForm[1].datoEnvio" value="costoTasa" data-parsley-group="block-0">
+                                        <div class="floating-label has-value">	
+                                            <label for="costoTasa">Fecha y hora del pedido</label>
+                                            <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $c[4].$c[5]."/".$c[2].$c[3]."/".$c[0].$c[1]." ".$c[6].$c[7].":".$c[8].$c[9].":".$c[10].$c[11]; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+                                        </div>		
+                                    </div>
+                                    <!--
+                                    <div class="row">
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 pb-0">
+                                    -->
+                                    <div class="input-group mb-3">
+                                        
+                                        <input type="hidden" name="fieldsForm[2].datoEnvio" value="tipoDocumento" data-parsley-group="block-0">
+                                        <div class="floating-label has-value">								
+                                            <label for="tipoDocumento">Tarjeta</label>
+                                            <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $data->dataMap->CARD." (".$data->dataMap->BRAND.")"; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+                                        </div>
+                                    </div>
+                                    <!--
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 pb-0">
+                                    -->
+                                    <div class="input-group mb-3">
+                                        <input type="hidden" name="fieldsForm[4].datoEnvio" value="cantidadTasa" data-parsley-group="block-0">
+                                        <div class="floating-label has-value">
+                                            <label for="cantidadTasa">Importe pagado</label>
+                                            <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $data->order->amount. " ".$data->order->currency; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+                                        </div>
+                                    </div>
+                                    <!--
+                                    </div>
+                                    </div>
+                                    -->
+
+                            </div>
+                            
+                                    <?php
+                            }
+                            } else {
+                            //$c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
                             ?>
-                            <p>No existen items de pago generados.</p>
-                            <?php 
-                        }
-                    ?>
-
-				
-			</div>
-			<!-- <div class="thead">
-				<div class="row">
-					<div class="col">
-						Total a pagar: S/ 41.00
-					</div>
-				</div>
-			</div> -->
-		</div>
-	</div>
-
-	<!--<p class="alert alert-sm alert-info alert-horario">Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente.</p>-->
-
-    <p class="alert alert-sm alert-info alert-horario">Todos los pagos son realizados a través de un servicio de pago en línea confiable con los diferentes metodos de pago.</p>
-	<!--
-	<div class="carrito-terminos">
-		<div id="alertTerminos" class="alert alert-sm alert-warning alert-terminos" style="display: none;">Debes aceptar los términos y condiciones para continuar con el pago.</div>
-		<div id="terminos">
-			<label class="chk-label"><input type="checkbox" id="chk-terminos" data-parsley-multiple="chk-terminos" data-parsley-id="10"> <div class="chk-terminos-text">Aceptar los <span class="link" data-toggle="modal" data-target="#modalTerminos">Términos y Condiciones</span></div></label>
-		</div>
-	</div>
-    -->
-	
-	<h6 class="total-carrito">
-		Total a pagar: S/ <?php echo $total_general?>
-	</h6>
-
-<script type="text/javascript">
-    /*
-	$(document).ready(function(){
-		// var mobileQuery = 992;
-		// if($(window).width() < mobileQuery) {
-			$("body").on("click",".tablaflex-carrito .item-menu", function(){
-				$(".tablaflex-carrito .activo").removeClass("activo");
-				$(this).parents(".col-opciones").addClass("activo");
-			});
-
-			$("body").on("click",".tablaflex-carrito .item-cerrar", function(){
-				$(this).parents(".col-opciones").removeClass("activo");
-			});
-		// }
-	});
-    */
-</script>
-
-<input type="hidden" name="maxOper" value="9" id="maxOper">
-<input type="hidden" name="numOper" value="1" id="numOper">
-<input type="hidden" name="codMoneda" value="1" id="codMoneda">
 
 
-					</div>
-				</form>
+                            <?php
+                                }
+                            ?>
 
-                <a class="btn btn-secondary" href="/carrito" id="add-pay">AGREGAR OTRO PAGO</a>
-                
-                <!--
-                btn-linear
-				<form id="fGenTicket" name="fGenTicket" action="/operaciones/genTicketGlobal.action" method="post" novalidate="">				
-				<div class="botones-carrito">
-					<div class="form-group-btn">
-						<button type="button" class="btn btn-primary" id="btnGenTicket">Pagar</button>
-					</div>
-				</div>
-				</form>
-                -->
-                <br><br>
-                <?php if($total_general>0){?>
-                <input type="checkbox" name="ckbTerms" id="ckbTerms" onclick="visaNetEc3()"> 
-                <label for="ckbTerms">Acepto los <a href="#" target="_blank">Términos y condiciones</a></label>
+                    </div>
+                </div>
+            </div>
 
-                <!--<form id="frmVisaNet" action="http://localhost/PagoWebPhp/finalizar.php?amount=<?php //echo $total_general;?>&purchaseNumber=<?php //echo $purchaseNumber?>">-->
-                <form id="frmVisaNet" action="{{ url('carrito/finalizar') }}" method="POST">    
-                    @csrf
-                    <script src="<?php echo $urlJs?>" 
-                        data-sessiontoken="<?php echo $sesion;?>"
-                        data-channel="web"
-                        data-merchantid="<?php echo $merchantId?>"
-                        data-merchantlogo="http://127.0.0.1:8000/img/logo-sin-fondo2.png"
-                        data-purchasenumber="<?php echo $purchaseNumber;?>"
-                        data-amount="<?php echo $total_general; ?>"
-                        data-expirationminutes="5"
-                        data-timeouturl="http://127.0.0.1:8000/carrito"
-                    ></script>
-                    <input type="hidden" name="amount" value="{{ $total_general }}">
-                    <input type="hidden" name="purchaseNumber" value="{{ $purchaseNumber }}">
-                </form>
-                <?php }?>
+            <div class="col-lg-8 col-md-8 col-sm-8 pb-0">
+                <div class="card">
+                    <div class="card-body">
+                                
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div id="" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div id="" class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        @if ($factura->tipo != 'TK')
+                                                        <div class="divlogoimpresora" style="width:100%">
+                                                            <img class="logoimpresora" src="/img/logo-sin-fondo.png" style="width:200px">
+                                                        </div>
+                                                        <h3>
+                                                            COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA
+                                                        </h3><br>
+                                                        @endif
+                                                        <p>AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA</p>
+                                                        <p>RUC 20172977911</p>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <strong>
+                                                            <p>
+                                                                @switch($factura->tipo)
+                                                                @case('FT')
+                                                                <p> FACTURA ELECTRONICA</p>
+                                                                @break
+
+                                                                @case('BV')
+                                                                <p>BOLETA ELECTRONICA</p>
+                                                                @break
+
+                                                                @case('TK')
+                                                                <p>BOLETA ELECTRONICA</p>
+                                                                @break
+
+                                                                @case('FT')
+                                                                <p>FACTURA ELECTRONICA</p>
+                                                                @break
+
+                                                                @case('NC')
+                                                                <p>NOTA DE CREDITO</p>
+                                                                @break
+
+                                                                @case('ND')
+                                                                <p>NOTA DE DEBITO</p>
+                                                                @break
+
+                                                                @default
+                                                                <p>No esta identificado el tipo de documento</p>
+                                                                @endswitch
+                                                            </p>
+                                                        <h3 class="divlogoimpresora">
+                                                           {{ $factura->serie }}-{{ $factura->numero }}
+                                                        </h3>
+
+                                                            <p class="d-print-none"><a href="/carrito/ver_comprobante_pdf/{{ $factura->id }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
+                                                           
+                                                        </strong>
+
+                                                    </div>
+													
+													<?php 
+														$modeda = "S/";
+														if($factura->moneda_id==1)$modeda = "$.";
+													
+														if($factura->nro_guia!=""){
+													?>
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <strong>
+                                                            <p>
+                                                                <p> GUIA DE REMISIÓN</p>
+                                                            </p>
+                                                            <p>
+															 
+															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">{{ $factura->serie_guia }}-{{ $factura->nro_guia }}</a>
+															
+															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">&nbsp;&nbsp;Ver Guia
+															<i style="float:left;margin-left:25px;padding-top:3px;cursor:pointer;color:#007bff" class="fas fa-search"></i>
+															</a>
+															
+															</p>
+                                                        </strong>
+
+                                                    </div>
+													<?php 
+														}
+													?>
+													
+                                                                                                    
+                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <table>
+                                                        <tbody>
+                                                        <tr>
+                                                        <td>RUC/DNI:</td>
+                                                        <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
+                                                        </tr>
+                                                        <div class="separador">&nbsp;</div>
+                                                        <tr>
+                                                        <td>ADQUIRIENTE:</td>
+                                                        <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>DIRECCION:</td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>FECHA DE EMISIÓN:</td>
+                                                        <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>CAP :</td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
+                                                        </tr>
+
+                                                        <tr id="trdocmodi">
+                                                        <td>Documento que modifica :</td>
+                                                        <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
+                                                                @case('FT')
+                                                                 FACTURA ELECTRONICA  
+                                                                @break
+
+                                                                @case('BV')
+                                                                BOLETA ELECTRONICA   
+                                                                @break
+
+                                                                    
+                                                                @default
+                                                                <p>No esta identificado el tipo de documento</p>
+                                                                @endswitch
+
+                                                                {{ $ref_comprobante}}</span></td>
+                                                        </tr>
+                                                        
+                                                        <tr id="trdocmodi2">
+                                                            <td>Motivo o sustento :</td>
+                                                            <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
+                                                        </tr>    
+
+                                                        </tbody>
+                                                        </table>
+                                                               
+                                                        </div>
+                                                    <div class="separador">&nbsp;</div>
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <p> </p>
+                                                    </div>
+                                                    <div class="separador">&nbsp;</div>
+                                                </div>
+                                           
+ 
+                                <div id="" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div >
+                                                    <table id="tblProductos" class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center" width="8%">Cant.</th>
+                                                                <th width="37%">Descripción</th>
+                                                                <th class="text-right" width="15%">P.Unitario</th>
+                                                                <th class="text-right" width="10%">Dcto.</th>
+                                                                <!--<th class="text-right" width="10%">V.Unitario</th>   -->                                                                                                                     
+                                                                <th class="text-right" width="15%">Monto</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($factura_detalles as $factura_detalle)
+                                                            <tr id="fila{{ $loop->iteration }}">
+                                                                <td class="text-center">
+                                                                    {{ $factura_detalle->cantidad }} 
+                                                                    
+                                                                    @if($factura_detalle->id_concepto ==="26475")
+                                                                        {{" Revisiones "}}
+                                                                    @endif
+                                                                    
+                                                            
+                                                                    
+                                                                
+                                                                </td>
+                                                                <td class="text-left">
+                                                                    {{ $factura_detalle->descripcion }}
+                                                                </td>
+
+                                                                <td class="text-right">{{ number_format($factura_detalle->precio_venta,2)  }}
+                                                                </td>
+
+                                                                <td class="text-right">{{ $factura_detalle->descuento }}
+                                                                </td>
+<!--
+                                                                <td class="text-right">{{ number_format($factura_detalle->pu,2) }}
+                                                                </td>
+                                                    -->                                                                                                                     
+                                                                <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                            <tr id="fila_sub_total">
+                                                                <td class="text-right" colspan="4">
+                                                                    @if($factura->impuesto!=0)
+                                                                        {{"  OP.GRAVADAS "}}
+                                                                    @else
+                                                                        {{"  OP.INAFECTAS "}}
+                                                                    @endif                                                        
+                                                                <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
+                                                            </tr>
+                                                            <tr id="fila_igv">
+                                                                <td class="text-right" colspan="4">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right">{{ number_format($factura->impuesto,2) }}</td>
+                                                            </tr>
+                                                            <tr id="fila_total">
+                                                                <td class="text-right" colspan="4">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right"><span class="resaltado">{{ number_format($factura->total,2) }}</span></td>
 
 
-			</div>
-		</div>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--table-responsive-->
+                                            </div>
+                                            <!--card-body-->
+                                        </div>
+                                        <!--card-->
+                                    </div>
+                                    
+                                    <div class="separador">&nbsp;</div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
+                                    </div>
+                                    @if($factura->tipo_operacion =="1001")
+                                    <div class="separador">&nbsp;</div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                        <table>
+                                        <tbody>
+                                        <tr>
+                                        <td style="vertical-align: top;">BENEFICIARIO :</td>
+                                        <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
+                                        </tr>
+                                        <div class="separador">&nbsp;</div>
+                                        <tr>
+                                        <td style="vertical-align: top;">CUENTAS:</td>
+                                        <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
+                                        </tr>
+                                        <tr>
+                                        <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
+                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                    @endif
+
+                                
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
+                                    
+                                        <div class="card">
+
+                                            <div class="card-header">
+                                                <strong>                                            
+                                                    Información del crédito
+                                                </strong>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">                                                   
+                                                    <table id="tblcuotas" class="table table-hover" >
+                                                        
+                                                        <thead>                                                            
+                                                            <tr>
+                                                                <th class="text-center" width="8%">item</th>
+                                                                <th width="37%">Monto</th>
+                                                                <th width="37%">Fecha Venc.</th>                                                                    
+                                                            </tr>
+                                                        </thead>
+                                                        
+                                                        <tbody>
+                                                            @foreach ($cronograma as $cronograma_v)
+                                                            <tr id="fila{{ $loop->iteration }}">
+                                                                <td class="text-center">
+                                                                    {{ $cronograma_v->item }} 
+                                                                    
+                                                                
+                                                                </td>
+                                                                <td class="text-left">
+                                                                    {{ $cronograma_v->monto }} 
+                                                                </td>
+
+                                                                <td class="text-left">
+                                                                    {{ date('d-m-Y',strtotime($cronograma_v->fecha_vencimiento)) }} 
+
+
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="separador">&nbsp;</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
+                                    </div>
+
+                                    <div class="separador">&nbsp;</div>
+                                    <hr style="width:90%", size="3", color=black>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
+                                            utilizando su clave SOL</p>
+
+                                    </div>
+
+                                    <?php } ?>
+                                </div>
+
 	</section>
 	
-	<section class="seccion-sidebar" style="visibility: visible;">
-		<div class="card" style="position: absolute; top: 218.203px;">
-			<h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i> Información</h4>
-			<div class="card-body">
-				<h6 class="subtitulo">¿Algo más que deba saber?</h6>
-				<p>Recuerda revisar bien los datos ingresados y aceptar los términos y condiciones antes de proceder con el pago.</p>
-				<p class="alert alert-sm alert-info alert-horario">Todos los pagos son realizados a través de un servicio de pago en línea confiable con los diferentes metodos de pago.</p>
-			</div>
-		</div>
+	<section class="seccion-sidebar">
+		
 	</section>
 </div>
 
@@ -1034,20 +1182,5 @@ const iziConfig = {
 @push('after-scripts')
 
 <script src="{{ asset('js/agremiado/lista.js') }}"></script>
-<script>
-
-var frmVisa = document.getElementById('frmVisaNet');
-
-if (document.body.contains(frmVisa)) {
-    document.getElementById('frmVisaNet').setAttribute("style", "display:none");
-}
-function visaNetEc3() {
-    if (document.getElementById('ckbTerms').checked) {
-        document.getElementById('frmVisaNet').setAttribute("style", "display:auto");
-    } else {
-        document.getElementById('frmVisaNet').setAttribute("style", "display:none");
-    }
-}
-</script>
 
 @endpush

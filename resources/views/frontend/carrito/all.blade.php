@@ -241,6 +241,45 @@ div {
     text-align: center !important;
 }
 */
+
+.product-item-hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.btn-secondary {
+    color:#FFFFFF!important
+}
+
+.tit_1{
+    font-weight: 300;
+    /*line-height: 110%;*/
+    line-height: 220%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 20px;
+    padding-top:30px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+
+}
+
+.tit_2{
+    font-weight: 300;
+    line-height: 110%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 42px;
+    padding-top:30px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+}
+
 </style>
 
 @extends('frontend.layouts.app_carrito')
@@ -354,18 +393,32 @@ div {
 		<!--<p>No existen tickets de pago generados.</p>-->
 
         <div class="container-fluid pt-0 pb-3">
+
+
+        <div class="form-group form-group-btn form-navigation">
+            
+            @if($prontopago[0]->msg=='ok')
+            <a href="javascript:void(0);" class="btn btn-secondary pull-left" style="float:left" onclick="agregarProntoPagoAlCarrito({{ $id_persona }})">GENERAR PRONTOPAGO</a>
+            @endif
+
+            <a href="/carrito/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
+        </div>
+        
+
         <form id="form-agregar-carrito" action="{{ url('carrito/item') }}" method="POST">
         @csrf
-        <input type="hidden" name="item_id" id="item-id-input">
+        <input type="hidden" name="valorizacion_id" id="item-id-input">
+        <input type="hidden" name="cantidad" id="cantidad" value="1">
 
         <div class="row px-xl-0">        
-            <?php foreach($carrito_deuda as $row){?>
+            <?php foreach($carrito_deuda as $row){?> 
             <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
                 <div class="product-item bg-light mb-3">
                     <div class="product-img position-relative overflow-hidden">                        
+                        <!-- product-item-hover -->
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href="" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
                         </div>
                         <div class="text-center py-4">
                             <a class="h6 text-decoration-none text-truncate" href="">{{$row->descripcion}}</a>
@@ -379,16 +432,42 @@ div {
             </div>
             <?php }?>
         </div>
+        
         </form>
+
+        <div class="form-group form-group-btn form-navigation">
+            <a href="/carrito/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
+        </div>
+        
     </div>
 
 <script>
+    
+    function verItem(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        //carrito/item
+        form.submit();
+    }
+
     function agregarAlCarrito(itemId) {
         const form = document.getElementById('form-agregar-carrito');
         const input = document.getElementById('item-id-input');
         input.value = itemId;
+        form.action = '/carrito/agregar'; 
         form.submit();
     }
+
+    function agregarProntoPagoAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.action = '/carrito/agregar_prontopago'; 
+        form.submit();
+    }
+
+
 </script>
 
 
@@ -419,18 +498,23 @@ div {
 	</section>
 	
 	<section class="seccion-sidebar" style="visibility: visible;">
+
+            <div class="tit_1">Situacion : </div>
+            <div class="tit_2">Habilitado</div>
+            <br>
+
 		<div class="card" style="position: absolute; top: 173.203px;">
-			<h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+			
+            <h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
 				Información
 			</h4>
 			<div class="card-body">
-				<h6 class="subtitulo">¿Cómo descargo mi constancia?</h6>
-				<p>Puedes descargar todas las constancias de pago, ingresando a la opción "Ver".</p>
-				<p>Si tu ticket aún está pendiente de pago, puedes continuar con el proceso haciendo clic sobre el botón "Pagar".</p>
-				<p>Recuerda, solo se muestran en este listado los tickets de pago generados en los últimos 30 días.</p>
+				<h6 class="subtitulo">¿Cómo pagar mis deudas?</h6>
+				<p>Si tu deuda aún está pendiente de pago, puedes continuar con el proceso haciendo clic sobre el botón.</p>
+				<p>Recuerda, se muestran en este listado todas las deudas generados.</p>
 				<!-- dinamico -->
-				<h6 class="subtitulo">¿Por qué mi ticket está pendiente y no puedo pagarlo?</h6>
-				<p>Debido a que el concepto seleccionado es un servicio y no podrá pagarlo por esta opción, deberás generar un nuevo ticket de pago.</p>
+				<h6 class="subtitulo">¿Que deudas aparecen?</h6>
+				<p>Debido a que el concepto seleccionado es un servicio solo se podrá pagar por esta opción las deudas como CUOTA GREMIAL, FRACCIONAMIENTO y MULTAS.</p>
 			</div>
 		</div>
 	</section>

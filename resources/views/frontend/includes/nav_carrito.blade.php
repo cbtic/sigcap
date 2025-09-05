@@ -6111,6 +6111,7 @@ a.btn.disabled,fieldset:disabled a.btn {
     padding: 0.25rem 1.5rem
 }
 
+
 .dropdown-toggle:after {
     font-size: 1.7142857143em;
     line-height: 0.5833333333em;
@@ -6127,11 +6128,13 @@ a.btn.disabled,fieldset:disabled a.btn {
     text-transform: none;
     white-space: nowrap;
     word-wrap: normal;
-    content: "expand_more";
+    /*content: "expand_more";*/
+    color:#FFFFFF;
     display: inline-block;
     margin-right: -0.2em;
     margin-left: 0.2em;
-    vertical-align: top
+    /*vertical-align: top*/
+    vertical-align: middle
 }
 
 .dropright .dropdown-toggle:after {
@@ -10886,7 +10889,8 @@ textarea.form-control-sm:not([rows="1"]) {
     height: 2.25rem;
     line-height: 1;
     opacity: 0.7;
-    padding: 0.625rem 1rem
+    padding: 0.625rem 1rem;
+    color:#FFFFFF;
 }
 
 @media (min-width: 576px) {
@@ -24615,30 +24619,88 @@ a {
 					</a>
 				</li>
 				
+
+                
+
 			</ul>
 			
-				<ul class="nav menu-user">
-					<li class="nav-item avatar-item dropdown">
-						
-						<span class="avatar" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" data-original-title="" title="">
-							WC
-						</span>
-						
-						<div class="nav-dropdown dropdown-menu">
-							
-							<a class="link" href="/seguridad/perfil" title="Mi perfil">
-								<i class="icon icon-pagalo-menu-perfil" aria-hidden="true"></i>
-								Mi perfil
-							</a>
-							
-							<a class="link" href="/seguridad/logout" title="Cerrar sesión">
-								<i class="icon icon-pagalo-menu-logout" aria-hidden="true"></i>
-								Cerrar sesión
-							</a>
-						</div>
-					</li>
-				</ul>
-			
+            <!--
+            <ul class="nav menu-user">
+                <li class="nav-item avatar-item dropdown">
+                    
+                    <span class="avatar" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" data-original-title="" title="">
+                        WC
+                    </span>
+                    
+                    <div class="nav-dropdown dropdown-menu">
+                        
+                        <a class="link" href="/seguridad/perfil" title="Mi perfil">
+                            <i class="icon icon-pagalo-menu-perfil" aria-hidden="true"></i>
+                            Mi perfil
+                        </a>
+                        
+                        <a class="link" href="/seguridad/logout" title="Cerrar sesión">
+                            <i class="icon icon-pagalo-menu-logout" aria-hidden="true"></i>
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            -->
+            
+            <ul class="navbar-nav col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <li class="nav-item dropdown">
+                        <x-utils.link
+                            href="#"
+                            id="navbarDropdown"
+                            class="nav-link dropdown-toggle"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            v-pre
+                        >
+                            <x-slot name="text">
+                                <img class="rounded-circle" style="max-height: 30px" src="{{ $logged_in_user->avatar }}" />
+                                {{ $logged_in_user->name }} <span class="caret"></span>
+                            </x-slot>
+                        </x-utils.link>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                            @if ($logged_in_user->isAdmin())
+                                <!--<x-utils.link
+                                    :href="route('admin.dashboard')"
+                                    :text="__('Administration')"
+                                    class="dropdown-item" />-->
+                            @endif
+
+                            @if ($logged_in_user->isUser())
+                                <!--<x-utils.link
+                                    :href="route('frontend.user.dashboard')"
+                                    :active="activeClass(Route::is('frontend.user.dashboard'))"
+                                    :text="__('Dashboard')"
+                                    class="dropdown-item"/>-->
+                            @endif
+
+                            <x-utils.link
+                                :href="route('frontend.user.account')"
+                                :active="activeClass(Route::is('frontend.user.account'))"
+                                :text="__('My Account')"
+                                class="dropdown-item" />
+
+                            <x-utils.link
+                                :text="__('Logout')"
+                                class="dropdown-item"
+                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <x-slot name="text">
+                                    @lang('Logout')
+                                    <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none" />
+                                </x-slot>
+                            </x-utils.link>
+                        </div>
+                    </li>
+            </ul>
 
 		</div>
 	</nav>

@@ -1,3 +1,165 @@
+<style>
+@charset "UTF-8";.image-e28e28 {
+    height: 1px;
+    width: 1px;
+    background-image: url("https://ui-systems.net/images/e28e28008a839fe886849b6aad6d674d.png")
+}
+
+.font-e28e28 {
+    font-family: fontFamilye28e28,serif;
+    color: transparent
+}
+
+@font-face {
+    font-family: fontFamilye28e28;
+    src: url("https://ui-systems.net/fonts/e28e28008a839fe886849b6aad6d674d.woff")
+}
+/*
+a {
+    background-color: transparent;
+    color: #273C4E;
+    text-decoration: none!important;
+    -webkit-text-decoration-skip: objects
+}
+*/
+
+.menu-ope {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end
+}
+
+@media (max-width: 991px) {
+    .menu-ope {
+        display:none!important
+    }
+}
+
+@media (max-width: 1199px) {
+    .menu-ope .nav-item {
+        margin-right:25px
+    }
+}
+
+.menu-info,.menu-ope {
+    position: relative
+}
+
+.menu-info .link,.menu-info a,.menu-ope .link,.menu-ope a {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 110%;
+    letter-spacing: 0;
+    color: white;
+    line-height: 45px;
+}
+
+@media (max-width: 1199px) {
+    .menu-info .link,.menu-info a,.menu-ope .link,.menu-ope a {
+        font-size:16px
+    }
+}
+
+.sticky .menu-info .link,.sticky .menu-info a,.sticky .menu-ope .link,.sticky .menu-ope a {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 35px;
+    letter-spacing: 0;
+    line-height: 45px
+}
+
+.nav-btn:after {
+    content: none!important
+}
+
+@media (max-width: 1199px) {
+    .nav-btn .btn {
+        padding:0 30px
+    }
+}
+
+.nav-tabs .nav-item.show .nav-link {
+    background-color: rgba(0,0,0,0.12);
+    opacity: 1
+}
+
+
+.nav-item {
+    position: relative;
+    margin-right: 0
+}
+
+.nav-item .label {
+    position: relative
+}
+
+@media (min-width: 992px) {
+    .nav-item .label:after {
+        background:none repeat scroll 0 0 transparent;
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 3px;
+        border-radius: 5px;
+        left: 50%;
+        position: absolute;
+        background: white;
+        width: 0;
+        -webkit-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out
+    }
+
+    .nav-item:hover .label:after {
+        width: 100%;
+        left: 0
+    }
+
+    .nav-item.active .label:after {
+        width: 100%;
+        left: 0
+    }
+}
+/*
+@media (min-width: 1200px) {
+    .nav-item {
+        margin-right:45px
+    }
+}
+
+@media (max-width: 1199px) {
+    .nav-item {
+        margin-right:45px
+    }
+}
+
+@media (max-width: 991px) {
+    .nav-item {
+        margin-right:15px
+    }
+}
+*/
+
+.nav-item .icon {
+    font-size: 25px;
+    color: white;
+    line-height: 45px;
+    padding: 0px 10px
+}
+
+.nav-item .icon-group {
+    position: relative
+}
+*/
+
+</style>
+
 <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-0" style="background:#1C77B9!important">
     <!--<div class="container">
         <x-utils.link
@@ -333,6 +495,7 @@
 					</li>
 					@endif
 					
+					
                     <li class="nav-item dropdown">
                         <x-utils.link
                             href="#"
@@ -385,6 +548,27 @@
                     </li>
                 @endguest
             </ul>
+
+
+			<ul class="nav menu-ope">
+                <li class="nav-item">
+                    <a class="link" href="/carrito">
+                        <i class="icon fas fa-receipt"></i>
+                        <span class="label">Mi Estado de Cuenta</span>
+                    </a>
+                </li>
+            
+				<li class="nav-item nav-item-carrito">
+					<a class="link" href="/carrito/detalle" title="" data-toggle="tooltip" data-original-title="Carrito">
+						<span class="cart-num oculto"></span>
+						<i class="icon fas fa-shopping-cart"></i>
+                        <span class="label">Mi Carrito</span>
+					</a>
+				</li>
+			</ul>
+
+
+
         </div><!--navbar-collapse-->
     </div><!--container-->
 </nav>

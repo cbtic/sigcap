@@ -87,10 +87,21 @@ Route::get('terms', [TermsController::class, 'index'])
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
 
-Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
-Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
+Route::middleware(['auth'])->group(function () {
+    Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+    Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
+    //Route::get('checkout', [PagoController::class, 'checkout'])->name('checkout');
+    //Route::post('checkout/pagar', [PagoController::class, 'pagar'])->name('checkout.pagar');
+    Route::post('carrito/finalizar', [CarritoController::class, 'finalizar'])->name('carrito.finalizar');
+    Route::get('carrito/show/{id}', [CarritoController::class, 'show'])->name('carrito.show');
+    Route::get('carrito/ver_comprobante_pdf/{id}', [CarritoController::class, 'ver_comprobante_pdf'])->name('carrito.ver_comprobante_pdf');
+});
+
+//Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+//Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
 //Route::get('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');
 Route::post('carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
+Route::post('carrito/agregar_prontopago', [CarritoController::class, 'agregar_prontopago'])->name('carrito.agregar_prontopago');
 Route::post('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
@@ -488,6 +499,8 @@ Route::get('sesion/obtener_delegados/{id}', [SesionController::class, 'obtener_d
 
 Route::get('sesion/eliminar_sesion/{id}/{estado}', [SesionController::class, 'eliminar_sesion'])->name('sesion.eliminar_sesion');
 
+Route::get('sesion/obtener_msg_comision/{fecha_inicio}/{fecha_fin}', [SesionController::class, 'obtener_msg_comision'])->name('sesion.obtener_msg_comision');
+
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
 Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
@@ -712,7 +725,7 @@ Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [Coordi
 
 Route::get('planillaDelegado/consulta_planilla_recibos_honorario', [PlanillaDelegadoController::class, 'consulta_planilla_recibos_honorario'])->name('planillaDelegado.consulta_planilla_recibos_honorario');
 Route::get('sesion/obtener_anio_periodo/{id_periodo}', [SesionController::class, 'obtener_anio_periodo'])->name('sesion.obtener_anio_periodo');
-Route::get('sesion/obtener_comision_agremiado/{id_agremiado}', [SesionController::class, 'obtener_comision_agremiado'])->name('sesion.obtener_comision_agremiado');
+Route::get('sesion/obtener_comision_agremiado/{id_agremiado}/{id_comision}', [SesionController::class, 'obtener_comision_agremiado'])->name('sesion.obtener_comision_agremiado');
 Route::post('planillaDelegado/listar_recibo_honorario_ajax', [PlanillaDelegadoController::class, 'listar_recibo_honorario_ajax'])->name('planillaDelegado.listar_recibo_honorario_ajax');
 Route::get('planillaDelegado/obtener_datos_recibo/{id}', [PlanillaDelegadoController::class, 'obtener_datos_recibo'])->name('planillaDelegado.obtener_datos_recibo');
 Route::post('planillaDelegado/send_recibo_honorario', [PlanillaDelegadoController::class, 'send_recibo_honorario'])->name('planillaDelegado.send_recibo_honorario');

@@ -230,6 +230,14 @@ class SesionController extends Controller
 		echo json_encode($comision);
 		
 	}
+
+	public function obtener_msg_comision($fecha_inicio,$fecha_fin){
+			
+		$comision_model = new Comisione;
+		$comision = $comision_model->getMsgComision($fecha_inicio,$fecha_fin);
+		echo json_encode($comision);
+		
+	}
 	
 	public function obtener_puesto($id_periodo,$tipo_comision){
 			
@@ -682,7 +690,7 @@ class SesionController extends Controller
 				
     }
 	
-	public function send_delegado_sesion(Request $request){
+	public function send_delegado_sesion(Request $request){ 
 		
 		$id_user = Auth::user()->id; 
 		
@@ -762,6 +770,7 @@ class SesionController extends Controller
 		$comisionSesionDelegado->observaciones = NULL;
 		$comisionSesionDelegado->estado = 1;
 		$comisionSesionDelegado->id_usuario_inserta = $id_user;
+		$comisionSesionDelegado->coordinador = 0;
 		$comisionSesionDelegado->save();
 		
 		/*********************************/
@@ -790,6 +799,7 @@ class SesionController extends Controller
 			$comisionSesionDelegadoObj->id_agremiado_anterior = $id_agremiado_anterior_obj;
 			
 			$comisionSesionDelegadoObj->id_delegado = $id_delegado;
+			$comisionSesionDelegadoObj->coordinador = 0;
 			$comisionSesionDelegadoObj->save();
 			
 			/*********************************/
@@ -963,10 +973,17 @@ class SesionController extends Controller
 		
 	}
 
-	public function obtener_comision_agremiado($id_agremiado){
-			
-		$comisionDelegado_model = new ComisionDelegado;
-		$comision = $comisionDelegado_model->getComisionDelegadoByAgremiado($id_agremiado);
+	public function obtener_comision_agremiado($id_agremiado,$id_comision){
+
+		$comisione = Comisione::find($id_comision);
+		$id_instancia = $comisione->id_instancia;
+		if($id_instancia==2){
+			$comision["comisiones"]=NULL;
+		}else{
+			$comisionDelegado_model = new ComisionDelegado;
+			$comision = $comisionDelegado_model->getComisionDelegadoByAgremiado($id_agremiado);
+		}
+		
 		echo json_encode($comision);
 		
 	}

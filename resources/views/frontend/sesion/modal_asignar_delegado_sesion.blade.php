@@ -263,6 +263,7 @@ function guardarCita(id_medico,fecha_cita){
 function obtener_comision_agremiado(){
 
 	var id_agremiado = $('#id_delegado').val();
+	var id_comision = $('#id_comision').val();
 
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
@@ -271,7 +272,7 @@ function obtener_comision_agremiado(){
     $('.loader').show();
 	
 	$.ajax({
-			url: "/sesion/obtener_comision_agremiado/"+id_agremiado,
+			url: "/sesion/obtener_comision_agremiado/"+id_agremiado+"/"+id_comision,
             type: "GET",
 			dataType: "json",
             //data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente,fecha_inicio_sesion:fecha_inicio_sesion,fecha_fin_sesion:fecha_fin_sesion,id_concurso_inscripcion:id_concurso_inscripcion},
@@ -279,10 +280,35 @@ function obtener_comision_agremiado(){
 				console.log(result);
 				
 				if(result.comisiones!=null){
-					bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado en la comisión "+result.comisiones);
-					//$("#id_delegado").select2({ width: '100%' });
-					$("#id_delegado").val("").select2();
-					//return false;
+					//bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado en la comisión "+result.comisiones);
+					//$("#id_delegado").val("").select2();
+					
+					bootbox.confirm({
+						title: "Agremiado ya registrado",
+						message: "El agremiado ya se encuentra en la comisión <b>"+result.comisiones+"</b>. ¿Desea reemplazarlo?",
+						buttons: {
+							confirm: {
+								label: 'Sí',
+								className: 'btn-success'
+							},
+							cancel: {
+								label: 'No',
+								className: 'btn-danger'
+							}
+						},
+						callback: function (respuesta) {
+							if(respuesta) {
+								// Acción si el usuario elige "Sí"
+								// Ejemplo: cargarDelegados();
+								console.log("Usuario aceptó reemplazar.");
+							} else {
+								// Acción si el usuario elige "No"
+								$("#id_delegado").val("").select2();
+								console.log("Usuario canceló.");
+							}
+						}
+					});
+
 				}else{
 					//cargarDelegados();
 				}

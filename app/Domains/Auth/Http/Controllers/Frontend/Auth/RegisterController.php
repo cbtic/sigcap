@@ -110,7 +110,8 @@ class RegisterController
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')],
-            'password' => array_merge(['max:100'], PasswordRules::register($data['email'] ?? null)),
+            //'password' => array_merge(['max:100'], PasswordRules::register($data['email'] ?? null)),
+            'password' => ['required', 'string', 'min:8', 'max:100', 'confirmed'],
             'terms' => ['required', 'in:1'],
             'g-recaptcha-response' => ['required_if:captcha_status,true', new Captcha],
         ], [
