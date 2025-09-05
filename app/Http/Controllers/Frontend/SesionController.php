@@ -682,7 +682,7 @@ class SesionController extends Controller
 				
     }
 	
-	public function send_delegado_sesion(Request $request){
+	public function send_delegado_sesion(Request $request){ 
 		
 		$id_user = Auth::user()->id; 
 		
@@ -762,6 +762,7 @@ class SesionController extends Controller
 		$comisionSesionDelegado->observaciones = NULL;
 		$comisionSesionDelegado->estado = 1;
 		$comisionSesionDelegado->id_usuario_inserta = $id_user;
+		$comisionSesionDelegado->coordinador = 0;
 		$comisionSesionDelegado->save();
 		
 		/*********************************/
@@ -790,6 +791,7 @@ class SesionController extends Controller
 			$comisionSesionDelegadoObj->id_agremiado_anterior = $id_agremiado_anterior_obj;
 			
 			$comisionSesionDelegadoObj->id_delegado = $id_delegado;
+			$comisionSesionDelegadoObj->coordinador = 0;
 			$comisionSesionDelegadoObj->save();
 			
 			/*********************************/
