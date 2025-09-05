@@ -144,7 +144,7 @@
                     </strong>
                 </div><!--card-header-->
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off" style="margin-bottom:0px">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
@@ -294,16 +294,29 @@
 							<option value="desc">Descendente</option>
 						</select>
 					</div>
-					
+
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="N. Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:10px" />
 						<input class="btn btn-danger pull-rigth" value="Ejecutar" type="button" id="btnEjecutar" style="margin-left:10px" />
 						<!--<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px"/>-->
 					</div>
+
+					<div style="min-height:50px">
+						<div id="divMsg" class="alert alert-success" role="alert" style="margin-left:15px;margin-bottom:0px;display:none">
+							<!--
+							Línea 1: mensaje1 <br>
+							Línea 2: mensaje2 256<br>
+							Línea 3: mensaje 3<br>
+							Línea 4: mensaje 4
+							-->
+						</div>
+					</div>
+					
 				</div>
+				
 				</form>
-                <div class="card-body">
+                <div class="card-body" style="padding-top:0px">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">

@@ -163,6 +163,13 @@ inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getMsgComision($fecha_inicio,$fecha_fin){
+
+        $cad = "select * from valida_computo('".$fecha_inicio."','".$fecha_fin."')";
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 	function getPuestoByPeriodo($id_periodo,$tipo_comision){
 

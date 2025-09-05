@@ -230,6 +230,14 @@ class SesionController extends Controller
 		echo json_encode($comision);
 		
 	}
+
+	public function obtener_msg_comision($fecha_inicio,$fecha_fin){
+			
+		$comision_model = new Comisione;
+		$comision = $comision_model->getMsgComision($fecha_inicio,$fecha_fin);
+		echo json_encode($comision);
+		
+	}
 	
 	public function obtener_puesto($id_periodo,$tipo_comision){
 			

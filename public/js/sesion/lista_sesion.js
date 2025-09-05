@@ -6,6 +6,7 @@ $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
+		obtenerMsgComision();
 	});
 		
 	$('#btnNuevo').click(function () {
@@ -75,6 +76,61 @@ $(document).ready(function () {
 		});
 	});
 });
+
+function convertirFecha(fechaStr, restarMes = false) {
+    // fechaStr en formato dd/mm/yyyy
+    let partes = fechaStr.split("/");
+    let dia = parseInt(partes[0], 10);
+    let mes = parseInt(partes[1], 10) - 1; // JS usa base 0 para meses
+    let anio = parseInt(partes[2], 10);
+
+    let dateObj = new Date(anio, mes, dia);
+
+    // Si queremos restar un mes
+    if (restarMes) {
+        dateObj.setMonth(dateObj.getMonth() - 1);
+    }
+
+    // Construimos en formato yyyy-mm-dd
+    let yyyy = dateObj.getFullYear();
+    let mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    let dd = String(dateObj.getDate()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function obtenerMsgComision(){
+		
+	var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+	var fecha_fin_bus = $('#fecha_fin_bus').val();
+	
+	fecha_inicio_bus = convertirFecha(fecha_inicio_bus);
+	fecha_fin_bus = convertirFecha(fecha_fin_bus);
+
+	$.ajax({
+		url: '/sesion/obtener_msg_comision/' + fecha_inicio_bus + '/' + fecha_fin_bus,
+		dataType: "json",
+		success: function(result){
+			//$('#empresa_id').val(result.empresa.id);
+			console.log(result.length);
+			$("#divMsg").hide();
+			$("#divMsg").html("");
+			if(result.length>0){
+				$("#divMsg").show();
+				$.each(result, function(index, item) {
+					$("#divMsg").append(item.linea + "</br>");
+				});
+			}
+			
+		},
+		error: function(data) {
+			alert("Empresa no encontrada en la Base de Datos.");
+			$('#empresaModal').modal('show');
+		}
+		
+	});
+	
+}
 
 function guardar_sesion_bloque(){
     

@@ -499,6 +499,8 @@ Route::get('sesion/obtener_delegados/{id}', [SesionController::class, 'obtener_d
 
 Route::get('sesion/eliminar_sesion/{id}/{estado}', [SesionController::class, 'eliminar_sesion'])->name('sesion.eliminar_sesion');
 
+Route::get('sesion/obtener_msg_comision/{fecha_inicio}/{fecha_fin}', [SesionController::class, 'obtener_msg_comision'])->name('sesion.obtener_msg_comision');
+
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
 Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
