@@ -104,32 +104,34 @@ function obtenerMsgComision(){
 	var fecha_inicio_bus = $('#fecha_inicio_bus').val();
 	var fecha_fin_bus = $('#fecha_fin_bus').val();
 	
-	fecha_inicio_bus = convertirFecha(fecha_inicio_bus);
-	fecha_fin_bus = convertirFecha(fecha_fin_bus);
-
-	$.ajax({
-		url: '/sesion/obtener_msg_comision/' + fecha_inicio_bus + '/' + fecha_fin_bus,
-		dataType: "json",
-		success: function(result){
-			//$('#empresa_id').val(result.empresa.id);
-			console.log(result.length);
-			$("#divMsg").hide();
-			$("#divMsg").html("");
-			if(result.length>0){
-				$("#divMsg").show();
-				$.each(result, function(index, item) {
-					$("#divMsg").append(item.linea + "</br>");
-				});
+	if(fecha_inicio_bus!="" && fecha_fin_bus!=""){
+		fecha_inicio_bus = convertirFecha(fecha_inicio_bus);
+		fecha_fin_bus = convertirFecha(fecha_fin_bus);
+		
+		$.ajax({
+			url: '/sesion/obtener_msg_comision/' + fecha_inicio_bus + '/' + fecha_fin_bus,
+			dataType: "json",
+			success: function(result){
+				//$('#empresa_id').val(result.empresa.id);
+				console.log(result.length);
+				$("#divMsg").hide();
+				$("#divMsg").html("");
+				if(result.length>0){
+					$("#divMsg").show();
+					$.each(result, function(index, item) {
+						$("#divMsg").append(item.linea + "</br>");
+					});
+				}
+				
+			},
+			error: function(data) {
+				//alert("Empresa no encontrada en la Base de Datos.");
+				//$('#empresaModal').modal('show');
 			}
 			
-		},
-		error: function(data) {
-			alert("Empresa no encontrada en la Base de Datos.");
-			$('#empresaModal').modal('show');
-		}
-		
-	});
-	
+		});
+
+	}
 }
 
 function guardar_sesion_bloque(){
