@@ -2191,7 +2191,7 @@ function AplicarDescuento(){
 		Swal.fire("Cuentas Exoneradas!");
 		exit();
 	}
-
+ 
 	var msg = "";
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
