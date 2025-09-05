@@ -280,10 +280,35 @@ function obtener_comision_agremiado(){
 				console.log(result);
 				
 				if(result.comisiones!=null){
-					bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado en la comisión "+result.comisiones);
-					//$("#id_delegado").select2({ width: '100%' });
-					$("#id_delegado").val("").select2();
-					//return false;
+					//bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado en la comisión "+result.comisiones);
+					//$("#id_delegado").val("").select2();
+					
+					bootbox.confirm({
+						title: "Agremiado ya registrado",
+						message: "El agremiado ya se encuentra en la comisión <b>"+result.comisiones+"</b>. ¿Desea reemplazarlo?",
+						buttons: {
+							confirm: {
+								label: 'Sí',
+								className: 'btn-success'
+							},
+							cancel: {
+								label: 'No',
+								className: 'btn-danger'
+							}
+						},
+						callback: function (respuesta) {
+							if(respuesta) {
+								// Acción si el usuario elige "Sí"
+								// Ejemplo: cargarDelegados();
+								console.log("Usuario aceptó reemplazar.");
+							} else {
+								// Acción si el usuario elige "No"
+								$("#id_delegado").val("").select2();
+								console.log("Usuario canceló.");
+							}
+						}
+					});
+
 				}else{
 					//cargarDelegados();
 				}
