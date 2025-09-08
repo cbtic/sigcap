@@ -973,7 +973,7 @@ class SesionController extends Controller
 		
 	}
 
-	public function obtener_comision_agremiado($id_agremiado,$id_comision){
+	public function obtener_comision_agremiado($id_agremiado,$id_comision,$fecha_progrmado){
 
 		$comisione = Comisione::find($id_comision);
 		$id_instancia = $comisione->id_instancia;
@@ -981,7 +981,7 @@ class SesionController extends Controller
 			$comision["comisiones"]=NULL;
 		}else{
 			$comisionDelegado_model = new ComisionDelegado;
-			$comision = $comisionDelegado_model->getComisionDelegadoByAgremiado($id_agremiado);
+			$comision = $comisionDelegado_model->getComisionDelegadoByAgremiado($id_agremiado,$fecha_progrmado);
 		}
 		
 		echo json_encode($comision);
