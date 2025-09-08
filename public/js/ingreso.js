@@ -1299,6 +1299,13 @@ function cargarValorizacion(){
 			});
 			*/
 
+			/*
+			alert(cboTipoConcepto_b);
+			alert(id_concepto_pp);
+			
+			alert(cboPeriodo_b);
+			alert(periodo_pp);
+*/
 			if (cboTipoConcepto_b==id_concepto_pp && cboPeriodo_b==periodo_pp) {
 
 				$("#btnDescuento").prop('disabled', false);
@@ -2184,7 +2191,7 @@ function AplicarDescuento(){
 		Swal.fire("Cuentas Exoneradas!");
 		exit();
 	}
-
+ 
 	var msg = "";
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
