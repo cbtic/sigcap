@@ -85,6 +85,7 @@ where c.id=".$id_carrito;
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
+                left join carrito_items ci on v.id=ci.valorizacion_id 
                 ".$tlb_liquidacion."
                 where v.id_persona = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
@@ -97,7 +98,8 @@ where c.id=".$id_carrito;
                 ".$exonerado_."
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
-            order by v.fecha desc
+                and ci.id is null
+            order by v.fecha asc
              ".$filas."
 			";
         }
@@ -109,6 +111,48 @@ where c.id=".$id_carrito;
         return $data;
     }
     
+    function getAgremiado($tipo_documento,$id_persona){
+		//echo $tipo_documento; exit();
+        if($tipo_documento=="79"){  //RUC
+            $cad = "select t1.id,razon_social,t1.direccion,t1.representante, t1.ruc, t1.email, 79 id_tipo_documento,  trim(t1.ruc) numero_documento_
+                    from empresas t1                    
+                    Where trim(t1.ruc)='".$id_persona."' and t1.estado ='1' ";
+
+        }elseif($tipo_documento=="85"){ //NRO_CAP
+			
+			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
+			t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, t1.apellido_paterno|| ' ' ||t1.apellido_materno || ', ' || t1.nombres as nombre_completo,85 id_tipo_documento,email1 email, 
+			t4.denominacion actividad, t2.numero_regional, r.denominacion regional, t5.denominacion autoriza_tramite, t6.denominacion ubicacion, t7.denominacion categoria, t2.celular1, trim(t2.numero_cap) numero_documento_, t2.celular1 celular, t2.firma 
+			from personas t1 
+			inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+			left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'
+			left join tabla_maestras t4 on t2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+			inner join regiones r on t2.id_regional = r.id
+			left join tabla_maestras t5 on t2.id_autoriza_tramite = t5.codigo::int And t5.tipo ='45'	
+			left join tabla_maestras t6 on t2.id_ubicacion = t6.codigo::int And t6.tipo ='63'
+			left join tabla_maestras t7 on t2.id_categoria = t7.codigo::int And t7.tipo ='18'
+			where t1.id=".$id_persona."
+			and t1.estado='1' 
+			limit 1";
+								
+        }else{
+			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
+					t1.numero_ruc,t1.id_tipo_documento,t3.denominacion situacion, t4.denominacion actividad,t1.correo email, trim(t1.numero_documento)  numero_documento_ 			
+					from personas t1 
+					left join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+					left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'
+					left join tabla_maestras t4 on t2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'                    
+					Where  t1.id_tipo_documento='".$tipo_documento."' 
+                    and t1.id=".$id_persona."
+					and t1.estado='1' 
+					limit 1";
+		}
+		//echo $cad; exit();
+		$data = DB::select($cad);
+		
+        return $data[0];
+    }
+
     function getCarritoDeudaById($id){  
         
         $cad = "select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 

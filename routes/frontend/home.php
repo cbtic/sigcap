@@ -89,6 +89,7 @@ Route::get('terms', [TermsController::class, 'index'])
 
 Route::middleware(['auth'])->group(function () {
     Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+    Route::post('carrito/listar_deuda', [CarritoController::class, 'listar_deuda'])->name('carrito.listar_deuda');
     Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
     //Route::get('checkout', [PagoController::class, 'checkout'])->name('checkout');
     //Route::post('checkout/pagar', [PagoController::class, 'pagar'])->name('checkout.pagar');
@@ -103,6 +104,10 @@ Route::middleware(['auth'])->group(function () {
 Route::post('carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 Route::post('carrito/agregar_prontopago', [CarritoController::class, 'agregar_prontopago'])->name('carrito.agregar_prontopago');
 Route::post('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');
+
+Route::post('carrito/listar_valorizacion_concepto', [CarritoController::class, 'listar_valorizacion_concepto'])->name('carrito.listar_valorizacion_concepto');
+Route::post('carrito/listar_valorizacion_periodo', [CarritoController::class, 'listar_valorizacion_periodo'])->name('carrito.listar_valorizacion_periodo');
+Route::post('carrito/listar_valorizacion_mes', [CarritoController::class, 'listar_valorizacion_mes'])->name('carrito.listar_valorizacion_mes');
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
 Route::post('personas', [personaController::class, 'store'])->name('personas');

@@ -14,6 +14,7 @@
     
 
 <style>
+    
 	#tblAfiliado tbody tr{
 		font-size:13px
 	}
@@ -273,12 +274,50 @@ div {
     color: white;
     margin: 0;
     /*width: 100%;*/
-    font-size: 42px;
+    font-size: 35px;
     padding-top:30px;
     padding-left: 7px;
     float:left;
     font-family: "Inter", sans-serif !important;
 }
+
+
+.seccion-sidebar{
+    width: 350px !important
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 100%
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width:540px
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width:720px
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width:960px
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width:1440px!important
+    }
+}
+
 
 </style>
 
@@ -311,7 +350,7 @@ div {
 
 <div id="pageTickets" class="container">
 	
-	<section class="seccion-principal seccion-tickets" style="height: 707.984px;">
+	<section class="seccion-principal seccion-tickets" style="height: 837.984px;">
 		<h1 class="titulo">
 			
 			Estado de Cuenta
@@ -410,12 +449,103 @@ div {
         <input type="hidden" name="valorizacion_id" id="item-id-input">
         <input type="hidden" name="cantidad" id="cantidad" value="1">
 
+        <input type="hidden" readonly name="Exonerado" id="Exonerado" value="" class="form-control form-control-sm">
+        <input type="hidden" readonly name="mes_deuda" id="mes_deuda" value="" class="form-control form-control-sm">
+        <input type="hidden" readonly name="anio_deuda" id="anio_deuda" value="" class="form-control form-control-sm">
+
+
+        <div class="row">
+
+            <!--
+            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <select id="cboPeriodo_b" name="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <select id="cboMes_b" name="cboMes_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                        <option value="" selected>Todas cuotas</option>
+                        <option value="1">Cuotas vencidas</option>
+                        <option value="0">Cuotas pendientes</option>
+                    </select>
+                </div>
+            </div>
+            -->
+            <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    
+                    <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()"><br />
+
+                    <!--
+                    <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
+                    <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y Cuota Gremial Vencido</label>
+                    -->
+
+                    </select>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-lg-1 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <input class="form-check-input" type="checkbox"  id="chkExonerado"  value="false" onchange="">
+                    <label class="form-check-label">
+                        Exonerados
+                    </label>
+                </div>
+            </div>
+            -->
+
+        </div>
+
+        <div class="table-responsive overflow-auto" style="max-height: 350px">
+            <table id="tblValorizacion" class="table table-hover table-sm">
+                <thead>
+                    <tr style="font-size:13px">
+                        <!--
+                        <th width="5%" style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
+                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php //echo $seleccionar_todos ?>>
+                        </th>
+                        -->
+                        <th width="5%">Nro</th>
+                        <th width="10%">Fecha</th>
+                        <th width="40%">Concepto</th>
+                        <th width="10%">Fecha Vencimiento</th>                                                        
+                        <th width="10%" class="text-center">P.Unit.</th>                                                        
+                        <th width="10%" class="text-center">Cantidad</th>
+                        <th width="10%"class="text-center">Total</th>
+                        <th width="10%"class="text-center">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+
+
+                </tfoot>
+            </table>
+        </div>
+
+
+
+
+        <!--
         <div class="row px-xl-0">        
             <?php foreach($carrito_deuda as $row){?> 
             <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
                 <div class="product-item bg-light mb-3">
                     <div class="product-img position-relative overflow-hidden">                        
-                        <!-- product-item-hover -->
+                        
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
@@ -432,7 +562,8 @@ div {
             </div>
             <?php }?>
         </div>
-        
+        -->
+
         </form>
 
         <div class="form-group form-group-btn form-navigation">
@@ -497,10 +628,10 @@ div {
 		</div>
 	</section>
 	
-	<section class="seccion-sidebar" style="visibility: visible;">
+	<section class="seccion-sidebar" style="visibility: visible">
 
             <div class="tit_1">Situacion : </div>
-            <div class="tit_2">Habilitado</div>
+            <div class="tit_2">{{$agremiado->situacion}}</div>
             <br>
 
 		<div class="card" style="position: absolute; top: 173.203px;">
@@ -527,29 +658,6 @@ div {
 		</div>
 	</div>
 </div>
-<form id="historico" name="historico" action="/sistema/detalleHistorico.action" method="post" novalidate="">
-	<input type="hidden" name="codHistorico" value="" id="codHistorico">
-	<input type="hidden" name="numTicket" value="" id="numTicket">
-	<input type="hidden" name="estadoOperacion" value="" id="estado">
-	<input type="hidden" name="codEstadoOperacion" value="" id="codEstado">
-	<input type="hidden" name="importeTotal" value="" id="importeTotal">
-	<input type="hidden" name="simboloMoneda" value="" id="simboloMoneda">
-</form>
-
-
-
-
-
-<form id="carrito" name="carrito" action="/operaciones/iniciarDetalleCarrito.action" method="post" novalidate="">
-	<input type="hidden" name="idEntidad" value="" id="idEntidad">
-	<input type="hidden" name="abrirBuscador" value="1" id="carrito_abrirBuscador">
-</form>
-
-
-
-
-
-
 
 
 
@@ -1179,5 +1287,385 @@ div {
 @push('after-scripts')
 
 <script src="{{ asset('js/agremiado/lista.js') }}"></script>
+
+<script>
+
+$("#chkExonerado").on('change', function() {
+    if ($(this).is(':checked')) {						
+        $(this).attr('value', 'true');
+
+        $('#Exonerado').val("1");
+
+        $("#btnExonerarS").hide();
+        $("#btnExonerarN").show();
+
+    } else {
+        $(this).attr('value', 'false');
+        $('#Exonerado').val("0");
+
+        $("#btnExonerarN").hide();
+        $("#btnExonerarS").show();
+
+    }
+    cargarValorizacion();
+
+});
+
+$('#cboTipoCuota_b').select2();
+cargarValorizacion();
+cargarcboTipoConcepto();
+//cargarcboPeriodo();
+//cargarcboMes();
+
+var id_caja_usuario = "1<?php //echo ($caja_usuario)?$caja_usuario->id_caja:0?>";
+
+function cargarcboMes(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_mes",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Mes-</option>";
+			$('#cboMes_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.mes+"</option>";
+			});
+			$('#cboMes_b').html(option);
+			$('#cboMes_b').select2();
+			
+		}
+		
+	});
+}
+
+function cargarcboTipoConcepto(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_concepto",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option;
+			$('#cboTipoConcepto_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#cboTipoConcepto_b').html(option);
+			$('#cboTipoConcepto_b').select2();
+			
+		}
+		
+	});
+}
+
+function cargarcboPeriodo(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_periodo",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Periodo-</option>";
+			$('#cboPeriodo_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
+			});
+			$('#cboPeriodo_b').html(option);
+			$('#cboPeriodo_b').select2();
+			
+		}
+		
+	});
+}
+
+function calcular_total(obj){
+
+	var rol_exonera = $('#rol_exonera').val();
+
+	var id_tipo_afectacion= "";
+	var id_concepto="";
+	var id_concepto_actual="";
+
+	
+	if(id_caja_usuario=="0" && rol_exonera=="0"){
+		bootbox.alert("Debe seleccionar una Caja disponible");
+		$(obj).prop("checked",false);
+		return false;
+	}
+	
+	if($(obj).is(':checked')){
+		var key = $(obj).attr("key");
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+		$(obj).parent().parent().parent().find('.chek').val("1");
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",false);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",false);
+
+	}else{
+		var key = $(obj).attr("key");
+		var key2 = 0;
+		var obligatorio = "";
+		$(".mov:checked").each(function (i){
+			if(i==0)key2 = $(this).attr("key")-1;			
+		});
+		
+		$(".mov:checked").each(function (){
+			obligatorio = $(this).parent().parent().parent().find('.obligatorio_ultimo_pago').html();
+		});
+		
+		if(key!=key2){
+			if (obligatorio=='1'){
+				bootbox.alert("Debe seleccionar el ultimo registro");
+				$(obj).prop("checked",true);
+				return false;
+			}
+
+		}
+		
+		if (obligatorio=='1'){
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+		}
+
+		$(obj).parent().parent().parent().find('.chek').val("");
+
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",true);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",true);
+		
+	}
+	
+	var total = 0;
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var igv = 0;
+	var stotal = 0;
+	var descuento =0;
+	
+	
+	var cantidad = $(".mov:checked").length;
+	if(cantidad == 0)$('#id_concepto_sel').val("");
+	
+	id_concepto = $('#id_concepto_sel').val();
+	
+	id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+	
+	if(id_concepto!="" && id_concepto!=id_concepto_actual){
+		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
+		$(obj).prop("checked",false);		
+		return false;
+	}
+	
+	var id_tipo_afectacion_sel = $('#id_tipo_afectacion_sel').val();
+	
+	var ruc_p = $('#ruc_p').val();
+
+	$("#btnBoleta").prop('disabled', true);
+    $("#btnFactura").prop('disabled', true);
+	
+	if(cantidad != 0){
+	
+		var tipo_documento = $('#tipo_documento').val();
+
+		if(tipo_documento == "79"){//RUC			
+			
+			$("#btnBoleta").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
+		}else {
+
+			$("#btnBoleta").prop('disabled', false);			
+			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
+		}
+
+		var exonerado = $('#Exonerado').val();
+		$("#btnExonerarS").prop('disabled', true);
+		$("#btnExonerarN").prop('disabled', true);
+		
+		if(exonerado=="0"){
+			$("#btnExonerarS").prop('disabled', false);			
+		}else{
+			$("#btnExonerarN").prop('disabled', false);			
+		}
+
+		$("#btnAnulaVal").prop('disabled', false);
+
+	}
+		
+	if(tipo_documento == "79"){//RUC
+		
+	}else
+	{
+		
+	}
+	
+	$('#id_concepto_actual').val("");
+	
+	$(".mov:checked").each(function (){
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.toString().replace(',','');
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.toString().replace(',','');
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.toString().replace(',','');
+
+		id_concepto_actual = $(this).parent().parent().parent().find('.id_concepto_modal_sel').html();
+		id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
+		
+		var val_descuento =$('#DescuentoPP').val("");
+		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
+		var importe_pp =$('#importe_pp').val("");
+		
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+		id_tipo_afectacion  = $(this).parent().parent().parent().find('.id_tipo_afectacion_sel').html();
+
+	});
+
+	$('#id_concepto_actual').val(id_concepto_actual);
+
+	descuento = 0;
+
+	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+	if(cantidad > 1){
+		$('#MonAd').attr("readonly",true);
+		$('#MonAd').val("0");
+	}else{
+		$('#MonAd').attr("readonly",false);
+		$('#MonAd').val(total.toFixed(2));
+	}
+	
+	$('#id_tipo_afectacion_pp').val(id_tipo_afectacion);
+	$('#id_concepto_pp').val(id_concepto);
+	
+}
+
+
+function total_deuda(){
+	
+	var msg = "";
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
+
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var cantidad = $(".mov").length;
+
+	
+	$('#total').val(0.0);
+
+	$(".mov").each(function (){
+		
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.toString().replace(',','');
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.toString().replace(',','');
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.toString().replace(',','');
+
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+	});
+	$('#deudaTotales').val(total.toFixed(2));
+	$('#total').val(total.toFixed(2));
+
+};
+
+function cargarValorizacion(){
+	
+	var numero_documento =$("#numero_documento").val();
+	if (numero_documento=="")exit();
+
+	$("#btnExonerarS").prop('disabled', true);
+	$("#btnExonerarN").prop('disabled', true);
+	
+    var tipo_documento = $("#tipo_documento").val();
+	var id_persona = 0;
+	/*
+    var x = document.getElementById("cbox2").checked;
+
+	$("#SelFracciona").val("");
+	if (x) $("#SelFracciona").val("S");
+	*/
+	var idconcepto = $("#cboTipoConcepto_b").val();
+
+	$("#idConcepto").val(idconcepto);
+	$("#id_concepto_sel").val("");
+	$('#example-select-all').prop( "checked", false );
+    $("#tblValorizacion tbody").html("");
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
+	var cboPeriodo_b = $('#cboPeriodo_b').val();
+	var periodo_pp = $('#periodo_pp').val();
+	var id_concepto_pp = $('#id_concepto_pp').val();
+
+	$("#btnFracciona").prop('disabled', true);
+	$("#btnDescuento").prop('disabled', true);
+	$("#btnAnulaVal").prop('disabled', true);
+
+	$.ajax({
+		url: "/carrito/listar_deuda",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function (result) {  
+			$("#tblValorizacion tbody").html(result);
+
+			if (cboTipoConcepto_b==id_concepto_pp && cboPeriodo_b==periodo_pp) {
+				$("#btnDescuento").prop('disabled', false);
+			}
+
+			if ((cboTipoConcepto_b=="26411")||(cboTipoConcepto_b=="26541")||(cboTipoConcepto_b=="26412")||(cboTipoCuota_b==1)) {
+				$("#btnFracciona").prop('disabled', false);
+			}
+
+			if (cboTipoConcepto_b=="26412" ||(cboTipoConcepto_b=="26541")|| cboTipoConcepto_b=="26411") {				
+				$('#cbox2').show();
+				$('#lblFrac').show();	
+			}else{
+				$('#cbox2').hide();
+				$('#lblFrac').hide();
+				$("#cbox2").prop('checked', false);
+				$("#SelFracciona").val("");
+			}
+
+			if (cboTipoConcepto_b==26412) {
+				$("#btnAnulaFrac").prop('disabled', false);
+				$("#btnAnulaFrac").show();
+
+			}else{
+
+				$("#btnAnulaFrac").hide();
+			}
+
+			total_deuda();
+			$('.loader').hide();
+		}
+});
+
+}
+
+
+</script>
 
 @endpush

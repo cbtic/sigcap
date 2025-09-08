@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Agremiado;
 use App\Models\Carrito;
 use App\Models\CarritoItem;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\User;
+use App\Models\Persona;
 use App\Models\Comprobante;
 use App\Models\ComprobanteDetalle;
 use App\Models\Valorizacione;
@@ -30,7 +32,10 @@ class CarritoController extends Controller
         
 		$usuario = Auth::user();
 		$id_persona = $usuario->id_persona;
-
+		//$persona = Ag::find($id_persona);
+		//$agremiadoExiste = Agremiado::where("numero_cap",$request->numero_cap)->where("estado",1)->get();
+		//$numero_documento = $persona->numero_documento;
+		//echo $numero_documento;exit();
 		//$id_persona = 291290;
 		$tipo_documento = 85;
 		$periodo = "";
@@ -42,13 +47,108 @@ class CarritoController extends Controller
 		$numero_documento_b = "";
 
 		$carrito_model = new Carrito;
+		//$agremiado_model = new Agremiado;
 		$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
-		
+		$agremiado = $carrito_model->getAgremiado($tipo_documento,$id_persona);
+
 		$p[]=$id_persona;
 		$p[]="v";
 		$prontopago = $carrito_model->genera_prontopago($p);
 
-		return view('frontend.carrito.all',compact('carrito_deuda','prontopago','id_persona'));
+		return view('frontend.carrito.all',compact('carrito_deuda','prontopago','id_persona','agremiado'));
+
+    }
+
+	public function listar_deuda(Request $request){
+
+		$usuario = Auth::user();
+		$id_persona = $usuario->id_persona;
+		$tipo_documento = 85;
+
+		//$periodo = "";
+        //$mes = "";
+		//$tipo_couta = "";
+		//$concepto = "";
+		//$filas = "";
+		//$Exonerado = "";
+		//$numero_documento_b = "";
+
+		$SelFracciona = $request->SelFracciona;
+        $Exonerado = $request->Exonerado;
+
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+
+        $periodo = $request->cboPeriodo_b;
+        $mes = $request->cboMes_b;
+        $tipo_couta = $request->cboTipoCuota_b;
+        $concepto = $request->cboTipoConcepto_b;
+        $filas = $request->cboFilas;
+        $tipo_documento_b = $request->tipo_documento_b;
+
+        if($tipo_documento_b=="87"){
+            $numero_documento_b = $request->numero_documento_b;
+        }else{
+            $numero_documento_b = "";
+        }
+
+		$carrito_model = new Carrito;
+		$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
+
+
+		return view('frontend.carrito.lista_valorizacion',compact('carrito_deuda'));
+
+	}
+
+	public function listar_valorizacion_concepto(Request $request){
+        
+		//$id_persona = $request->id_persona;
+        //$tipo_documento = $request->tipo_documento;
+        
+		$usuario = Auth::user();
+		$id_persona = $usuario->id_persona;
+		$tipo_documento = 85;
+
+		if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getValorizacionConcepto($tipo_documento,$id_persona);
+    
+		return $resultado;
+
+    }
+
+	public function listar_valorizacion_periodo(Request $request){
+        
+		//$id_persona = $request->id_persona;
+        //$tipo_documento = $request->tipo_documento;
+
+		$usuario = Auth::user();
+		$id_persona = $usuario->id_persona;
+		$tipo_documento = 85;
+
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getPeridoValorizacion($tipo_documento,$id_persona);
+
+        return $resultado;
+
+    }
+
+	public function listar_valorizacion_mes(Request $request){
+        
+		//$id_persona = $request->id_persona;
+        //$tipo_documento = $request->tipo_documento;
+
+		$usuario = Auth::user();
+		$id_persona = $usuario->id_persona;
+		$tipo_documento = 85;
+
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getMesValorizacion($tipo_documento,$id_persona);
+
+        return $resultado;
 
     }
 
@@ -401,7 +501,7 @@ class CarritoController extends Controller
 
 	public function show($id){
 
-		$pedido = Pedido::find(1);
+		$pedido = Pedido::find(4);
 
 		$factura_model = new Comprobante;
 
