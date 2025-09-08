@@ -125,14 +125,14 @@ class ComisionDelegado extends Model
         return $data;
     }
 
-	function getComisionDelegadoByAgremiado($id_agremiado){
+	function getComisionDelegadoByAgremiado($id_agremiado,$fecha_programado){
 
         $cad = "select string_agg(distinct c.denominacion || ' (' || c.comision || ')', ', ') as comisiones 
-from comision_delegados cd 
-inner join comision_sesion_delegados csd on cd.id=csd.id_delegado
-inner join comision_sesiones cs on csd.id_comision_sesion=cs.id
-inner join comisiones c on cs.id_comision=c.id
-where cd.id_agremiado=".$id_agremiado;
+				from comision_delegados cd 
+				inner join comision_sesion_delegados csd on cd.id=csd.id_delegado
+				inner join comision_sesiones cs on csd.id_comision_sesion=cs.id
+				inner join comisiones c on cs.id_comision=c.id
+				where cd.id_agremiado=".$id_agremiado ." and cs.fecha_programado  >='". $fecha_programado ."' and cd.id_puesto in (1,2) " ;
 
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];
