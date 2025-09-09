@@ -99,6 +99,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
 
     Route::post('carrito/cargar_comprobante', [CarritoController::class, 'cargar_comprobante'])->name('carrito.cargar_comprobante');
+    Route::post('carrito/send_comprobante', [CarritoController::class, 'send_comprobante'])->name('carrito.send_comprobante');
+    Route::get('carrito/ver_comprobante/{id}', [CarritoController::class, 'ver_comprobante'])->name('carrito.ver_comprobante');
 });
 
 //Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');

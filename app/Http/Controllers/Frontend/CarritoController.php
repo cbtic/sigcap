@@ -69,19 +69,16 @@ class CarritoController extends Controller
 		
 		//$carrito_model = new Carrito;
 		//$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
-
-
-		$trans ='FA';
-		//$TipoF = $request->TipoF;
-		$TipoF = "FTFT";
+		$trans = $request->trans;
+		$TipoF = $request->TipoF;
         
-        if ($TipoF == 'FTFT') {$TipoF = 'FT'; $titulo = 'Nueva Factura';}
-        if ($TipoF == 'BVBV') {$TipoF = 'BV'; $titulo = 'Nueva Boleta de Venta';}
-        if ($TipoF == 'NCFT') {$TipoF = 'NCF'; $titulo = 'Nueva Nota Crédito Factura';}
-        if ($TipoF == 'NCBV') {$TipoF = 'NCB'; $titulo = 'Nueva Nota Crédito Boleta de Venta';}
-        if ($TipoF == 'NDFT') {$TipoF = 'NDF'; $titulo = 'Nueva Nota Dévito Factura';}
-        if ($TipoF == 'NDBV') {$TipoF = 'NDB'; $titulo = 'Nueva Nota Dévito Boleta de Venta';}
-        if ($TipoF == 'TKTK') {$TipoF = 'TK'; $titulo = 'Nuevo Ticket';}
+        if ($TipoF == 'FT') {$titulo = 'Nueva Factura';}
+        if ($TipoF == 'BV') {$titulo = 'Nueva Boleta de Venta';}
+        if ($TipoF == 'NCF') {$titulo = 'Nueva Nota Crédito Factura';}
+        if ($TipoF == 'NCB') {$titulo = 'Nueva Nota Crédito Boleta de Venta';}
+        if ($TipoF == 'NDF') {$titulo = 'Nueva Nota Dévito Factura';}
+        if ($TipoF == 'NDB') {$titulo = 'Nueva Nota Dévito Boleta de Venta';}
+        if ($TipoF == 'TK') {$titulo = 'Nuevo Ticket';}
 
 		$empresa_model = new Empresa;
 		$serie_model = new TablaMaestra;
@@ -182,7 +179,7 @@ class CarritoController extends Controller
 		$pedido_item = PedidoItem::where("pedido_id",$request->id_pedido)->get();
 		
 
-		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido'));
+		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido','titulo'));
 
 	}
 
@@ -780,6 +777,22 @@ class CarritoController extends Controller
 
 	}
 
+	public function ver_comprobante($id){
+
+		$factura = Comprobante::find($id);
+		$facd_serie = $factura->serie;
+        $facd_numero = $factura->numero;
+        $facd_tipo = $factura->tipo;
+		$factura_detalles = ComprobanteDetalle::where([
+            'serie' => $facd_serie,
+            'numero' => $facd_numero,
+            'tipo' => $facd_tipo
+        ])->get();
+		
+		return view('frontend.carrito.show_comprobante',compact('id','factura','factura_detalles'));
+
+	}
+
 	public function ver_comprobante_pdf($id){
 		
 		ini_set('display_errors', 1);
@@ -810,6 +823,70 @@ class CarritoController extends Controller
 		
 		return $pdf->stream('ver_comprobante.pdf');
 	
+	}
+
+	public function send_comprobante(Request $request)
+	{
+		$pedido = Pedido::find($request->id_pedido);
+		
+		$facturas_model = new Comprobante;
+		$usuario_id=$pedido->usuario_id;
+		$usuario = User::find($usuario_id);
+
+		$serieF=$request->serieF;
+		$id_tipo_afectacion_pp=30;
+		$tipoF=$request->TipoF;
+		$ubicacion_id=$usuario->id_persona;
+		$id_persona_act=$usuario->id_persona;
+		$total = $pedido->total_general;
+		$ubicacion_id2="0";
+		$id_persona2="0";
+		$id_caja=3;
+		$descuento=0;
+		$id_user=$usuario_id;
+		$id_moneda=1;
+		$id_nc=0;
+
+		//echo $serieF.",".$id_tipo_afectacion_pp.",".$tipoF.",".$ubicacion_id.",". 
+		//$id_persona_act.",".round($total, 2).",".$ubicacion_id2.",".$id_persona2.",0,".$id_caja.",".$descuento.",'f',".$id_user.",".$id_moneda.",".$id_nc;
+
+		$id_factura = $facturas_model->registrar_factura_moneda($serieF,$id_tipo_afectacion_pp,$tipoF,$ubicacion_id, 
+		$id_persona_act, round($total, 2),$ubicacion_id2,$id_persona2,0, $id_caja,$descuento,'f',$id_user, $id_moneda, $id_nc);
+		
+		$factura = Comprobante::find($id_factura);
+		$fac_serie = $factura->serie;
+		$fac_numero = $factura->numero;
+		
+		$pedido_item = PedidoItem::where("pedido_id",$pedido->id)->get();
+		foreach ($pedido_item as $key => $value) {
+			
+			$total = $value->total;
+			$pu_   = $value->precio_unitario;
+			$id_concepto=26411;
+			$cod_contable="";
+			$descuento = 0;
+			$item = $key + 1;
+
+			$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, 
+			$value->cantidad, $id_concepto, $pu_, $value->nombre, $cod_contable, $item, 
+			$id_factura, $descuento,'d',$id_user,$id_moneda, 0);
+
+			$valoriza_upd = Valorizacione::find($value->valorizacion_id);                       
+			$valoriza_upd->id_comprobante = $id_factura;
+			$valoriza_upd->pagado = "1";
+			$valoriza_upd->valor_unitario = $value->precio_unitario;
+			$valoriza_upd->cantidad = $value->cantidad;
+			$valoriza_upd->save();
+			
+        }
+		
+		//return $id_factura;
+
+		return response()->json([
+            'sw' => true,
+            'id_factura' => $id_factura,
+        ]);
+
 	}
 
 	public function factura($pedido)

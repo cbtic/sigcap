@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h4 class="card-title mb-3" style="color:#373F41!important;font-size:30px;font-weight:bold">
-            Nueva Factura
+            {{$titulo}}
         </h4>
     </div>
 </div>
@@ -9,8 +9,12 @@
 <div class="col col-sm-12 align-self-center">
                                 
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" name="trans" id="trans" value="<?php //echo $trans;?>">
+                                    
+                                    <!--
+                                    <input type="hidden" name="trans" id="trans" value="FA">
                                     <input type="hidden" name="TipoF" value="<?php //if ($trans == 'FA'){echo $TipoF;}?>">
+                                    -->
+                                    
                                     <input type="hidden" name="vestab" value="1">
                                     <input type="hidden" name="totalF" value="<?php //if ($trans == 'FA'){echo $total;}?>">
                                     <input type="hidden" name="ubicacion" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
@@ -247,7 +251,8 @@
 
                                                 </div>
                                                 <br>
-
+                                                
+                                                <div class="row">
                                                 <div class="col-lg-6 offset-lg-6 col-md-6 offset-md-6 col-12">
                                                 <div class="card">
                                                     <div class="card-header btn-secondary">
@@ -332,8 +337,10 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="margin-top:30px">
-                                                <button type="button" onclick="guardarFactura()" class="btn btn-success" id="btnGenTicket">GUARDAR FACTURA</button> 
+                                            <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-top:30px">
+                                                <button type="button" onclick="guardarFactura()" class="btn btn-primary" id="btnGenTicket">GUARDAR FACTURA</button> 
+                                            </div>
                                             </div>
                                         </div>
                                     
