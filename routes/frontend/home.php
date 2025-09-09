@@ -98,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('carrito/ver_comprobante_pdf/{id}', [CarritoController::class, 'ver_comprobante_pdf'])->name('carrito.ver_comprobante_pdf');
     Route::delete('carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
 
+    Route::post('carrito/cargar_comprobante', [CarritoController::class, 'cargar_comprobante'])->name('carrito.cargar_comprobante');
 });
 
 //Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');

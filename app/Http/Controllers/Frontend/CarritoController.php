@@ -60,6 +60,131 @@ class CarritoController extends Controller
 		return view('frontend.carrito.all',compact('carrito_deuda','prontopago','id_persona','agremiado'));
 
     }
+	
+	public function cargar_comprobante(Request $request){
+
+		$usuario = Auth::user();
+		$id_persona = $usuario->id_persona;
+		$tipo_documento = 85;
+		
+		//$carrito_model = new Carrito;
+		//$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
+
+
+		$trans ='FA';
+		//$TipoF = $request->TipoF;
+		$TipoF = "FTFT";
+        
+        if ($TipoF == 'FTFT') {$TipoF = 'FT'; $titulo = 'Nueva Factura';}
+        if ($TipoF == 'BVBV') {$TipoF = 'BV'; $titulo = 'Nueva Boleta de Venta';}
+        if ($TipoF == 'NCFT') {$TipoF = 'NCF'; $titulo = 'Nueva Nota Crédito Factura';}
+        if ($TipoF == 'NCBV') {$TipoF = 'NCB'; $titulo = 'Nueva Nota Crédito Boleta de Venta';}
+        if ($TipoF == 'NDFT') {$TipoF = 'NDF'; $titulo = 'Nueva Nota Dévito Factura';}
+        if ($TipoF == 'NDBV') {$TipoF = 'NDB'; $titulo = 'Nueva Nota Dévito Boleta de Venta';}
+        if ($TipoF == 'TKTK') {$TipoF = 'TK'; $titulo = 'Nuevo Ticket';}
+
+		$empresa_model = new Empresa;
+		$serie_model = new TablaMaestra;
+		$tabla_model = new TablaMaestra;
+
+		if ($trans == 'FA'){
+            $serie = $serie_model->getMaestroC('95',$TipoF); 
+            $serie_default = $serie[0]->predeterminado;
+            $MonAd = 0;
+            $total   = 100;//$request->total;
+            $stotal   = 100;//$request->stotal;            
+            $igv   = 18;//$request->igv;
+            $deudaTotal   = 100;//$request->deudaTotal; 
+            $adelanto   = 'N';
+
+            if ($MonAd != '0' && $total <> $MonAd){
+                $total   = $MonAd;
+                $adelanto   = 'S';
+            }else{
+                $MonAd = 0;
+            }
+
+			$factura_detalle = array();
+			$facturad = array();
+			
+            $id_concepto_pp = 0;//$request->id_concepto_pp;
+
+            $ubicacion = 1;//$request->id_ubicacion;
+            $persona = 1;//$request->id_persona;
+            $tipoDocP = 84;//$request->tipo_documento;
+			$empresa_id = 1;//$request->empresa_id;
+
+            if($tipoDocP == "78" && $TipoF == 'FT'){
+                $empresa_id = $request->empresa_id;
+            }
+			
+            if ($TipoF == 'BV' || $TipoF == 'TK'){
+
+
+                if($persona==''){
+                    $persona=-1; 
+                }
+                $empresa = $empresa_model->getPersonaId_BV($persona);
+
+				if(!$empresa){
+					$empresa = $empresa_model->getEmpresaId($ubicacion);
+				}
+            }
+            else{
+                
+                if ($tipoDocP == "79"){
+                    $empresa = $empresa_model->getEmpresaId($ubicacion);
+                }
+                else{
+                    $empresa = $empresa_model->getPersonaId($persona);
+                }
+                
+            }
+
+            if ($tipoDocP=="79"){
+                $id_cliente=$ubicacion;
+            }
+            else{
+                $id_cliente=$persona;
+            }
+
+            $comprobante_model = new Comprobante;
+            $nc = $comprobante_model->getncById($id_cliente,1/*$request->tipo_documento*/,$id_concepto_pp);
+            
+        }
+        if ($trans == 'FN'){
+            $serie = $serie_model->getMaestroC('95',$TipoF);
+
+        }
+        if ($trans == 'FE'){
+
+            $fac_id = $request->fac_id;
+            $facturas = Comprobante::where('id', $fac_id)->first();
+            $TipoF =  $facturas->fac_tipo;
+
+            if ($TipoF == 'FT') {$titulo = 'Edita Factura';}
+            if ($TipoF == 'BV') {$titulo = 'Edita Boleta de Venta';}
+            if ($TipoF == 'NCF') {$titulo = 'Edita Nota Crédito Factura';}
+            if ($TipoF == 'NCB') {$titulo = 'Edita Nota Crédito Boleta de Venta';}
+            if ($TipoF == 'NDF') {$titulo = 'Edita Nota Dévito Factura';}
+            if ($TipoF == 'NDB') {$titulo = 'Edita Nota Dévito Boleta de Venta';}
+            if ($TipoF == 'TK') {$titulo = 'Edita Ticket';}
+
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $facturas->fac_serie,
+                'numero' => $facturas->fac_numero,
+                'tipo' => $facturas->fac_tipo
+            ])->get();
+
+        }
+
+		$pedido = Pedido::find($request->id_pedido);
+		$pedido_item = PedidoItem::where("pedido_id",$request->id_pedido)->get();
+		
+
+		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido'));
+
+	}
 
 	public function listar_deuda(Request $request){
 
@@ -530,55 +655,9 @@ class CarritoController extends Controller
 	public function show($id){
 
 		$pedido = Pedido::find($id);
+		
 		/*
-		$factura_model = new Comprobante;
-
-        $factura = Comprobante::find($id);
-		
-        if (is_null($factura->id_comprobante_ncnd) || $factura->id_comprobante_ncnd==0){
-            $factura_referencia = Comprobante::where('id', -1)->get();
-            $ref_comprobante="";
-            $ref_tipo="";
-        }   
-        else {
-            $factura_referencia = Comprobante::where('id', $factura->id_comprobante_ncnd)->get()[0];
-            $ref_comprobante=  $factura_referencia->serie . " - " .$factura_referencia->numero ;
-            $ref_tipo=$factura_referencia->tipo;
-        };
-		
-        $facd_serie = $factura->serie;
-        $facd_numero = $factura->numero;
-        $facd_tipo = $factura->tipo;
-       
-        $tipo_comp = ($facd_tipo=="FT")?"01":"03";
-        $fecha_comp = $factura->fecha;
-        $fecha_comp = (new DateTime($fecha_comp))->format('Ymd');
-
-        if ($factura->ruta_comprobante != null)
-        {
-            $rutapdf = 'storage/' . $tipo_comp .'_'. $facd_serie .'_'. $facd_numero .'_'. $fecha_comp.'.pdf';
-        }
-        else{
-            $rutapdf = $factura->ruta_comprobante;
-        }
-
-		$id_guia = 0;
-        $datos_model = new Comprobante;
-		
-        $datos=  $datos_model->getDatosByComprobante($id);
-        $cronograma =  $datos_model->getCronogramaPagos($id);
-        $usuario_caja =  $datos_model->getComprobanteCajaUsuario($id);
-       
-        $factura_detail_model = new ComprobanteDetalle;
-        $factura_detalles = ComprobanteDetalle::where([
-            'serie' => $facd_serie,
-            'numero' => $facd_numero,
-            'tipo' => $facd_tipo
-        ])->get();
-		*/
-
 		$trans ='FA';
-
 		//$TipoF = $request->TipoF;
 		$TipoF = "FTFT";
         
@@ -613,26 +692,8 @@ class CarritoController extends Controller
 
 			$factura_detalle = array();
 			$facturad = array();
-			/*
-            $factura_detalle = $request->comprobante_detalle;
-            $ind = 0;
-			*/
-            $id_concepto_pp = 0;/*$request->id_concepto_pp;*/
-			/*
-            if ($descuentopp!="S"){
-
-                foreach($request->comprobante_detalles ?? [] as $key=>$det){
-                    $facturad[$ind] = $factura_detalle[$key];
-                    $ind++;
-                }
-            }
-
-            $ind = 0;
-            foreach($request->comprobante_detalles ?? [] as $key=>$det){
-                $valorizad[$ind] = $factura_detalle[$key];
-                $ind++;
-            }
-			*/
+			
+            $id_concepto_pp = 0;//$request->id_concepto_pp;
 
             $ubicacion = 1;//$request->id_ubicacion;
             $persona = 1;//$request->id_persona;
@@ -674,15 +735,12 @@ class CarritoController extends Controller
             }
 
             $comprobante_model = new Comprobante;
-            $nc = $comprobante_model->getncById($id_cliente,1/*$request->tipo_documento*/,$id_concepto_pp);
-
-            //return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc','tipo_documento_b', 'tipo_cambio'));
+            $nc = $comprobante_model->getncById($id_cliente,1 $request->tipo_documento,$id_concepto_pp);
             
         }
         if ($trans == 'FN'){
             $serie = $serie_model->getMaestroC('95',$TipoF);
 
-            //return view('frontend.factura.create',compact('trans', 'titulo','TipoF','id_caja','serie'));
         }
         if ($trans == 'FE'){
 
@@ -704,15 +762,21 @@ class CarritoController extends Controller
                 'tipo' => $facturas->fac_tipo
             ])->get();
 
-            //return view('frontend.factura.create',compact('trans', 'titulo','TipoF', 'facturas','facturad'));
         }
 
 		$pedido_item = PedidoItem::where("pedido_id",$pedido->id)->get();
+		*/
 
 		$data = json_decode($pedido->response);
 		$purchaseNumber = $pedido->purchase_number;
-		return view('frontend.carrito.show',compact('data','purchaseNumber'/*,'factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'*/,
+		
+		/*
+		return view('frontend.carrito.show',compact('data','purchaseNumber',
 					'trans','serie','empresa','facturad','stotal','igv','total','pedido_item','pedido'));
+		*/
+
+		return view('frontend.carrito.show',compact('data','purchaseNumber','id'/*,'factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'*/,
+					/*'trans','serie','empresa','facturad','stotal','igv','total','pedido_item','pedido'*/));
 
 	}
 
