@@ -94,6 +94,42 @@
 	color: #FFFFFF;
 }
 
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 100%
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width:540px
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width:720px
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width:960px
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width:1600px!important
+    }
+}
+
+.btn-secondary:hover, .modal-footer .btn-secondary:hover {
+    color: white;
+    background: #373F41!important;
+}
 
 /***************************/
 
@@ -145,7 +181,7 @@
 		</h1>
 
         <div class="row" style="width: 100%;">
-            <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
+            <div class="col-lg-3 col-md-3 col-sm-4 pb-0">
                 <div class="card">
                     <div class="card-body">
                         
@@ -221,335 +257,424 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-8 col-md-8 col-sm-8 pb-0">
+            
+            <div class="col-lg-9 col-md-9 col-sm-8 pb-0">
                 <div class="card">
                     <div class="card-body">
-                                
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                <div id="" class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div id="" class="row">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        @if ($factura->tipo != 'TK')
-                                                        <div class="divlogoimpresora" style="width:100%">
-                                                            <img class="logoimpresora" src="/img/logo-sin-fondo.png" style="width:200px">
-                                                        </div>
-                                                        <h3>
-                                                            COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA
-                                                        </h3><br>
-                                                        @endif
-                                                        <p>AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA</p>
-                                                        <p>RUC 20172977911</p>
-                                                    </div>
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <strong>
-                                                            <p>
-                                                                @switch($factura->tipo)
-                                                                @case('FT')
-                                                                <p> FACTURA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('BV')
-                                                                <p>BOLETA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('TK')
-                                                                <p>BOLETA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('FT')
-                                                                <p>FACTURA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('NC')
-                                                                <p>NOTA DE CREDITO</p>
-                                                                @break
-
-                                                                @case('ND')
-                                                                <p>NOTA DE DEBITO</p>
-                                                                @break
-
-                                                                @default
-                                                                <p>No esta identificado el tipo de documento</p>
-                                                                @endswitch
-                                                            </p>
-                                                        <h3 class="divlogoimpresora">
-                                                           {{ $factura->serie }}-{{ $factura->numero }}
-                                                        </h3>
-
-                                                            <p class="d-print-none"><a href="/carrito/ver_comprobante_pdf/{{ $factura->id }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
-                                                           
-                                                        </strong>
-
-                                                    </div>
-													
-													<?php 
-														$modeda = "S/";
-														if($factura->moneda_id==1)$modeda = "$.";
-													
-														if($factura->nro_guia!=""){
-													?>
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <strong>
-                                                            <p>
-                                                                <p> GUIA DE REMISIÓN</p>
-                                                            </p>
-                                                            <p>
-															 
-															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">{{ $factura->serie_guia }}-{{ $factura->nro_guia }}</a>
-															
-															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">&nbsp;&nbsp;Ver Guia
-															<i style="float:left;margin-left:25px;padding-top:3px;cursor:pointer;color:#007bff" class="fas fa-search"></i>
-															</a>
-															
-															</p>
-                                                        </strong>
-
-                                                    </div>
-													<?php 
-														}
-													?>
-													
-                                                                                                    
-                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <table>
-                                                        <tbody>
-                                                        <tr>
-                                                        <td>RUC/DNI:</td>
-                                                        <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
-                                                        </tr>
-                                                        <div class="separador">&nbsp;</div>
-                                                        <tr>
-                                                        <td>ADQUIRIENTE:</td>
-                                                        <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <td>DIRECCION:</td>
-                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <td>FECHA DE EMISIÓN:</td>
-                                                        <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <td>CAP :</td>
-                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
-                                                        </tr>
-
-                                                        <tr id="trdocmodi">
-                                                        <td>Documento que modifica :</td>
-                                                        <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
-                                                                @case('FT')
-                                                                 FACTURA ELECTRONICA  
-                                                                @break
-
-                                                                @case('BV')
-                                                                BOLETA ELECTRONICA   
-                                                                @break
-
-                                                                    
-                                                                @default
-                                                                <p>No esta identificado el tipo de documento</p>
-                                                                @endswitch
-
-                                                                {{ $ref_comprobante}}</span></td>
-                                                        </tr>
-                                                        
-                                                        <tr id="trdocmodi2">
-                                                            <td>Motivo o sustento :</td>
-                                                            <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
-                                                        </tr>    
-
-                                                        </tbody>
-                                                        </table>
-                                                               
-                                                        </div>
-                                                    <div class="separador">&nbsp;</div>
-
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p> </p>
-                                                    </div>
-                                                    <div class="separador">&nbsp;</div>
-                                                </div>
                                            
- 
-                                <div id="" class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div >
-                                                    <table id="tblProductos" class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center" width="8%">Cant.</th>
-                                                                <th width="37%">Descripción</th>
-                                                                <th class="text-right" width="15%">P.Unitario</th>
-                                                                <th class="text-right" width="10%">Dcto.</th>
-                                                                <!--<th class="text-right" width="10%">V.Unitario</th>   -->                                                                                                                     
-                                                                <th class="text-right" width="15%">Monto</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($factura_detalles as $factura_detalle)
-                                                            <tr id="fila{{ $loop->iteration }}">
-                                                                <td class="text-center">
-                                                                    {{ $factura_detalle->cantidad }} 
-                                                                    
-                                                                    @if($factura_detalle->id_concepto ==="26475")
-                                                                        {{" Revisiones "}}
-                                                                    @endif
-                                                                    
+                        <input class="btn btn-success pull-rigth" value="FACTURA" type="button" id="btnFactura" onclick="enviarTipo(1)">
+                        <input class="btn btn-success pull-rigth" value="BOLETA" type="button" id="btnBoleta" onclick="enviarTipo(2)">
+                        
+                        <div class="row justify-content-center">
+                            <div class="col col-sm-12 align-self-center">
+                                <form class="form-horizontal" method="post" action=""
+                                    id="frmFacturacion" name="frmFacturacion" autocomplete="off">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="trans" id="trans" value="<?php //echo $trans;?>">
+                                    <input type="hidden" name="TipoF" value="<?php //if ($trans == 'FA'){echo $TipoF;}?>">
+                                    <input type="hidden" name="vestab" value="1">
+                                    <input type="hidden" name="totalF" value="<?php //if ($trans == 'FA'){echo $total;}?>">
+                                    <input type="hidden" name="ubicacion" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
+                                    <input type="hidden" name="persona" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
+                                    <input type="hidden" name="id_caja" value="<?php //if ($trans == 'FA'){echo $id_caja;}?>">
+                                    <input type="hidden" name="MonAd" value="<?php //if ($trans == 'FA'){echo $MonAd;}?>">
+                                    <input type="hidden" name="adelanto" value="<?php //if ($trans == 'FA'){echo $adelanto;}?>">
+                                    <input type="hidden" name="id_factura" value="<?php //if ($trans == 'FE'){echo $facturas->id;}?>">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div id="" class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="card">
+                                                        <div class="card-header btn-secondary">
+                                                            <div id="" class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <strong>
+                                                                        Datos del Cliente
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="fsFiltro" class="card-body" >
+                                                            <div id="" class="row">
+                                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-sm">Serie</label>
+                                                                        <select name="serieF" id="serieF" class="form-control form-control-sm">
+                                                                            <?php if ($trans == 'FA'||$trans == 'FN'){?>
+                                                                                <?php foreach($serie as $row):?>
+                                                                                    <option value="<?php echo $row->denominacion?>"><?php echo $row->denominacion?></option>
+                                                                                <?php  endforeach;?>
+                                                                            <?php } ?>
+                                                                            <?php if ($trans == 'FE'){?>
+                                                                                <option value="<?php echo $facturas->fac_serie?>"><?php echo $facturas->fac_serie?></option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12"name="divNumeroF" id="divNumeroF">
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-sm">Número</label>
+                                                                        <input type="text" name="numerof" readonly
+                                                                            id="numerof" value="<?php if ($trans == 'FE'){echo $facturas->fac_numero;}?>"
+                                                                            placeholder="" class="form-control form-control-sm text-center"  >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-sm">Fecha Emisión</label>
+                                                                        <?php if ($trans == 'FA'||$trans == 'FN'){?>
+                                                                            <input type="text" name="fechaF" id="fechaF" value="<?php echo date("d/m/Y")?>"
+                                                                            placeholder="" class="form-control form-control-sm datepicker">
+                                                                        <?php } ?>
+                                                                        <?php if ($trans == 'FE'){?>
+                                                                            <input type="text" name="fechaFE" id="fechaFE" value="<?php echo date("d/m/Y", strtotime($facturas->fac_fecha)) ?>"
+                                                                            placeholder="" class="form-control form-control-sm text-center" readonly>
+                                                                        <?php } ?>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="" class="row">
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="form-control-sm">RUC/DNI</label>
+                                                        <div class="input-group">
+                                                            <input type="text" name="numero_documento" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                                                                                                                    echo $empresa->ruc;
+                                                                                                                                                }
+                                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                                    echo $comprobante->cod_tributario;
+                                                                                                                                                } ?>" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Razón Social/Nombre</label>
+                                                            <input type="text" name="razon_social" readonly id="razon_social" value="<?php if ($trans == 'FA') {
+                                                                                                                                                    echo $empresa->razon_social;
+                                                                                                                                                }
+                                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                                    echo $comprobante->destinatario;
+                                                                                                                                                } ?>" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Dirección</label>
+                                                            <input type="text" name="direccion"  id="direccion" value="<?php if ($trans == 'FA') {
+                                                                                                                                            echo $empresa->direccion;
+                                                                                                                                        }
+                                                                                                                                        if ($trans == 'FE') {
+                                                                                                                                            echo $comprobante->direccion;
+                                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Email</label>
+                                                            <input type="text" name="email"  id="email" value="<?php if ($trans == 'FA') {
+                                                                                                                                            echo $empresa->email;
+                                                                                                                                        }
+                                                                                                                                        if ($trans == 'FE') {
+                                                                                                                                            echo $comprobante->email;
+                                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="" class="row">
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="form-control-sm">RUC/DNI</label>
+                                                        <div class="input-group">
+                                                            <!--
+                                                            <input type="text" name="numero_documento2"  id="numero_documento2" value="" placeholder="" class="form-control form-control-sm">
+                                                                                                                                    -->
+
+                                                            <input class="form-control input-sm text-uppercase" type="text" name="numero_documento2" id="numero_documento2" autocomplete="OFF" maxlength="12" required="" tabindex="0">
                                                             
-                                                                    
-                                                                
-                                                                </td>
-                                                                <td class="text-left">
-                                                                    {{ $factura_detalle->descripcion }}
-                                                                </td>
+                                                            <button class="btn btn-square link link-icon" href="javascript:void(0);" onclick="obtenerRepresentante()" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></button>
 
-                                                                <td class="text-right">{{ number_format($factura_detalle->precio_venta,2)  }}
-                                                                </td>
+                                                            <!--
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerRepresentante()" tabindex="0">
+                                                                    <i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                                            </span>
+                                                            -->
 
-                                                                <td class="text-right">{{ $factura_detalle->descuento }}
-                                                                </td>
-<!--
-                                                                <td class="text-right">{{ number_format($factura_detalle->pu,2) }}
-                                                                </td>
-                                                    -->                                                                                                                     
-                                                                <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                            <tr id="fila_sub_total">
-                                                                <td class="text-right" colspan="4">
-                                                                    @if($factura->impuesto!=0)
-                                                                        {{"  OP.GRAVADAS "}}
-                                                                    @else
-                                                                        {{"  OP.INAFECTAS "}}
-                                                                    @endif                                                        
-                                                                <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
-                                                            </tr>
-                                                            <tr id="fila_igv">
-                                                                <td class="text-right" colspan="4">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                <td class="text-right">{{ number_format($factura->impuesto,2) }}</td>
-                                                            </tr>
-                                                            <tr id="fila_total">
-                                                                <td class="text-right" colspan="4">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                <td class="text-right"><span class="resaltado">{{ number_format($factura->total,2) }}</span></td>
+                                                        </div>                                                        
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Razón Social/Nombre</label>
+                                                            <input type="text" name="razon_social2" readonly id="razon_social2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Dirección</label>
+                                                            <input type="text" name="direccion2"  id="direccion2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Email</label>
+                                                            <input type="text" name="email2"  id="email2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
 
 
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+
                                                 </div>
-                                                <!--table-responsive-->
-                                            </div>
-                                            <!--card-body-->
-                                        </div>
-                                        <!--card-->
-                                    </div>
-                                    
-                                    <div class="separador">&nbsp;</div>
-
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
-                                    </div>
-                                    @if($factura->tipo_operacion =="1001")
-                                    <div class="separador">&nbsp;</div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                        <table>
-                                        <tbody>
-                                        <tr>
-                                        <td style="vertical-align: top;">BENEFICIARIO :</td>
-                                        <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
-                                        </tr>
-                                        <div class="separador">&nbsp;</div>
-                                        <tr>
-                                        <td style="vertical-align: top;">CUENTAS:</td>
-                                        <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
-                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                        </table>
-                                    </div>
-                                    @endif
-
-                                
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
-                                    
-                                        <div class="card">
-
-                                            <div class="card-header">
-                                                <strong>                                            
-                                                    Información del crédito
-                                                </strong>
-                                            </div>
-                                            <div class="card-body">
-
-                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">                                                   
-                                                    <table id="tblcuotas" class="table table-hover" >
-                                                        
-                                                        <thead>                                                            
-                                                            <tr>
-                                                                <th class="text-center" width="8%">item</th>
-                                                                <th width="37%">Monto</th>
-                                                                <th width="37%">Fecha Venc.</th>                                                                    
-                                                            </tr>
-                                                        </thead>
-                                                        
-                                                        <tbody>
-                                                            @foreach ($cronograma as $cronograma_v)
-                                                            <tr id="fila{{ $loop->iteration }}">
-                                                                <td class="text-center">
-                                                                    {{ $cronograma_v->item }} 
-                                                                    
-                                                                
-                                                                </td>
-                                                                <td class="text-left">
-                                                                    {{ $cronograma_v->monto }} 
-                                                                </td>
-
-                                                                <td class="text-left">
-                                                                    {{ date('d-m-Y',strtotime($cronograma_v->fecha_vencimiento)) }} 
-
-
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-                                                    </table>
+                                                
+                                                        </div>
+                                                        <!--card-body-->
+                                                    </div>
+                                                    <!--card-->
                                                 </div>
                                             </div>
+                                            <br>
+
+                                            <div id="" class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
+                                                    <div class="card">
+                                                        <div class="card-header btn-secondary">
+                                                            <strong>
+                                                                <!--@lang('labels.frontend.asistencia.box_asistencia')-->
+                                                                Detalle Resumen
+                                                                <?php
+                                                                if ($trans == 'FN'){?>
+                                                                    <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Agregar Item(s)</button>
+                                                                <?php } ?>
+                                                            </strong>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="table-responsive overflow-auto" style="max-height: 500px;">
+                                                                <table id="tblDetalle" class="table table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-right" width="5%">#</th>
+                                                                            <th class="text-center" width="10%">Cant.</th>
+                                                                            <th width="40%">Descripción</th>
+                                                                            <th width="40%">%Dscto.</th>
+                                                                            <th class="text-right" width="15%">PU</th>
+                                                                            <th class="text-right" width="15%">IGV</th>
+                                                                            <th class="text-right" width="15%">P.Venta</th>
+                                                                            <th class="text-right" width="15%">Total</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <?php $n = 0;
+                                                                        $smodulo = "";
+                                                                        if ($trans == 'FA' || $trans == 'FE'){?>
+                                                                            @foreach ($pedido_item as $factura_detalle)
+                                                                            <?php
+                                                                            
+                                                                                    //$smodulo = $fac['smodulo'];
+                                                                            ?>
+                                                                                <!--
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][vestab]" value="<?php //echo $fac['vestab']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][vcodigo]" value="<?php //echo $fac['vcodigo']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][modulo]" value="<?php //echo $fac['modulo']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][denominacion]" value="<?php //echo $fac['denominacion']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][smodulo]" value="<?php //echo $fac['smodulo']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][cantidad]" value="<?php //echo $fac['cantidad']?>" />
+
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][subtotal]" value="<?php //if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd-$MonAd*0.18);} else {echo $fac['valor_venta_bruto'];}}?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][igv]" value="<?php //if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd*0.18);} else {echo $fac['igv'];}}?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][total]" value="<?php //if ($trans == 'FA') {if ($adelanto == 'S'){echo $MonAd;} else {echo $fac['total'];}}?>" />
+
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][plancontable]" value="<?php //echo $fac['plancontable']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][descuento_item]" value="<?php //echo $fac['descuento_item']?>" />
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][descuento]" value="<?php //echo $fac['descuento']?>" />
+                                                                                -->
+                                                                                <tr>
+                                                                                    <td class="text-right"><?php $n = $n + 1; echo $n;?></td>
+                                                                                    <td class="text-center">{{ $factura_detalle->cantidad }} </td>
+                                                                                    <td class="text-left">{{ $factura_detalle->nombre }}</td>
+                                                                                    <td class="text-left">{{ number_format($pedido->descuento_total,2)  }}</td>
+
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->precio_unitario,2)  }}</td>
+                                                                                    <td class="text-right">{{ number_format($pedido->impuesto_total,2)  }}</td>
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->total,2) }}</td>
+                                                                                    <td class="text-right" >{{ number_format($factura_detalle->total_general,2) }}</td>
+
+                                                                                    <?php
+                                                                                    if ($trans == 'FN'){?>
+                                                                                        <td class="text-center">
+                                                                                            <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Editar Factura</b>">
+                                                                                                <a href="/editar_receta_vale/1" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td class="text-center">
+                                                                                            <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Anular Factura</b>">
+                                                                                                <a href="/ver_receta_atendida/1/" class="btn btn-danger btn-xs"><i class="fa fa-xing"></i></a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    <?php } ?>
+                                                                                </tr>
+                                                                                <input type="hidden" name="facturad[<?php //echo $key?>][item]" value="<?php echo $n?>" />
+                                                                            @endforeach
+                                                                        <?php } ?>
+                                                                        
+                                                                        <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo?>" />
+                                                                        
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!--table-responsive-->
+                                                        </div>
+                                                        <!--card-body-->
+                                                    </div>
+                                                    <!--card-->
+                                                </div>
+                                                <!--card-->
+
+                                                </div>
+                                                <br>
+
+                                                <div class="col-lg-6 offset-lg-6 col-md-6 offset-md-6 col-12">
+                                                <div class="card">
+                                                    <div class="card-header btn-secondary">
+                                                        <strong>
+                                                            Información de Pago
+                                                        </strong>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table id="tblPago" class="table table-hover">
+                                                                <tbody>
+                                                                    <tr style="display:none">
+                                                                        <th></th>
+                                                                        <th>Anticipos</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="anticipos"></span> 0.00</th>
+                                                                    </tr>
+                                                                    <tr style="display:none">
+                                                                        <th></th>
+                                                                        <th>Descuentos</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="descuentos"></span> 0.00</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th>Ope Gravadas</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="gravadas"></span> 
+                                                                                {{ number_format($pedido->total_general,2)  }}
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr style="display:none">
+                                                                        <th></th>
+                                                                        <th>Ope Inafectas</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="inafectas"></span> 0.00</th>
+                                                                    </tr>
+                                                                    <tr style="display:none">
+                                                                        <th></th>
+                                                                        <th>Ope Exoneradas</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="exoneradas"></span> 0.00</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th>I.G.V.</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="igv"></span> 
+                                                                                {{ number_format($pedido->impuesto_total,2)  }}
+                                                                            </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th>Total</th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th class="text-right"><span
+                                                                                id="totalP"></span> 
+                                                                                {{ number_format($pedido->total_general,2)  }}
+                                                                        </th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--table-responsive-->
+                                                    </div>
+                                                    <!--card-body-->
+                                                </div>
+                                                <!--card-->
+                                                </div>
+                                            </div>
+
+                                            <br>
+
+                                            <div id="" class="row" >
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    
+                                                    
+                                                    <?php if($smodulo == 32){?>
+                                                    <div class="card" style="margin-top:15px">
+                                                        <div class="card-header">
+                                                            <div id="" class="row">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                                    <strong>
+                                                                        Datos de la Guia
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="fsFiltro" class="card-body" >
+                                                            <div id="" class="row">
+                                                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-sm">Direcci&oacute;n del punto de llegada</label>
+                                                                        <input type="text" name="guia_llegada_direccion" id="guia_llegada_direccion" value="" placeholder="" class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>					
+                                                    <?php } ?>
+                                                                        
+                                                                        
+                                                    
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            
+                                            
+                                            
                                         </div>
                                     </div>
+                                            <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>
+                                            <!--<a class='flotante' name="guardar" id="guardar" onclick="validaNumeroComprobante()" href='#' ><img src='/img/btn_save.png' border="0"/></a>-->
 
-                                    <div class="separador">&nbsp;</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
-                                    </div>
+                                            <!-- <a class='flotante' href='#' ><img src='/img/deshacer.png' border="0"/></a>-->
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
 
-                                    <div class="separador">&nbsp;</div>
-                                    <hr style="width:90%", size="3", color=black>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
-                                            utilizando su clave SOL</p>
 
-                                    </div>
 
-                                    <?php } ?>
-                                </div>
+                    </div>
+                </div>
+            </div>
 
 	</section>
 	

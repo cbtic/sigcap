@@ -161,8 +161,8 @@ foreach ($carrito_deuda as $key => $row):
 		</td>
 
 		<td style="min-width:220px">
-			<button class="btn btn-outline-dark btn-square" <?php echo $disabled?> href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></button>
-            <button class="btn btn-outline-dark btn-square" <?php echo $disabled?> href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></button>
+			<button class="btn btn-square link link-icon" <?php echo $disabled?> href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></button>
+            <button class="btn btn-square link link-icon" <?php echo $disabled?> href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></button>
 		</td>
 
 	</tr>

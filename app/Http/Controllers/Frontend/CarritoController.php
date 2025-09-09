@@ -14,6 +14,8 @@ use App\Models\Persona;
 use App\Models\Comprobante;
 use App\Models\ComprobanteDetalle;
 use App\Models\Valorizacione;
+use App\Models\TablaMaestra;
+use App\Models\Empresa;
 use Auth;
 use App\Services\VisaService;
 use Monolog\Logger;
@@ -264,6 +266,33 @@ class CarritoController extends Controller
 		return redirect('/carrito/detalle')->with('success', 'Producto agregado al carrito');
     }
 
+	public function eliminar($id) 
+	{
+		$usuario = Auth::user();
+
+		// Buscar el item asegurando que pertenezca al carrito del usuario logueado
+		$item = CarritoItem::where('id', $id)
+			->whereHas('carrito', function ($q) use ($usuario) {
+				$q->where('usuario_id', $usuario->id);
+			})
+			->firstOrFail();
+
+		$carrito = $item->carrito;
+
+		// Eliminar el item
+		$item->delete();
+
+		// Recalcular totales del carrito
+		$this->recalcularTotales($carrito);
+
+		// Si el carrito quedó vacío, lo puedes eliminar también
+		if ($carrito->items()->count() == 0) {
+			$carrito->delete();
+		}
+
+		return redirect('/carrito/detalle')->with('success', 'Producto eliminado del carrito');
+	}
+
 	public function agregar_prontopago(Request $request)
     {
 		
@@ -432,6 +461,7 @@ class CarritoController extends Controller
 		// 5. Eliminar carrito
 		$carrito->delete();
 
+		/*		
 		if($valorizacion_id==0){
 			$usuario = User::find($pedido->usuario_id);
 			$carrito_model = new Valorizacione;
@@ -440,16 +470,11 @@ class CarritoController extends Controller
 			$p[]="c";
 			$prontopago = $carrito_model->genera_prontopago($p)[0];
 			$id_factura = $prontopago->id_comprobante;
-			//echo $id_factura;exit();
 
 		}else{
 			$id_factura = $this->factura($pedido);
 		}
 		
-		//$id_factura = $this->factura($pedido);
-
-		/**********************/
-
 		$factura = Comprobante::find($id_factura);
 		
         if (is_null($factura->id_comprobante_ncnd) || $factura->id_comprobante_ncnd==0){
@@ -492,17 +517,20 @@ class CarritoController extends Controller
             'numero' => $facd_numero,
             'tipo' => $facd_tipo
         ])->get();
-
+		*/
+		
 		/**********************/
 		//print_r($data);exit();
-		return view('frontend.carrito.pedido',compact('data','purchaseNumber','pedido','factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'));
+		//return view('frontend.carrito.pedido',compact('data','purchaseNumber','pedido','factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'));
+
+		return redirect('/carrito/show/'.$pedido->id)->with('success', 'Producto eliminado del carrito');
 
 	}
 
 	public function show($id){
 
-		$pedido = Pedido::find(4);
-
+		$pedido = Pedido::find($id);
+		/*
 		$factura_model = new Comprobante;
 
         $factura = Comprobante::find($id);
@@ -547,10 +575,144 @@ class CarritoController extends Controller
             'numero' => $facd_numero,
             'tipo' => $facd_tipo
         ])->get();
+		*/
+
+		$trans ='FA';
+
+		//$TipoF = $request->TipoF;
+		$TipoF = "FTFT";
+        
+        if ($TipoF == 'FTFT') {$TipoF = 'FT'; $titulo = 'Nueva Factura';}
+        if ($TipoF == 'BVBV') {$TipoF = 'BV'; $titulo = 'Nueva Boleta de Venta';}
+        if ($TipoF == 'NCFT') {$TipoF = 'NCF'; $titulo = 'Nueva Nota Crédito Factura';}
+        if ($TipoF == 'NCBV') {$TipoF = 'NCB'; $titulo = 'Nueva Nota Crédito Boleta de Venta';}
+        if ($TipoF == 'NDFT') {$TipoF = 'NDF'; $titulo = 'Nueva Nota Dévito Factura';}
+        if ($TipoF == 'NDBV') {$TipoF = 'NDB'; $titulo = 'Nueva Nota Dévito Boleta de Venta';}
+        if ($TipoF == 'TKTK') {$TipoF = 'TK'; $titulo = 'Nuevo Ticket';}
+
+		$empresa_model = new Empresa;
+		$serie_model = new TablaMaestra;
+		$tabla_model = new TablaMaestra;
+
+		if ($trans == 'FA'){
+            $serie = $serie_model->getMaestroC('95',$TipoF); 
+            $serie_default = $serie[0]->predeterminado;
+            $MonAd = 0;
+            $total   = 100;//$request->total;
+            $stotal   = 100;//$request->stotal;            
+            $igv   = 18;//$request->igv;
+            $deudaTotal   = 100;//$request->deudaTotal; 
+            $adelanto   = 'N';
+
+            if ($MonAd != '0' && $total <> $MonAd){
+                $total   = $MonAd;
+                $adelanto   = 'S';
+            }else{
+                $MonAd = 0;
+            }
+
+			$factura_detalle = array();
+			$facturad = array();
+			/*
+            $factura_detalle = $request->comprobante_detalle;
+            $ind = 0;
+			*/
+            $id_concepto_pp = 0;/*$request->id_concepto_pp;*/
+			/*
+            if ($descuentopp!="S"){
+
+                foreach($request->comprobante_detalles ?? [] as $key=>$det){
+                    $facturad[$ind] = $factura_detalle[$key];
+                    $ind++;
+                }
+            }
+
+            $ind = 0;
+            foreach($request->comprobante_detalles ?? [] as $key=>$det){
+                $valorizad[$ind] = $factura_detalle[$key];
+                $ind++;
+            }
+			*/
+
+            $ubicacion = 1;//$request->id_ubicacion;
+            $persona = 1;//$request->id_persona;
+            $tipoDocP = 84;//$request->tipo_documento;
+			$empresa_id = 1;//$request->empresa_id;
+
+            if($tipoDocP == "78" && $TipoF == 'FT'){
+                $empresa_id = $request->empresa_id;
+            }
+			
+            if ($TipoF == 'BV' || $TipoF == 'TK'){
+
+
+                if($persona==''){
+                    $persona=-1; 
+                }
+                $empresa = $empresa_model->getPersonaId_BV($persona);
+
+				if(!$empresa){
+					$empresa = $empresa_model->getEmpresaId($ubicacion);
+				}
+            }
+            else{
+                
+                if ($tipoDocP == "79"){
+                    $empresa = $empresa_model->getEmpresaId($ubicacion);
+                }
+                else{
+                    $empresa = $empresa_model->getPersonaId($persona);
+                }
+                
+            }
+
+            if ($tipoDocP=="79"){
+                $id_cliente=$ubicacion;
+            }
+            else{
+                $id_cliente=$persona;
+            }
+
+            $comprobante_model = new Comprobante;
+            $nc = $comprobante_model->getncById($id_cliente,1/*$request->tipo_documento*/,$id_concepto_pp);
+
+            //return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc','tipo_documento_b', 'tipo_cambio'));
+            
+        }
+        if ($trans == 'FN'){
+            $serie = $serie_model->getMaestroC('95',$TipoF);
+
+            //return view('frontend.factura.create',compact('trans', 'titulo','TipoF','id_caja','serie'));
+        }
+        if ($trans == 'FE'){
+
+            $fac_id = $request->fac_id;
+            $facturas = Comprobante::where('id', $fac_id)->first();
+            $TipoF =  $facturas->fac_tipo;
+
+            if ($TipoF == 'FT') {$titulo = 'Edita Factura';}
+            if ($TipoF == 'BV') {$titulo = 'Edita Boleta de Venta';}
+            if ($TipoF == 'NCF') {$titulo = 'Edita Nota Crédito Factura';}
+            if ($TipoF == 'NCB') {$titulo = 'Edita Nota Crédito Boleta de Venta';}
+            if ($TipoF == 'NDF') {$titulo = 'Edita Nota Dévito Factura';}
+            if ($TipoF == 'NDB') {$titulo = 'Edita Nota Dévito Boleta de Venta';}
+            if ($TipoF == 'TK') {$titulo = 'Edita Ticket';}
+
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $facturas->fac_serie,
+                'numero' => $facturas->fac_numero,
+                'tipo' => $facturas->fac_tipo
+            ])->get();
+
+            //return view('frontend.factura.create',compact('trans', 'titulo','TipoF', 'facturas','facturad'));
+        }
+
+		$pedido_item = PedidoItem::where("pedido_id",$pedido->id)->get();
 
 		$data = json_decode($pedido->response);
 		$purchaseNumber = $pedido->purchase_number;
-		return view('frontend.carrito.show',compact('data','purchaseNumber','factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'));
+		return view('frontend.carrito.show',compact('data','purchaseNumber'/*,'factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'*/,
+					'trans','serie','empresa','facturad','stotal','igv','total','pedido_item','pedido'));
 
 	}
 
