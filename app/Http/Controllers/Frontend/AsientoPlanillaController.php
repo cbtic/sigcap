@@ -222,6 +222,14 @@ class AsientoPlanillaController extends Controller
 		
 		
 		//$periodo = 1054;
+		if ($mes==12){
+			$mes=1;
+			$anio=$anio+1;
+		}
+			else{
+				$mes=$mes+1;
+			}
+			
 	
 		$ch = curl_init('http://190.119.30.106:9090/planillas2.php');
 		
@@ -272,7 +280,7 @@ class AsientoPlanillaController extends Controller
 		$asiento_planilla_model = new AsientoPlanilla;
 			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$anio, $mes);
 
-			print_r($periodo); exit();
+			
 		
 	}
 

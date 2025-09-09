@@ -333,7 +333,12 @@ function modalAsignacion(id){
 
 
 function fn_importar_Vou(){
-	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
 	//$(".modal-dialog").css("width","85%");
 	//$('#openOverlayOpc .modal-body').css('height', 'auto');
 	var id_periodo = $("#id_periodo").val();
@@ -344,7 +349,8 @@ function fn_importar_Vou(){
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
+					//$('#openOverlayOpc').modal('show');
+					$('.loader').hide();
 			}
 	});
 
