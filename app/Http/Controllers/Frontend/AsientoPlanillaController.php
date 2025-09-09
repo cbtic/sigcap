@@ -279,9 +279,9 @@ class AsientoPlanillaController extends Controller
 
 			
 		}
-
+		//Asigna al mes del comprobante 
 		$asiento_planilla_model = new AsientoPlanilla;
-			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$anio, $mes);
+			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$_anio, $_mes);
 
 			
 		
