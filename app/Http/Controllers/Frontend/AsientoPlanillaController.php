@@ -223,7 +223,7 @@ class AsientoPlanillaController extends Controller
 		
 		//$periodo = 1054;
 	
-		$ch = curl_init('http://190.119.30.106:9090/planillas.php');
+		$ch = curl_init('http://190.119.30.106:9090/planillas2.php');
 		
 		$postData = [
 					'mes' => $mes+1,
