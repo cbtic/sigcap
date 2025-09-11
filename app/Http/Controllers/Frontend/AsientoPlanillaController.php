@@ -20,6 +20,7 @@ use PDO;
 //use App\Models\CondicionLaborale;
 
 use Auth;
+use Symfony\Component\Mime\Crypto\SMimeEncrypter;
 
 class AsientoPlanillaController extends Controller
 {
@@ -220,13 +221,23 @@ class AsientoPlanillaController extends Controller
 
 	public function importar_vou_siscont($periodo,$anio, $mes){ 
 		
-		
+		$_mes=intval($mes);
+		$_anio=intval($anio);
+		 
 		//$periodo = 1054;
-	
+		if ($mes=='12'){
+			$_mes=1;
+			$_anio=$_anio+1;
+		}
+			else{
+				$_mes=$_mes+1;
+			}
+			
+		
 		$ch = curl_init('http://190.119.30.106:9090/planillas2.php');
 		
 		$postData = [
-					'mes' => $mes+1,
+					'mes' => sprintf("%02d", $_mes),
 					'anio' => $anio
 				];
 		
@@ -268,11 +279,11 @@ class AsientoPlanillaController extends Controller
 
 			
 		}
-
+		//Asigna al mes del comprobante 
 		$asiento_planilla_model = new AsientoPlanilla;
-			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$anio, $mes);
+			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$_anio, $_mes);
 
-			print_r($periodo); exit();
+			
 		
 	}
 
