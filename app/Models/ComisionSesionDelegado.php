@@ -82,16 +82,19 @@ where id_comision=".$id_comision;
         return $data[0]->cantidad;
     }
 	
-	function getComisionDelegadosByIdDelegadoAndFecha($id_agremiado,$fecha_programado,$fecha_inicio_sesion,$fecha_fin_sesion){
+	function getComisionDelegadosByIdDelegadoAndFecha($id_agremiado,$fecha_programado,$fecha_inicio_sesion,$fecha_fin_sesion, $id_comision){
+        
+        //print_r($id_comision); exit();
 
         $cad = "select csd.* 
-from comision_sesion_delegados csd
-inner join comision_sesiones cs on csd.id_comision_sesion=cs.id 
-inner join comision_delegados cd on csd.id_delegado=cd.id
-where cd.id_agremiado=".$id_agremiado."
-and csd.estado='1'
-and cs.fecha_programado>'".$fecha_programado."'
-and cs.estado='1' ";
+                from comision_sesion_delegados csd
+                inner join comision_sesiones cs on csd.id_comision_sesion=cs.id 
+                inner join comision_delegados cd on csd.id_delegado=cd.id
+                where cd.id_agremiado=".$id_agremiado."
+                and csd.estado='1'
+                and cs.fecha_programado>'".$fecha_programado."'
+                and cs.estado='1'
+                and cs.id_comision =" . $id_comision. " ";
 		
 		if($fecha_inicio_sesion!=""){
 			$cad .= " And cs.fecha_programado>='".$fecha_inicio_sesion."'";
