@@ -66,7 +66,7 @@ class CarritoController extends Controller
 		$usuario = Auth::user();
 		$id_persona = $usuario->id_persona;
 		$tipo_documento = 85;
-		
+		//echo $id_persona;
 		//$carrito_model = new Carrito;
 		//$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
 		$trans = $request->trans;
@@ -106,10 +106,10 @@ class CarritoController extends Controller
 			
             $id_concepto_pp = 0;//$request->id_concepto_pp;
 
-            $ubicacion = 1;//$request->id_ubicacion;
-            $persona = 1;//$request->id_persona;
-            $tipoDocP = 84;//$request->tipo_documento;
-			$empresa_id = 1;//$request->empresa_id;
+            $ubicacion = "";//1;//$request->id_ubicacion;
+            $persona = $id_persona;//$request->id_persona;
+            $tipoDocP = $tipo_documento;//84;//$request->tipo_documento;
+			$empresa_id = "";//1;//$request->empresa_id;
 
             if($tipoDocP == "78" && $TipoF == 'FT'){
                 $empresa_id = $request->empresa_id;
@@ -146,7 +146,7 @@ class CarritoController extends Controller
             }
 
             $comprobante_model = new Comprobante;
-            $nc = $comprobante_model->getncById($id_cliente,1/*$request->tipo_documento*/,$id_concepto_pp);
+            $nc = $comprobante_model->getncById($id_cliente,/*1*/$tipo_documento,$id_concepto_pp);
             
         }
         if ($trans == 'FN'){
@@ -178,8 +178,8 @@ class CarritoController extends Controller
 		$pedido = Pedido::find($request->id_pedido);
 		$pedido_item = PedidoItem::where("pedido_id",$request->id_pedido)->get();
 		
-
-		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido','titulo'));
+        //print_r($empresa);
+		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido','titulo','empresa'));
 
 	}
 
@@ -780,16 +780,39 @@ class CarritoController extends Controller
 	public function ver_comprobante($id){
 
 		$factura = Comprobante::find($id);
-		$facd_serie = $factura->serie;
+		
+        $facd_serie = $factura->serie;
         $facd_numero = $factura->numero;
         $facd_tipo = $factura->tipo;
-		$factura_detalles = ComprobanteDetalle::where([
+		$ref_tipo="";
+        $ref_comprobante="";
+
+        $tipo_comp = ($facd_tipo=="FT")?"01":"03";
+        $fecha_comp = $factura->fecha;
+        $fecha_comp = (new DateTime($fecha_comp))->format('Ymd');
+
+        if ($factura->ruta_comprobante != null)
+        {
+            $rutapdf = 'storage/' . $tipo_comp .'_'. $facd_serie .'_'. $facd_numero .'_'. $fecha_comp.'.pdf';
+        }
+        else{
+            $rutapdf = $factura->ruta_comprobante;
+        }
+
+        $id_guia = 0;
+        
+        $datos_model = new Comprobante;
+		
+        $datos=  $datos_model->getDatosByComprobante($id);
+        
+
+        $factura_detalles = ComprobanteDetalle::where([
             'serie' => $facd_serie,
             'numero' => $facd_numero,
             'tipo' => $facd_tipo
         ])->get();
 		
-		return view('frontend.carrito.show_comprobante',compact('id','factura','factura_detalles'));
+		return view('frontend.carrito.show_comprobante',compact('id','factura','factura_detalles','id_guia','datos','ref_tipo','ref_comprobante'));
 
 	}
 
@@ -857,6 +880,19 @@ class CarritoController extends Controller
 		$fac_serie = $factura->serie;
 		$fac_numero = $factura->numero;
 		
+        //if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+        $factura->estado_pago =  "C";//$request->estado_pago;
+        $factura->id_forma_pago =  "1";//$request->id_formapago_;
+        $factura->tipo_operacion = "0101";//$request->id_tipooperacion_;
+        $id_persona = $id_persona_act;
+        $id_empresa = $ubicacion_id;//$request->ubicacion;
+
+        if ($id_persona != "") $factura->id_persona = $id_persona;
+        if ($id_empresa != "") $factura->id_empresa = $id_empresa;
+
+        //$factura_upd->observacion = $request->observacion;
+        $factura->save();
+
 		$pedido_item = PedidoItem::where("pedido_id",$pedido->id)->get();
 		foreach ($pedido_item as $key => $value) {
 			
@@ -880,6 +916,9 @@ class CarritoController extends Controller
 			
         }
 		
+
+        $facturas_model->registrar_deuda_persona($id_persona);
+        
 		//return $id_factura;
 
 		return response()->json([

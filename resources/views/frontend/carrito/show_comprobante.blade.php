@@ -308,7 +308,56 @@
                                                                                                             
                                                             <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
                                                     
+                                                            <table>
+                                                                <tbody>
+                                                                <tr>
+                                                                <td>RUC/DNI:</td>
+                                                                <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
+                                                                </tr>
+                                                                <div class="separador">&nbsp;</div>
+                                                                <tr>
+                                                                <td>ADQUIRIENTE:</td>
+                                                                <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                <td>DIRECCION:</td>
+                                                                <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                <td>FECHA DE EMISIÓN:</td>
+                                                                <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                <td>CAP :</td>
+                                                                <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
+                                                                </tr>
+
+                                                                <tr id="trdocmodi">
+                                                                <td>Documento que modifica :</td>
+                                                                <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
+                                                                        @case('FT')
+                                                                        FACTURA ELECTRONICA  
+                                                                        @break
+
+                                                                        @case('BV')
+                                                                        BOLETA ELECTRONICA   
+                                                                        @break
+
+                                                                            
+                                                                        @default
+                                                                        <p>No esta identificado el tipo de documento</p>
+                                                                        @endswitch
+
+                                                                        {{ $ref_comprobante}}</span></td>
+                                                                </tr>
                                                                 
+                                                                <tr id="trdocmodi2">
+                                                                    <td>Motivo o sustento :</td>
+                                                                    <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
+                                                                </tr>    
+
+                                                                </tbody>
+                                                                </table>    
                                                                     
                                                             
                                                             <div class="separador">&nbsp;</div>

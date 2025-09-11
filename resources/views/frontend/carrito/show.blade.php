@@ -133,6 +133,21 @@
 
 /***************************/
 
+.agregar-rep {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.agregar-rep:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
 
 </style>
 
@@ -940,6 +955,20 @@
 
 //cargarComprobante();
 
+function verRepresentante(){
+    
+    $("#divRepresentante").toggle();
+
+    // Cambiar el texto del link según el estado
+    if($("#divRepresentante").is(":visible")){
+        $(this).text("➖ Cerrar Representante");
+        //obtenerRepresentante();
+    } else {
+        $(this).text("➕ Agregar Representante");
+    }
+    
+}
+
 function cargarComprobante(tipo){
 	
     var msgLoader = "";
@@ -1078,6 +1107,51 @@ function fn_save() {
         }
     });
 }
+
+function obtenerRepresentante(){
+
+    var tipo_documento = "";
+    var tipo_comprobante = $("#TipoF").val();
+
+    //alert(tipo_comprobante);
+    
+    if(tipo_comprobante=="FT") tipo_documento = '79';
+    if(tipo_comprobante=="BV") tipo_documento = '78';
+
+    var numero_documento = $("#numero_documento2").val();
+
+    $.ajax({
+        url: '/agremiado/obtener_representante/' + tipo_documento + '/' + numero_documento,
+        dataType: "json",
+        success: function (result) {
+
+            if (result) {
+                $('#razon_social2').val(result.agremiado.representante);
+                $('#direccion2').val(result.agremiado.direccion);
+                $('#email2').val(result.agremiado.email);
+                
+                if(tipo_comprobante=="FT") $('#ubicacion2').val(result.agremiado.id);
+                if(tipo_comprobante=="BV") $('#persona2').val(result.agremiado.id);
+
+                
+
+            }
+            else {						
+                alert("registro no encontrado!");
+            }
+
+        },
+        "error": function (msg, textStatus, errorThrown) {
+
+            alert("Numero de documento no fue registrado!");
+
+        }
+        
+        
+    });
+    
+}
+
 
 </script>
 

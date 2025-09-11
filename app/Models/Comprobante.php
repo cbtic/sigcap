@@ -53,6 +53,17 @@ class Comprobante extends Model
             throw $e;
         }
     }
+
+    public function registrar_deuda_persona($id_persona)
+    {
+
+        $cad = "Select sp_crud_deuda_persona(?)";
+        $data = DB::select($cad, [$id_persona]);
+        
+        return $data[0]->sp_crud_deuda_persona;
+        
+    }
+
 /*
     public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda, $id_nc)
     {
