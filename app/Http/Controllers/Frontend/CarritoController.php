@@ -907,6 +907,20 @@ class CarritoController extends Controller
 			$value->cantidad, $id_concepto, $pu_, $value->nombre, $cod_contable, $item, 
 			$id_factura, $descuento,'d',$id_user,$id_moneda, 0);
 
+			if ($value['id_concepto'] != '26464') {
+			
+				$facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+
+				$facturaDet_upd->pu = $value->precio_unitario;
+				$facturaDet_upd->importe = $value->total;
+				$facturaDet_upd->igv_total = 0;
+				$facturaDet_upd->precio_venta = $value->precio_unitario;
+				$facturaDet_upd->valor_venta_bruto = $value->total;
+				$facturaDet_upd->valor_venta = $value->total;
+				//$facturaDet_upd->unidad = $value['unidad_medida_item'];
+				$facturaDet_upd->save();
+			}
+		
 			$valoriza_upd = Valorizacione::find($value->valorizacion_id);                       
 			$valoriza_upd->id_comprobante = $id_factura;
 			$valoriza_upd->pagado = "1";

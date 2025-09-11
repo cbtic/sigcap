@@ -1091,7 +1091,7 @@ function fn_save() {
             if(result.sw) {
                 $('#numerof').val(result.id_factura);
                 $('#divNumeroF').show();
-                //enviar_comprobante(result.id_factura);
+                enviar_comprobante(result.id_factura);
                 location.href = "/carrito/ver_comprobante/"+result.id_factura;
             } else {
                 alert(result.msg);
@@ -1104,6 +1104,25 @@ function fn_save() {
             $('.loader').hide();
             alert("Error en la comunicación con el servidor");
             $('#guardar').show();
+        }
+    });
+}
+
+function enviar_comprobante(id){
+
+    $.ajax({
+        url: '/comprobante/firmar/' + id ,
+        dataType: "json",
+        success: function (result) {
+            if (result) {
+                alert("Enviado al Facturador Electrónica!");
+            }
+            else {						
+                alert("registro no encontrado!");
+            }
+        },
+        "error": function (msg, textStatus, errorThrown) {
+            //alert("Numero de documento no fue registrado!");
         }
     });
 }
