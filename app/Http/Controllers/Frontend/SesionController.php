@@ -787,7 +787,7 @@ class SesionController extends Controller
 		
 		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
 		$comisionSesionDelegado_model = new ComisionSesionDelegado();
-		$comisionSesionDelegados = $comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha($comisionDelegadoOld->id_agremiado,$comisionSesion->fecha_programado,$request->fecha_inicio_sesion,$request->fecha_fin_sesion);
+		$comisionSesionDelegados = $comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha($comisionDelegadoOld->id_agremiado,$comisionSesion->fecha_programado,$request->fecha_inicio_sesion,$request->fecha_fin_sesion, $comisionSesion->id_comision);
 		
 		foreach($comisionSesionDelegados as $row){
 			$comisionSesionDelegadoObj = ComisionSesionDelegado::find($row->id);
