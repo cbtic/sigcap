@@ -133,7 +133,12 @@
                                                     
                                                 </div>
 
-                                                <!--
+                                                <a href="javascript:void(0);" onclick="verRepresentante()" id="btnRepresentante" class="agregar-rep">
+        ➕ Agregar a un Tercero
+    </a>
+
+                                                <fieldset id="divRepresentante" style="display:none; margin-top:15px; border:1px solid #ccc; padding:10px; border-radius:6px;">
+                                                <legend style="font-size:14px; font-weight:bold; color:#373F41;">Datos del Tercero</legend>
                                                 <div id="" class="row">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <label class="form-control-sm">RUC/DNI</label>
@@ -141,21 +146,15 @@
 
                                                             <input class="form-control input-sm text-uppercase" type="text" name="numero_documento2" id="numero_documento2" autocomplete="OFF" maxlength="12" required="" tabindex="0">
                                                             
-                                                            <button class="btn btn-square link link-icon" href="javascript:void(0);" onclick="obtenerRepresentante()" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></button>
+                                                            <button type="button" class="btn btn-square link link-icon" href="javascript:void(0);" onclick="obtenerRepresentante()" style="padding-left:0px!important;padding-right:0px!important;line-height:37px;min-width:4rem"><i class="fa fa-search" style="line-height:unset !important;"></i></button>
 
                                                         </div>                                                        
                                                     </div>
 
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Razón Social/Nombre</label>
                                                             <input type="text" name="razon_social2" readonly id="razon_social2" value="" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion2"  id="direccion2" value="" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -164,9 +163,17 @@
                                                             <input type="text" name="email2"  id="email2" value="" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Dirección</label>
+                                                            <input type="text" name="direccion2"  id="direccion2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
 
                                                 </div>
-                                                -->
+                                                
+                                                </fieldset>
+
                                                         </div>
                                                         <!--card-body-->
                                                     </div>
@@ -195,10 +202,10 @@
                                                                             <th class="text-right" width="5%">#</th>
                                                                             <th class="text-center" width="10%">Cant.</th>
                                                                             <th width="40%">Descripción</th>
-                                                                            <th width="40%">%Dscto.</th>
                                                                             <th class="text-right" width="15%">PU</th>
+                                                                            <th class="text-right" width="15%">V.Venta</th>
+                                                                            <th width="40%">%Dscto.</th>
                                                                             <th class="text-right" width="15%">IGV</th>
-                                                                            <th class="text-right" width="15%">P.Venta</th>
                                                                             <th class="text-right" width="15%">Total</th>
                                                                         </tr>
                                                                     </thead>
@@ -211,12 +218,11 @@
                                                                                     <td class="text-right"><?php $n = $n + 1; echo $n;?></td>
                                                                                     <td class="text-center">{{ $factura_detalle->cantidad }} </td>
                                                                                     <td class="text-left">{{ $factura_detalle->nombre }}</td>
-                                                                                    <td class="text-left">{{ number_format($pedido->descuento_total,2)  }}</td>
-
                                                                                     <td class="text-right">{{ number_format($factura_detalle->precio_unitario,2)  }}</td>
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->total,2) }}</td> 
+                                                                                    <td class="text-left">{{ number_format($pedido->descuento_total,2)  }}</td>
                                                                                     <td class="text-right">{{ number_format($pedido->impuesto_total,2)  }}</td>
-                                                                                    <td class="text-right">{{ number_format($factura_detalle->total,2) }}</td>
-                                                                                    <td class="text-right" >{{ number_format($factura_detalle->total_general,2) }}</td>
+                                                                                    <td class="text-right" >{{ number_format($factura_detalle->total,2) }}</td>
 
                                                                                     <?php
                                                                                     if ($trans == 'FN'){?>
