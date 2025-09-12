@@ -220,6 +220,19 @@ const iziConfig = {
 			</small>
 			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
 		</h1>
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
 		<div class="card">
             
             <!--
@@ -229,10 +242,6 @@ const iziConfig = {
             -->
 
 			<div class="card-body">
-					
-				<form id="fEditarItem" name="fEditarItem" action="/operaciones/editarItemCarrito.action" method="post" novalidate="">
-					<input type="hidden" name="idItem" value="" id="idItem">
-					<input type="hidden" name="accionItem" value="insertar" id="accionItem">
 					<div id="divTablaCarrito">
     
     <div class="container">
@@ -263,7 +272,14 @@ const iziConfig = {
 				
 					<?php 
                     if($carrito_items){
-                    foreach($carrito_items as $key=>$row){?>
+                    $tot_reg = count($carrito_items);
+                    $n = 0;
+                    foreach($carrito_items as $key=>$row){
+                        $disabled = "";
+                        $n++;
+                        //if ($n!=1)$disabled = "disabled";
+                        if ($tot_reg != $n)$disabled = "disabled";
+                    ?>
 					
 					<div class="row">
 						<div class="col col-num">{{$key+1}}</div>
@@ -282,15 +298,17 @@ const iziConfig = {
 							</div>
 							<div class="acciones">
                                 <!--
-								<a href="javascript:void(0)" onclick="faccionItem(0,'editar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Editar">
-									<i class="icon icon-pagalo-edit" aria-hidden="true"></i></a>
+								<a href="javascript:void(0)" onclick="eliminarItem({{$row->id}})" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Eliminar">
+									<i class="icon fa fa-trash" aria-hidden="true"></i>
+                                </a>
                                 -->
-								<a href="javascript:void(0)" onclick="faccionItem(0,'eliminar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Eliminar">
-									<i class="icon fa fa-trash" aria-hidden="true"></i></a>
-								<!--
-                                <a href="javascript:void(0)" onclick="faccionItem(0,'duplicar')" data-toggle="tooltip" data-placement="top" title="" class="link link-icon" data-original-title="Duplicar">
-									<i class="icon icon-pagalo-duplicate" aria-hidden="true"></i></a>
-                                -->
+                                <form action="{{ url('carrito/eliminar', $row->id) }}" method="POST" >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" <?php echo $disabled?> class="btn link link-icon" style="border:0px;background-color:#FFFFFF"><i class="icon fa fa-trash" aria-hidden="true"></i></a></button>
+                                </form>
+                            
 							</div>
 						</div>
 						<div class="col col-id">0</div>
@@ -356,7 +374,6 @@ const iziConfig = {
 
 
 					</div>
-				</form>
 
                 <a class="btn btn-secondary" href="/carrito" id="add-pay">AGREGAR OTRO PAGO</a>
                 

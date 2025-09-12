@@ -10,7 +10,7 @@ class Persona extends Model
 {
     //protected $fillable = ['nro_brevete', 'codigo', 'tipo_documento', 'numero_documento', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'sexo', 'telefono', 'email', 'foto', 'ocupacion', 'titular_id', 'tipo_relacion'];
 
-    protected $fillable = ['numero_documento', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'sexo', 'estado', 'tipo_documento'];
+    protected $fillable = ['numero_documento', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'sexo', 'estado', 'tipo_documento', 'numero_ruc', 'telefono_fijo', 'numero_celular', 'correo', 'direccion'];
 
     // contantes SEXO
     const SEXO_FEMENINO = 'F';

@@ -69,6 +69,9 @@ use App\Http\Controllers\Frontend\CarritoController;
 use App\Http\Controllers\Frontend\EncuestaController;
 
 use App\Models\Expediente;
+use App\Http\Controllers\Frontend\User\PerfilController;
+
+Route::patch('perfil/update', [PerfilController::class, 'update'])->name('perfil.update');
 
 /*
  * Frontend Controllers
@@ -89,12 +92,18 @@ Route::get('terms', [TermsController::class, 'index'])
 
 Route::middleware(['auth'])->group(function () {
     Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+    Route::post('carrito/listar_deuda', [CarritoController::class, 'listar_deuda'])->name('carrito.listar_deuda');
     Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
     //Route::get('checkout', [PagoController::class, 'checkout'])->name('checkout');
     //Route::post('checkout/pagar', [PagoController::class, 'pagar'])->name('checkout.pagar');
     Route::post('carrito/finalizar', [CarritoController::class, 'finalizar'])->name('carrito.finalizar');
     Route::get('carrito/show/{id}', [CarritoController::class, 'show'])->name('carrito.show');
     Route::get('carrito/ver_comprobante_pdf/{id}', [CarritoController::class, 'ver_comprobante_pdf'])->name('carrito.ver_comprobante_pdf');
+    Route::delete('carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
+
+    Route::post('carrito/cargar_comprobante', [CarritoController::class, 'cargar_comprobante'])->name('carrito.cargar_comprobante');
+    Route::post('carrito/send_comprobante', [CarritoController::class, 'send_comprobante'])->name('carrito.send_comprobante');
+    Route::get('carrito/ver_comprobante/{id}', [CarritoController::class, 'ver_comprobante'])->name('carrito.ver_comprobante');
 });
 
 //Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
@@ -103,6 +112,10 @@ Route::middleware(['auth'])->group(function () {
 Route::post('carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 Route::post('carrito/agregar_prontopago', [CarritoController::class, 'agregar_prontopago'])->name('carrito.agregar_prontopago');
 Route::post('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');
+
+Route::post('carrito/listar_valorizacion_concepto', [CarritoController::class, 'listar_valorizacion_concepto'])->name('carrito.listar_valorizacion_concepto');
+Route::post('carrito/listar_valorizacion_periodo', [CarritoController::class, 'listar_valorizacion_periodo'])->name('carrito.listar_valorizacion_periodo');
+Route::post('carrito/listar_valorizacion_mes', [CarritoController::class, 'listar_valorizacion_mes'])->name('carrito.listar_valorizacion_mes');
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
 Route::post('personas', [personaController::class, 'store'])->name('personas');

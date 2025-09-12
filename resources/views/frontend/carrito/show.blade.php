@@ -94,8 +94,59 @@
 	color: #FFFFFF;
 }
 
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 100%
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width:540px
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width:720px
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width:960px
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width:1600px!important
+    }
+}
+
+.btn-secondary:hover, .modal-footer .btn-secondary:hover {
+    color: white;
+    background: #373F41!important;
+}
 
 /***************************/
+
+.agregar-rep {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.agregar-rep:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
 
 
 </style>
@@ -145,7 +196,7 @@
 		</h1>
 
         <div class="row" style="width: 100%;">
-            <div class="col-lg-4 col-md-4 col-sm-4 pb-0">
+            <div class="col-lg-3 col-md-3 col-sm-4 pb-0">
                 <div class="card">
                     <div class="card-body">
                         
@@ -221,335 +272,52 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-8 col-md-8 col-sm-8 pb-0">
+            
+            <div class="col-lg-9 col-md-9 col-sm-8 pb-0">
                 <div class="card">
                     <div class="card-body">
-                                
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                <div id="" class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div id="" class="row">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        @if ($factura->tipo != 'TK')
-                                                        <div class="divlogoimpresora" style="width:100%">
-                                                            <img class="logoimpresora" src="/img/logo-sin-fondo.png" style="width:200px">
-                                                        </div>
-                                                        <h3>
-                                                            COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA
-                                                        </h3><br>
-                                                        @endif
-                                                        <p>AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA</p>
-                                                        <p>RUC 20172977911</p>
-                                                    </div>
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <strong>
-                                                            <p>
-                                                                @switch($factura->tipo)
-                                                                @case('FT')
-                                                                <p> FACTURA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('BV')
-                                                                <p>BOLETA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('TK')
-                                                                <p>BOLETA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('FT')
-                                                                <p>FACTURA ELECTRONICA</p>
-                                                                @break
-
-                                                                @case('NC')
-                                                                <p>NOTA DE CREDITO</p>
-                                                                @break
-
-                                                                @case('ND')
-                                                                <p>NOTA DE DEBITO</p>
-                                                                @break
-
-                                                                @default
-                                                                <p>No esta identificado el tipo de documento</p>
-                                                                @endswitch
-                                                            </p>
-                                                        <h3 class="divlogoimpresora">
-                                                           {{ $factura->serie }}-{{ $factura->numero }}
-                                                        </h3>
-
-                                                            <p class="d-print-none"><a href="/carrito/ver_comprobante_pdf/{{ $factura->id }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
-                                                           
-                                                        </strong>
-
-                                                    </div>
-													
-													<?php 
-														$modeda = "S/";
-														if($factura->moneda_id==1)$modeda = "$.";
-													
-														if($factura->nro_guia!=""){
-													?>
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <strong>
-                                                            <p>
-                                                                <p> GUIA DE REMISIÓN</p>
-                                                            </p>
-                                                            <p>
-															 
-															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">{{ $factura->serie_guia }}-{{ $factura->nro_guia }}</a>
-															
-															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">&nbsp;&nbsp;Ver Guia
-															<i style="float:left;margin-left:25px;padding-top:3px;cursor:pointer;color:#007bff" class="fas fa-search"></i>
-															</a>
-															
-															</p>
-                                                        </strong>
-
-                                                    </div>
-													<?php 
-														}
-													?>
-													
-                                                                                                    
-                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <table>
-                                                        <tbody>
-                                                        <tr>
-                                                        <td>RUC/DNI:</td>
-                                                        <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
-                                                        </tr>
-                                                        <div class="separador">&nbsp;</div>
-                                                        <tr>
-                                                        <td>ADQUIRIENTE:</td>
-                                                        <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <td>DIRECCION:</td>
-                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <td>FECHA DE EMISIÓN:</td>
-                                                        <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <td>CAP :</td>
-                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
-                                                        </tr>
-
-                                                        <tr id="trdocmodi">
-                                                        <td>Documento que modifica :</td>
-                                                        <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
-                                                                @case('FT')
-                                                                 FACTURA ELECTRONICA  
-                                                                @break
-
-                                                                @case('BV')
-                                                                BOLETA ELECTRONICA   
-                                                                @break
-
-                                                                    
-                                                                @default
-                                                                <p>No esta identificado el tipo de documento</p>
-                                                                @endswitch
-
-                                                                {{ $ref_comprobante}}</span></td>
-                                                        </tr>
-                                                        
-                                                        <tr id="trdocmodi2">
-                                                            <td>Motivo o sustento :</td>
-                                                            <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
-                                                        </tr>    
-
-                                                        </tbody>
-                                                        </table>
-                                                               
-                                                        </div>
-                                                    <div class="separador">&nbsp;</div>
-
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p> </p>
-                                                    </div>
-                                                    <div class="separador">&nbsp;</div>
-                                                </div>
                                            
- 
-                                <div id="" class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div >
-                                                    <table id="tblProductos" class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center" width="8%">Cant.</th>
-                                                                <th width="37%">Descripción</th>
-                                                                <th class="text-right" width="15%">P.Unitario</th>
-                                                                <th class="text-right" width="10%">Dcto.</th>
-                                                                <!--<th class="text-right" width="10%">V.Unitario</th>   -->                                                                                                                     
-                                                                <th class="text-right" width="15%">Monto</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($factura_detalles as $factura_detalle)
-                                                            <tr id="fila{{ $loop->iteration }}">
-                                                                <td class="text-center">
-                                                                    {{ $factura_detalle->cantidad }} 
-                                                                    
-                                                                    @if($factura_detalle->id_concepto ==="26475")
-                                                                        {{" Revisiones "}}
-                                                                    @endif
-                                                                    
-                                                            
-                                                                    
-                                                                
-                                                                </td>
-                                                                <td class="text-left">
-                                                                    {{ $factura_detalle->descripcion }}
-                                                                </td>
+                        
+                        <form class="form-horizontal" method="post" action=""
+                        id="frmFacturacion" name="frmFacturacion" autocomplete="off">
 
-                                                                <td class="text-right">{{ number_format($factura_detalle->precio_venta,2)  }}
-                                                                </td>
+                        
+                        <input type="hidden" name="id_pedido" value="{{$id}}" id="id_pedido">
+                        <input type="hidden" name="TipoF" id="TipoF" value="">
+                        <input type="hidden" name="trans" id="trans" value="FA">
 
-                                                                <td class="text-right">{{ $factura_detalle->descuento }}
-                                                                </td>
-<!--
-                                                                <td class="text-right">{{ number_format($factura_detalle->pu,2) }}
-                                                                </td>
-                                                    -->                                                                                                                     
-                                                                <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                            <tr id="fila_sub_total">
-                                                                <td class="text-right" colspan="4">
-                                                                    @if($factura->impuesto!=0)
-                                                                        {{"  OP.GRAVADAS "}}
-                                                                    @else
-                                                                        {{"  OP.INAFECTAS "}}
-                                                                    @endif                                                        
-                                                                <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
-                                                            </tr>
-                                                            <tr id="fila_igv">
-                                                                <td class="text-right" colspan="4">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                <td class="text-right">{{ number_format($factura->impuesto,2) }}</td>
-                                                            </tr>
-                                                            <tr id="fila_total">
-                                                                <td class="text-right" colspan="4">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                <td class="text-right"><span class="resaltado">{{ number_format($factura->total,2) }}</span></td>
+                        @csrf
 
-
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!--table-responsive-->
-                                            </div>
-                                            <!--card-body-->
-                                        </div>
-                                        <!--card-->
-                                    </div>
+                        <div id="divComprobante" class="row justify-content-center" style="min-height:500px">
+                            
+                            <div class="col-10 col-md-8">
+                                <div class="alert alert-warning text-center shadow rounded-3 p-4">
+                                    <h4 class="mb-3">📑 Datos del comprobante</h4>
+                                    <p class="mb-0" style="font-size:17px">Aquí aparecerá la información relacionada con tu comprobante, por favor selecciona el tipo de comprobante que deseas generar.</p>
                                     
-                                    <div class="separador">&nbsp;</div>
+                                    <!--
+                                    <p class="fw-bold mb-0">Dispones de dos opciones: 
+                                        <span class="text-success">Factura</span> o <span class="text-primary">Boleta</span>.
+                                    </p>
+                                    -->
 
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
-                                    </div>
-                                    @if($factura->tipo_operacion =="1001")
-                                    <div class="separador">&nbsp;</div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                        <table>
-                                        <tbody>
-                                        <tr>
-                                        <td style="vertical-align: top;">BENEFICIARIO :</td>
-                                        <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
-                                        </tr>
-                                        <div class="separador">&nbsp;</div>
-                                        <tr>
-                                        <td style="vertical-align: top;">CUENTAS:</td>
-                                        <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
-                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                        </table>
-                                    </div>
-                                    @endif
-
-                                
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
-                                    
-                                        <div class="card">
-
-                                            <div class="card-header">
-                                                <strong>                                            
-                                                    Información del crédito
-                                                </strong>
-                                            </div>
-                                            <div class="card-body">
-
-                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">                                                   
-                                                    <table id="tblcuotas" class="table table-hover" >
-                                                        
-                                                        <thead>                                                            
-                                                            <tr>
-                                                                <th class="text-center" width="8%">item</th>
-                                                                <th width="37%">Monto</th>
-                                                                <th width="37%">Fecha Venc.</th>                                                                    
-                                                            </tr>
-                                                        </thead>
-                                                        
-                                                        <tbody>
-                                                            @foreach ($cronograma as $cronograma_v)
-                                                            <tr id="fila{{ $loop->iteration }}">
-                                                                <td class="text-center">
-                                                                    {{ $cronograma_v->item }} 
-                                                                    
-                                                                
-                                                                </td>
-                                                                <td class="text-left">
-                                                                    {{ $cronograma_v->monto }} 
-                                                                </td>
-
-                                                                <td class="text-left">
-                                                                    {{ date('d-m-Y',strtotime($cronograma_v->fecha_vencimiento)) }} 
-
-
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="w-100 clearfix" style="padding-top:20px">
+                                        <input class="btn btn-secondary float-left" 
+                                            value="Factura" type="button" id="btnFactura" onclick="cargarComprobante(1)">
+                                        <input class="btn btn-secondary float-right" 
+                                            value="Boleta" type="button" id="btnBoleta" onclick="cargarComprobante(2)">
                                     </div>
 
-                                    <div class="separador">&nbsp;</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
-                                    </div>
-
-                                    <div class="separador">&nbsp;</div>
-                                    <hr style="width:90%", size="3", color=black>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
-                                            utilizando su clave SOL</p>
-
-                                    </div>
-
-                                    <?php } ?>
                                 </div>
+                            </div>
+                            
+                        </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
 
 	</section>
 	
@@ -1182,5 +950,229 @@
 @push('after-scripts')
 
 <script src="{{ asset('js/agremiado/lista.js') }}"></script>
+
+<script>
+
+//cargarComprobante();
+
+function verRepresentante(){
+    
+    $("#divRepresentante").toggle();
+
+    // Cambiar el texto del link según el estado
+    if($("#divRepresentante").is(":visible")){
+        $(this).text("➖ Cerrar Representante");
+        //obtenerRepresentante();
+    } else {
+        $(this).text("➕ Agregar Representante");
+    }
+    
+}
+
+function cargarComprobante(tipo){
+	
+    var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+    if(tipo == 1)$('#TipoF').val("FT");
+	if(tipo == 2)$('#TipoF').val("BV");
+	if(tipo == 3)$('#TipoF').val("TK");
+	if(tipo == 4)$('#NCFT').val("NCF"); //'Nueva Nota CrÃ©dito Factura'
+	if(tipo == 5)$('#NCBV').val("NCB"); //'Nueva Nota CrÃ©dito Boleta de Venta'
+	if(tipo == 6)$('#NDFT').val("NDF"); //'Nueva Nota DÃ©vito Factura'
+	if(tipo == 7)$('#NDBV').val("NDB"); //'Nueva Nota DÃ©vito Boleta de Venta'
+
+    //$("#opc").val(opc);
+	//$("#btnFracciona").prop('disabled', true);
+	//$("#btnDescuento").prop('disabled', true);
+	
+	$.ajax({
+		url: "/carrito/cargar_comprobante",
+		type: "POST",
+		data : $("#frmFacturacion").serialize(),
+		success: function (result) {  
+
+			$("#divComprobante").html(result);
+			
+			$('.loader').hide();
+		}
+});
+
+}
+
+function guardarFactura(){
+
+    var msg = "";
+    var smodulo_guia = $('#smodulo_guia').val();
+	var tipo_cambio = $('#tipo_cambio').val();
+	var forma_pago = $('#forma_pago').val();
+	var valorizad = $('#valorizad').val();
+	var ind = $('#tblMedioPago tbody tr').length;
+	
+	//if(ind==0)msg+="Debe adicionar el Medio de Pago <br>";
+	
+	var totalMedioPago = $('#totalMedioPago').val();
+	var total_fac_ = $('#total_fac_').val();
+	var id_formapago_ = $('#id_formapago_').val();
+	var total_ = 0;
+	total_ = Number(totalMedioPago);
+	
+	if(total_!=total_fac_ && id_formapago_==1){
+		$total_pagar_abono = $("#total_pagar_abono").val();
+
+		if($total_pagar_abono=="0"){
+			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+		}
+	}
+
+	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var direccion2 = $('#direccion2').val();
+	var email2 = $('#email2').val();
+	var razon_social2 = $('#razon_social2').val();
+
+	if(razon_social2!=''){
+		direccion = direccion2;
+		email= email2;
+	}
+
+	if(direccion=='')msg+="Debe ingresar la direcci&oacute;n del comprobante<br>";
+	if(email=='')msg+="Debe ingresar el Email del comprobante<br>";
+	
+	var ruc_e = $('#numero_documento').val();
+	var ruc_p = $('#numero_documento2').val();
+	var tipo=$('#TipoF').val();
+
+	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
+		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";	
+	}
+
+	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
+		msg+="Se Requiere el NÃºmero de RUC o DNI para generar una Boleta!";	
+	}
+
+    if(smodulo_guia=="32"){
+		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
+		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
+	}
+	
+	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
+
+    if(msg!=""){
+		bootbox.alert(msg);
+        return false;
+    }
+    else{
+        fn_save();
+	}
+
+}
+
+function fn_save() {
+    var msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    
+    $('.loader').css("opacity","0.8").css("height",heightBrowser)
+               .html(`<div id='Grd1_wrapper' class='dataTables_wrapper'>
+                      <div id='Grd1_processing' class='dataTables_processing panel-default'>
+                      ${msgLoader}</div></div>`);
+    $('.loader').show();
+    $('#guardar').hide();
+    
+    $.ajax({
+        url: "/carrito/send_comprobante",
+        type: "POST",
+        data: $("#frmFacturacion").serialize(),
+        dataType: 'json',
+        success: function (result) {           
+            if(result.sw) {
+                $('#numerof').val(result.id_factura);
+                $('#divNumeroF').show();
+                enviar_comprobante(result.id_factura);
+                location.href = "/carrito/ver_comprobante/"+result.id_factura;
+            } else {
+                alert(result.msg);
+                $('#guardar').show();
+            }
+
+			$('.loader').hide();
+        },
+        error: function() {
+            $('.loader').hide();
+            alert("Error en la comunicación con el servidor");
+            $('#guardar').show();
+        }
+    });
+}
+
+function enviar_comprobante(id){
+
+    $.ajax({
+        url: '/comprobante/firmar/' + id ,
+        dataType: "json",
+        success: function (result) {
+            if (result) {
+                alert("Enviado al Facturador Electrónica!");
+            }
+            else {						
+                alert("registro no encontrado!");
+            }
+        },
+        "error": function (msg, textStatus, errorThrown) {
+            //alert("Numero de documento no fue registrado!");
+        }
+    });
+}
+
+function obtenerRepresentante(){
+
+    var tipo_documento = "";
+    var tipo_comprobante = $("#TipoF").val();
+
+    //alert(tipo_comprobante);
+    
+    if(tipo_comprobante=="FT") tipo_documento = '79';
+    if(tipo_comprobante=="BV") tipo_documento = '78';
+
+    var numero_documento = $("#numero_documento2").val();
+
+    $.ajax({
+        url: '/agremiado/obtener_representante/' + tipo_documento + '/' + numero_documento,
+        dataType: "json",
+        success: function (result) {
+
+            if (result) {
+                $('#razon_social2').val(result.agremiado.representante);
+                $('#direccion2').val(result.agremiado.direccion);
+                $('#email2').val(result.agremiado.email);
+                
+                if(tipo_comprobante=="FT") $('#ubicacion2').val(result.agremiado.id);
+                if(tipo_comprobante=="BV") $('#persona2').val(result.agremiado.id);
+
+                
+
+            }
+            else {						
+                alert("registro no encontrado!");
+            }
+
+        },
+        "error": function (msg, textStatus, errorThrown) {
+
+            alert("Numero de documento no fue registrado!");
+
+        }
+        
+        
+    });
+    
+}
+
+
+</script>
+
 
 @endpush

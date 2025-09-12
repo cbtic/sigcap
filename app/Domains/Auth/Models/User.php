@@ -160,4 +160,9 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     {
         return UserFactory::new();
     }
+
+    public function persona()
+    {
+        return $this->belongsTo(\App\Models\Persona::class, 'id_persona');
+    }
 }
