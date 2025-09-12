@@ -69,6 +69,9 @@ use App\Http\Controllers\Frontend\CarritoController;
 use App\Http\Controllers\Frontend\EncuestaController;
 
 use App\Models\Expediente;
+use App\Http\Controllers\Frontend\User\PerfilController;
+
+Route::patch('perfil/update', [PerfilController::class, 'update'])->name('perfil.update');
 
 /*
  * Frontend Controllers
