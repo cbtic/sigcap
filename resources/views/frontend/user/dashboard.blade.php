@@ -31,7 +31,7 @@
             @if (!$logged_in_user->persona->direccion)msg+="Direccion <br>";
             @endif
             msg+="Para Actualizar sus datos dar ";
-            msg+='<a href="{{route('frontend.user.account')}}">Clic aqui </a>';
+            msg+='<a href="{{route('frontend.user.account')}}?tab=information_agremiado">Clic aqui </a>';
 
             bootbox.alert(msg);
         })

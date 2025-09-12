@@ -12,11 +12,16 @@
                     </x-slot>
 
                     <x-slot name="body">
+
+                    @php
+                        $activeTab = request()->get('tab', 'my-profile'); // por defecto "my-profile"
+                    @endphp
+
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <x-utils.link
                                     :text="__('My Profile')"
-                                    class="nav-link active"
+                                    class="nav-link {{ $activeTab === 'my-profile' ? 'active' : '' }}"
                                     id="my-profile-tab"
                                     data-toggle="pill"
                                     href="#my-profile"
@@ -36,7 +41,7 @@
 
                                 <x-utils.link
                                     :text="__('Informacion Basica de Agremiado')"
-                                    class="nav-link"
+                                    class="nav-link {{ $activeTab === 'information_agremiado' ? 'active' : '' }}"
                                     id="information_agremiado-tab"
                                     data-toggle="pill"
                                     href="#information_agremiado"
@@ -69,7 +74,7 @@
                         </nav>
 
                         <div class="tab-content" id="my-profile-tabsContent">
-                            <div class="tab-pane fade pt-3 show active" id="my-profile" role="tabpanel" aria-labelledby="my-profile-tab">
+                            <div class="tab-pane fade pt-3 {{ $activeTab === 'my-profile' ? 'show active' : '' }}" id="my-profile" role="tabpanel" aria-labelledby="my-profile-tab">
                                 @include('frontend.user.account.tabs.profile')
                             </div><!--tab-profile-->
 
@@ -77,7 +82,7 @@
                                 @include('frontend.user.account.tabs.information')
                             </div><!--tab-information-->
 
-                            <div class="tab-pane fade pt-3" id="information_agremiado" role="tabpanel" aria-labelledby="information_agremiado-tab">
+                            <div class="tab-pane fade pt-3 {{ $activeTab === 'information_agremiado' ? 'show active' : '' }}" id="information_agremiado" role="tabpanel" aria-labelledby="information_agremiado-tab">
                                 @include('frontend.user.account.tabs.information_agremiado')
                             </div><!--tab-information-->
 
