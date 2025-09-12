@@ -2520,15 +2520,17 @@ class ComprobanteController extends Controller
                             $valoriza_upd->save();
 
 
-
+                            /*
                             if ($codigo_concepto == '00006' && $pk_registro != "0") {
 
+                                
                                 $agremiado_cuota_upd = AgremiadoCuota::find($pk_registro);
 
                                 $agremiado_cuota_upd->id_situacion = "62";
 
                                 $agremiado_cuota_upd->save();
                             }
+                                */
                         }
 
                         //}
