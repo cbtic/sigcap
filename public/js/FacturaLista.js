@@ -375,8 +375,8 @@ function datatablenew(){
                             if ((row.tipo=="FT" || row.tipo=="BV"|| row.tipo=="NC"|| row.tipo=="ND")&&(row.fecha).slice(0, -9)==today){
                                 var opcion="";
                                 if (row.tipo=="FT" || row.tipo=="BV")opcion = "firmar";
-                                if (row.tipo=="NC")opcion = "firmarNC";
-                                if (row.tipo=="ND")opcion = "firmarND";
+                                if (row.tipo=="NC")opcion = "firmar_nc";
+                                if (row.tipo=="ND")opcion = "firmar_nd";
                                 var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                                
                                 html += '<a href="/comprobante/'+opcion+'/'+row.id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
                                 return html;
