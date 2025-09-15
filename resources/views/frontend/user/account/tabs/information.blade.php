@@ -9,7 +9,7 @@
 
     @if ($logged_in_user->canChangeEmail())
         <div class="form-group row">
-            <label for="email" class="col-md-3 col-form-label text-md-right">@lang('E-mail Address')</label>
+            <label for="email" class="col-md-3 col-form-label text-md-right">@lang('Direcci&oacute;n de correo electr&oacute;nico para Acceso')</label>
 
             <div class="col-md-9">
                 <x-utils.alert type="info" class="mb-3" :dismissable="false">
