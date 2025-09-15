@@ -4705,7 +4705,7 @@ class ComprobanteController extends Controller
 
 		$data["codigoPaisEmisor"] = "PE";
 		$data["totalOPGratuitas"] = "0.00";
-        $data["direccionReceptor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
+        $data["direccionReceptor"] = $factura->direccion;
 		$data["docAfectadoFisico"] = false;
 
 

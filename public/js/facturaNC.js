@@ -46,6 +46,7 @@ $(document).ready(function () {
 		$("#devolucion_nc").val('S');
 		$("#devolucion_nc").prop('readonly', true);
 		$("#devolucion_nc option:not(:selected)").prop('disabled', true);
+		
 
 		$("#tiponota_").prop('readonly', true);
 		$("#tiponota_ option:not(:selected)").prop('disabled', true);
