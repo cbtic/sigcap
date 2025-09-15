@@ -40,12 +40,15 @@ $(document).ready(function () {
 	if (numero_peronalizado=='S'){
 		//$("#afecta_ingreso").hide();
 		$("#afecta_ingreso").val('D');
-		$("#afecta_ingreso").prop('disabled', true);
+		$("#afecta_ingreso").prop('readonly', true);
+		$("#afecta_ingreso option:not(:selected)").prop('disabled', true);
 		
 		$("#devolucion_nc").val('S');
-		$("#devolucion_nc").prop('disabled', true);
+		$("#devolucion_nc").prop('readonly', true);
+		$("#devolucion_nc option:not(:selected)").prop('disabled', true);
 
-		$("#tiponota_").prop('disabled', true);
+		$("#tiponota_").prop('readonly', true);
+		$("#tiponota_ option:not(:selected)").prop('disabled', true);
 
 	}
 

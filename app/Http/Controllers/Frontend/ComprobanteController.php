@@ -5094,7 +5094,7 @@ class ComprobanteController extends Controller
 
         /**********RUC***********/
         $tarifa = $request->facturad;
-        //print_r($tarifa); exit();
+       // print_r($request->direccion); exit();
 
         $total = $request->totalP;
         $serieF = $request->serieF;
@@ -5118,6 +5118,7 @@ class ComprobanteController extends Controller
             $motivo = $request->motivo_;
             $afecta_ingreso = $request->afecta_ingreso;
             $devolucion_nc = $request->devolucion_nc;
+           
             $id_comprobante_ncdc = $request->id_comprobante_ncdc;
             $id_comprobante = $request->id_comprobante;
 
