@@ -70,6 +70,7 @@ foreach ($carrito_deuda as $key => $row):
 		if ($obligatorio =="1")$disabled = "disabled";
 	}
 
+	if($actividad=="SUSPENDIDO")$disabled = "disabled";
 ?>
 	<tr style="font-size:13px" data-toggle="tooltip" data-placement="top" title="<?php echo $row->exonerado_motivo ?>">
 		<!--

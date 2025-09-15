@@ -260,7 +260,7 @@ div {
     margin: 0;
     /*width: 100%;*/
     font-size: 20px;
-    padding-top:30px;
+    padding-top:8px;
     padding-left: 7px;
     float:left;
     font-family: "Inter", sans-serif !important;
@@ -275,7 +275,7 @@ div {
     margin: 0;
     /*width: 100%;*/
     font-size: 35px;
-    padding-top:30px;
+    padding-top:8px;
     padding-left: 7px;
     float:left;
     font-family: "Inter", sans-serif !important;
@@ -283,7 +283,7 @@ div {
 
 
 .seccion-sidebar{
-    width: 350px !important
+    width: 360px !important
 }
 
 .container {
@@ -370,9 +370,11 @@ div {
 	<div class="alert alert-success mb-3" style="display: none;">El ticket se eliminó correctamente.</div>
 </div>
 
-
-
-
+@if($agremiado->actividad=="SUSPENDIDO")
+<div class="alert alert-danger">
+    No puede realizar pagos porque esta suspendido
+</div>
+@endif
 
 <div class="tickets-desktop">
 	<div class="container">
@@ -452,7 +454,8 @@ div {
         <input type="hidden" readonly name="Exonerado" id="Exonerado" value="" class="form-control form-control-sm">
         <input type="hidden" readonly name="mes_deuda" id="mes_deuda" value="" class="form-control form-control-sm">
         <input type="hidden" readonly name="anio_deuda" id="anio_deuda" value="" class="form-control form-control-sm">
-
+        
+        <input type="hidden" readonly name="actividad" id="actividad" value="{{$agremiado->actividad}}">
 
         <div class="row">
 
@@ -628,17 +631,29 @@ div {
 		</div>
 	</section>
 	
-	<section class="seccion-sidebar" style="visibility: visible">
+	<section class="seccion-sidebar" style="visibility: visible;padding-top:15px">
 
             <div class="tit_1">Situacion : </div>
             <div class="tit_2">{{$agremiado->situacion}}</div>
-            <br>
+            <div style="clear:both"></div>
+            <div class="tit_1">Actividad : </div>
+            <div class="tit_2">{{$agremiado->actividad}}</div>
 
-		<div class="card" style="position: absolute; top: 173.203px;">
-			
-            <h4 class="titulo"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+            <div style="clear:both;padding-top:20px"></div>
+            
+            <h4 class="titulo" style="position:static"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
 				Información
 			</h4>
+
+            <div style="clear:both;padding-top:20px"></div>
+
+		<div class="card">
+			<!--
+            <h4 class="titulo" style="position:static"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+				Información
+			</h4>
+            -->
+
 			<div class="card-body">
 				<h6 class="subtitulo">¿Cómo pagar mis deudas?</h6>
 				<p>Si tu deuda aún está pendiente de pago, puedes continuar con el proceso haciendo clic sobre el botón.</p>
