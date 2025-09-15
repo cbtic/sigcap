@@ -39,15 +39,18 @@
                                     aria-controls="information"
                                     aria-selected="false"/>
 
-                                <x-utils.link
-                                    :text="__('Informacion Basica de Agremiado')"
-                                    class="nav-link {{ $activeTab === 'information_agremiado' ? 'active' : '' }}"
-                                    id="information_agremiado-tab"
-                                    data-toggle="pill"
-                                    href="#information_agremiado"
-                                    role="tab"
-                                    aria-controls="information_agremiado"
-                                    aria-selected="false"/>
+                                    @if ($logged_in_user->id_tipo_usuario != 99)
+
+                                    <x-utils.link
+                                        :text="__('Informacion Basica de Agremiado')"
+                                        class="nav-link {{ $activeTab === 'information_agremiado' ? 'active' : '' }}"
+                                        id="information_agremiado-tab"
+                                        data-toggle="pill"
+                                        href="#information_agremiado"
+                                        role="tab"
+                                        aria-controls="information_agremiado"
+                                        aria-selected="false"/>
+                                    @endif
 
                                 @if (! $logged_in_user->isSocial())
                                     <x-utils.link
@@ -82,9 +85,11 @@
                                 @include('frontend.user.account.tabs.information')
                             </div><!--tab-information-->
 
-                            <div class="tab-pane fade pt-3 {{ $activeTab === 'information_agremiado' ? 'show active' : '' }}" id="information_agremiado" role="tabpanel" aria-labelledby="information_agremiado-tab">
-                                @include('frontend.user.account.tabs.information_agremiado')
-                            </div><!--tab-information-->
+                            @if ($logged_in_user->id_tipo_usuario != 99)
+                                <div class="tab-pane fade pt-3 {{ $activeTab === 'information_agremiado' ? 'show active' : '' }}" id="information_agremiado" role="tabpanel" aria-labelledby="information_agremiado-tab">
+                                    @include('frontend.user.account.tabs.information_agremiado')
+                                </div><!--tab-information-->
+                            @endif
 
                             @if (! $logged_in_user->isSocial())
                                 <div class="tab-pane fade pt-3" id="password" role="tabpanel" aria-labelledby="password-tab">
