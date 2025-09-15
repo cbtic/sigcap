@@ -100,6 +100,14 @@
 	color: #FFFFFF;
 }
 
+.seccion-principal{
+    padding-top: 35px!important;
+}
+
+.seccion-principal>.titulo{
+    margin-bottom: 15px!important;
+}
+
 /***************************/
 /*
 .pb-1, .py-1 {
