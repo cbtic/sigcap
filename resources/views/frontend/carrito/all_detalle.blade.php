@@ -399,11 +399,11 @@ const iziConfig = {
                         data-sessiontoken="<?php echo $sesion;?>"
                         data-channel="web"
                         data-merchantid="<?php echo $merchantId?>"
-                        data-merchantlogo="http://127.0.0.1:8000/img/logo-sin-fondo2.png"
+                        data-merchantlogo="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png"
                         data-purchasenumber="<?php echo $purchaseNumber;?>"
                         data-amount="<?php echo $total_general; ?>"
                         data-expirationminutes="5"
-                        data-timeouturl="http://127.0.0.1:8000/carrito"
+                        data-timeouturl="<?php echo URL::to('/') ?>/carrito"
                     ></script>
                     <input type="hidden" name="amount" value="{{ $total_general }}">
                     <input type="hidden" name="purchaseNumber" value="{{ $purchaseNumber }}">
