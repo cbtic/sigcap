@@ -277,8 +277,8 @@
 			
 			<div class="col-lg-8 col-12 footer-izquierdo">
 				<div class="brand">
-					<a href="/home" title="Págalo.pe - Banco de la Nación">
-						<img class="logo" src="http://127.0.0.1:8000/img/logo-sin-fondo.png" width="500" height="100" alt="Págalo.pe - Banco de la Nación">
+					<a href="/home" title="CAP">
+						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
 					</a>
 				</div>
 				<strong class="titulo">Banco de la Nación | Ministerio de Economía y Finanzas</strong>
@@ -727,8 +727,8 @@
 						<i class="icon icon-pagalo-close" aria-hidden="true"></i>
 					</button>
 					<div class="container">
-						<a class="link" href="/home" title="Págalo.pe">
-							<img class="logo" src="http://127.0.0.1:8000/img/logo-sin-fondo2.png" width="500" height="100">
+						<a class="link" href="/home" title="CAP">
+							<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" width="500" height="100">
 						</a>
 					</div>
 				</div>
