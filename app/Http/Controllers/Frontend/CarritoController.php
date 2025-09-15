@@ -864,7 +864,7 @@ class CarritoController extends Controller
 		$total = $pedido->total_general;
 		$ubicacion_id2="0";
 		$id_persona2="0";
-		$id_caja=3;
+		$id_caja=143;
 		$descuento=0;
 		$id_user=$usuario_id;
 		$id_moneda=1;

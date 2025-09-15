@@ -137,6 +137,100 @@
 
 /***************************/
 
+/*
+ VERSION PARA IMPRESORAS
+*/
+@page  {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media  print {
+  
+  .titulo{
+    display:none
+  }
+
+  .footer{
+    display:none
+  }
+
+  .card-body {
+    padding: 0px!important;
+  }
+    
+  html, body {
+    width: 80mm !important; 
+    min-height: 100vh;      
+    margin: 2px !important;
+    padding: 0 !important;
+
+  }
+  
+    *, :after, :before {
+        color: #FFF!important;
+        text-shadow: none!important;
+        /*background: blue!important;*/
+        -webkit-box-shadow: none!important;
+        box-shadow: none!important;
+        font-family:sans-serif;
+    }
+    
+    p,table, th, td {
+        color: black !important;
+        /*font-size: 36px !important;*/
+        font-family:sans-serif;
+    }
+    
+    .resaltado {
+        color: black !important;
+        /*font-size: 36px !important;*/
+        font-weight: bold;
+    }
+    
+    .divlogoimpresora {
+        display: block;
+    }
+
+    .logoimpresora {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        display: block;
+        width: 350px !important;
+        height: 125px !important;
+    }
+    h3{
+        color: black !important;
+        /*font-size: 52px !important;*/
+        text-align: center;
+        font-family:sans-serif;
+    }
+
+    .separador {
+        /*display: block;*/
+        /*margin-top: 20px;*/
+    }
+
+    .navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-0 {
+        display: none
+    }
+    h4,ol{
+        display: none !important
+    }
+
+    .flotante,.flotanteC {
+        display: none !important
+    }
+
+    .no-divider {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+}
 
 </style>
 
@@ -317,10 +411,9 @@
                                                             <?php 
                                                                 }
                                                             ?>
-                                                            
                                                                                                             
                                                             <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
-                                                    
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <table>
                                                                 <tbody>
                                                                 <tr>
@@ -344,53 +437,17 @@
                                                                 <td>CAP :</td>
                                                                 <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
                                                                 </tr>
-
-                                                                <tr id="trdocmodi">
-                                                                <td>Documento que modifica :</td>
-                                                                <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
-                                                                        @case('FT')
-                                                                        FACTURA ELECTRONICA  
-                                                                        @break
-
-                                                                        @case('BV')
-                                                                        BOLETA ELECTRONICA   
-                                                                        @break
-
-                                                                            
-                                                                        @default
-                                                                        <p>No esta identificado el tipo de documento</p>
-                                                                        @endswitch
-
-                                                                        {{ $ref_comprobante}}</span></td>
-                                                                </tr>
-                                                                
-                                                                <tr id="trdocmodi2">
-                                                                    <td>Motivo o sustento :</td>
-                                                                    <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
-                                                                </tr>    
-
                                                                 </tbody>
                                                                 </table>    
-                                                                    
-                                                            
-                                                            <div class="separador">&nbsp;</div>
-
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <p> </p>
                                                             </div>
-                                                            <div class="separador">&nbsp;</div>
                                                         </div>
-                                                    </div>
-                                                    <div id="fsFiltro" class="card-body">
-
                                                     </div>
                                                     <!--card-body-->
                                                 </div>
                                                 <!--card-->
                                             </div>
                                         </div>
-                                        
-        
+                                    
                                         <div id="" class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="card">
@@ -530,7 +587,7 @@
 
                                             <div class="separador">&nbsp;</div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <p>Usuario: <span class="resaltado">xxxxxx</span></p>
+                                                <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
                                             </div>
 
                                             <div class="separador">&nbsp;</div>
