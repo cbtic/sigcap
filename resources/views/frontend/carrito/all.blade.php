@@ -101,11 +101,11 @@
 }
 
 .seccion-principal{
-    padding-top: 35px!important;
+    padding-top: 15px!important;
 }
 
 .seccion-principal>.titulo{
-    margin-bottom: 15px!important;
+    margin-bottom: 5px!important;
 }
 
 /***************************/
