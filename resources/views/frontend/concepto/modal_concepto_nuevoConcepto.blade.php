@@ -180,163 +180,21 @@ input:checked + .slider:before {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
-/*
-jQuery(function($){
-$.mask.definitions['H'] = "[0-1]";
-$.mask.definitions['h'] = "[0-9]";
-$.mask.definitions['M'] = "[0-5]";
-$.mask.definitions['m'] = "[0-9]";
-$.mask.definitions['P'] = "[AaPp]";
-$.mask.definitions['p'] = "[Mm]";
-});
-*/
+
+
 $(document).ready(function() {
-	//$('#hora_solicitud').focus();
-	$('#hora_solicitud').mask('00:00');
+
 	$("#partida_presupuestal").select2({ width: '100%' });
 	$("#id_tipo_afectacion").select2({ width: '100%' });
 	$("#id_centro_costo").select2({ width: '100%' });
 	$("#id_tipo_concepto").select2({ width: '100%' });
-	//$("#id_empresa").select2({ width: '100%' });
+	$("#cuenta_contable_debe").select2({ width: '100%' });
+	$("#cuenta_contable_al_haber1").select2({ width: '100%' });
+	$("#cuenta_contable_al_haber2").select2({ width: '100%' });
 });
-</script>
-
-<script type="text/javascript">
-
-$('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_egresado').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-	});
-});
-
-$('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_graduado').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-	});
-});
-
-$(document).ready(function() {
-	 
-	 
-
-});
-
-function validacion(){
-    
-    var msg = "";
-    var cobservaciones=$("#frmComentar #cobservaciones").val();
-    
-    if(cobservaciones==""){msg+="Debe ingresar una Observacion <br>";}
-    
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-}
-
-function guardarCita__(){
-	alert("fdssf");
-}
-
-function guardarCita(id_medico,fecha_cita){
-    
-    var msg = "";
-    var id_ipress = $('#id_ipress').val();
-    var id_consultorio = $('#id_consultorio').val();
-    var fecha_atencion = $('#fecha_atencion').val();
-    var dni_beneficiario = $("#dni_beneficiario").val();
-	//alert(id_ipress);
-	if(dni_beneficiario == "")msg += "Debe ingresar el numero de documento <br>";
-    if(id_ipress==""){msg+="Debe ingresar una Ipress<br>";}
-    if(id_consultorio==""){msg+="Debe ingresar un Consultorio<br>";}
-    if(fecha_atencion==""){msg+="Debe ingresar una fecha de atencion<br>";}
-   
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-    else{
-        fn_save_cita(id_medico,fecha_cita);
-    }
-}
-
-function fn_save_estudio(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_agremiado = $('#id_agremiado').val();
-	var id_universidad = $('#id_universidad').val();
-	var id_especialidad = $('#id_especialidad').val();
-	var tesis = $('#tesis').val();
-	var fecha_egresado = $('#fecha_egresado').val();
-	var fecha_graduado = $('#fecha_graduado').val();
-	var libro = $('#libro').val();
-	var folio = $('#folio').val();
-	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/agremiado/send_agremiado_estudio",
-            type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_universidad:id_universidad,id_especialidad:id_especialidad,tesis:tesis,fecha_egresado:fecha_egresado,fecha_graduado:fecha_graduado,libro:libro,folio:folio},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function fn_save_empresa(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var ruc = $('#ruc').val();
-	var nombre_comercial = $('#nombre_comercial').val();
-	var razon_social = $('#razon_social').val();
-	var direccion = $('#direccion').val();
-	var representante = $('#representante').val();
-	//var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/empresa/send_empresa_nuevoEmpresa",
-            type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,representante:representante},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
 
 function valida(){
+	
 	var msg = "0";
 
 	var _token = $('#_token').val();
@@ -350,6 +208,7 @@ function valida(){
 	var partida_presupuestal = $('#partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#id_centro_costo').val();
+	var genera_pago = $('#genera_pago').val();
 
 	if (id_regional==""){
 		msg= "Falta seleccionar la Regional";
@@ -369,19 +228,13 @@ function valida(){
 		msg= "Falta seleccionar el Tipo de Afectaci&oacute;n";
 	}else if (centro_costo==""){
 		msg= "Falta ingresar el Centro de Costos";
+	}else if (genera_pago==""){
+		msg= "Falta ingresar Genera Pago";
 	}
-	
-	
-	/*elseif (direccion==""){
-		msg= "Falta ingresar la direcci&oacuten";
 
-	}elseif (email==""){
-		msg= "Falta ingresar el Email";
-
-	}elseif (telefono==""){
-		msg= "Falta ingresar el tel&eacute;fono";
-
-	}*/
+	if(genera_pago==1 && importe == "0" ){
+		msg= "El importe no puede ser 0 cuando el concepto genera pago";
+	}
 
 	if (msg=="0"){
 		fn_save_concepto()		
@@ -409,167 +262,23 @@ function fn_save_concepto(){
 	var partida_presupuestal = $('#partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#id_centro_costo').val();
+	var genera_pago = $('#genera_pago').val();
 	
 	
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo},
+            data : {_token:_token,id:id,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo,genera_pago:genera_pago},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
 				datatablenew();
 				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
             }
     });
 }
 
-function fn_liberar(id){
-    
-	//var id_estacionamiento = $('#id_estacionamiento').val();
-	var _token = $('#_token').val();
-	
-    $.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-            type: "POST",
-            data : {_token:_token,id:id},
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
-            }
-    });
-}
-
-
-function validarLiquidacion() {
-	
-	var msg = "";
-	var sw = true;
-	
-	var saldo_liquidado = $('#saldo_liquidado').val();
-	var estado = $('#estado').val();
-	
-	if(saldo_liquidado == "")msg += "Debe ingresar un saldo liquidado <br>";
-	if(estado == "")msg += "Debe ingresar una observacion <br>";
-	
-	if(msg!=""){
-		bootbox.alert(msg);
-		//return false;
-	} else {
-		//submitFrm();
-		document.frmLiquidacion.submit();
-	}
-	return false;
-}
-
-
-function obtenerVehiculo(id,obj){
-	
-	//$("#tblPlan tbody text-white").attr('class','bg-primary text-white');
-	if(obj!=undefined){
-		$("#tblSinReservaEstacionamiento tbody tr").each(function (ii, oo) {
-			var clase = $(this).attr("clase");
-			$(this).attr('class',clase);
-		});
-		
-		$(obj).attr('class','bg-success text-white');
-	}
-	//$('#tblPlanDetalle tbody').html("");
-	$('#id_empresa').val(id);
-	var id_estacionamiento = $('#id_estacionamiento').val();
-	$.ajax({
-		url: '/estacionamiento/obtener_vehiculo/'+id+'/'+id_estacionamiento,
-		dataType: "json",
-		success: function(result){
-			
-			var newRow = "";
-			$('#tblPlanDetalle').dataTable().fnDestroy(); //la destruimos
-			$('#tblPlanDetalle tbody').html("");
-			$(result).each(function (ii, oo) {
-				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
-				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
-				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
-				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
-			});
-			$('#tblPlanDetalle tbody').html(newRow);
-			
-			$('#tblPlanDetalle').DataTable({
-				//"sPaginationType": "full_numbers",
-				"paging":false,
-				"dom": '<"top">rt<"bottom"flpi><"clear">',
-				"language": {"url": "/js/Spanish.json"},
-			});
-			
-			$("#system-search2").keyup(function() {
-				var dataTable = $('#tblPlanDetalle').dataTable();
-			   dataTable.fnFilter(this.value);
-			});
-			
-		}
-		
-	});
-	
-}
-
-function cargar_tipo_proveedor(){
-	
-	var tipo_proveedor = 0;
-	if($('#tipo_proveedor_').is(":checked"))tipo_proveedor = 1;
-	
-	$("#divPersona").hide();
-	$("#divEmpresa").hide();
-	
-	$("#empresa_").val("");
-	$("#persona_").val("");
-	
-	$("#id_empresa").val("");
-	$("#id_persona").val("");
-	
-	if(tipo_proveedor==0)$("#divPersona").show();
-	if(tipo_proveedor==1)$("#divEmpresa").show();
-	
-}
-
-/*
-$('#fecha_solicitud').datepicker({
-	autoclose: true,
-	dateFormat: 'dd-mm-yy',
-	changeMonth: true,
-	changeYear: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-/*
-$('#fecha_solicitud').datepicker({
-	format: "dd/mm/yyyy",
-	startDate: "01-01-2015",
-	endDate: "01-01-2020",
-	todayBtn: "linked",
-	autoclose: true,
-	todayHighlight: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-
-/*				
-format: "dd/mm/yyyy",
-startDate: "01-01-2015",
-endDate: "01-01-2020",
-todayBtn: "linked",
-autoclose: true,
-todayHighlight: true,
-container: '#myModal modal-body'
-*/	
 </script>
 
 
@@ -590,12 +299,12 @@ container: '#myModal modal-body'
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 							<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 							<div class="row" style="padding-left:10px">
-								<!--<div class="col-lg-3">
+								<div class="col-lg-3">
 									<div class="form-group">
 										<label class="control-label form-control-sm">C&oacute;digo</label>
-										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?/*php echo $concepto->codigo*/?>" type="text" readonly="readonly" >						
+										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
 									</div>
-								</div>-->
+								</div>
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Regional</label>
@@ -656,22 +365,49 @@ container: '#myModal modal-body'
 										<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concepto->periodo?>" type="text" >
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable Debe</label>
-										<input id="cuenta_contable_debe" name="cuenta_contable_debe" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_debe?>" type="text" >
+										<select name="cuenta_contable_debe" id="cuenta_contable_debe" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_debe as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_debe)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable al Haber1</label>
-										<input id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber1?>" type="text" >
+										<select name="cuenta_contable_al_haber1" id="cuenta_contable_al_haber1" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_haber1 as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_al_haber1)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable al Haber2</label>
-										<input id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber2?>" type="text" >
+										<select name="cuenta_contable_al_haber2" id="cuenta_contable_al_haber2" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_haber2 as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_al_haber2)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
 								<div class="col-lg-5">
@@ -716,6 +452,15 @@ container: '#myModal modal-body'
 										</select>
 									</div>
 								</div>
+
+								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+									<label class="control-label form-control-sm">Genera Pago</label>
+									<select name="genera_pago" id="genera_pago" class="form-control form-control-sm">
+										<option value="" <?php if(''==$concepto->genera_pago)echo "selected='selected'"?>>--Selecciona Genera Pago--</option>
+										<option value="1" <?php if('1'==$concepto->genera_pago)echo "selected='selected'"?>>Si</option>
+										<option value="0" <?php if('0'==$concepto->genera_pago)echo "selected='selected'"?>>No</option>
+									</select>
+								</div>
 						
 					</div>
 					
@@ -747,128 +492,8 @@ container: '#myModal modal-body'
     <!-- /.content-wrapper -->
     
 <script type="text/javascript">
-$(document).ready(function () {
-	
-	
-	$('#tblReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
-	$('#tblReservaEstacionamientoPreferente').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-searchp").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamientoPreferente').dataTable();
-		dataTable.fnFilter(this.value);
-	});
-	
-	$('#tblSinReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search2").keyup(function() {
-		var dataTable = $('#tblSinReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
-	
-});
 
-</script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	$('#persona_').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-		
-	$('#persona_').focusin(function() { $('#persona_').select(); });
-	/*
-	$('#usuario_').autocomplete({
-		appendTo: "#usuario_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/empresa/list_usuario/'+$('#usuario_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.usuario};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#user_id").val(ui.item.key);
-		},
-			minLength: 2,
-			delay: 100
-	  });
-	*/
-	
-	$('#empresa_').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-		
-	$('#empresa_').focusin(function() { $('#empresa_').select(); });
-	
-	$('#empresa_').autocomplete({
-		appendTo: "#empresa_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/empresa/list_empresa/'+$('#empresa_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.razon_social, ruc: obj.ruc};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#id_empresa").val(ui.item.key);
-		},
-			minLength: 1,
-			delay: 100
-	  });
-	  
-	  $('#persona_').autocomplete({
-		appendTo: "#persona_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/persona/list_persona/'+$('#persona_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.persona};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#id_persona").val(ui.item.key);
-		},
-			minLength: 1,
-			delay: 100
-	  });
-	  
-	
-});
 
 </script>
 

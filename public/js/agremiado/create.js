@@ -17,6 +17,8 @@ $(document).ready(function () {
 	obtenerProvinciaDomiciliarioEdit(idProvinciaDomiciliario);
 	obtenerDistritoDomiciliarioEdit(idProvinciaDomiciliario,idDistritoDomiciliario);
 	
+	if(id_agremiado>0)obtenerLocalEdit(id_regional,id_local);
+
 	$('#btnNuevoLit').on('click', function () {
 		modalLitigante(0);
 	});
@@ -35,6 +37,10 @@ $(document).ready(function () {
 	
 	$('#btnNuevoEstudio').on('click', function () {
 		modalEstudio(0);
+	});
+
+	$('#btnSuspension').click(function () {
+		modal_suspension(0);
 	});
 	
 	$('#btnNuevoIdioma').on('click', function () {
@@ -88,25 +94,49 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
-	
+
+	$('#frmDeudas #btnBuscarDeuda').click(function () {
+		fn_ListarBusqueda2();
+	});
 	
 	$('#fecha_colegiado').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_actualiza').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_nacimiento').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
+	$('#fecha_fallecido').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_inicio_temp').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_temp').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
@@ -136,7 +166,65 @@ $(document).ready(function () {
         return false;
     });
 	
+	$('#numero_documento').blur(function() {
+		var id = $('#id_agremiado').val();
+		
+		if (id == 0) {
+			validaDni(this.value);
+		}
+	});
+	
 });
+
+function validaDni(dni) {
+
+	var numero_documento = $("#numero_documento").val();
+	var tipo_documento = $("#id_tipo_documento").val();
+	var msg = "";
+
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+
+	if (tipo_documento == "0" || numero_documento == "") {
+		bootbox.alert(msg);
+		return false;
+	}
+
+	var settings = {
+		"url": "https://apiperu.dev/api/dni/" + dni,
+		"method": "GET",
+		"timeout": 0,
+		"headers": {
+			"Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+		},
+	};
+
+	$.ajax(settings).done(function(response) {
+		console.log(response);
+
+		if (response.success == true) {
+
+			var data = response.data;
+
+			$('#apellido_paterno').val('')
+			$('#apellido_materno').val('')
+			$('#nombres').val('')
+
+			$('#apellido_paterno').val(data.apellido_paterno);
+			$('#apellido_materno').val(data.apellido_materno);
+			$('#nombres').val(data.nombres);
+
+			//alert(data.nombre_o_razon_social);
+
+		} else {
+			Swal.fire("DNI Inv&aacute;lido. Revise el DNI digitado!");
+			return false;
+		}
+
+	});
+}
 
 function formato_miles(numero){
 	
@@ -177,6 +265,23 @@ function guardar_agremiado(){
     //alert("cvvfv");
     var msg = "";
     
+	var id_regional = $("#id_regional").val();
+	var fecha_colegiado = $("#fecha_colegiado").val();
+	
+	var id_tipo_documento = $("#id_tipo_documento").val();
+	var numero_documento = $("#numero_documento").val();
+	
+	if(id_tipo_documento=="")msg += "Debe seleccionar una Tipo de documento<br>";
+	if(numero_documento=="")msg += "Debe ingresar un Numero de documento<br>";
+	
+	if(id_regional=="")msg += "Debe seleccionar una Región<br>";
+	if(fecha_colegiado=="")msg += "Debe ingrear una Fecha de colegiado<br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
 	fn_save();
 }
 
@@ -188,8 +293,18 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-                    
+                    if(result==1){
+						bootbox.alert("En Numero de CAP ya esta registrado");
+						return false;	
+					}
+					
+					if(result==2){
+						bootbox.alert("En Numero de documento ya esta registrado");
+						return false;	
+					}
+					
 					window.location.reload();
+					
 					//Limpiar();
 					/*$('#openOverlayOpc').modal('hide');
 					$('#calendar').fullCalendar("refetchEvents");
@@ -2369,6 +2484,7 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
+
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
     setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 500);
@@ -3294,6 +3410,23 @@ function modalEstudio(id){
 
 }
 
+function modal_suspension(id){
+	
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_suspension/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 function modalIdioma(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -3629,6 +3762,98 @@ function fn_eliminar_seg(id){
     });
 }
 
+
+
+
+function obtenerLocal(){
+	
+	var id = $('#id_regional').val();
+	if(id=="")return false;
+	$('#id_local').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_local/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_local').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#id_local').html(option);
+			
+			$('#id_local').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerLocalEdit(id_regional,id_local){
+	
+	$('#id_local').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_local/'+id_regional,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_local').html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id_local == oo.id)selected = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+selected+" >"+oo.denominacion+"</option>";
+			});
+			$('#id_local').html(option);
+			$('#id_local').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function habilitarCategoriaTemporal(){
+
+	var id_categoria = $('#id_categoria').val();
+	
+	$("#divCategoriaTemporal").hide();
+	
+	if(id_categoria==91){
+		$("#divCategoriaTemporal").show();
+	}
+	
+}
+
+function validarSituacion(){
+
+	var id_actividad_gremial = $("#id_actividad_gremial").val();
+	var id_situacion_tmp = $("#id_situacion_tmp").val();
+	
+	$("#id_situacion").val(id_situacion_tmp);
+	if(id_actividad_gremial==225){
+		$("#id_situacion").val(74);
+	}
+	
+
+}
 
 
 

@@ -679,3 +679,5 @@ function fn_eliminar_empresa(id,estado){
     });
 }
 
+
+

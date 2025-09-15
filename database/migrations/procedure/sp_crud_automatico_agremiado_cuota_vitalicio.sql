@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_crud_automatico_agremiado_cuota_vitalicio()
  RETURNS character varying
  LANGUAGE plpgsql
@@ -47,7 +48,7 @@ begin
 		
 		v_anio:=v_anio + 40;
 	
-		if v_dia > 25 then
+		if v_dia > 25 and v_mes!=12 then
 			v_mes:=v_mes+1;
 		end if;
 		
@@ -77,3 +78,4 @@ begin
 end;
 $function$
 ;
+

@@ -144,7 +144,7 @@
                     </strong>
                 </div><!--card-header-->
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off" style="margin-bottom:0px">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
@@ -162,20 +162,49 @@
 					</div>
 					-->
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
-							<option value="">--Periodo--</option>
+						<?php 
+                        if($periodo_activo){
+                        ?>
+						<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+						<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
+							<option value="0">--Periodo--</option>
 							<?php
 							foreach ($periodo as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+							<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 							<?php 
 							}
 							?>
 						</select>
+						<?php
+                        }else{
+                        ?>
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
+							<option value="0">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+						<?php } ?>
 					</div>
 					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="tipo_comision_bus" id="tipo_comision_bus" class="form-control form-control-sm" onchange="obtenerComisionBus()">
+							<option value="0">--Tipo Comisi&oacute;n--</option>
+								<?php
+								foreach ($tipo_comision as $row) {?>
+									<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+								<?php
+								}
+								?>
+						</select>
+					</div>
+					
+					<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
-							<option value="">--Comisi&oacute;n--</option>
+							<option value="0">--Comisi&oacute;n--</option>
 						</select>
 					</div>
 					
@@ -186,9 +215,9 @@
 						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
 					</div>
 					
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     	<select name="id_tipo_sesion_bus" id="id_tipo_sesion_bus" class="form-control form-control-sm" onChange="">
-							<option value="">--Tipo Programci&oacute;n--</option>
+							<option value="">--Tipo Programaci&oacute;n--</option>
 							<?php
 							foreach ($tipo_programacion as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
@@ -197,10 +226,14 @@
 							?>
 						</select>
 					</div>
+						
+				</div>
+				
+				<div class="row" style="padding:20px 20px 0px 20px;">
 					
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
                     	<select name="id_estado_sesion_bus" id="id_estado_sesion_bus" class="form-control form-control-sm">
-							<option value="">--Estado Sesi&oacute;n--</option>
+							<option value="">Estado Sesi&oacute;n</option>
 							<?php
 							foreach ($estado_sesion as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
@@ -212,7 +245,7 @@
 					
 					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                     	<select name="id_estado_aprobacion_bus" id="id_estado_aprobacion_bus" class="form-control form-control-sm">
-							<option value="">--Estado Aprobaci&oacute;n--</option>
+							<option value="">Estado Aprobaci&oacute;n</option>
 							<?php
 							foreach ($estado_aprobacion as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
@@ -224,27 +257,73 @@
 					
 					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                     	<select name="cantidad_delegado" id="cantidad_delegado" class="form-control form-control-sm">
-							<option value="">--Cantidad Delegado--</option>
+							<option value="">--Can.Delegado--</option>
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    	<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm">
+							<option value="">--Situaci&oacute;n--</option>
+							<?php
+							foreach ($situacion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
 					</div>
+					
+					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+						<select name="campo" id="campo" class="form-control form-control-sm">
+							<option value="t1.fecha_programado">--Campo--</option>
+							<option value="t1.fecha_programado">Fecha Programada</option>
+							<option value="t8.denominacion">Tipo Comisi&oacute;n</option>
+							<option value="t4.denominacion||'' ''||t4.comision">Comisi&oacute;n</option>
+							<option value="t2.denominacion">Sesi&oacute;n Programada</option>
+							<option value="t3.denominacion">Estado Sesi&oacute;n</option>
+							<option value="t7.denominacion">Estado Aprobaci&oacute;n</option>
+						</select>
+					</div>
+					
+					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+						<select name="orden" id="orden" class="form-control form-control-sm">
+							<option value="asc">Ascendente</option>
+							<option value="desc">Descendente</option>
+						</select>
+					</div>
+
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
+						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success pull-rigth" value="N. Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:10px" />
+						<input class="btn btn-danger pull-rigth" value="Ejecutar" type="button" id="btnEjecutar" style="margin-left:10px" />
+						<!--<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px"/>-->
+					</div>
+
+					<div style="min-height:50px">
+						<div id="divMsg" class="alert alert-success" role="alert" style="margin-left:15px;margin-bottom:0px;display:none">
+							<!--
+							Línea 1: mensaje1 <br>
+							Línea 2: mensaje2 256<br>
+							Línea 3: mensaje 3<br>
+							Línea 4: mensaje 4
+							-->
+						</div>
+					</div>
+					
 				</div>
 				
-                <div class="card-body">				
+				</form>
+                <div class="card-body" style="padding-top:0px">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>Regi&oacute;n</th>
 							<th>Periodo</th>
+							<th>Tipo Comisi&oacute;n</th>
 							<th>Comisi&oacute;n</th>
 							<th>Fecha Programada</th>
 							<th>Fecha Ejecuci&oacute;n</th>
@@ -254,8 +333,11 @@
                             <th>Estado Sesi&oacute;n</th>
 							<th>Estado Aprobaci&oacute;n</th>
 							<th>Num Delegado</th>
+							<th>Num Situaci&oacute;n</th>
+							<th>Observaci&oacute;n</th>
 							<th>Dictamen</th>
 							<th>Editar</th>
+							<th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -265,13 +347,16 @@
 					<table id="tblDictamen" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>C&oacute;digo</th>
+							<!--<th>C&oacute;digo</th>-->
+							<th>Distrito</th>
+							<th>Exp. Municipal</th>
 							<th>Tipo de Solicitud</th>
-							<th>Revis&oacute;n</th>
 							<th>N&deg; Liquidaci&oacute;n</th>
-							<th>Nombre</th>
-							<th>Direcci&oacute;n</th>
+							<th>Monto</th>
 							<th>Dictamen</th>
+							<th>Revis&oacute;n</th>
+							<th>Rec. o Apel</th>
+							<th>Proyectista</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -281,7 +366,7 @@
 					
 					
                 </div><!--table-responsive-->
-                </form>
+                
 
 
 

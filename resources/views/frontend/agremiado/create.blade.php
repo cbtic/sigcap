@@ -409,7 +409,7 @@ label.form-control-sm{
 															Regional
 															</div>
 															<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-															<select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="">
+															<select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="obtenerLocal()">
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($region as $row) {?>
@@ -467,7 +467,9 @@ label.form-control-sm{
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo ($agremiado->fecha_colegiado!="")?date("d-m-Y",strtotime($agremiado->fecha_colegiado)):""?>" class="form-control form-control-sm" <?php if($id!=0)echo "disabled='disabled'"?> >
+															
+															
 															</div>
 														</div>
 														
@@ -482,23 +484,17 @@ label.form-control-sm{
 															Fecha Actualiza
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo $agremiado->fecha_actualiza?>" class="form-control form-control-sm" >
+															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo ($agremiado->fecha_actualiza!="")?date("d-m-Y",strtotime($agremiado->fecha_actualiza)):""?>" class="form-control form-control-sm" <?php echo "disabled='disabled'"?>>
 															</div>
 														</div>
 														
 														<div class="row">
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Zona
+															Zonal
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+															<select name="id_local" id="id_local" class="form-control form-control-sm">
 																<option value="">--Selecionar--</option>
-																<?php
-																foreach ($tipo_zona as $row) {?>
-																<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
-																<?php 
-																}
-																?>
 															</select>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -579,9 +575,12 @@ label.form-control-sm{
 													<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:0px">
 													<?php
 														$img = "/img/logo-sin-fondo2.png";
-								if($persona->foto!="")$img="/img/agremiado/".$persona->foto;
+								if($persona->foto!=""){
+									//$img="/img/agremiado/".$persona->foto;
+									$img="/".$persona->foto;
+								}
 													?>
-													<a href="/img/agremiado/<?php echo $persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
+													<a href="<?php echo "/".$persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
 													<input type="hidden" id="img_foto" name="img_foto" value="" />
 													
 													<!--
@@ -592,8 +591,12 @@ label.form-control-sm{
 													</div>
 													-->
 												</div>
-														
+														@can('Guardar Agremiado')
+								
+								
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+
+														@endcan
 														
 													</div>
 												</div>
@@ -691,6 +694,15 @@ label.form-control-sm{
 								role="tab"
 								aria-controls="situacion"
 								aria-selected="false">Viaje Extranjero</a>
+
+							<a
+								class="nav-link"
+								id="roles-tab"
+								data-toggle="pill"
+								href="#roles"
+								role="tab"
+								aria-controls="traslado"
+								aria-selected="false">Roles</a>
 							
 						</div>
 					</nav>
@@ -723,13 +735,13 @@ label.form-control-sm{
 												Fecha Nac.
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo $persona->fecha_nacimiento?>" class="form-control form-control-sm" >
+												<input type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo ($persona->fecha_nacimiento!="")?date("d-m-Y",strtotime($persona->fecha_nacimiento)):""?>" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Edad
 												</div>
 												<?php
-												
+												/*
 												$edad = "";
 												if($persona->fecha_nacimiento!=""){
 													$fecha_actual = date('Y-m-d');
@@ -737,7 +749,7 @@ label.form-control-sm{
 													$dateDifference = abs(strtotime($fecha_nacimiento) - strtotime($fecha_actual));
 													$edad  = floor($dateDifference / (365 * 60 * 60 * 24));
 												}
-												
+												*/
 												?>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="edad" id="edad" readonly="readonly" value="<?php echo $edad?>" class="form-control form-control-sm" >
@@ -1022,8 +1034,8 @@ label.form-control-sm{
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 												Act. Gremial
 												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="">
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="validarSituacion()">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($actividad_gremial as $row) {?>
@@ -1033,6 +1045,8 @@ label.form-control-sm{
 													?>
 												</select>
 												</div>
+													<input class="btn btn-success" value="Suspension" type="button" id="btnSuspension" style="margin-left:0px"/>
+													
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 												Ubicacion
 												</div>
@@ -1068,7 +1082,7 @@ label.form-control-sm{
 												Categoria
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="id_categoria" id="id_categoria" class="form-control form-control-sm" onchange="">
+												<select name="id_categoria" id="id_categoria" class="form-control form-control-sm" onchange="habilitarCategoriaTemporal()">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($categoria_cliente as $row) {?>
@@ -1079,14 +1093,18 @@ label.form-control-sm{
 												</select>
 												</div>
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-												Situacion
+												Situaci&oacute;n
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="hidden" name="id_situacion_tmp" id="id_situacion_tmp" value="<?php echo $agremiado->id_situacion?>" >
 												<select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($situacion_cliente as $row) {?>
-													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_situacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" 
+													<?php if($id!=0 && $row->codigo==$agremiado->id_situacion)echo "selected='selected'"?>
+													<?php if($id==0 && $row->codigo==74)echo "selected='selected'"?>
+													><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -1102,11 +1120,32 @@ label.form-control-sm{
 												Fecha Fallec.
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="fecha_fallecido" id="fecha_fallecido" value="<?php echo $agremiado->fecha_fallecido?>" class="form-control form-control-sm" >
+												<input type="text" name="fecha_fallecido" id="fecha_fallecido" value="<?php echo ($agremiado->fecha_fallecido!="")?date("d-m-Y",strtotime($agremiado->fecha_fallecido)):""?>" class="form-control form-control-sm" >
 												</div>
 											</div>
 											
-												
+											<div id="divCategoriaTemporal" class="row" style="padding-top:5px;<?php echo (isset($agremiado->id_categoria) && $agremiado->id_categoria==91)?"":"display:none"?>">
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												F. Inicio Temp.
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_inicio_temp" id="fecha_inicio_temp" value="<?php echo ($agremiado->fecha_inicio_temp!="")?date("d-m-Y",strtotime($agremiado->fecha_inicio_temp)):""?>" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												F. Fin Temp.
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_fin_temp" id="fecha_fin_temp" value="<?php echo ($agremiado->fecha_fin_temp!="")?date("d-m-Y",strtotime($agremiado->fecha_fin_temp)):""?>" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Obser. Temp.
+												</div>
+												<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+												<textarea type="text" name="observacion_temp" id="observacion_temp" rows="1" placeholder="" class="form-control form-control-sm"><?php echo $agremiado->observacion_temp?></textarea>
+												</div>
+											</div>
+											
+													
 										</div>
 										
 										
@@ -1439,6 +1478,8 @@ label.form-control-sm{
 							</div>
 							
 						</div>
+
+						
 						
 						<div class="tab-pane fade pt-3" id="traslado" role="tabpanel" aria-labelledby="traslado-tab">
 							
@@ -1496,6 +1537,90 @@ label.form-control-sm{
 					<a href="javascript:void(0)" onclick="eliminarTraslado(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 					</div>
 																</th>
+															</tr>						
+															<?php }?>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+												</div>
+														
+												</div>
+												
+											</div>
+											
+											
+												
+										</div>
+										
+										
+									</div>
+		
+								</div>
+						
+							</div>
+							
+						</div>
+
+						<div class="tab-pane fade pt-3" id="roles" role="tabpanel" aria-labelledby="roles-tab">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Roles
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+											<!--
+											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoRol" style="width:120px;margin-right:15px"/>
+											-->
+											<div style="clear:both"></div>
+											
+											<div class="row">
+											
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																								
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Id</th>
+																<th>Rol</th>
+																<th>Rol Espec&iacute;fico</th>
+																<th>Fecha Inicio</th>
+																<th>Fecha Fin</th>
+																<th>Observaci&oacute;n</th>
+																<!--<th>Opciones</th>-->
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<?php foreach($agremiado_rol as $row){?>
+															<tr>
+																<th><?php echo $row->id?></th>
+																<th><?php echo $row->tipo_concurso//rol?></th>
+																<th><?php echo $row->puesto//rol_especifico?></th>
+																<th><?php echo $row->fecha_acreditacion_inicio//fecha_inicio?></th>
+																<th><?php echo $row->fecha_acreditacion_fin//fecha_fin?></th>
+																<th><?php //echo $row->observacion?></th>
+																<!--<th>-->
+															<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+															<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalRol(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+															<a href="javascript:void(0)" onclick="eliminarRol(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+															</div>-->
+																<!--</th>-->
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1881,6 +2006,11 @@ label.form-control-sm{
 	
 	<script src="{{ asset('js/agremiado/create.js') }}"></script>
 	<script>
+
+		var id_regional = "<?php echo $agremiado->id_regional?>";
+		var id_local = "<?php echo $agremiado->id_local?>";
+		var id_agremiado = "<?php echo $id?>"; 
+		
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();
 	var idProvincia = id_ubigeo_nacimiento.substring(2,4);

@@ -10,6 +10,7 @@ use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Seguro_afiliado_parentesco;
+use App\Models\Concepto;
 
 use Auth;
 
@@ -59,7 +60,7 @@ class SeguroController extends Controller
 	
 		$plan_model = new Seguro();
 		$p[]=$request->id_seguro;
-		$p[]=1;          
+		$p[]=1;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $plan_model->listar_plan($p);
@@ -121,6 +122,8 @@ class SeguroController extends Controller
     public function modal_seguro($id){
 		
 		$id_user = Auth::user()->id;
+		$concepto_model = new Concepto;
+		$concepto = $concepto_model->getConceptoAllDenominacion();
 		$seguro = new Seguro;
 		if($id>0) $seguro = Seguro::find($id);else $seguro = new Seguro;
 
@@ -131,13 +134,17 @@ class SeguroController extends Controller
 		$id_regional="5";
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.seguro.modal_seguro',compact('id','seguro',/*'plan_seguro',*/'region','id_regional'));
+		return view('frontend.seguro.modal_seguro',compact('id','seguro',/*'plan_seguro',*/'region','id_regional','concepto'));
 
     }
 	
 	public function modal_plan($id){
 		
 		$id_user = Auth::user()->id;
+		$tablaMaestra_model = new TablaMaestra;
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$parentesco = $tablaMaestra_model->getMaestroByTipo(23);
+		$seguro_plan = new SegurosPlane;
 		/*
 		$seguro = new Seguro;
 		$regione_model = new Regione;
@@ -160,7 +167,7 @@ class SeguroController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.seguro.modal_plan',compact('id','plan_seguro'/*'plan_seguro',*/));
+		return view('frontend.seguro.modal_plan',compact('id','plan_seguro','sexo','parentesco'));
 
     }
 
@@ -176,6 +183,7 @@ class SeguroController extends Controller
 		$seguro->id_regional = $request->id_regional;
 		$seguro->nombre = $request->nombre;
 		$seguro->descripcion = $request->descripcion;
+		$seguro->id_concepto = $request->concepto;
 		$seguro->estado = 1;
 		$seguro->id_usuario_inserta = $id_user;
 		$seguro->save();
@@ -198,6 +206,10 @@ class SeguroController extends Controller
 		$segurosPlan->fecha_inicio = $request->fecha_inicio;
 		$segurosPlan->fecha_fin = $request->fecha_fin;
 		$segurosPlan->monto = $request->monto;
+		$segurosPlan->edad_minima = $request->edad_minima;
+		$segurosPlan->edad_maxima = $request->edad_maxima;
+		$segurosPlan->sexo = $request->sexo;
+		$segurosPlan->id_parentesco = $request->parentesco;
 		$segurosPlan->estado = 1;
 		$segurosPlan->id_usuario_inserta = $id_user;
 		$segurosPlan->save();
@@ -249,9 +261,6 @@ class SeguroController extends Controller
         return redirect('/ingreso/liquidacion_caja');
 		
     }	
-
-    
-    
     
 }
 

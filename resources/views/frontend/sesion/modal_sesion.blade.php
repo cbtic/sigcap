@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{
@@ -157,8 +157,18 @@ input:checked + .slider:before {
 <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
 
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<!--
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+-->
+
+<!--
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.css" />
+-->
+
+
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>-->
 
 <!--
@@ -177,7 +187,10 @@ input:checked + .slider:before {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/css/bootstrap-datetimepicker.css" integrity="sha512-HWqapTcU+yOMgBe4kFnMcJGbvFPbgk39bm0ExFn0ks6/n97BBHzhDuzVkvMVVHTJSK5mtrXGX4oVwoQsNcsYvg==" crossorigin="anonymous" />
 -->
 
+<!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+-->
+
 <script type="text/javascript">
 /*
 jQuery(function($){
@@ -194,38 +207,111 @@ $(document).ready(function() {
 	//$('#hora_solicitud').mask('00:00');
 	$("#id_regional").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
+	
+	var id = "<?php echo $id?>"; 
+	if(id==0){
+		var id_periodo = $("#id_periodo_bus").val();
+		var tipo_comision = $("#tipo_comision_bus").val();
+		var id_comision = $("#id_comision_bus").val();
+		
+		$("#id_regional").attr("disabled",true);
+		$("#id_periodo").val(id_periodo).attr("disabled",true);
+		if(tipo_comision>0)$("#tipo_comision").val(tipo_comision).attr("disabled",true);
+		
+		$("#id_regional_").val(5);
+		$("#id_periodo_").val(id_periodo);
+		if(tipo_comision>0)$("#tipo_comision_").val(tipo_comision);
+		
+		obtenerComision();
+		obtenerComisionDelegadoNuevo(id_comision);
+	}else{
+		var fecha_ejecucion = $("#fecha_ejecucion").val();
+		var fecha_programado = $("#fecha_programado").val();
+		
+		if(fecha_ejecucion==""){
+			$("#fecha_ejecucion").val(fecha_programado);
+		}
+	}
+	
 });
+
+$('#btnImportarDictamenes').click(function () {
+	importarDatalicenciaDictamenes();
+});
+
+function importarDatalicenciaDictamenes(){
+
+	var fecha_ejecucion = $('#fecha_ejecucion').val();
+	var id_comision = $('#id_comision').val();
+	var id_sesion = $('#id').val();
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+
+	//fecha_ejecucion="2025-15-02";
+	
+	$.ajax({
+		url: "/sesion/importar_dataLicencia_dictamenes/"+fecha_ejecucion+"/"+id_comision+"/"+id_sesion,
+		type: "GET",
+		success: function(result){
+
+			//$('.loader').hide();
+			//cargarDictamenNuevo(id_sesion);
+			//bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			//datatablenew();
+			
+			$('.loader').hide();
+			var id = $("#id").val();
+			modalSesion(id);
+			cargarDelegados();
+			cargarDictamenNuevo(id_sesion);
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			
+		},
+		error: function(xhr, status, error) {
+			$('.loader').hide();
+			console.error("Error en la importación:", status, error);
+			bootbox.alert("Ocurrió un error al importar los datos. Por favor, intente nuevamente, si el erro persiste comuniquese con sistemas.");
+		}
+	});
+}
+
 </script>
 
 <script type="text/javascript">
+//var mainNavigationOffset = $('.js-nav-container > ul').offset();
+//var left = 0;
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
+
      $('#fecha_programado').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
-		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
 	 
 	 $('#fecha_ejecucion').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
-		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
-	 
-	 /*
-	 $('#hora_inicio').timepicker({
-		showInputs: false,
-		container: '#openOverlayOpc modal-body'
-	});
-	*/
 	 
 });
 
 $(document).ready(function() {
 	 
-	 
+	$('#fecha_programado').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
+	
+	$('#fecha_ejecucion').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
 
 });
 
@@ -288,12 +374,48 @@ function fn_save(){
 			data : $('#frmSesion').serialize(),
             //data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_tipo_sesion:id_tipo_sesion,fecha_programado:fecha_programado,hora_inicio:hora_inicio,hora_fin:hora_fin,fecha_ejecucion:fecha_ejecucion,observaciones:observaciones,id_estado_sesion:id_estado_sesion},
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				datatablenew();
+				
+				if(id>0){
+					$('.loader').hide();
+					//var id = $("#id").val();
+					modalSesion(id);
+					cargarDelegados();
+					cargarDictamenNuevo(id);
+					bootbox.alert("Se guardaron exitosamente los datos");
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					datatablenew();	
+				}
+
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
 				
+            }
+    });
+}
+
+function cerrar(){
+	$('#openOverlayOpc').modal('hide');
+	datatablenew();	
+}
+
+function fn_save_dia(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_comision = $('#id_comision').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var observaciones = $('#observaciones').val();
+	
+	$.ajax({
+			url: "/sesion/update_sesion_dia_semana",
+            type: "POST",
+			data : $('#frmSesion').serialize(),
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				datatablenew();
             }
     });
 }
@@ -438,6 +560,7 @@ container: '#myModal modal-body'
 
 var id = "<?php echo $id?>";
 var id_periodo = "<?php echo $comision->id_periodo_comisiones?>";
+var tipo_comision = "<?php echo $comision->id_tipo_comision?>";
 var id_comision = "<?php echo $comisionSesion->id_comision?>";
 //alert(id);
 
@@ -446,20 +569,24 @@ $("#id_tipo_sesion").attr("disabled",false);
 $("#id_periodo").attr("disabled",false);
 $("#id_regional").attr("disabled",false);
 $("#observaciones").attr("disabled",false);
+$("#tipo_comision").attr("disabled",false);
 
 if(id>0){
-	obtenerComisionEdit(id_periodo,id_comision);
+	obtenerComisionEdit(id_periodo,tipo_comision,id_comision);
 	$("#id_comision").attr("disabled",true);
 	$("#id_tipo_sesion").attr("disabled",true);
 	$("#id_periodo").attr("disabled",true);
 	$("#id_regional").attr("disabled",true);
-	$("#observaciones").attr("disabled",true);
+	//$("#observaciones").attr("disabled",true);
+	$("#tipo_comision").attr("disabled",true);
+	cargarDelegados();
+	cargarDictamenNuevo(id);
 }
 
-function obtenerComisionEdit(id_periodo,id_comision){
+function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 	
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";
@@ -468,13 +595,48 @@ function obtenerComisionEdit(id_periodo,id_comision){
 			$(result).each(function (ii, oo) {
 				sel = "";
 				if(id_comision==oo.id)sel = "selected='selected'";
-				option += "<option value='"+oo.id+"' "+sel+">"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"' "+sel+">"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
 		
 	});
 	
+}
+
+function fn_validar_dia(opc){
+	
+	if(opc==1){
+		$("#semana1").hide();
+		$("#semana2").show();
+		$("#btnActualizarSemana").hide();
+		$("#btnGuardarSemana").show();
+		$("#btnCancelarSemana").show();
+	}
+	
+	if(opc==2){
+		$("#semana1").show();
+		$("#semana2").hide();
+		$("#btnActualizarSemana").show();
+		$("#btnGuardarSemana").hide();
+		$("#btnCancelarSemana").hide();
+	}
+}
+
+
+function cargarDelegados(){
+    
+	var id=$("#id").val();
+	
+    $("#tblDelegado tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_delegados/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDelegado tbody").html(result);
+			}
+	});
+
 }
 
 </script>
@@ -490,6 +652,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
           </h1>
         </section>
 		-->
+		
 		<div class="justify-content-center">		
 
 		<div class="card">
@@ -498,7 +661,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 				Registro Programacion de Sesi&oacute;n
 			</div>
 			
-            <div class="card-body">
+            <div class="card-body" style="max-height: 850px; overflow-y: auto;">
 
 			<div class="row">
 
@@ -514,6 +677,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
+								<input type="hidden" name="id_regional_" id="id_regional_" value="" />
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
@@ -529,14 +693,34 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
+								<input type="hidden" name="id_periodo_" id="id_periodo_" value="" />
 								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComision()">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" 
+										<?php if($id>0 && $row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>
+										<?php if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'"?>
+									><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
+								<input type="hidden" name="tipo_comision_" id="tipo_comision_" value="" />
+								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="obtenerComision()">
+									<option value="0">--Tipo Comisi&oacute;n--</option>
+										<?php
+										foreach ($tipo_comision as $row) {?>
+											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
 								</select>
 							</div>
 						</div>
@@ -555,17 +739,50 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						</div>
 						
 						<div class="col-lg-4">
+						
 							<div class="form-group">
+								
+								<div class="row">
+								<div class="col-lg-7">
 								<label class="control-label form-control-sm">Dia Semana</label>
+								
+								<div id="semana1">
 								<input type="text" id="dia_semana" name="dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->denominacion;}?>" readonly="readonly">
 								<input type="hidden" id="id_dia_semana" name="id_dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->codigo;}?>">
+								</div>
+								<div id="semana2" style="display:none">
+								<select name="dia_semana_nuevo" id="dia_semana_nuevo" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($dia_semanas as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision->id_dia_semana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+								</div>
+								
+								</div>
+								<div class="col-lg-5">
+								<label class="control-label form-control-sm"></label>
+								
+								<a href="javascript:void(0)" id="btnActualizarSemana" style="margin-top:20px" onClick="fn_validar_dia(1)" class="btn btn-sm btn-warning">Actualizar</a>
+								<a href="javascript:void(0)" style="display:none;float:left" id="btnGuardarSemana" onClick="fn_save_dia()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" style="display:none;float:left" id="btnCancelarSemana" onClick="fn_validar_dia(2)" class="btn btn-sm btn-danger">Cancelar</a>
+								
+								</div>
+								
+								</div>
+								
 							</div>
+							
+							
 						</div>
 														
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
-								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
+								<label class="control-label form-control-sm">Tipo Sesi&oacute;n</label>
+								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="habilitarProgramacion()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_programacion as $row) {?>
@@ -576,6 +793,16 @@ function obtenerComisionEdit(id_periodo,id_comision){
 								</select>
 							</div>
 						</div>
+						
+						
+						<?php if($id==0){?>
+						<div id="divFechaProgramado" class="col-lg-4" style="display:none">
+							<div class="form-group">
+								<label class="control-label form-control-sm">F. Programaci&oacute;n</label>
+								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="" type="text"/>
+							</div>
+						</div>
+						<?php }?>
 						
 						<?php if($id>0){?>
 						<div class="col-lg-4">
@@ -593,7 +820,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Inicio</label>
-								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_inicio?>" type="time">
+								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo ($comisionSesion->hora_inicio!="")?$comisionSesion->hora_inicio:"09:00"?>" type="time">
 								
 							</div>
 						</div>
@@ -601,7 +828,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Fin</label>
-								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_fin?>" type="time">
+								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo ($comisionSesion->hora_fin!="")?$comisionSesion->hora_fin:"15:00"?>" type="time">
 								
 							</div>
 						</div>
@@ -610,7 +837,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							<div class="form-group">
 								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
 								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+									<!--<option value="">--Selecionar--</option>-->
 									<?php
 									foreach ($estado_sesion as $row) {?>
 									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_estado_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
@@ -624,8 +851,8 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Aprobaci&oacute;n Sesi&oacute;n</label>
-								<select name="id_estado_aprobacion" id="id_estado_aprobacion" class="form-control form-control-sm">
-									<option value="">--Selecionar--</option>
+								<select name="id_estado_aprobacion" id="id_estado_aprobacion" class="form-control form-control-sm" onChange="habilitarAprobarPago()">
+									<!--<option value="">--Selecionar--</option>-->
 									<?php
 									foreach ($estado_sesion_aprobado as $row) {?>
 									<option value="<?php echo $row->codigo?>" <?php 
@@ -644,8 +871,11 @@ function obtenerComisionEdit(id_periodo,id_comision){
 									?>
 								</select>
 							</div>
+							
 						</div>
-						
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
+								<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px;margin-top:30px"/>
+							</div>
 						<?php } ?>
 																	
 					</div>
@@ -679,45 +909,94 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							<div class="form-group">
 								<!--<label class="control-label form-control-sm">Delegado</label>-->
 								
+								<?php if($id>0){?>
 								<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onClick="modalAsignarProfesionSesion(0)" ><i class='fa fa-edit'></i> Agregar</button>
+								<?php } ?>
 								
 								<div class="table-responsive">
 									<table id="tblDelegado" class="table table-hover table-sm">
 										<thead>
 										<tr style="font-size:13px">
 											<th>Puesto</th>
-											<th>Delegado</th>
 											<th>CAP</th>
+											<th>Delegado</th>
 											<th>Situaci&oacute;n</th>
-											<th>Coordinador</th>
+											<th>
+												<span style="float:left">Coordinador</span> 
+												<span style="display:block;color:#0099FF;float:left;padding-left:5px;cursor:pointer" onClick="limpiar_coordinador()">(X)</span>
+											</th>
 											<th>Aprobar Pago</th>
+											<th>CAP Anterior</th>
+											<th>Delegado Anterior</th>
+											<th>Delegados</th>
 											<th>Editar</th>
+											<th>Eliminar</th>
 										</tr>
 										</thead>
 										<tbody>
-										<?php foreach ($delegados as $row) {?>
+										<?php 
+										foreach ($delegados as $row) {
+											$id_delegado = ($row->id_delegado>0)?$row->id_delegado:$row->id_agremiado;
+											$id_tipo = ($row->id_delegado>0)?1:2;
+										?>
 										<tr style='font-size:13px'>
-											<input type='hidden' name='id_delegado[]' value='<?php echo $row->id_delegado?>'>
+											<input type='hidden' name='id_delegado[]' value='<?php echo $id_delegado?>'>
+											<input type='hidden' name='id_tipo[]' value='<?php echo $id_tipo?>'>
 											<td class='text-left'>
 											<?php
 											$puesto = $row->puesto;
+											$disabled = "";
 											if($puesto=="")$puesto="ASESOR / ESPECIALISTA";
 											echo $puesto; 
+											
+											if($puesto=="ASESOR / ESPECIALISTA" || $puesto=="SUPLENTE")$disabled = "disabled='disabled'";
 											?></td>
-											<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 											<td class='text-left'><?php echo $row->numero_cap?></td>
+											<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 											<td class='text-left'><?php echo $row->situacion?></td>
 											<td class='text-center'>
-											<input type="radio" name="coordinador" value="<?php echo $row->id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> />
+											<input type="radio" <?php echo $disabled?> name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> onChange="guardar_coordinador(<?php echo $row->id?>,<?php echo $id_delegado?>)" />
 											</td>
 											<td class='text-center'>
-											<input type="checkbox" name="id_aprobar_pago[<?php echo $row->id_delegado?>]" value="<?php echo $row->id_delegado?>" <?php if($row->id_aprobar_pago==2)echo "checked='checked'"?> />
+											<input type="checkbox" class="<?php if($row->situacion!="INHABILITADO" && $row->situacion!="FALLECIDO")echo "id_aprobar_pago"?>" name="id_aprobar_pago[<?php echo $id_delegado?>]" value="<?php echo $id_delegado?>" 
+											<?php 
+											if($row->id_aprobar_pago==2)echo "checked='checked'";
+											if($row->situacion=="INHABILITADO" || $row->situacion=="FALLECIDO")echo "disabled='disabled'";
+											?> 
+											/>
 											</td>
-											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') ><i class='fa fa-edit'></i> Editar</button></td>
+											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') >Editar</button></td>
+											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-danger' data-toggle='modal' onclick=eliminarDelegadoSesion('<?php echo $row->id?>') >Eliminar</button></td>
 										<?php } ?>
 										</tbody>
 									</table>
                 				</div>
+								
+								<div class="table-responsive" style="overflow-y: visible; height:150px;width:100%;">
+								<table id="tblDictamenNuevo" class="table table-hover table-sm">
+									<thead>
+									<tr style="font-size:13px">
+										<!--<th>C&oacute;digo</th>-->
+										
+										<th>Distrito</th>
+										<th>Exp. Municipal</th>
+										<th>Tipo de Solicitud</th>
+										<th>N&deg; Liquidaci&oacute;n</th>
+										<th>Monto</th>
+										<th>Dictamen</th>
+										<th>Revisi&oacute;n</th>
+										<th>Rec. o Apel</th>
+										<th>Proyectista</th>
+										
+										<!--Cambio 29/07</th>
+										<th>Nombre</th>
+										<th>Direcci&oacute;n</th>-->										
+									</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								</div>
 								
 							</div>
 						</div>
@@ -739,8 +1018,16 @@ function obtenerComisionEdit(id_periodo,id_comision){
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<?php //if($id==0){?>
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<?php //if($id==0){
+									$btnDisabledGuardar = "";
+									if(count($delegados)==0)$btnDisabledGuardar = "disabled='disabled'";
+								?>
+								
+								<button <?php echo $btnDisabledGuardar ?> style="font-size:12px;font-weight:bold" type="button" onClick="fn_save()" class="btn btn-sm btn-success" id="btnSesionGuardar">Guardar</button>
+
+								<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning" style="margin-left:15px;font-weight:bold">Cerrar</a>
+
+								<!--<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>-->
 								<?php //}else{?>
 								<!--<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning">Cerrar</a>-->
 								<?php //} ?>

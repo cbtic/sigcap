@@ -94,6 +94,12 @@
 	color: #FFFFFF;
 }
 
+
+.dropdown-menu {
+    position: absolute !important;
+	padding-left:20px !important;
+    left: -50% !important;
+}
 </style>
 
 @extends('frontend.layouts.app')
@@ -149,7 +155,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="row" style="padding:20px 20px 0px 20px;">
 						<!--
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -165,15 +171,32 @@
 						</div>
 						-->
 						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
-							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+							<?php 
+							if($periodo_activo){
+							?>
+							<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+							<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido();obtenerPuestoBus()" disabled="disabled">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+								<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 								<?php 
 								}
 								?>
 							</select>
+							<?php
+							}else{
+							?>
+							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido();obtenerPuestoBus()">
+								<option value="">--Periodo--</option>
+								<?php
+								foreach ($periodo as $row) {?>
+								<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+								<?php 
+								}
+								?>
+							</select>
+							<?php } ?>
 						</div>
 
 						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
@@ -193,9 +216,9 @@
 						</div>
 					</div>
 					<div class="row" style="padding:20px 20px 0px 20px;">
-						<div class="col-lg-6">
+						<div class="col-lg-8">
 							<div class="form-group">
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+								<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar Comisi&oacute;n--</option>
 									<?php
 									foreach ($comision as $row) {?>
@@ -206,33 +229,49 @@
 								</select>
 							</div>
 						</div>
-
+						
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							<select name="id_puesto_bus" id="id_puesto_bus" class="form-control form-control-sm">
+								<option value="">--Puesto--</option>
+								<?php
+								//foreach ($puesto as $row) {?>
+								<!--<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>-->
+								<?php 
+								//}
+								?>
+							</select>
+						</div>
+						
+						<!--
 						<div class="col-lg-6">
 							<div class="form-group">
 								<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar Delegado--</option>
 									<?php
-									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									//foreach ($concurso_inscripcion as $row) {?>
+									<option value="<?php //echo $row->id?>"><?php //echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
 									<?php 
-									}
+									//}
 									?>
 								</select>
 							</div>
 						</div>
+						-->
 					</div>
                     </div>
-                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 					<div class="table-responsive">
                     <table id="tblComputoCerrado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>N° de C&oacute;mputo</th>
+							<th>N° C&oacute;mputo</th>
 							<th>Año</th>
 							<th>Mes</th>
 							<th>Fecha C&oacute;mputo</th>
-							<th>Computo Mes Actual</th>
-							<th>Computo Meses Anteriores</th>
+							<th>Mes Actual</th>
+							<th>Meses Ant.</th>
+							<th>Reporte</th>
+							<th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -247,13 +286,83 @@
 
 				</div>
 
-					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nuevo Computo" type="button" id="btnNuevo" style="margin-left:15px" />
+
+						<!--
+						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
+						-->
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Vista Previa Computo</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaComputo"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaComputoExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+
+						<!--
+						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
+						-->
+
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Vista Previa Calendario</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaCalendario"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaCalendarioExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+
+						<!--
+						<input class="btn btn-secondary pull-rigth" value="Movilidad Delegados" type="button" id="btnVistaPreviaMovilidad" style="margin-left:15px" />
+						<input class="btn btn-secondary pull-rigth" value="Delegado Coordinadores" type="button" id="btnVistaPreviaCoordinador" style="margin-left:15px" />
+						-->
+
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Movilidad Delegados</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaMovilidad"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaMovilidadExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+						
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Delegado Coordinadores</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaCoordinador"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaCoordinadorExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+						<!--
+						<input class="btn btn-secondary pull-rigth" value="Calendario C Z" type="button" id="btnVistaPreviaCalendarioCoordinadorZonal" style="margin-left:15px" />
+						-->
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Calendario C Z</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaCalendarioCoordinadorZonal"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaCalendarioCoordinadorZonalExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+
+						<input class="btn btn-danger pull-rigth" value="Finalizar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
@@ -273,6 +382,34 @@
                         <tbody>
                         </tbody>
                     </table>
+					
+					<table class="table table-hover table-sm" style="width:50%!important" align="right">
+                        <thead>
+                        <tr style="font-size:13px">
+							<th>Sesiones delegados</th>
+							<th><span id="sesion_delegados"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
+							<th>Sesiones suplentes</th>
+							<th><span id="sesion_suplentes"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
+							<th>Sesiones especialistas</th>
+							<th><span id="sesion_especialistas"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
+							<th>Sesiones coordinador zonal</th>
+							<th><span id="sesion_coordinador_zonal"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
+							<th>Total de sesiones</th>
+							<th><span id="sesion_total"></span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+					
                 </div><!--table-responsive-->
                 </form>
 
@@ -305,5 +442,9 @@
 @push('after-scripts')
 
 <script src="{{ asset('js/sesion/lista_computo.js') }}"></script>
-
+<script>
+obtenerComisionBus();
+obtenerAnioPerido();
+obtenerPuestoBus();
+</script>
 @endpush

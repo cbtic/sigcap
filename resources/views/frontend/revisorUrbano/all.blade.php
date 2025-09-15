@@ -114,7 +114,7 @@
 				
                     <form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
                     <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                    <!--<input type="hidden" name="id" id="id" value="0">-->
+                    <input type="hidden" name="id" id="id" value="0">
                     
                     <div class="row" style="padding:20px 20px 0px 20px;">
 				
@@ -125,14 +125,14 @@
                                         N&deg; CAP
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> onkeydown="verificarEnter(event)" >
                                     </div>
 
                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     Tipo Documento
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">
+                                    <select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($tipo_documento as $row) {?>
@@ -188,7 +188,7 @@
                                     Regional
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="">
+                                    <select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($region as $row) {?>
@@ -213,7 +213,7 @@
                                     Ubicacion
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_ubicacion" id="id_ubicacion" class="form-control form-control-sm" onchange="">
+                                    <select name="id_ubicacion" id="id_ubicacion" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($ubicacion_cliente as $row) {?>
@@ -228,7 +228,7 @@
                                     Situacion
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
+                                    <select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($situacion_cliente as $row) {?>
@@ -281,14 +281,85 @@
                                 <input class="btn btn-success" value="Generar C&oacute;digo RU" type="button" id="btnNuevo" style="margin-left:15px"/>
                             </div>
 
-                            <div style="float:left;padding-top:7px">C&oacute;digo RU</div>
+                            <!--<div style="float:left;padding-top:7px">C&oacute;digo RU</div>
                                 <div style="float:left" class="col-lg-2 md-form md-outline input-with-post-icon">
                                 <input class="form-control form-control-sm" id="codigo_ru" name="codigo_ru" readonly="readonly">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 					</form>
+                </div>
+
+            <div class="card-body">
+
+                <div class="row justify-content-center">
+        
+                    <div class="col col-sm-12 align-self-center">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>
+                                    Lista de C&oacute;digo RU
+                                </strong>
+                            </div><!--card-header-->
+
+                    <form class="form-horizontal" method="post" action="" id="frmCodigoRU" autocomplete="off">
+                    <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                    
+                    <div class="row" style="padding:20px 20px 0px 20px;">
+
+                        <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="N° de CAP">
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="codigo_itf_bus" name="codigo_itf_bus" placeholder="C&oacute;digo ITF">
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="codigo_ru_bus" name="codigo_ru_bus" placeholder="C&oacute;digo RU">
+						</div>
+
+                        <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+							<select name="situacion_pago" id="situacion_pago" class="form-control form-control-sm">
+                                <option value="" selected="selected">--Selecionar Situaci&oacute;n Venta--</option>
+                                <option value="0">PENDIENTE</option>
+								<option value="1">PAGADO</option>
+                                <option value="2">EXONERADO</option>
+                                <option value="3">ANULADO</option>
+                                
+								<!--<option value="">Todos</option>
+								<option value="1" selected="selected">Pendientes</option>
+                                <option value="0">Eliminado</option>
+								<option value="2">Pagados</option>-->
+							</select>
+						
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+							<select name="estado" id="estado" class="form-control form-control-sm">
+                                <option value="">Todos</option>
+								<option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+								<!--<option value="">Todos</option>
+								<option value="1" selected="selected">Pendientes</option>
+                                <option value="0">Eliminado</option>
+								<option value="2">Pagados</option>-->
+							</select>
+						
+                        </div>
+						<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
+							<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                            <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+						
+						</div>
+
+                    </div>
 					
                 <div class="card-body">				
 
@@ -296,6 +367,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+                            <th>CAP</th>
                             <th>Nombre</th>
                             <th>Fecha Colegiado</th>
                             <th>Situaci&oacute;n</th>

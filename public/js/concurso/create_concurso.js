@@ -3,6 +3,25 @@ $(document).ready(function () {
 	
 	datatablenew();
 	
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/concurso/upload_concurso",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+				datatablenew();
+            }
+        });
+		return false;
+    });
 	
 	$('#btnNuevoTrabajo').on('click', function () {
 		modalTrab(0);
@@ -21,6 +40,33 @@ $(document).ready(function () {
 	$('#btnDescargar').on('click', function () {
 		DescargarArchivos()
 
+	});
+	
+	$('#btnDescargarComprimido').on('click', function () {
+													   
+		var id_concurso= $('#id_concurso_bus').val();
+		var id_periodo = $('#id_periodo_bus').val();
+		var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+		var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+		var id_puesto = $('#id_puesto_bus').val();	
+		
+		var numero_cap = $('#numero_cap_bus').val();
+		var numero_documento = $('#numero_documento_bus').val();
+		var agremiado = $('#agremiado_bus').val();
+		var id_situacion = $('#id_situacion_bus').val();
+		var id_estado = $('#id_estado_bus').val();
+		var campo = $('#campo').val();
+		var orden = $('#orden').val();
+		
+		if(numero_cap=="")numero_cap="0";
+		if(id_concurso=="")id_concurso="0";
+		if(id_periodo=="")id_periodo="0";
+		if(id_tipo_concurso=="")id_tipo_concurso="0";
+		if(id_sub_tipo_concurso=="")id_sub_tipo_concurso="0";
+		if(id_puesto=="")id_puesto="0";
+		
+		location.href = '/concurso/descargar_comprimido/'+numero_cap+"/"+id_concurso+"/"+id_periodo+"/"+id_tipo_concurso+"/"+id_sub_tipo_concurso+"/"+id_puesto;
+		
 	});
 
 
@@ -98,6 +144,36 @@ function aperturar(accion){
 
 
 function DescargarArchivos(){
+		
+	var id_concurso = $('#id_concurso_bus').val();
+	var numero_cap = $('#numero_cap_bus').val();
+	var numero_documento = $('#numero_documento_bus').val();
+	var agremiado = $('#agremiado_bus').val();
+	var id_situacion = $('#id_situacion_bus').val();
+	var id_estado = $('#id_estado_bus').val();
+	var campo = $('#campo').val();
+	var orden = $('#orden').val();
+	var id_periodo = $('#id_periodo_bus').val();
+	var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+	var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+	var id_puesto = $('#id_puesto_bus').val();	
+	var id_agremiado = 0;
+	var id_regional = 0;
+	
+	if (id_concurso == "")id_concurso = 0;
+	if (numero_cap == "")numero_cap = 0;
+	if (numero_documento == "")numero_documento = 0;
+	if (agremiado == "")agremiado = 0;
+	if (id_situacion == "")id_situacion = 0;
+	if (id_estado == "")id_estado = 0;
+	if (campo == "")campo = 0;
+	if (orden == "")orden = 0;
+	if (id_periodo == "")id_periodo = 0;
+	if (id_tipo_concurso == "")id_tipo_concurso = 0;
+	if (id_sub_tipo_concurso == "")id_sub_tipo_concurso = 0;
+	if (id_puesto == "")id_puesto = 0;
+	
+	location.href = '/concurso/exportar_listar_concurso_agremiado/' + id_concurso + '/' + numero_documento + '/' + id_agremiado + '/' + agremiado + '/' + numero_cap + '/' + id_regional + '/' + id_situacion + '/' + id_estado + '/' + campo + '/' + orden + '/' + id_periodo + '/' + id_tipo_concurso + '/' + id_sub_tipo_concurso + '/' + id_puesto;
 	
 }
 
@@ -1651,7 +1727,7 @@ function ocultar_solicitud(){
 function datatablenew(){
     var oTable = $('#tblConcurso').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/concurso/listar_concurso_agremiado",
+        "sAjaxSource": "/concurso/listar_concurso_resultado_agremiado",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -1682,7 +1758,12 @@ function datatablenew(){
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_estado = $('#id_estado_bus').val();
-			
+			var campo = $('#campo').val();
+			var orden = $('#orden').val();
+			var id_periodo = $('#id_periodo_bus').val();
+			var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+			var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+			var id_puesto = $('#id_puesto_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -1692,6 +1773,9 @@ function datatablenew(){
 						id_concurso:id_concurso,numero_cap:numero_cap,
 						numero_documento:numero_documento,agremiado:agremiado,
 						id_situacion:id_situacion,id_estado:id_estado,
+						campo:campo,orden:orden,
+						id_periodo:id_periodo,id_tipo_concurso:id_tipo_concurso,
+						id_sub_tipo_concurso:id_sub_tipo_concurso,id_puesto:id_puesto,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1713,7 +1797,7 @@ function datatablenew(){
 		},
         "aoColumnDefs":
             [	
-			 	{
+			 	/*{
                 "mRender": function (data, type, row, meta) {	
                 	var id = "";
 					if(row.id!= null)id = row.id;
@@ -1721,7 +1805,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "aTargets": [0]
-                },
+                },*/
 				{
                 "mRender": function (data, type, row) {
                 	var periodo = "";
@@ -1729,7 +1813,7 @@ function datatablenew(){
 					return periodo;
                 },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [0],
 				},
 				{
                 "mRender": function (data, type, row) {
@@ -1738,7 +1822,7 @@ function datatablenew(){
 					return tipo_concurso;
                 },
                 "bSortable": false,
-                "aTargets": [2],
+                "aTargets": [1],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1747,7 +1831,7 @@ function datatablenew(){
 					return sub_tipo_concurso;
                 },
                 "bSortable": false,
-                "aTargets": [3],
+                "aTargets": [2],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1756,7 +1840,7 @@ function datatablenew(){
 					return puesto;
                 },
                 "bSortable": false,
-                "aTargets": [4],
+                "aTargets": [3],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1765,7 +1849,7 @@ function datatablenew(){
 					return fecha_inscripcion;
                 },
                 "bSortable": false,
-                "aTargets": [5],
+                "aTargets": [4],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1774,7 +1858,7 @@ function datatablenew(){
 					return pago;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [5]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1783,7 +1867,7 @@ function datatablenew(){
 					return numero_cap;
                 },
                 "bSortable": false,
-                "aTargets": [7]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1792,7 +1876,7 @@ function datatablenew(){
 					return numero_documento;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1801,7 +1885,7 @@ function datatablenew(){
 					return apellido_paterno;
                 },
                 "bSortable": false,
-                "aTargets": [9]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1810,17 +1894,17 @@ function datatablenew(){
 					return situacion;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [9]
                 },
 				
 				{
                 "mRender": function (data, type, row) {
                 	var puntaje = "";
 					if(row.puntaje!= null)puntaje = row.puntaje;
-					return puntaje;
+					return formato_miles(puntaje);
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [10]
                 },
 				
 				{
@@ -1830,7 +1914,7 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [12]
+                "aTargets": [11]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -1846,7 +1930,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [13],
+					"aTargets": [12],
 				},
 				
 				
@@ -1906,19 +1990,32 @@ function editarConcursoInscripcion(id){
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
 			
-			$('#fecha_delegatura_inicio').val(result.fecha_delegatura_inicio);
-			$('#fecha_delegatura_fin').val(result.fecha_delegatura_fin);
+			$('#fecha_delegatura_inicio').val(result.fecha_acreditacion_inicio);
+			$('#fecha_delegatura_fin').val(result.fecha_acreditacion_fin);
 			$('#numero_cap').val(result.numero_cap);
 			$('#nombres').val(result.apellido_paterno+" "+result.apellido_materno+" "+result.nombres);
 			$('#numero_documento').val(result.numero_documento);
 			$('#region').val(result.region);
 			$('#situacion').val(result.situacion);
-			$('#puesto').val(result.puesto);
+			$('#puesto').val(result.nombre_puesto);
 			$('#tipo_concurso').val(result.periodo+" - "+result.tipo_concurso);
 			$('#id_concurso').val(result.id_concurso);
-			$('#puntaje').val(result.puntaje);
-			$('#id_estado').val(result.resultado);
-			cargarRequisitos(result.id);	
+
+			if(result.situacion=="HABILITADO"){
+				$('#puntaje').val(result.puntaje);
+				$('#id_estado').val(result.resultado);
+				$('#puntaje').attr("disabled",false);
+				$('#id_estado').attr("disabled",false);
+				$('#asignar_puesto').attr("disabled",false);
+			}else if(result.situacion=="INHABILITADO"){
+				$('#puntaje').attr("disabled",true);
+				$('#id_estado').attr("disabled",true);
+				$('#asignar_puesto').attr("disabled",true);
+			}
+			
+
+			cargarRequisitos(result.id);
+			obtenerPuesto(result.id_concurso,result.puesto);
 			
 		}
 		
@@ -3493,5 +3590,65 @@ function fn_eliminar_seg(id){
 }
 
 
+function obtenerPuesto(id_concurso,id){
+	
+	$.ajax({
+		url: '/concurso/listar_puesto_concurso/'+id_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#asignar_puesto").html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				//alert(oo.id_tipo_plaza+"|"+id);
+				if(oo.id_tipo_plaza == id)selected = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+selected+" >"+oo.puesto+"</option>";
+			});
+			$("#asignar_puesto").html(option);
+		}
+		
+	});
+	
+}
 
+function obtenerSubTipoConcursoBus(){
+	
+	var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo_concurso_bus").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo_concurso_bus").html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerRoEspecifico(){
+	
+	var id_sub_rol = $('#id_sub_tipo_concurso_bus').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/94/'+id_sub_rol,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Espec&iacute;fico--</option>";
+			$("#id_puesto_bus").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_puesto_bus").html(option);
+		}
+		
+	});
+	
+}
 

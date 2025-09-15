@@ -150,7 +150,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
                     <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cap_" name="cap_" placeholder="CAP">
+						<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="CAP">
 					</div>
 
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -171,8 +171,8 @@
 
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
@@ -187,7 +187,8 @@
                             <th>Apellidos y nombres</th>
                             <th>Seguro</th>
                             <th>Plan</th>
-                            <th>Monto</th>                            
+                            <th>Monto</th>
+                            <th>Moneda</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{
@@ -260,24 +260,36 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
-function fn_save(){
+function fn_save_asesor(){
     
 	var _token = $('#_token').val();
 	var id = $('#id_').val();
 	var id_comision_sesion = $('#id').val();
 	var id_profesion_otro = $('#id_profesion_otro').val();
 	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
     $.ajax({
 			url: "/sesion/send_profesion_otro",
             type: "POST",
             data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_profesion_otro:id_profesion_otro},
+			dataType: "json",
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
+				
+				if(result.cantidad>0){
+					bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado");
+					//return false;
+				}else{
+					cargarDelegados();
+				}
+				
+				$('.loader').hide();
 				$('#openOverlayOpc2').modal('hide');
-				datatablenew();
-				//obtenerInversionista(0);
-				//obtenerDetalleInversionista(0);
-				//window.location.reload();
+				
 				
             }
     });
@@ -348,7 +360,7 @@ function obtenerVehiculo(id,obj){
 				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
 				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
 				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
+				newRow += '<a href="javascript:void(0)" onClick=fn_save_asesor("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
 				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
 			});
 			$('#tblPlanDetalle tbody').html(newRow);
@@ -459,7 +471,7 @@ container: '#myModal modal-body'
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($profesion_sesion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_documento." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
+									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
 									<?php 
 									}
 									?>
@@ -473,7 +485,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_asesor()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

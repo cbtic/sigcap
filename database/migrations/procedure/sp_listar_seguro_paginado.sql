@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_seguro_paginado(p_denominacion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -19,10 +18,11 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' s.id,r.denominacion regional,s.nombre,s.descripcion,s.estado ';
+	v_campos=' s.id, r.denominacion regional, s.nombre, s.descripcion, c.denominacion concepto, s.estado ';
 
 	v_tabla=' from seguros s
-		inner join regiones r on s.id_regional = r.id';
+	inner join regiones r on s.id_regional = r.id
+	left join conceptos c on s.id_concepto = c.codigo';
 	
 	
 	v_where = ' Where 1=1  ';

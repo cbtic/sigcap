@@ -36,15 +36,44 @@ class MunicipalidadIntegrada extends Model
 
         $cad = "select mi.*,tm.denominacion tipo_agrupacion, cm.monto from municipalidad_integradas mi
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
-        left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
+        left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id and cm.estado='1'
         where mi.estado='1' and mi.id_tipo_agrupacion::varchar ilike '%".$tipo_agrupacion."'
 		and mi.id_periodo_comision='".$periodo."'";
 		
 		if($tipo_comision>0){
 			$cad .= " and mi.id_tipo_comision='".$tipo_comision."'";
 		}
+			//$cad .= " and mi.estado='1' order by 1 desc ";
+		$cad .= " and mi.estado='1' order by mi.denominacion asc "; 
 		
-		$cad .= " and mi.estado='1' order by 1 desc ";
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getMunicipalidadDetalle($id_periodo_comision,$id_tipo_comision,$municipalidad){
+
+        $cad = "select distinct m.denominacion from mucipalidad_detalles md
+inner join municipalidad_integradas mi on md.id_municipalidad_integrada=mi.id  
+inner join municipalidades m on md.id_municipalidad=m.id
+where mi.id_periodo_comision='".$id_periodo_comision."' 
+and mi.id_tipo_comision = ".$id_tipo_comision."
+and m.denominacion='".$municipalidad."' 
+and mi.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getMunicipalidadDetalleById($id){
+
+        $cad = "select md.id,m.denominacion 
+from mucipalidad_detalles md
+inner join municipalidad_integradas mi on md.id_municipalidad_integrada=mi.id  
+inner join municipalidades m on md.id_municipalidad=m.id
+where mi.id='".$id."'  
+and md.estado='1'
+and mi.estado='1'";
+
 		$data = DB::select($cad);
         return $data;
     }
@@ -55,6 +84,33 @@ class MunicipalidadIntegrada extends Model
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
         where mi.estado='1'";
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getMuniIntegradaByPeriodoAndTipComisionMovilidad($id_periodo,$id_tipo_comision){
+
+        $cad = "select mi.*
+        from municipalidad_integradas mi
+        where mi.estado='1'
+        and mi.id_periodo_comision='".$id_periodo."'
+        and mi.id_tipo_comision='".$id_tipo_comision."'
+        order by mi.denominacion ";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getMuniIntegradaByPeriodoAndTipComision($id_periodo,$id_tipo_comision){
+
+        $cad = "select mi.*
+        from municipalidad_integradas mi
+        where mi.estado='1'
+        and mi.id_periodo_comision='".$id_periodo."'
+        and mi.id_tipo_comision='".$id_tipo_comision."'
+        and mi.id not in(select distinct id_comision from comision_delegados cd where estado='1')
+        order by mi.denominacion asc";
+
 		$data = DB::select($cad);
         return $data;
     }

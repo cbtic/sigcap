@@ -18,7 +18,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' p.id, p.anio, p.porcentaje_calculo_edificacion, p.valor_metro_cuadrado_habilitacion_urbana, p.valor_uit, p.igv, p.estado';
+	v_campos=' p.id, p.anio, p.porcentaje_calculo_edificacion, p.valor_minimo_edificaciones, p.valor_maximo_edificaciones, p.valor_metro_cuadrado_habilitacion_urbana, p.valor_minimo_hu, p.valor_maximo_hu, p.valor_uit, p.igv, p.monto_minimo_rh, p.estado ';
 
 	v_tabla=' from parametros p';
 	
@@ -49,6 +49,10 @@ begin
 	 v_where:=v_where||'And t2.id_situacion = '''||p_id_situacion||''' ';
 	End If;
 */
+	If p_anio<>'' Then
+	 v_where:=v_where||'And p.anio = '''||p_anio||''' ';
+	End If;
+
 	If p_estado<>'' Then
 	 v_where:=v_where||'And p.estado = '''||p_estado||''' ';
 	End If;

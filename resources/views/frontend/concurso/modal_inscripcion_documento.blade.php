@@ -290,7 +290,7 @@ function fn_save_requisito(){
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_documento?></td>
 							<td class="text-left" style="vertical-align:middle">
-								<a href="/img/documento/<?php echo $row->ruta_archivo?>" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>
+								<a href="/<?php echo $row->ruta_archivo?>" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>
 							</td>
 						</tr>
 						<?php 

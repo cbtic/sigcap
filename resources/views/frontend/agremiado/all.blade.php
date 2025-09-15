@@ -149,12 +149,12 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
 							<option value="">--Regional--</option>
 							<?php
 							foreach ($region as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+							<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 							<?php 
 							}
 							?>
@@ -175,7 +175,8 @@
 					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
 					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				
+                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 						<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 							<option value="">--Situaci&oacute;n--</option>
 							<?php
@@ -186,16 +187,43 @@
 							?>
 						</select>
 					</div>
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<select name="id_categoria_bus" id="id_categoria_bus" class="form-control form-control-sm" >
+							<option value="">--Categoria--</option>
+							<?php
+							foreach ($categoria_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<select name="id_act_gremial_bus" id="id_act_gremial_bus" class="form-control form-control-sm" >
+							<option value="">--Act. Gremial--</option>
+							<?php
+							foreach ($act_gremial_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
                     
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px">
                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							
-						<a class="btn btn-success" href="/agremiado" style="margin-left:15px">Nuevo</a>
+						<a class="btn btn-success" href="/agremiado" style="margin-left:0px">Nuevo</a>
+
+                        <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;" /> 
+														
+						<input class="btn btn-success" value="Cuotas excepcional" type="button" id="btnGenerarCuotas" style=""/>
 	
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
@@ -209,6 +237,8 @@
 							<th>Agremiado</th>
 							<th>Fecha Nacimiento</th>
 							<th>Situaci&oacute;n</th>
+							<th>Categoria</th>
+							<th>Act. Gremial</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>

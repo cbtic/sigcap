@@ -1,8 +1,21 @@
+//const { message } = require("laravel-mix/src/Log");
 
 $(document).ready(function () {
 	
 	datatablenew();
 	
+	if(c_cantidad_concurso>0){
+		//var nombre_concurso = "";
+		//nombre_concurso += c_periodo+' '+c_tipo_concurso;
+		//if(c_sub_tipo_concurso!="")nombre_concurso += " - "+c_sub_tipo_concurso;
+		
+		bootbox.alert("La postulaci&oacute;n al concurso "+nombre_concurso+" esta pendiente de presentar documentos, haga click en el boton azul <u><b>(Registrar Doc)</b></u> para adjuntar");
+		//return false;
+	}
+
+	if($("#situacion").val()=='FALLECIDO'){
+		$("#btnGuardar").prop("disabled",true);
+	}
 	
 	$('#btnNuevoTrabajo').on('click', function () {
 		modalTrab(0);
@@ -35,6 +48,8 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+	
+	$("#id_concurso_bus").select2();
 	
 	/*
 	$('#fecha_desde').datepicker({
@@ -92,8 +107,16 @@ function aperturar(accion){
 function guardar_inscripcion(){
     //alert("cvvfv");
     var msg = "";
+
+	if($("#situacion").val()=='INHABILITADO'){
+		bootbox.alert("Usted se encuentra INHABILITADO, debe estar HABILITADO para continuar con el proceso de concurso",function(){
+			fn_save();
+		});
+			
+	}else{
+		fn_save();
+	}
     
-	fn_save();
 }
 
 
@@ -106,23 +129,14 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-					/*
-					var id_agremiado = $("#id_agremiado").val();
-					obtenerConcursoVigentePendiente(id_agremiado);
-					datatablenew();
-					$("#id_concurso_puesto").val(0);
-                    */
-					location.reload();
-					//location.href="/concurso/editar_inscripcion/"+result;
+					if(result==false){
+						bootbox.alert("En este periodo ya cuenta con una postulación a delegado, no puede postular a otro");
+						return false;	
+					}
 					
-					//window.location.reload();
-					//Limpiar();
-					/*$('#openOverlayOpc').modal('hide');
-					$('#calendar').fullCalendar("refetchEvents");
-					modalDelegar(fecha_atencion_original);*/
-					//modalTurnos();
-					//modalHistorial();
-					//location.href="ver_cita/"+id_user+"/"+result;
+					//location.reload();
+					datatablenew();
+					
             }
     });
 }
@@ -1701,6 +1715,7 @@ function datatablenew(){
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_concurso = $('#id_concurso_bus').val();
+			var flag_concurso = $('#flag_concurso').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -1710,7 +1725,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
 						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
-						id_agremiado:id_agremiado,
+						id_agremiado:id_agremiado,flag_concurso:flag_concurso,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1823,7 +1838,7 @@ function datatablenew(){
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" '+valida+' ><i class="fa fa-edit"></i> Registrar Doc</button>';
 						
-						html += '<button onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px" '+valida+'> Eliminar</button>';
+						html += '<button type="button" onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px" '+valida+'> Eliminar</button>';
 						
 						html += '</div>';
 						return html;
@@ -3491,7 +3506,7 @@ function fn_eliminar_seg(id){
 
 
 function eliminarInscripcionConcurso(id){
-	
+	//event.preventdefault();
     bootbox.confirm({ 
         size: "small",
         message: "&iquest;Deseas eliminar la Inscripción del Concurso?", 
@@ -3501,6 +3516,7 @@ function eliminarInscripcionConcurso(id){
             }
         }
     });
+	return false;
     //$(".modal-dialog").css("width","30%");
 }
 
@@ -3558,3 +3574,44 @@ function duplicar_concurso(){
             }
     });
 }
+
+function obtenerTipoSubTipo(){
+
+	var select = document.getElementById("id_concurso");
+    var selectedOption = select.options[select.selectedIndex];
+    var tipo_concurso = selectedOption.getAttribute("data_tipo_concurso");
+    var sub_tipo_concurso = selectedOption.getAttribute("data_sub_tipo_concurso");
+
+	if(tipo_concurso=='DELEGADO'){
+		$("#id_tipo_concurso").val(3);
+		obtenerSubTipoConcurso(function(){
+			
+			if(sub_tipo_concurso=='EDIFICACIONES'){
+				$("#id_sub_tipo").val(1);
+			}else if(sub_tipo_concurso=='HABILITACIONES URBANAS'){
+				$("#id_sub_tipo").val(2);
+			}
+			fn_ListarBusqueda();
+		});
+		
+	}else if(tipo_concurso=='IMO'){
+		$("#id_tipo_concurso").val(1);
+		obtenerSubTipoConcurso(function(){
+		if(sub_tipo_concurso=='EDIFICACIONES'){
+			$("#id_sub_tipo").val(3);
+		}else if(sub_tipo_concurso=='HABILITACIONES URBANAS'){
+			$("#id_sub_tipo").val(4);
+		}
+		fn_ListarBusqueda();
+		});
+
+	}else if(tipo_concurso=='ESPECIALISTA'){
+		$("#id_tipo_concurso").val(2);
+		obtenerSubTipoConcurso(function(){
+		$("#id_sub_tipo").val(5);
+		});
+		fn_ListarBusqueda();
+	}
+}
+
+

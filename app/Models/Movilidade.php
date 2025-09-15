@@ -15,7 +15,20 @@ class Movilidade extends Model
         return $this->readFuntionPostgres('sp_listar_movilidad_paginado',$p);
 
     }
+	
+	function getMesByPeriodo($id_periodo){
 
+        $cad = "select to_char(mes::date,'yyyymm')mes,to_char(mes::date,'mm')mes_,to_char(mes::date,'yyyy')anio_  
+        
+from generate_series(
+(select fecha_inicio from periodo_comisiones pc where id=".$id_periodo." and estado='1'), 
+(select fecha_fin from periodo_comisiones pc where id=".$id_periodo." and estado='1'), 
+'1 month'::interval) mes";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

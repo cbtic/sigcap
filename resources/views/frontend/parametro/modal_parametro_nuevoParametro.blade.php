@@ -11,7 +11,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:20%!important
+	max-width:30%!important
   }
   
 #tablemodal{
@@ -154,15 +154,21 @@ function fn_save_parametro(){
 	var id = $('#id').val();
 	var anio = $('#anio').val();
   var porcentaje_calculo_edificacion = $('#porcentaje_calculo_edificacion').val();
+  var valor_minimo_edificaciones = $('#valor_minimo_edificaciones').val();
   var valor_metro_cuadrado_habilitacion_urbana = $('#valor_metro_cuadrado_habilitacion_urbana').val();
+  var valor_minimo_hu = $('#valor_minimo_hu').val();
+  var valor_maximo_hu = $('#valor_maximo_hu').val();
   var valor_uit = $('#valor_uit').val();
   var igv = $('#igv').val();
+  var valor_rh = $('#valor_rh').val();
+  
 	
     $.ajax({
 			url: "/parametro/send_parametro_nuevoParametro",
             type: "POST",
             data : {_token:_token,id:id,anio:anio,porcentaje_calculo_edificacion:porcentaje_calculo_edificacion,
-            valor_metro_cuadrado_habilitacion_urbana:valor_metro_cuadrado_habilitacion_urbana,valor_uit:valor_uit,igv:igv},
+            valor_metro_cuadrado_habilitacion_urbana:valor_metro_cuadrado_habilitacion_urbana,valor_minimo_edificaciones:valor_minimo_edificaciones,
+            valor_minimo_hu:valor_minimo_hu,valor_maximo_hu:valor_maximo_hu,valor_uit:valor_uit,igv:igv,valor_rh:valor_rh},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -202,7 +208,7 @@ function fn_save_parametro(){
                   
                     <div class="row" style="padding:0px,10px,0px,10px">
                       
-                      <div class="col-lg-12">
+                      <div class="col-lg-3">
                         <div class="form-group">
                           <label class="control-label form-control-sm">Año</label>
                           <input id="anio" name="anio" on class="form-control form-control-sm"  value="<?php echo $parametro->anio?>" type="text" >
@@ -210,39 +216,68 @@ function fn_save_parametro(){
                         </div>
                       </div>
                     </div>
-                    <div class="row" style="padding:0px,10px,0px,10px">
+                    <fieldset name="edificaciones" style="border:1px solid #A4A4A4; padding: 10px">
+                      <legend class="control-label form-control-sm">Edificaciones</legend>
+                      <div class="row" style="padding:0px,10px,0px,10px">
 
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="control-label form-control-sm">Porcentaje Calculo Edificacion</label>
-                          <input id="porcentaje_calculo_edificacion" name="porcentaje_calculo_edificacion" on class="form-control form-control-sm"  value="<?php echo $parametro->porcentaje_calculo_edificacion?>" type="text" >
-                        
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="control-label form-control-sm">% Calculo Edificacion</label>
+                            <input id="porcentaje_calculo_edificacion" name="porcentaje_calculo_edificacion" on class="form-control form-control-sm"  value="<?php echo $parametro->porcentaje_calculo_edificacion?>" type="text" >
+                          
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="control-label form-control-sm">Valor M&iacute;nimo % de UIT - Edificaciones</label>
+                            <input id="valor_minimo_edificaciones" name="valor_minimo_edificaciones" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_minimo_edificaciones?>" type="text" >
+                          
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row" style="padding:0px,10px,0px,10px">
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label class="control-label form-control-sm">Valor Metro Cuadrado HU</label>
-                          <input id="valor_metro_cuadrado_habilitacion_urbana" name="valor_metro_cuadrado_habilitacion_urbana" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_metro_cuadrado_habilitacion_urbana?>" type="text" >
-                        
+                    </fieldset>
+                    <fieldset name="hu" style="border:1px solid #A4A4A4; padding: 10px">
+                      <legend class="control-label form-control-sm">Habilitaci&oacute;n Urbana</legend>
+                      <div class="row" style="padding:0px,10px,0px,10px">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="control-label form-control-sm">Valor m2 HU</label>
+                            <input id="valor_metro_cuadrado_habilitacion_urbana" name="valor_metro_cuadrado_habilitacion_urbana" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_metro_cuadrado_habilitacion_urbana?>" type="text" >
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="control-label form-control-sm">Costo M&iacute;nimo - HU</label>
+                            <input id="valor_minimo_hu" name="valor_minimo_hu" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_minimo_hu?>" type="text" >
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="control-label form-control-sm">Valor M&aacute;ximo Ha (m2) - HU</label>
+                            <input id="valor_maximo_hu" name="valor_maximo_hu" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_maximo_hu?>" type="text" >
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </fieldset>
                     <div class="row" style="padding:0px,10px,0px,10px">
-                      <div class="col-lg-12">
+                      <div class="col-lg-6">
                         <div class="form-group">
                           <label class="control-label form-control-sm">Valor UIT</label>
                           <input id="valor_uit" name="valor_uit" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_uit?>" type="text" >
                         
                         </div>
                       </div>
-                    </div>
-                    <div class="row" style="padding:0px,10px,0px,10px">
-                      <div class="col-lg-12">
+                      <div class="col-lg-6">
                         <div class="form-group">
                           <label class="control-label form-control-sm">IGV</label>
                           <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php echo $parametro->igv?>" type="text" >
+                          </div>
+                        </div>
+                     
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="control-label form-control-sm">Aplica Tributo Mayor a (RH)</label>
+                          <input id="valor_rh" name="valor_rh" on class="form-control form-control-sm"  value="<?php echo $parametro->monto_minimo_rh?>" type="text" >
                           </div>
                         </div>
                       </div>

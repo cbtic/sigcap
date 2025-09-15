@@ -217,6 +217,35 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
+					<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+						<?php 
+                        if($periodo_activo){
+                        ?>
+						<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+						<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComision()" disabled="disabled">
+							<option value="">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+						<?php
+                        }else{
+                        ?>
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComision()">
+							<option value="">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+						<?php } ?>
+					</div>
+					
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<select name="id_tipo_concurso_bus" id="id_tipo_concurso_bus" class="form-control form-control-sm" onChange="obtenerSubTipoConcursoBus()">
 							<option value="">--TIPO CONCURSO--</option>
@@ -235,11 +264,7 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="periodo_bus" name="periodo_bus" placeholder="Periodo">
-					</div>
-					
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
@@ -260,10 +285,10 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Id</th>
+                            <!--<th>Id</th>-->
+							<th>Periodo</th>
 							<th>Tipo Concurso</th>
 							<th>SubTipo Concurso</th>
-                            <th>Periodo</th>
 							<th>Fecha Concurso</th>
 							<th>Fecha Inscripci&oacute;n Inicio</th>
 							<th>Fecha Inscripci&oacute;n Fin</th>

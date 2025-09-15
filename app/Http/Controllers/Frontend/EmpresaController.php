@@ -146,7 +146,7 @@ class EmpresaController extends Controller
 			$empresa->email = $request->email;
 			$empresa->telefono = $request->telefono;
 			$empresa->representante = $request->representante;
-			$empresa->id_usuario_inserta = $id_user;
+			$empresa->id_usuario_actualiza = $id_user;
 			$empresa->save();
 		}	
 		$array["sw"] = $sw;
@@ -157,10 +157,32 @@ class EmpresaController extends Controller
 
 	public function eliminar_empresa($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$empresa = Empresa::find($id);
 		$empresa->estado = $estado;
+		$empresa->id_usuario_actualiza = $id_user;
 		$empresa->save();
 
 		echo $empresa->id;
     }
+
+	public function obtener_datos_empresa($ruc_propietario){
+
+		$empresa_model = new Empresa;
+		$sw = true;
+
+		$empresa2 = Empresa::where('ruc',$ruc_propietario)->where('estado','1')->first();
+
+		if($empresa2)
+		{
+			$empresa = $empresa_model->getEmpresaPropietario($ruc_propietario);
+			$array["sw"] = $sw;
+			$array["empresa"] = $empresa;
+			echo json_encode($array);
+		}else {
+			$array["empresa"] = "0";
+			echo json_encode($array);}
+	}
 }

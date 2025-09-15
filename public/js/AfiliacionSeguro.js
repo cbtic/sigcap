@@ -15,6 +15,12 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#numero_cap_bus').keypress(function(e){
+		if(e.which == 13) {
+			fn_ListarBusqueda();
+		}
+	});
+
     $('#modal_afiliado #cap_').keypress(function(e){
 		if(e.which == 13) {
             print_r("CAP"); exit();
@@ -377,7 +383,11 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-            var cap = $('#cap_').val();
+
+			//var id = $('#id').val();
+			var id = "";
+            var cap = $('#numero_cap_bus').val();
+
 			var nombre = $('#nombre').val();
             var seguro= $('#seguro_').val();
 			var estado = $('#estado').val();
@@ -389,9 +399,10 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-                    nombre:nombre,estado:estado,cap:cap,seguro:seguro,
+                    	id:id,nombre:nombre,estado:estado,cap:cap,seguro:seguro,
 						_token:_token
                        },
+
                 "success": function (result) {
                     fnCallback(result);
                 },
@@ -405,9 +416,10 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var id = "";
+                	 var id = "";
 					if(row.id!= null)id = row.id;
 					return id;
+
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -425,9 +437,9 @@ function datatablenew(){
                 },
                 {
                     "mRender": function (data, type, row) {
-                        var desc_cliente = "";
-                        if(row.desc_cliente!= null)desc_cliente = row.desc_cliente;
-                        return desc_cliente;
+                        var agremiado = "";
+                        if(row.agremiado!= null)agremiado = row.agremiado;
+                        return agremiado;
                     },
                     "bSortable": true,
                     "aTargets": [2]
@@ -460,8 +472,15 @@ function datatablenew(){
                     "bSortable": true,
                     "aTargets": [5]
                 },
-                
-			
+                {
+                    "mRender": function (data, type, row) {
+                        var moneda = "";
+                        if(row.moneda!= null)moneda = row.moneda;
+                        return moneda;
+                    },
+                    "bSortable": true,
+                    "aTargets": [6]
+                },
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -474,7 +493,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -501,7 +520,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [8],
 				},
 
             ]

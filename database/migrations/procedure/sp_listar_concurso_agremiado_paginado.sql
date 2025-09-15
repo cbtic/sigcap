@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_campo character varying, p_orden character varying, p_flag_concurso character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,10 +18,10 @@ begin
 	 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' t1.id,t5.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,to_char(t1.created_at,''dd-mm-yyyy'')fecha_inscripcion,
+	v_campos=' t1.id,pc.descripcion periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,to_char(t1.created_at,''dd-mm-yyyy'')fecha_inscripcion,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
 t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t1.puntaje,t1.resultado,t11.denominacion puesto, 
-case when now() > t5.fecha_inscripcion_fin then 1 else 0 end valida
+case when now() > t5.fecha_inscripcion_fin then 1 else 0 end valida,fecha_acreditacion_inicio,fecha_acreditacion_fin 
 ';
 
 	v_tabla=' from concurso_inscripciones t1 
@@ -29,6 +29,7 @@ inner join agremiados t2 on t1.id_agremiado=t2.id
 inner join personas t3 on t2.id_persona=t3.id
 inner join concurso_puestos t4 on t1.id_concurso_puesto=t4.id 
 inner join concursos t5 on t4.id_concurso=t5.id
+inner join periodo_comisiones pc on t5.id_periodo=pc.id 
 inner join tabla_maestras tm on t5.id_tipo_concurso::int=tm.codigo::int and tm.tipo=''101''
 left join tabla_maestras tms on t5.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo=''93''
 inner join tabla_maestras t7 on t2.id_situacion = t7.codigo::int And t7.tipo =''14'' 
@@ -39,7 +40,7 @@ left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11
 	
 	
 	v_where = ' Where 1=1  
-And t1.estado=''1''';
+And t1.estado=''1'' ';
 	
 	If p_numero_documento<>'' Then
 	 v_where:=v_where||'And t3.numero_documento = '''||p_numero_documento||''' ';
@@ -73,14 +74,26 @@ And t1.estado=''1''';
 	 v_where:=v_where||'And t1.resultado = '''||p_id_estado||''' ';
 	End If;
 	
+	if p_flag_concurso<>'' Then
+	 v_where:=v_where||'And (case when now() > t5.fecha_inscripcion_fin then 2 else 1 end) = '''||p_flag_concurso||''' ';
+	End If;
 
+	/*
+	If p_campo='' Then
+		p_campo='t1.id';
+	End If;
+
+	If p_orden='' Then
+		p_orden='desc';
+	End If;
+	*/
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t1.id desc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By '||p_campo||' '||p_orden||' LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t1.id desc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By '||p_campo||' '||p_orden||' ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

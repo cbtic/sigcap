@@ -269,6 +269,46 @@ function habilitar(obj){
 	}
 }
 
+function fn_save_confirmar(){
+	
+	var msg = "";
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
+	var id_tipo_agrupacion = "<?php echo $id_tipo_agrupacion?>";
+	//alert(tipo_comision);
+	
+	
+	var coordinador = $('input[name=coordinador]:checked').val();
+	
+	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
+	var id_concurso_inscripcion2 = $('#id_concurso_inscripcion2').val();
+	
+	if(id_concurso_inscripcion == "")msg += "Debe seleccionar un delegado titular 1 <br>";
+	if(id_concurso_inscripcion2 == "")msg += "Debe seleccionar un delegado titular 2 <br>";
+	
+	if(msg!=""){
+		bootbox.alert(msg);
+		return false;
+	}
+	//alert(coordinador);
+	
+	if(tipo_comision==1 && coordinador==undefined){
+	
+		bootbox.confirm({ 
+			size: "small",
+			message: "&iquest;Deseas grabar el registro sin coordinador?", 
+			callback: function(result){
+				if (result==true) {
+					fn_save();
+				}
+			}
+		});
+		
+	}else{
+		fn_save();
+	}
+
+}
+
 function fn_save(){
     
 	var _token = $('#_token').val();
@@ -278,18 +318,22 @@ function fn_save(){
 	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
 	var id_concurso_inscripcion2 = $('#id_concurso_inscripcion2').val();
 	var coordinador = $('input[name=coordinador]:checked').val();
+	
+	var id_comision_delegado_1 = $('#id_comision_delegado_1').val();
+	var id_comision_delegado_2 = $('#id_comision_delegado_2').val();
 	//alert(coordinador);return false;
 	
     $.ajax({
 			url: "/comision/send_delegado",
             type: "POST",
-            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador},
+            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador,id_comision_delegado_1:id_comision_delegado_1,id_comision_delegado_2:id_comision_delegado_2},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
 				cargarComisiones();
+				//alert();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
@@ -492,14 +536,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
-								<input type="text" id="periodo" name="periodo" class="form-control form-control-sm" value="<?php echo $periodo->descripcion?>" readonly="readonly">
+								<input type="text" id="_periodo" name="_periodo" class="form-control form-control-sm" value="<?php echo $periodo->descripcion?>" readonly="readonly">
 							</div>
 						</div>
 					
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
-								<input type="text" id="tipo_comision" name="tipo_comision" class="form-control form-control-sm" value="<?php echo $tipo_comision->denominacion?>" readonly="readonly">
+								<input type="text" id="_tipo_comision" name="_tipo_comision" class="form-control form-control-sm" value="<?php echo $tipo_comision->denominacion?>" readonly="readonly">
 							</div>
 						</div>
 						
@@ -529,11 +573,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-8">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado Titular 1<?php //echo $comisionDelegado[0]->id_agremiado?></label>
+								
+								<input type="hidden" name="id_comision_delegado_1" id="id_comision_delegado_1" value="<?php if(isset($comisionDelegado[0]->id))echo $comisionDelegado[0]->id?>" />
+								
 								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[0]->id_agremiado) && $row->id_agremiado==$comisionDelegado[0]->id_agremiado)echo "selected='selected'"?>><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[0]->id_agremiado) && $row->id_agremiado==$comisionDelegado[0]->id_agremiado)echo "selected='selected'"?>><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto_asignado?></option>
 									<?php 
 									}
 									?>
@@ -541,26 +588,30 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
+						<?php if($tipo_comision->codigo!=2){?>
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" <?php if(isset($comisionDelegado[0]->coordinador) && $comisionDelegado[0]->coordinador==1)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
+						<?php } ?>
 						
 					</div>
 					
+					<?php if($tipo_comision->codigo!=2){?>
 					<div class="row" style="padding-left:10px">
 						
 						<div class="col-lg-8">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado Titular 2</label>
+								<input type="hidden" name="id_comision_delegado_2" id="id_comision_delegado_2" value="<?php if(isset($comisionDelegado[1]->id))echo $comisionDelegado[1]->id?>" />
 								<select name="id_concurso_inscripcion2" id="id_concurso_inscripcion2" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[1]->id_agremiado) && $row->id_agremiado==$comisionDelegado[1]->id_agremiado)echo "selected='selected'"?> ><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[1]->id_agremiado) && $row->id_agremiado==$comisionDelegado[1]->id_agremiado)echo "selected='selected'"?> ><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto_asignado?></option>
 									<?php 
 									}
 									?>
@@ -572,17 +623,17 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" <?php if(isset($comisionDelegado[1]->coordinador) && $comisionDelegado[1]->coordinador==1)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						
 					</div>
-					
+					<?php } ?>
 					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_confirmar()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

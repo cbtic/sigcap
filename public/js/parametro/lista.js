@@ -12,6 +12,13 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#anio').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -105,12 +112,42 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var valor_minimo_edificaciones = "";
+					if(row.valor_minimo_edificaciones!= null)valor_minimo_edificaciones = row.valor_minimo_edificaciones;
+					return valor_minimo_edificaciones;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var valor_metro_cuadrado_habilitacion_urbana = "";
 					if(row.valor_metro_cuadrado_habilitacion_urbana!= null)valor_metro_cuadrado_habilitacion_urbana = row.valor_metro_cuadrado_habilitacion_urbana;
 					return valor_metro_cuadrado_habilitacion_urbana;
 				},
 				"bSortable": false,
-				"aTargets": [2],
+				"aTargets": [3],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var valor_minimo_hu = "";
+					if(row.valor_minimo_hu!= null)valor_minimo_hu = row.valor_minimo_hu;
+					return valor_minimo_hu;
+				},
+				"bSortable": false,
+				"aTargets": [4],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var valor_maximo_hu = "";
+					if(row.valor_maximo_hu!= null)valor_maximo_hu = row.valor_maximo_hu;
+					return valor_maximo_hu;
+				},
+				"bSortable": false,
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				{
@@ -120,7 +157,7 @@ function datatablenew(){
 					return valor_uit;
 				},
 				"bSortable": false,
-				"aTargets": [3],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -130,7 +167,17 @@ function datatablenew(){
 					return igv;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [7],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var monto_minimo_rh = "";
+					if(row.monto_minimo_rh!= null)monto_minimo_rh = row.monto_minimo_rh;
+					return monto_minimo_rh;
+				},
+				"bSortable": false,
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				{
@@ -145,7 +192,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [5]
+				"aTargets": [9]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -168,7 +215,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [10],
 				},
             ]
     });

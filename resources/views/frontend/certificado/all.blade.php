@@ -9,7 +9,7 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
-	#tblAfiliado tbody tr{
+	#tblCertificado tbody tr{
 		font-size:13px
 	}
     .table-sortable tbody tr {
@@ -149,26 +149,37 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cap_" name="cap_" placeholder="CAP">
+                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="cap_lista" name="cap_lista" placeholder="CAP">
 					</div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Apellidos y Nombres">
 					</div>
+
+                    <div class="form-group">
+                        <select name="tipo_certificado_bus" id="tipo_certificado_bus" class="form-control form-control-sm" onchange="">
+                            <option value="">--Seleccionar Tipo--</option>
+                            <?php
+                            foreach ($tipo_certificado as $row) {?>
+                            <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
 					
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
-
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
-					</div>
+                    </div>
 				</div>
 				
                 <div class="card-body">				
@@ -181,6 +192,7 @@
                             <th>CAP</th>
                             <th>Apellidos y Nombres</th>
                             <th>Tipo Certificado</th>
+                            <th>Fecha</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

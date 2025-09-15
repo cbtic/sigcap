@@ -479,7 +479,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" <?php if($id>0){echo 'disabled="disabled"';}?> onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>
@@ -497,15 +497,31 @@ container: '#myModal modal-body'
 								<?php if($id>0){?>
 								<input type="text" id="periodo" name="periodo" class="form-control form-control-sm" value="<?php echo $periodo_->descripcion?>" readonly="readonly">
 								<?php }else{?>
-								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision()">
-									<!--<option value="">--Seleccionar--</option>-->
-									<?php
-									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
 									<?php 
-									}
+									if($periodo_activo){
 									?>
-								</select>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision();obtenerConcursoInscripcionPeridoTipoComision()" disabled="disabled">
+										<!--<option value="">--Seleccionar--</option>-->
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision();obtenerConcursoInscripcionPeridoTipoComision()">
+										<!--<option value="">--Seleccionar--</option>-->
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
 								<?php } ?>
 							</div>
 						</div>
@@ -516,7 +532,7 @@ container: '#myModal modal-body'
 								<?php if($id>0){?>
 								<input type="text" id="tipo_comision" name="tipo_comision" class="form-control form-control-sm" value="<?php echo $tipo_comision_->denominacion?>" readonly="readonly">
 								<?php }else{?>
-								<select name="id_tipo_comision" id="id_tipo_comision" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision()">
+								<select name="id_tipo_comision" id="id_tipo_comision" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision();obtenerConcursoInscripcionPeridoTipoComision()">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($tipo_comision as $row) {?>
@@ -582,17 +598,19 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
-						<div class="col-lg-4">
+						<div class="col-lg-4" id="divCoordinador1" style=" <?php if(isset($tipo_comision_->codigo) && $tipo_comision_->codigo==2)echo "display:none";?> ">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" <?php if(isset($comisionDelegado[0]->coordinador) && $comisionDelegado[0]->coordinador==1)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						
 					</div>
 					
-					<div class="row" style="padding-left:10px">
+					<?php //echo $tipo_comision_->codigo."cccc"?>
+					
+					<div class="row" id="divDelegado2" style="padding-left:10px;<?php if(isset($tipo_comision_->codigo) && $tipo_comision_->codigo==2)echo "display:none";?>"  >
 						
 						<div class="col-lg-8">
 							<div class="form-group">
@@ -614,7 +632,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" <?php if(isset($comisionDelegado[1]->coordinador) && $comisionDelegado[1]->coordinador==1)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						

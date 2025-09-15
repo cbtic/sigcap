@@ -394,9 +394,13 @@ legend.scheduler-border {
 	var cuentaproductos = 0;
 
 	function generarConceptoNuevo() {
-
+		
 		var cantidad = $("#tblConceptos tr").length;
-		if (cantidad > 1) $("#tblConceptos tr").remove();
+		//alert(cantidad);
+		//if (cantidad > 1) $("#tblConceptos tr").remove();
+		//if (cantidad > 1) $("#tblConceptos").querySelector("tbody").innerHTML="";
+		//if (cantidad > 1) document.getElementById("tblConceptos").querySelector("tbody").innerHTML="";
+		//this.getElementById("tblConceptos").querySelector("tbody").innerHTML="";
 		//alert(cantidad);
 
 		var n = 0;
@@ -416,14 +420,29 @@ legend.scheduler-border {
 		//alert(FormatFecha(sumarDias(d, -5)));
 
 
-		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td td width="10%"> ' + fecha_cuota + ' </td> <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + cuota_uno + '</td></tr>');
+		$('#tblConceptos tbody').html("");
+		$("#divGuardar").hide();
 
-		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
-		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
-		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + cuota_uno + '"> </td>');
+		/*
+		$('#tblConceptos tbody tr').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td td width="10%"> ' + fecha_cuota + ' </td> <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + cuota_uno + '</td></tr>');
 
-		total_frac = parseFloat((total_frac - cuota_uno) / (nroCuotas - 1)).toFixed(1);
+		$('#tblConceptos tbody tr').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+		$('#tblConceptos tbody tr').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
+		$('#tblConceptos tbody tr').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + cuota_uno + '"> </td>');
+		*/
+		var total_frac_dif = total_frac - cuota_uno;
+
+		//alert(total_frac_dif);
+
+		total_frac = parseFloat((total_frac_dif) / (nroCuotas - 1)).toFixed(1);
+
+		var total_coutas = 0;
+		
 		for (let i = 0; i < nroCuotas - 1; i++) {
+
+			total_coutas+= Number(total_frac);
+			
+			/*
 			n++;
 			fecha_cuota = FormatFecha(sumarDias(d, 30))
 			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td width="10%">' + fecha_cuota + '</td>  <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + total_frac + '</td></tr>');
@@ -431,15 +450,77 @@ legend.scheduler-border {
 			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
 			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
 			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>');
+			*/
 		}
 
+		//alert(total_coutas.toFixed(1));
+		total_coutas=total_coutas.toFixed(1);
+
+		var total_diferencia = total_frac_dif - total_coutas;
+		
+		
+		var newRow = "";
+		for (let i = 0; i < nroCuotas; i++) {
+			newRow = "";
+			if(i == 0){
+				newRow+='<tr>';
+				newRow+='<td width="5%">' + n + '</td> <td td width="10%"> ' + fecha_cuota + ' </td> <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + cuota_uno + '</td></tr>';
+				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>';
+				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>';
+				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + cuota_uno + '"> </td>';
+				newRow+='</tr>';
+			}else{
+
+				if (i==(nroCuotas-1)){
+					total_frac = Number(total_frac) + Number(total_diferencia);
+					total_frac = total_frac.toFixed(1);
+				}
+				
+				fecha_cuota = FormatFecha(sumarDias(d, 30));
+
+				fecha_cuota= ultimoDiaDelMesDeFecha(fecha_cuota);
+
+
+
+				newRow+='<tr>';
+				newRow+='<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td width="10%">' + fecha_cuota + '</td>  <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + total_frac + '</td></tr>';
+				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>';
+				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>';
+				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
+				newRow+='</tr>';
+			}
+			n++;
+			//alert(newRow);
+			$('#tblConceptos tbody').append(newRow);
+			$("#divGuardar").show();
+		}
+
+		function ultimoDiaDelMesDeFecha(fecha) {
+			// Separar la fecha en día, mes y año
+			let [dia, mes, año] = fecha.split('-').map(Number);
+
+			// Obtener el último día del mes
+			let ultimoDia = new Date(año, mes, 0).getDate();
+
+			// Formatear el resultado en d/m/Y
+			return `${ultimoDia}-${mes}-${año}`;
+		}
 
 		
-		$('#btnFraciona').attr("disabled",true);
+		//$('#btnFraciona').attr("disabled",true);
+
+		//$('#cboCuotas').attr("disabled",true);
+		//$('#txtPorcentaje').attr("disabled",true);
+		//$('#txtFechaIni').attr("disabled",true);
+
 
 		//cuentaproductos = cuentaproductos + 1;
 		//alert(cuentaproductos);
 		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
+
+		
+		
+
 
 	}
 
@@ -494,6 +575,7 @@ legend.scheduler-border {
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona ?>">
 												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
+																								
 												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar ?>">
 
 
@@ -537,20 +619,42 @@ legend.scheduler-border {
 															<div class="col-lg-2">
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Nro Cuotas</label>
-																	<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm" onchange="cargarValorizacion()">
-																		<option value="6" selected>06 meses</option>
+																	<!--<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm" onchange="cargarValorizacion()">-->
+																<!--		
+																	<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm">
+																		<option value="3" selected>03 meses</option>
+																		<option value="6">06 meses</option>
 																		<option value="9">09 meses</option>
 																		<option value="12">12 meses</option>
 																		<option value="24">24 meses</option>
+																		<option value="36">36 meses</option>
 																	</select>
+											-->
+																	<select id="cboCuotas" name="cboCuotas" class="form-control form-control-sm">
+																		<option value="">Seleccione una opción</option>
+																		<?php
+																		// Generar las opciones de 2 a 99 con PHP
+																		for ($i = 2; $i <= 99; $i++) {
+																			// Por ejemplo, si quieres que la cuota 12 esté seleccionada por defecto:
+																			if ($i == 12) {
+																				echo "<option value='$i' selected>$i cuotas</option>";
+																			} else {
+																				echo "<option value='$i'>$i cuotas</option>";
+																			}
+																		}
+																		?>
+																	</select>
+
 																</div>
 															</div>
 															<div class="col-lg-2">
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Total Fraccionar</label>
-																	<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="<?php echo $total_fraccionar ?>" class="form-control form-control-sm">
+																	<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="<?php echo $total_fraccionar //$valorizacion[0]->monto?>" class="form-control form-control-sm">																	
 																</div>
 															</div>
+
+															
 
 															<div class="col-lg-2">
 																<div class="form-group">
@@ -569,14 +673,14 @@ legend.scheduler-border {
 															<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
 																<br>
 																<button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
-																	<i class="fas fa-plus-circle"></i> Fracionar
+																	<i class="fas fa-plus-circle"></i> Fraccionar
 																</button>
 															</div>
 
 														</div>
 
 														<?php $seleccionar_todos = "style='display:block'"; ?>
-														<div class="table-responsive">
+														<div class="table-responsive overflow-auto" style="max-height: 500px">
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
 																	<tr style="font-size:13px">
@@ -598,7 +702,7 @@ legend.scheduler-border {
 
 												</div>
 												<div style="margin-top:15px" class="form-group">
-													<div class="col-sm-12 controls">
+													<div id ="divGuardar" class="col-sm-12 controls" style="display:none">
 														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 															<a href="javascript:void(0)" onClick="guardar_fracciona_deuda()" class="btn btn-sm btn-success">Guardar</a>
 														</div>

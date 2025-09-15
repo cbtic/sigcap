@@ -15,8 +15,8 @@ class ComputoSesione extends Model
         $cad = "select distinct id_comision_sesion 
 from comision_sesion_delegados csd 
 inner join comision_sesiones cs on csd.id_comision_sesion=cs.id
-where to_char(fecha_aprobar_pago,'yyyy')='".$anio."' 
-and to_char(fecha_aprobar_pago,'mm')='".$mes."'
+where to_char(cs.fecha_ejecucion,'yyyy')='".$anio."' 
+and to_char(cs.fecha_ejecucion,'mm')='".$mes."'
 and csd.estado='1' 
 and cs.id_periodo_comisione='".$id_periodo_comisione."'";
 		//echo $cad;

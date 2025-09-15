@@ -210,7 +210,17 @@
 <script type="text/javascript">
 
 
+$(document).ready(function() {
+
+  obtener_datos_adelanto();
+  obtenerDelegado()
+
+});
+
 $("#profesion").select2();
+
+$("#delegado").select2({ width: '100%' });
+
 
 function obtener_profesional(){
 	
@@ -264,6 +274,75 @@ function obtener_profesional(){
 	
 }
 
+function obtener_datos_adelanto(){
+  if($("#delegado").val()!='' && $("#id_delegado_").val()!=''){
+
+    if($('input[name="id_delegado_"]').length && $('input[name="id_delegado_"]').val() !=''){
+      var id_agremiado = $("#id_delegado_").val();
+    }else{
+      var id_agremiado = $("#delegado").val();
+    }
+
+    /*if($("#delegado").val()!=''){
+      var id_agremiado = $("#delegado").val();
+    }else{
+      var id_agremiado = $("#id_delegado_").val();
+    }*/
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+      $('.loader').show();
+  
+    $.ajax({
+      url: '/adelanto/obtener_datos_adelanto/' + id_agremiado,
+      dataType: "json",
+      success: function(result){
+        
+  
+        var datos_adelanto = result[0];
+       
+        //console.log(datos_adelanto)
+        $("#municipalidad").val(datos_adelanto.comision);
+        $("#puesto").val(datos_adelanto.puesto);
+  
+        $('.loader').hide();
+      }
+    });
+  }
+  
+}
+
+function obtenerDelegado(){
+
+  var periodo = $("#id_periodo").val();
+    
+  var msgLoader = "";
+  msgLoader = "Procesando, espere un momento por favor";
+  var heightBrowser = $(window).width()/2;
+  $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+  $.ajax({
+    url: '/delegadoTributo/obtener_datos_delegado/' + periodo,
+    dataType: "json",
+    success: function(result){
+      
+      var agremiado = result.agremiado;
+      var option = "<option value='0'>--Seleccionar--</option>";
+      $('#delegado').html("");
+      $(agremiado).each(function (ii, oo) {
+        
+        option += "<option value='" + oo.id_agremiado + "'>" + oo.numero_cap + " - " + oo.apellido_paterno + " " + oo.apellido_materno + " " + oo.nombres +  "</option>";
+      });
+      $('#delegado').html(option);
+
+      $('.loader').hide();
+    }
+  });
+}
+
 function modal_personaNuevo(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
@@ -296,7 +375,12 @@ function modal_personaNuevo(){
     var apellido_materno = $('#apellido_materno').val();
     var monto = $('#monto').val();
     var numero_cuota = $('#numero_cuota').val();
-
+	  var id_tiene_recibo = $('#id_tiene_recibo').val();
+    var id_periodo = $('#id_periodo').val();
+    var delegado = $('#delegado').val();
+    var id_delegado_ = $('#id_delegado_').val();
+    
+	
     $.ajax({
       url: "/adelanto/send_adelanto_nuevoAdelanto",
       type: "POST",
@@ -310,7 +394,11 @@ function modal_personaNuevo(){
         apellido_paterno:apellido_paterno,
         apellido_materno:apellido_materno,
         monto:monto,
-        numero_cuota:numero_cuota
+        id_periodo:id_periodo,
+        delegado:delegado,
+        numero_cuota:numero_cuota,
+        id_tiene_recibo:id_tiene_recibo,
+        id_delegado_:id_delegado_
       },
       success: function(result) {
 
@@ -336,115 +424,93 @@ function modal_personaNuevo(){
         </div>
         <div class="card-body">
           <div class="row">
-            <!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
               <form method="post" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
-                <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 
-                <div class="row">
-                  <div class="col-lg-7">
-                    <div class="col-lg-7">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Tipo Documento</label>
-                        <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
-                          <option value="">--Selecionar--</option>
-                          <?php
-                          foreach ($tipo_documento as $row) { ?>
-                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '85') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-                          <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
+              <div class="row" style="padding-left:10px">
 
-                    <!--
-                    <div class="col-lg-7">
-                      <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-                        <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php /*echo $persona->numero_documento */?>" type="text">
-                      </div>
-                    </div>
-                        -->
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
-                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
-                          
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <div class="col-lg-5">
-                    <div class="form-group" style="text-align:center">
-                      <!--<span class="btn btn-sm btn-warning btn-file">
-												Examinar <input id="image" name="image" type="file" />
-											</span>
-
-											<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
-
-											<input type="button" class="btn btn-sm btn-danger delete" value="Eliminar" style="margin-left:10px">
-                        -->
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Periodo</label>
+                    <select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegado()" <?php if($id>0){?>disabled <?php }?> ?>>
+                      <!--<option value="">--Seleccionar--</option>-->
                       <?php
-                      $url_foto = "/img/profile-icon.png";
-                      //if ($persona->foto != "") $url_foto = "/img/agremiado/" . $persona->foto;
-                      if (isset($persona->foto) && $persona->foto != "")$url_foto = "/img/agremiado/" . $persona->foto;
-
-                      $foto = "";
-                      if (isset($persona->foto) && $persona->foto != "")$foto = $persona->foto;
+                      foreach ($periodo as $row) {?>
+                      <option value="<?php echo $row->id?>" <?php if($row->id==$adelanto->id_periodo_comision)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                      <?php 
+                      }
                       ?>
-                      <img src="<?php echo $url_foto ?>" id="img_ruta" width="130px" height="165px" alt="" style="text-align:center;margin-top:8px" />
-                      <input type="hidden" id="img_foto" name="img_foto" value="<?php echo $foto ?>" />
-
-                    </div>
+                    </select>
                   </div>
                 </div>
-
-                <div style="padding-left:15px">
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Nombres</label>
-                        <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Apellido Paterno</label>
-                        <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Apellido Materno</label>
-                        <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Monto</label>
-                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $adelanto->total_adelanto ?>" type="text">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
-                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text">
-                      </div>
-                    </div>
-                  </div>
-                  <div style="margin-top:15px" class="form-group">
-                    <div class="col-sm-12 controls">
-                      <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="fn_save_adelanto()" class="btn btn-sm btn-success">Guardar</a>
-                      </div>
-                    </div>
+                <div class="col-lg-9">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Delegado</label>
+                    <?php if($id>0){?>
+                    <input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno ." ". $persona->apellido_materno ." ". $persona->nombres ?>" type="text" readonly="readonly">										
+                    <input type="hidden" name="id_delegado_" id="id_delegado_" value="<?php echo $adelanto->id_agremiado?>">
+                    <?php }else{?>
+                    <select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_adelanto()">
+                      <option value="">--Selecionar--</option>
+                      
+                    </select>
+                    <?php }?>
                   </div>
                 </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Municipalidad</label>
+                    <input id="municipalidad" name="municipalidad" class="form-control form-control-sm" value="<?php //echo $adelanto->total_adelanto ?>" type="text" disabled='disabled'>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Puesto</label>
+                    <input id="puesto" name="puesto" class="form-control form-control-sm" value="<?php //echo $adelanto->total_adelanto ?>" type="text" disabled='disabled'>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Tiene Recibo</label>
+                    <select name="id_tiene_recibo" id="id_tiene_recibo" class="form-control form-control-sm">
+                      <option value="">--Selecionar--</option>
+                      <?php
+                      foreach ($tiene_recibo as $row) {?>
+                      <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$adelanto->id_tiene_recibo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                      <?php 
+                      }
+                      ?>
+                    </select>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="padding-left:10px">
+                    
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Monto</label>
+                    <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $adelanto->total_adelanto ?>" type="text" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago!=null && $fecha_pago<$fecha_actual){?>disabled <?php }?>>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
+                    <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago!=null && $fecha_pago<$fecha_actual){?>disabled <?php }?>>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:15px" class="form-group">
+                <div class="col-sm-12 controls">
+                  <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+                    <a href="javascript:void(0)" onClick="fn_save_adelanto()" class="btn btn-sm btn-success" style="margin-right: 15px;">Guardar</a>
+                    <a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');window.location.reload();" class="btn btn-md btn-warning">Cerrar</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

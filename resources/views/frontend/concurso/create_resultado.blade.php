@@ -464,33 +464,50 @@ label.form-control-sm{
 															<option value="">--Selecionar--</option>
 															<option value="Ingreso">Ingreso</option>
 															<option value="No Ingreso">No Ingreso</option>
-															<?php
-															//foreach ($concurso as $row) {?>
-															<!--<option value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso?></option>-->
-															<?php 
-															//}
-															?>
 														</select>
 													</div>
 													
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Asignar Plaza
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<select name="asignar_puesto" id="asignar_puesto" class="form-control form-control-sm">
+															<option value="">--Selecionar--</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12"></div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px"> 
 													
 														<div class="row">
 															
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-																<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
+																<input class="btn btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;" />
 															</div>
 
 														</div>
 														
 													</div>
-													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 													
-													<div class="row">
+													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
+													
+													<div class="row" style="margin-left:0px">
 
-														<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<input class="btn btn-sm btn-warning float-rigth" value="DESCARGAR" name="descargar" type="button" id="btnDescargar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
-														</div>
+														<input class="btn btn-sm btn-secondary float-rigth" value="Descargar Plantilla" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+														
+														<input class="btn btn-sm btn-danger float-rigth" value="Descargar Documentos" name="descargar" type="button" id="btnDescargarComprimido" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+														
+														<span class="btn btn-warning btn-file" style="float:left">
+															Examinar <input id="image" name="image" type="file" />
+														</span>
+														
+														<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+														
+														<input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+														
+														<input type="hidden" id="img_foto" name="img_foto" value="" />
+														
 													</div>
 													
 												</div>
@@ -506,26 +523,80 @@ label.form-control-sm{
 											</div>
 											
 											<div class="row" style="padding:20px 20px 0px 20px;">
+													<!--
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_concurso_bus" id="id_concurso_bus" class="form-control form-control-sm" >
 															<option value="">--Concurso--</option>
 															<?php
-															foreach ($concurso as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
+															//foreach ($concurso as $row) {?>
+															<option <?php //if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
-															}
+															//}
 															?>
 														</select>
 													</div>
+													-->
+													
+												<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<?php 
+													if($periodo_activo){
+													?>
+													<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+													<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComision()" disabled="disabled">
+														<option value="">--Periodo--</option>
+														<?php
+														foreach ($periodo as $row) {?>
+														<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+														<?php 
+														}
+														?>
+													</select>
+													<?php
+													}else{
+													?>
+													<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComision()">
+														<option value="">--Periodo--</option>
+														<?php
+														foreach ($periodo as $row) {?>
+														<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+														<?php 
+														}
+														?>
+													</select>
+													<?php } ?>
+												</div>
+												
+												<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<select name="id_tipo_concurso_bus" id="id_tipo_concurso_bus" class="form-control form-control-sm" onChange="obtenerSubTipoConcursoBus()">
+														<option value="">--TIPO CONCURSO--</option>
+														<?php
+														foreach ($tipo_concurso as $row) {?>
+														<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+														<?php 
+														}
+														?>
+													</select>
+												</div>
+												
+												<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<select name="id_sub_tipo_concurso_bus" id="id_sub_tipo_concurso_bus" class="form-control form-control-sm" onchange="obtenerRoEspecifico()">
+														<option value="">--SUBTIPO CONCURSO--</option>
+													</select>
+												</div>
+													
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 													</div>
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 															<input class="form-control form-control-sm" id="numero_documento_bus" name="numero_documento_bus" placeholder="Numero Documento">
 													</div>
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
 													</div>
+												</div>
+												
+												<div class="row" style="padding:10px 20px 0px 20px;">
+												
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 															<option value="">--Situaci&oacute;n--</option>
@@ -538,11 +609,39 @@ label.form-control-sm{
 														</select>
 													</div>
 													
-													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<select name="id_puesto_bus" id="id_puesto_bus" class="form-control form-control-sm">
+															<option value="">--Puesto--</option>
+															<?php
+															foreach ($puesto as $row) {?>
+															<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+															<?php 
+															}
+															?>
+														</select>
+													</div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 														<select name="id_estado_bus" id="id_estado_bus" class="form-control form-control-sm">
 															<option value="">--Estado--</option>
 															<option value="Ingreso">Ingreso</option>
 															<option value="No Ingreso">No Ingreso</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+														<select name="campo" id="campo" class="form-control form-control-sm">
+															<option value="t1.id">--Campo--</option>
+															<option value="t2.numero_cap::int">CAP</option>
+															<option value="t3.apellido_paterno||'' ''||t3.apellido_materno||'' ''||t3.nombres">Nombre</option>
+															<option value="t1.puntaje">Puntaje</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+														<select name="orden" id="orden" class="form-control form-control-sm">
+															<option value="desc">Descendente</option>
+															<option value="asc">Ascendente</option>
 														</select>
 													</div>
 													
@@ -558,7 +657,7 @@ label.form-control-sm{
 												<table id="tblConcurso" class="table table-hover table-sm">
 													<thead>
 													<tr style="font-size:13px">
-														<th>Id</th>
+														<!--<th>Id</th>-->
 														<th>Periodo</th>
 														<th>Tipo Concurso</th>
 														<th>SubTipo Concurso</th>

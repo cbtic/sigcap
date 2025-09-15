@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{
@@ -260,20 +260,139 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
-function fn_save(){
+function obtener_comision_agremiado(){
+
+	var id_agremiado = $('#id_delegado').val();
+	var id_comision = $('#id_comision').val();
+	var fecha_programado = "<?php echo date("d-m-Y", strtotime($fecha_inicio_sesion))?>";
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+			url: "/sesion/obtener_comision_agremiado/"+id_agremiado+"/"+id_comision+"/"+fecha_programado,
+            type: "GET",
+			dataType: "json",
+            //data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente,fecha_inicio_sesion:fecha_inicio_sesion,fecha_fin_sesion:fecha_fin_sesion,id_concurso_inscripcion:id_concurso_inscripcion},
+            success: function (result) {
+				console.log(result);
+				
+				if(result.comisiones!=null){
+					//bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado en la comisión "+result.comisiones);
+					//$("#id_delegado").val("").select2();
+					
+					bootbox.confirm({
+						title: "Agremiado ya registrado",
+						message: "El agremiado ya se encuentra en la comisión <b>"+result.comisiones+"</b>. ¿Desea reemplazarlo?",
+						buttons: {
+							confirm: {
+								label: 'Sí',
+								className: 'btn-success'
+							},
+							cancel: {
+								label: 'No',
+								className: 'btn-danger'
+							}
+						},
+						callback: function (respuesta) {
+							if(respuesta) {
+								// Acción si el usuario elige "Sí"
+								// Ejemplo: cargarDelegados();
+								console.log("Usuario aceptó reemplazar.");
+							} else {
+								// Acción si el usuario elige "No"
+								$("#id_delegado").val("").select2();
+								console.log("Usuario canceló.");
+							}
+						}
+					});
+
+				}else{
+					//cargarDelegados();
+				}
+			
+				$('.loader').hide();
+				//$('#openOverlayOpc2').modal('hide');
+            }
+    });
+
+}
+
+function obtener_fechas(){
+
+	var flag_titular_suplente = $('input[name=flag_titular_suplente]:checked').val();
+	var fecha_inicio_sesion = "<?php echo date("d-m-Y", strtotime($fecha_inicio_sesion))?>";
+	var fecha_fin_sesion = "<?php echo date("d-m-Y", strtotime($fecha_fin_sesion))?>";
+	
+	$("#fecha_inicio_sesion").val("");
+	$("#fecha_fin_sesion").val("");
+
+	$("#fecha_inicio_sesion").val(fecha_inicio_sesion);
+
+	if(flag_titular_suplente==1){
+		$("#fecha_fin_sesion").val(fecha_fin_sesion);
+	}
+	
+}
+
+function fn_save_delegado(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id_').val();
 	var id_comision_sesion = $('#id').val();
 	var id_delegado = $('#id_delegado').val();
+	var flag_titular_suplente = $('input[name=flag_titular_suplente]:checked').val();
+	var fecha_inicio_sesion = $('#fecha_inicio_sesion').val();
+	var fecha_fin_sesion = $('#fecha_fin_sesion').val();
+	var id_concurso_inscripcion = $('#id_delegado option:selected').attr("id_concurso_inscripcion");
+	//console.log(id_concurso_inscripcion);return false;
+
+	if($('input[name=flag_titular_suplente]').is(':checked')==false){msg+="Debe seleccionar cambiar titular o suplente<br>";}
+	if(id_delegado==""){msg+="Debe seleccionar un Delegado<br>";}
+	if(flag_titular_suplente==2 && fecha_inicio_sesion==""){msg+="Debe ingresar una Fecha de Inicio<br>";}
+	if(flag_titular_suplente==2 && fecha_fin_sesion==""){msg+="Debe ingresar una Fecha de Fin<br>";}
+	
+	/*
+	alert(id_delegado);
+	alert(flag_titular_suplente);
+	alert(msg);
+	return false;
+	*/
+	
+	if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
 	
     $.ajax({
 			url: "/sesion/send_delegado_sesion",
             type: "POST",
-            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado},
+			dataType: "json",
+            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente,fecha_inicio_sesion:fecha_inicio_sesion,fecha_fin_sesion:fecha_fin_sesion,id_concurso_inscripcion:id_concurso_inscripcion},
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				datatablenew();
+			
+				if(result.cantidad>0){
+					bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado");
+					//return false;
+				}else{
+					cargarDelegados();
+				}
+			
+				$('.loader').hide();
+				$('#openOverlayOpc2').modal('hide');
+				//datatablenew();
+				//location.reload();
+				//cargarDelegados();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
@@ -389,15 +508,24 @@ function cargar_tipo_proveedor(){
 	
 }
 
-/*
-$('#fecha_solicitud').datepicker({
+
+$('#fecha_inicio_sesion').datepicker({
 	autoclose: true,
-	dateFormat: 'dd-mm-yy',
+	format: 'dd-mm-yyyy',
 	changeMonth: true,
 	changeYear: true,
 	container: '#openOverlayOpc modal-body'
 });
-*/
+
+$('#fecha_fin_sesion').datepicker({
+	autoclose: true,
+	format: 'dd-mm-yyyy',
+	changeMonth: true,
+	changeYear: true,
+	container: '#openOverlayOpc modal-body'
+});
+
+
 /*
 $('#fecha_solicitud').datepicker({
 	format: "dd/mm/yyyy",
@@ -454,11 +582,11 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
-								<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="">
+								<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="obtener_comision_agremiado()">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<option value="<?php echo $row->id_agremiado?>" id_concurso_inscripcion="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - (Concurso) ".$row->puesto." - (Plaza) ".$row->puesto_asignado?></option>
 									<?php 
 									}
 									?>
@@ -466,13 +594,56 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<div class="row">
+									
+									<div class="col-lg-4">
+										<label class="radio-inline">
+										  <input type="radio" name="flag_titular_suplente" value="1" onchange="obtener_fechas()"> &nbsp; Cambiar Titular &nbsp;
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="flag_titular_suplente" value="2" onchange="obtener_fechas()"> &nbsp; Suplente &nbsp;
+										</label>
+									</div>
+									
+									<div id="divSuplente" class="col-lg-8">
+										<div class="row">
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+												Fecha Inicio
+											</div>
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_inicio_sesion" id="fecha_inicio_sesion" value="<?php //echo date("d-m-Y", strtotime($fecha_inicio_sesion));?>" placeholder="" class="form-control form-control-sm col-lg-12">
+											</div>
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+												Fecha Fin
+											</div>
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_fin_sesion" id="fecha_fin_sesion" value="<?php //echo date("d-m-Y", strtotime($fecha_fin_sesion));?>" placeholder="" class="form-control form-control-sm col-lg-12">
+											</div>
+										</div>
+									</div>
+									
+									<!--
+									<div class="col-lg-6">
+									<label class="radio-inline">Fecha Inicio</label>
+									<input type="text" name="fecha_inicio" id="fecha_inicio" value="" placeholder="" class="form-control form-control-sm col-lg-12">
+									</div>
+									-->
+									
+								</div>
+								
+							</div>
+						</div>
+						
+						
 					</div>
 					
 					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_delegado()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

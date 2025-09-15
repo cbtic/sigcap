@@ -10,6 +10,7 @@ use App\Models\Regione;
 use App\Models\TablaMaestra;
 use App\Models\PartidaPresupuestale;
 use App\Models\CentroCosto;
+use App\Models\PlanContable;
 use Auth;
 
 class ConceptoController extends Controller
@@ -87,9 +88,12 @@ class ConceptoController extends Controller
 		$partidaPresupuestal_model = new PartidaPresupuestale;
 		$centroCosto_model = new CentroCosto;
 		$concepto = new Concepto;
+		$plan_contable = new PlanContable;
+		$concepto_model = new Concepto;
 		$regione_model = new Regione;
 		$tipoConcepto_model = new TipoConcepto;
 		$tablaMaestra_model = new TablaMaestra;
+		$plan_contable_model = new PlanContable;
 		$id_tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(105);
 		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
 
@@ -103,8 +107,11 @@ class ConceptoController extends Controller
 		$centroCosto = $centroCosto_model->getCentroCostoAll();
 		$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
+		$concepto_cuenta_debe = $plan_contable_model->getPlanContableCuentaContableDebe();
+		$concepto_cuenta_haber1 = $plan_contable_model->getPlanContableCuentaContableHaber1();
+		$concepto_cuenta_haber2 = $plan_contable_model->getPlanContableCuentaContableHaber2();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda','partidaPresupuestal','centroCosto'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda','partidaPresupuestal','centroCosto','concepto_cuenta_debe','concepto_cuenta_haber1','concepto_cuenta_haber2','plan_contable'));
 	
 	}
 
@@ -124,17 +131,19 @@ class ConceptoController extends Controller
 		);*/
 		
 		$id_user = Auth::user()->id;
-		$Concepto_model = new Concepto;
+		$concepto_model = new Concepto;
 
 		if($request->id == 0){
 			$concepto = new Concepto;
-			//$codigo = $Concepto_model->getCodigoConcepto();
+			$codigo = $concepto_model->getCodigoConcepto();
+			$concepto->codigo = $codigo;
+			$concepto->id_usuario_inserta = $id_user;
 		}else{
 			$concepto = Concepto::find($request->id);
-			//$codigo = $request->codigo;
+			$codigo = $request->codigo;
+			$concepto->id_usuario_actualiza = $id_user;
 		}
 		
-		//$concepto->codigo = $codigo;
 		$concepto->id_regional = $request->id_regional;
 		$concepto->id_tipo_concepto = $request->id_tipo_concepto;
 		$concepto->denominacion = $request->denominacion;
@@ -147,15 +156,19 @@ class ConceptoController extends Controller
 		$concepto->partida_presupuestal = $request->partida_presupuestal;
 		$concepto->id_tipo_afectacion = $request->id_tipo_afectacion;
 		$concepto->centro_costo = $request->centro_costo;
+		$concepto->genera_pago = $request->genera_pago;
 		//$concepto->estado = 1;
-		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();
     }
 
 	public function eliminar_concepto($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$concepto = Concepto::find($id);
 		$concepto->estado = $estado;
+		$concepto->id_usuario_actualiza = $id_user;
 		$concepto->save();
 
 		echo $concepto->id;

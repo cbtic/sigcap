@@ -776,8 +776,9 @@ function fn_eliminar(id,estado){
 function obtenerComision(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
+	var tipo_comision  = $('#frmAfiliacion #tipo_comision').val();
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";
@@ -814,3 +815,37 @@ function obtenerComisionPeridoTipoComision(){
 	});
 	
 }
+
+function obtenerConcursoInscripcionPeridoTipoComision(){
+	
+	var id_periodo = $('#id_periodo').val();
+	var id_tipo_comision = $('#id_tipo_comision').val();
+	
+	$("#divDelegado2").show();
+	$("#divCoordinador1").show();
+	
+	if(id_tipo_comision==2){
+		$("#divDelegado2").hide();
+		$("#divCoordinador1").hide();
+	}
+	
+	$.ajax({
+		url: '/comision/obtener_concurso_inscripcion_periodo_tipo_comision/'+id_periodo+'/'+id_tipo_comision,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_concurso_inscripcion').html("");
+			$('#id_concurso_inscripcion2').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.numero_cap+" - "+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+" - "+oo.puesto+"</option>";
+			});
+			$('#id_concurso_inscripcion').html(option);
+			$('#id_concurso_inscripcion2').html(option);
+		}
+		
+	});
+	
+}
+
+

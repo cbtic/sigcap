@@ -484,6 +484,7 @@ function datatablenew(){
 			
 			var id = $('#id').val();
 			var descripcion = $('#descripcion').val();
+			var tipo = $('#tipoBus').val();
             var fecha_inicio = $('#fecha_inicio').val();
 			var fecha_fin = $('#fecha_fin').val();
 			var estado = $('#estado').val();
@@ -494,7 +495,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
+						id:id,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,tipo:tipo,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -519,13 +520,39 @@ function datatablenew(){
 				"className": "dt-center",
 				},
 				{
+				"mRender": function (data, type, row) {
+					var tipo_concurso = "";
+					if(row.tipo_concurso!= null)tipo_concurso = row.tipo_concurso;
+					return tipo_concurso;
+					},
+				"bSortable": false,
+				"aTargets": [1],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var activo = "";
+					/*if(row.activo!= null)activo = row.activo;
+					return activo;*/
+					if(row.activo == 1){
+						activo = "Activo";
+					}
+					if(row.activo == 0){
+						activo = "Inactivo";
+					}return activo;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				"className": "dt-center",
+				},
+				{
                 "mRender": function (data, type, row) {
                 	var fecha_inicio = "";
 					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
 					return fecha_inicio;
                 },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [3],
 				"className": "dt-center",
 				//"className": 'control'
                 },
@@ -536,7 +563,7 @@ function datatablenew(){
 					return fecha_fin;
                 },
                 "bSortable": false,
-                "aTargets": [2]
+                "aTargets": [4]
                 },
 				{
 				"mRender": function (data, type, row) {
@@ -550,7 +577,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [5]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -561,6 +588,10 @@ function datatablenew(){
 						clase = "btn-danger";
 					}
 					if(row.estado == 0){
+						estado = "Activar";
+						clase = "btn-success";
+					}
+					if(row.estado == 2){
 						estado = "Activar";
 						clase = "btn-success";
 					}
@@ -575,7 +606,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [4],
+					"aTargets": [6],
 				},
 
             ]
@@ -627,6 +658,10 @@ function eliminarperiodoComision(id,estado){
 		estado_=0;
 	}
 	if(estado==0){
+		act_estado = "Activar";
+		estado_=1;
+	}
+	if(estado==2){
 		act_estado = "Activar";
 		estado_=1;
 	}

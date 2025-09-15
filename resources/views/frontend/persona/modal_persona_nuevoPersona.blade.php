@@ -456,7 +456,7 @@ $.mask.definitions['p'] = "[Mm]";
 			msg= "Falta ingresar un Apellido Paterno";
 		}else if (apellido_materno==""){
 			msg= "Falta ingresar un Apellido Materno";
-		}else if (fecha_nacimiento==""){
+		}/*else if (fecha_nacimiento==""){
 			msg= "Falta seleccionar una Fecha de Nacimiento";
 		}else if (lugar_nacimiento==""){
 			msg= "Falta ingresar un Lugar de Nacimiento";
@@ -464,7 +464,7 @@ $.mask.definitions['p'] = "[Mm]";
 			msg= "Falta seleccionar una Nacionalidad";
 		}else if (sexo==""){
 			msg= "Falta seleccionar un Sexo";
-		}else if (numero_celular==""){
+		}*/else if (numero_celular==""){
 			msg= "Falta ingresar un N&uacute;mero de Celular";
 		}else if (!validarCelular(numero_celular)) { 
 			msg = "Ingrese un Número de Celular V&aacute;lido";
@@ -580,8 +580,10 @@ $.mask.definitions['p'] = "[Mm]";
 			},
 			dataType: 'json',
 			success: function(result) {
+				//alert(result[0]);
 				if(result.sw==false){
-					Swal.fire("El DNI ingresado ya existe !!!");
+					//Swal.fire("El DNI ingresado ya existe !!!");
+					Swal.fire(result.msg);
 					$('#openOverlayOpc').modal('hide');
 				}else{
 					$('#openOverlayOpc').modal('hide');
@@ -1081,7 +1083,7 @@ $.mask.definitions['p'] = "[Mm]";
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_documento as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 													<?php
 													}
 													?>
@@ -1296,8 +1298,21 @@ $.mask.definitions['p'] = "[Mm]";
 
 				$('#numero_documento').blur(function() {
 					var id = $('#id').val();
-					if (id == 0) {
+					var tipo_documento = $('#tipo_documento').val();
+					var nombre = $('#nombre').val();
+					if ((id == 0 && tipo_documento!=84) || (id > 0 && tipo_documento!=84 && nombre=="")) {
 						validaDni(this.value);
+					}else if(id == 0 && tipo_documento==84){
+						$('#nombre').val('');
+						$('#apellido_paterno').val('');
+						$('#apellido_materno').val('');
+						$('#nombre').prop('readonly', false);
+						$('#apellido_paterno').prop('readonly', false);
+						$('#apellido_materno').prop('readonly', false);
+					}else if(tipo_documento==84){
+						$('#nombre').prop('readonly', false);
+						$('#apellido_paterno').prop('readonly', false);
+						$('#apellido_materno').prop('readonly', false);
 					}
 				});
 

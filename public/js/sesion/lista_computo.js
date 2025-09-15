@@ -2,15 +2,125 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+	$("#id_comision_bus").select2({ width: '100%' });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
 		
 	$('#btnNuevo').click(function () {
-		guardar_computo()
+		bootbox.confirm({ 
+			size: "small",
+			message: "&iquest;Esta seguro de generar el reporte?", 
+			callback: function(result){
+				if (result==true) {
+					guardar_computo()
+				}
+			}
+		});
+	});
+	
+	$('#btnVistaPreviaComputo').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var id_comision_bus = $("#id_comision_bus").val();
+		var id_puesto_bus = $("#id_puesto_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		
+		var href = '/sesion/ver_computo_sesion_pdf/'+id_periodo_bus+'/'+id_comision_bus+'/'+id_puesto_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+	
+	$('#btnVistaPreviaComputoExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var id_comision_bus = $("#id_comision_bus").val();
+		var id_puesto_bus = $("#id_puesto_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+
+		var href = '/sesion/ver_computo_sesion_excel/'+id_periodo_bus+'/'+id_comision_bus+'/'+id_puesto_bus+'/'+ anio + '/' + mes;
+		location.href = href;
 	});
 
+	$('#btnVistaPreviaCalendario').click(function () { 
+		//guardar_computo()
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		//if (fecha == "")fecha = 0;
+		var href = '/sesion/ver_calendario_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+
+	$('#btnVistaPreviaCalendarioExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		
+		var href = '/sesion/ver_calendario_sesion_excel/'+id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+	});
+
+	$('#btnVistaPreviaMovilidad').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/movilidad/ver_movilidad_pdf/'+id_periodo_bus+'/'+anio+'/'+mes;
+		window.open(href, '_blank');
+	});
+	
+	$('#btnVistaPreviaMovilidadExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/movilidad/ver_movilidad_excel/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+	});
+
+	$('#btnVistaPreviaCoordinador').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/sesion/ver_delegado_coordinador_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+
+	$('#btnVistaPreviaCoordinadorExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/sesion/ver_delegado_coordinador_excel/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+		//window.open(href, '_blank');
+	});
+	
+	$('#btnVistaPreviaCalendarioCoordinadorZonal').click(function () {
+		//guardar_computo()
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		//if (fecha == "")fecha = 0;
+		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+
+	$('#btnVistaPreviaCalendarioCoordinadorZonalExcel').click(function () {
+		//guardar_computo()
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		//if (fecha == "")fecha = 0;
+		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_excel/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+	});
+	
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -31,8 +141,8 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
-	datatablenew();
-	datatablenewComputoCerrado();
+	//datatablenew();
+	//datatablenewComputoCerrado();
 
 	$(function() {
 		$('#modalSeguro #nombre_plan_').keyup(function() {
@@ -75,7 +185,7 @@ function guardar_computo(){
 	var anio = $("#anio").val();
 	var mes = $("#mes").val();
 	
-	if(anio=="")msg += "Debe seleccionar un año";
+	if(anio=="")msg += "Debe seleccionar un aï¿½o";
 	if(mes=="")msg += "Debe seleccionar un mes";
 	if(id_periodo_bus=="")msg += "Debe seleccionar un periodo";
 	
@@ -164,6 +274,29 @@ function fn_save___(){
 					location.href="/afiliacion";
             }
     });
+}
+
+obtenerAnioPerido();
+
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	
+	$.ajax({
+		url: '/sesion/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
 }
 
 function validaTipoDocumento(){
@@ -294,7 +427,7 @@ function obtenerComision(){
 			$('#id_comision').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
@@ -307,15 +440,37 @@ function obtenerComisionBus(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/1',
 		dataType: "json",
 		success: function(result){
 			var option = "";
 			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Seleccionar ComisiÃ³n--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision_bus').html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerPuestoBus(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	$.ajax({
+		url: '/sesion/obtener_puesto/'+id_periodo+'/1',
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_puesto_bus').html("");
+			option += "<option value='0'>--Puesto--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			option += "<option value='999'>ASESOR / ESPECIALISTA</option>";
+			$('#id_puesto_bus').html(option);
 		}
 		
 	});
@@ -556,6 +711,7 @@ function datatablenew(){
 			
 			var id_periodo = $('#id_periodo_bus').val();
 			var id_comision = $('#id_comision_bus').val();
+			var id_puesto = $('#id_puesto_bus').val();
 			var anio = $('#anio').val();
 			var mes = $('#mes').val();
 			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
@@ -570,19 +726,24 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_periodo:id_periodo,id_comision:id_comision,
-						anio:anio,mes:mes,
+						anio:anio,mes:mes,id_puesto:id_puesto,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
 						id_estado_aprobacion:id_estado_aprobacion,
 						_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
-					/*		
-					var rowIndex = oTable.fnGetData().length - 1;
-                       var strNameIdImg = 'ima_1_' + rowIndex;
-                       var strHtml = "<img id='" + strNameIdImg + "' src='/img/details_open.png' style='cursor:pointer;' title='Editar' onclick=fn_AbrirDetalle(" + rowIndex + ",'" + row.id +"') />";
-                       return strHtml;
-					*/
+					var total_sesion_delegado = result.aaData[0].total_sesion_delegado;
+					var total_sesion_suplente = result.aaData[0].total_sesion_suplente;
+					var total_sesion_especialista = result.aaData[0].total_sesion_especialista;
+					var total_sesion_coordinador_zonal = result.aaData[0].total_sesion_coordinador_zonal;
+					var total_sesion = Number(total_sesion_delegado) + Number(total_sesion_coordinador_zonal) + 
+					Number(total_sesion_suplente) + Number(total_sesion_especialista);
+					$('#sesion_delegados').html(total_sesion_delegado);
+					$('#sesion_coordinador_zonal').html(total_sesion_coordinador_zonal);
+					$('#sesion_suplentes').html(total_sesion_suplente);
+					$('#sesion_especialistas').html(total_sesion_especialista);
+					$('#sesion_total').html(total_sesion);
                 },
                 "error": function (msg, textStatus, errorThrown) {
                     //location.href="login";
@@ -849,6 +1010,26 @@ function datatablenewComputoCerrado(){
                 "aTargets": [5]
                 },
 				
+				{
+                "mRender": function (data, type, row) {
+                	var newHtml = "";
+					newHtml += '<a href="/sesion/computo_sesion_pdf/'+row.id+'" target="_blank" class="btn btn-sm btn-secondary" style="font-size:12px;margin-left:0px">Computo</a><a href="/sesion/calendario_sesion_pdf/'+row.id+'" target="_blank" class="btn btn-sm btn-secondary" style="font-size:12px;margin-left:5px">Calendario</a>';
+					return newHtml;
+                },
+                "bSortable": true,
+                "aTargets": [6]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newHtml = "";
+					newHtml += '<a href="javascript:void(0)" onclick=eliminar('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+					return newHtml;
+                },
+                "bSortable": true,
+                "aTargets": [7]
+                },
+				
             ]
 
 
@@ -860,11 +1041,12 @@ function fn_ListarBusqueda() {
     datatablenew();
 	datatablenewComputoCerrado();
 };
-
+/*
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
     setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
 }
+*/
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {
 
@@ -1033,37 +1215,32 @@ function modalResponsable(id){
 
 }
 
-function eliminar(id,estado){
-	var act_estado = "";
-	if(estado==1){
-		act_estado = "Eliminar";
-		estado_=0;
-	}
-	if(estado==0){
-		act_estado = "Activar";
-		estado_=1;
-	}
+function eliminar(id){
+
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
+        message: "&iquest;Deseas eliminar el computo de sesion?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id,estado_);
+                fn_eliminar(id);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar(id,estado){
+function fn_eliminar(id){
 	
     $.ajax({
-            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
+            url: "/sesion/eliminar_computo_sesion/"+id,
             type: "GET",
             success: function (result) {
-                //if(result="success")obtenerPlanDetalle(id_plan);
-				datatablenew();
+                datatablenew();
+				datatablenewComputoCerrado();
             }
     });
+	
 }
+
+
 

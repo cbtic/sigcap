@@ -12,7 +12,7 @@ class TablaMaestra extends Model
 	
 	function getMaestroByTipo($tipo){
 
-        $cad = "select codigo,denominacion 
+        $cad = "select codigo,denominacion,abreviatura
                 from tabla_maestras 
                 where tipo='".$tipo."' 
 				and estado='1' 
@@ -22,7 +22,7 @@ class TablaMaestra extends Model
         return $data;
     }
 	
-	function getMaestroByTipoAndSubTipo($tipo,$sub_codigo){
+	public static function getMaestroByTipoAndSubTipo($tipo,$sub_codigo){
 
         $cad = "select codigo,denominacion 
                 from tabla_maestras 
@@ -35,6 +35,19 @@ class TablaMaestra extends Model
         return $data;
     }
 	
+    function getMaestroByTipoAndDenomina($tipo,$denomina){
+
+        $cad = "select codigo,denominacion 
+                from tabla_maestras 
+                where tipo='".$tipo."' 
+				and denominacion ilike '".$denomina."%'
+				and estado='1' 
+                order by orden ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getMaestro($tipo){
 
         $cad = "select id,denominacion 
@@ -47,7 +60,7 @@ class TablaMaestra extends Model
     }
     function getMaestroC($tipo, $codigo){
 
-        $cad = "select id,denominacion,codigo  
+        $cad = "select id,denominacion,codigo, predeterminado  
                 from tabla_maestras 
                 where tipo='".$tipo."' 
                 and codigo ='".$codigo."'
@@ -55,6 +68,8 @@ class TablaMaestra extends Model
     
 		$data = DB::select($cad);
         return $data;
+        
+        //if($data)return $data[0];
     }
 
     
@@ -71,6 +86,11 @@ class TablaMaestra extends Model
         return $data;
     }
 
+    public function listar_tablaMaestra_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_tabla_maestra_paginado',$p);
+
+    }
 
     public function readFuntionPostgres($function, $parameters = null){
 
@@ -86,6 +106,59 @@ class TablaMaestra extends Model
         $data = DB::select($cad);
         return $data;
 
+    }
+
+    function getTipoNombre(){
+
+        $cad = "select distinct tm.tipo::int ,tm.tipo_nombre from tabla_maestras tm order by 1 asc";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getIdTablaMaestra(){
+
+        $cad = "select tm.id 
+        from tabla_maestras tm 
+        order by tm.id desc 
+        limit 1;";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getTipoTablaMaestra($tipo_nombre){
+
+        $cad = "select tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre, tm.estado, tm.predeterminado 
+        from tabla_maestras tm 
+        where tm.tipo ='".$tipo_nombre."'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getMaestroByTipoBySubcogioNull($tipo){
+
+        $cad = "select * from tabla_maestras tm 
+                where tm.tipo='".$tipo."' 
+                and tm.sub_codigo is null
+				and estado='1' 
+                order by orden ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getMaestroByTipoByTipoNombre($tipo,$tipoNombre){
+
+        $cad = "select * from tabla_maestras tm 
+        where tm.tipo='".$tipo."' 
+        and tm.tipo_nombre ilike '".$tipoNombre."'
+        and estado='1' 
+        order by orden ";
+    
+		$data = DB::select($cad);
+        return $data;
     }
 	
 }

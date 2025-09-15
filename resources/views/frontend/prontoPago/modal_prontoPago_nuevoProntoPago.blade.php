@@ -201,6 +201,22 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 });
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
+	$('#fecha_inicio').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		container: '#openOverlayOpc modal-body'
+	});
+});
+
+$('#openOverlayOpc').on('shown.bs.modal', function() {
+	$('#fecha_fin').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		container: '#openOverlayOpc modal-body'
+	});
+});
+
+$('#openOverlayOpc').on('shown.bs.modal', function() {
 	$('#fecha_graduado').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
@@ -276,18 +292,30 @@ function fn_save_prontoPago(){
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-5 col-md-4 col-sm-12 col-xs-12">
+						<!--<div class="col-lg-5 col-md-4 col-sm-12 col-xs-12">
 							<div style="float:left;padding-top:7px">F. Ini</div>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" value="<?php echo $prontoPago->fecha_inicio?>" type="text">
+								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" value="<?php /*echo $prontoPago->fecha_inicio*/?>" type="text">
 								
 							</div>
+						</div>-->
+						<div class="col-lg-5">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php if($prontoPago->fecha_inicio!="")echo date('d-m-Y',strtotime($prontoPago->fecha_inicio))?>" type="text"  >
+							</div>
 						</div>
-						<div class="col-lg-5 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">F. Fin</div>
+						<!--<div class="col-lg-5 col-md-4 col-sm-12 col-xs-12">
+							<div style="control-label form-control-sm">F. Fin</div>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" value="<?php echo $prontoPago->fecha_fin?>" type="text">
+								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" value="<?php /*echo $prontoPago->fecha_fin*/?>" type="text">
 								
+							</div>
+						</div>-->
+						<div class="col-lg-5">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Fin</label>
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($prontoPago->fecha_fin!="")echo date('d-m-Y',strtotime($prontoPago->fecha_fin))?>" type="text"  >
 							</div>
 						</div>
 						<div class="row" style="padding-left:10px">
@@ -306,7 +334,7 @@ function fn_save_prontoPago(){
 								</div>
 							</div>
 							
-							<div class="col-lg-5">
+							<div class="col-lg-10">
 								<div class="form-group">
 									<label class="control-label form-control-sm">Concepto</label>
 									<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="" required>

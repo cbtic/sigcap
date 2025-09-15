@@ -93,23 +93,27 @@ class TipoConceptoController extends Controller
 		if($request->id == 0){
 			$tipoConcepto = new TipoConcepto;
 			//$codigo = $tipoConcepto_model->getTipoConcepto();
+			$tipoConcepto->id_usuario_inserta = $id_user;
 		}else{
 			$tipoConcepto = TipoConcepto::find($request->id);
 			//$codigo = $request->codigo;
+			$tipoConcepto->id_usuario_actualiza = $id_user;
 		}
 	
 		//$tipoConcepto->codigo = $codigo;
 		$tipoConcepto->id_regional = $request->regional;
 		$tipoConcepto->denominacion = $request->denominacion;
 		//$tipoConcepto->estado = 1;
-		$tipoConcepto->id_usuario_inserta = $id_user;
 		$tipoConcepto->save();
     }
 
 	public function eliminar_tipoConcepto($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$tipoConcepto = TipoConcepto::find($id);
 		$tipoConcepto->estado = $estado;
+		$tipoConcepto->id_usuario_actualiza = $id_user;
 		$tipoConcepto->save();
 
 		echo $tipoConcepto->id;

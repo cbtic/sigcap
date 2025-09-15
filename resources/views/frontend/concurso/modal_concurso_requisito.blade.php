@@ -177,6 +177,12 @@ $(document).ready(function() {
     $(".upload").on('click', function() {
         var formData = new FormData();
         var files = $('#image')[0].files[0];
+		var maxSize = 10 * 1024 * 1024;
+
+		if (files.size > maxSize) {
+			bootbox.alert("El archivo supera el tamaño máximo permitido de 15 MB.");
+			return; 
+		}
         formData.append('file',files);
         $.ajax({
 			headers: {
@@ -219,6 +225,7 @@ function fn_save_documento(){
 	var observacion = $('#observacion').val();
 	var img_foto = $('#img_foto').val();
 	var fecha_documento = $('#fecha_documento').val();
+	var orden_requisito = $('#orden_requisito').val();
 	
 	var msg = "";
 	
@@ -235,14 +242,41 @@ function fn_save_documento(){
     $.ajax({
 			url: "/concurso/send_concurso_documento",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion,img_foto:img_foto,fecha_documento:fecha_documento},
-			//dataType: 'json',
-            success: function (result) {
+            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion,img_foto:img_foto,fecha_documento:fecha_documento,orden_requisito:orden_requisito},
+			dataType: 'json',
+            success: function (result) { 
+			
+				if(result.cantidad>0){
+					bootbox.alert("El orden de requisito ingresado ya existe, verifique y cambielo"); 
+        			return false;
+				}
+			
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
 				cargarRequisitos(id_concurso_inscripcion);
 				$("#divAlertaDocumento").hide();
+				
+				var msg_alerta = "";
+				if(result.inscripcionDocumento>=result.concursoRequisito){
+					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, <b style='font-size: 20px;'>ha culminado con adjuntar los requisitos</b>.";
+				}
+				
+				if(result.inscripcionDocumento<result.concursoRequisito){
+					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, deseas registrar otro documento?";
+				}
+
+				bootbox.confirm({ 
+					size: "small",
+					//message: "&iquest;Se registro correctamente, deseas registrar otro documento?, caso contrario ya culmino su postulaci&oacute;n", 
+					message: msg_alerta,
+					callback: function(result){
+						if (result==true) {
+							modalRequisito(0);
+						}
+					}
+				});
+				
             }
     });
 }
@@ -287,6 +321,13 @@ function fn_save_documento(){
 							$readonly_=$id>0?'':"readonly='readonly'";
 						?>
 						
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Orden Requisito</label>
+								<input id="orden_requisito" name="orden_requisito" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->orden_requisito?>" type="text">
+							</div>
+						</div>
+						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Documento</label>
@@ -318,10 +359,10 @@ function fn_save_documento(){
 								<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
 								<?php
 								$img = "/img/logo-sin-fondo2.png";
-								if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
+								if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 								?>
 								<img src="<?php echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
-								<input type="hidden" id="img_foto" name="img_foto" value="" />
+								<input type="hidden" id="img_foto" name="img_foto" value="<?php echo $inscripcionDocumento->ruta_archivo?>" />
 							</div>	
 						</div>
 						

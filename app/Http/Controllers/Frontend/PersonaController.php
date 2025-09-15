@@ -13,6 +13,7 @@ use App\Models\Ubigeo;
 use App\Models\UnidadTrabajo;
 use App\Models\Contrato;
 use App\Models\TablaMaestra;
+use App\Models\Beneficiario;
 
 //use App\Models\CondicionLaborale;
 
@@ -20,7 +21,7 @@ use Auth;
 
 class PersonaController extends Controller
 {
-
+	/*
 	public function __construct(){
 
 		$this->middleware(function ($request, $next) {
@@ -30,6 +31,7 @@ class PersonaController extends Controller
 			return $next($request);
     	});
 	}
+	*/
 	
     public function index(){
         //$persona_model = new Persona;
@@ -138,6 +140,52 @@ class PersonaController extends Controller
         echo json_encode($array);
 
     }
+	
+	public function obtener_persona_login($tipo_documento,$numero_documento){
+
+        $persona_model = new Persona;
+        $sw = true;
+        $persona = $persona_model->getPersona($tipo_documento,$numero_documento);
+        $array["sw"] = $sw;
+        $array["persona"] = $persona;
+        echo json_encode($array);
+
+    }
+
+	public function obtener_agremiado_login($numero_cap, $id_secret_code){
+
+        $persona_model = new Persona;
+        $sw = true;
+        $agremiado = $persona_model->getAgremiadoDatos($numero_cap, $id_secret_code);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
+	public function obtener_proyectista($id_profesion,$buscar){
+
+        $persona_model = new Persona;
+        $sw = true;
+		$proyectista = $persona_model->getProyectistaByProfesion($id_profesion,$buscar);
+
+        $array["sw"] = $sw;
+        $array["cantidad"] = count($proyectista);
+        echo json_encode($array);
+
+    }
+
+	public function obtener_responsable($id_profesion,$buscar){
+
+        $persona_model = new Persona;
+        $sw = true;
+		//$proyectista = $persona_model->getProyectistaByProfesion($id_profesion,$buscar);
+
+        $array["sw"] = $sw;
+        $array["cantidad"] = 0;//count($proyectista);
+        echo json_encode($array);
+
+    }
 
     public function send_persona(Request $request){
 		
@@ -191,8 +239,12 @@ class PersonaController extends Controller
 
 	public function eliminar_persona($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$persona = Persona::find($id);
 		$persona->estado = $estado;
+		$persona->id_usuario_actualiza = $id_user;
 		$persona->save();
 
 		echo $persona->id;
@@ -408,7 +460,7 @@ class PersonaController extends Controller
 	public function listar_persona2_ajax(Request $request){
 	
 		$persona_model = new Persona;
-		$p[]="";
+		$p[]=$request->tipo_documento;
 		$p[]=$request->numero_documento;
 		$p[]=$request->agremiado;
 		$p[]="";
@@ -424,6 +476,9 @@ class PersonaController extends Controller
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
+
+		//echo($p);exit();
+		//echo($request->NumeroRegistros);
 		$data = $persona_model->listar_persona2_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
@@ -447,12 +502,13 @@ class PersonaController extends Controller
 		
 		if($id>0){
 			$persona = Persona::find($id);
+			//echo($persona);
 		}else{
 			$persona = new Persona;
 		}
 		
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
 		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
 		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
         
@@ -469,7 +525,7 @@ class PersonaController extends Controller
 	public function modal_persona_new(Request $request){
 		
 		$id_tipo_documento = $request->tipo_documento;
-		$numero_documento = $request->numero_documento;
+		$numero_documento = $request->numero_documento_;
 		
 
 		$tablaMaestra_model = new TablaMaestra;		
@@ -561,8 +617,11 @@ class PersonaController extends Controller
 				$persona->id_usuario_inserta = $id_user;
 				$persona->save();
 			}else{
+				
+				$tablaMaestra_model = new TablaMaestra;		
+				$tipo_documento = $tablaMaestra_model->getMaestroC(110,$request->tipo_documento);
 				$sw = false;
-				$msg = "El DNI ingresado ya existe !!!";
+				$msg = "El ".$tipo_documento[0]->denominacion." ingresado ya existe !!!";
 			}
 		}else {
 			$persona = Persona::find($request->id);
@@ -583,13 +642,13 @@ class PersonaController extends Controller
 			$persona->correo = $request->correo;
 			$persona->foto = $request->img_foto;
 			$persona->direccion = $request->direccion;
-			$persona->id_usuario_inserta = $id_user;
+			$persona->id_usuario_actualiza = $id_user;
 			$persona->save();
 		}
 			//$persona = Persona::find($request->id);
 
 			$array["sw"] = $sw;
-			//$array["msg"] = $msg;
+			$array["msg"] = $msg;
 			echo json_encode($array);
 		
     }
@@ -688,6 +747,44 @@ class PersonaController extends Controller
 		
 		$persona->save();
     }
+
+	public function send_persona_newBeneficiario(Request $request){
+
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$persona = new Persona;
+			$beneficiario = new Beneficiario;
+			$persona->id_usuario_inserta = $id_user;
+		}else{
+			$persona = Persona::find($request->id);
+			$persona->id_usuario_actualiza = $id_user;
+		}
+
+		$persona->id_tipo_documento = $request->tipo_documento;
+		$persona->numero_documento = $request->numero_documento;
+		$persona->apellido_paterno = $request->apellido_paterno;
+		$persona->apellido_materno = $request->apellido_materno;
+		$persona->nombres = $request->nombres;
+		$persona->numero_celular = $request->celular;
+		$persona->correo = $request->correo;
+		$persona->fecha_nacimiento = $request->fecha_nacimiento;
+		$persona->id_sexo = $request->sexo;
+	
+		$persona->save();
+
+		echo $persona;
+
+		/*$persona = Persona::where("numero_documento",$request->numero_documento)->where("estado","1")->first();
+        $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+
+		$beneficiario->id_persona = $persona->id;
+		$beneficiario->id_empresa = $empresa->id;
+		$beneficiario->id_usuario_inserta = $id_user;
+		$beneficiario->save();*/
+
+    }
+
 	public function upload(Request $request){
 
     	$filepath = public_path('img/frontend/tmp_agremiado/');
@@ -718,8 +815,9 @@ class PersonaController extends Controller
 
 	public function modal_personaNuevo(Request $request){
 		
-		$id_tipo_documento = $request->tipo_documento;
-		$numero_documento = $request->numero_documento;
+		//$id_tipo_documento = $request->tipo_documento;
+		$id_tipo_documento = 78;
+		$numero_documento = $request->dni;
 		
 
 		$tablaMaestra_model = new TablaMaestra;		
@@ -728,4 +826,87 @@ class PersonaController extends Controller
 
 		return view('frontend.persona.modal_personaNuevo',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
 	}
+
+	public function modal_personaNuevoBeneficiario(Request $request){
+		
+		//$id_tipo_documento = $request->tipo_documento;
+		$id_tipo_documento = 78;
+		$numero_documento = $request->dni_;
+		
+
+		$tablaMaestra_model = new TablaMaestra;
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+
+		return view('frontend.persona.modal_personaNuevoBeneficiario',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
+	}
+
+
+	public function obtenerPersona($numero_documento){
+
+        $persona_model = new Persona;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+
+        //$persona = $persona_model->getPersonaDni($numero_documento);
+		$persona = Persona::where('numero_documento',$numero_documento)->where('estado','1')->first();
+
+        /*$array["sw"] = $sw;
+        $array["persona"] = $persona;
+        echo json_encode($array);*/
+
+		if($persona){
+
+			$array["persona"] = $persona;
+			echo json_encode($array);
+		}else{
+			$sw = false;
+			//$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			$array["sw"] = $sw;
+			//$array["msg"] = $msg;
+			echo json_encode($array);
+		} 
+
+    }
+
+	public function obtener_datos_persona($dni_propietario){
+
+		$persona_model = new Persona;
+		$sw = true;
+
+		$persona2 = Persona::where('numero_documento',$dni_propietario)->where('estado','1')->first();
+
+		if($persona2)
+		{
+			$persona = $persona_model->getPersonaDniPropietario($dni_propietario);
+			$array["sw"] = $sw;
+			$array["persona"] = $persona;
+			echo json_encode($array);
+		}else {
+			$array["persona"] = "0";
+			echo json_encode($array);}
+
+	}
+
+	public function obtener_datos_carne_extranjeria($carne_propietario){
+
+		$persona_model = new Persona;
+		$sw = true;
+
+		$persona2 = Persona::where('numero_documento',$carne_propietario)->where('estado','1')->first();
+
+		if($persona2)
+		{
+			$persona = $persona_model->getPersonaDniPropietario($carne_propietario);
+			$array["sw"] = $sw;
+			$array["persona"] = $persona;
+			echo json_encode($array);
+		}else {
+			$array["persona"] = "0";
+			echo json_encode($array);}
+
+	}
+
+
 }

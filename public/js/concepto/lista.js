@@ -1,68 +1,52 @@
-//alert("ok");
-//jQuery.noConflict(true);
-
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#estado').keypress(function(e){
+	$('#estado_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$("#partida_presupuestal").select2();
+	/*$("#partida_presupuestal").select2();
 	$("#id_tipo_afectacion").select2();
 	$("#id_centro_costo").select2();
-	$("#id_tipo_concepto").select2();
+	$("#id_tipo_concepto").select2();*/
 
-	/*	
-	$("#plan_id").select2();
-	$("#ubicacion_id").select2();
-	*/
+	$('#denominacion_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
 
-	$('#denominacionBus').keypress(function(e){
+	$('#cuenta_contable_debe_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#cuenta_contable_al_haber1_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#cuenta_contable_al_haber2_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
 	
-
-	/*$("#denominacionBus").on("keyup", function() {
-		var value = $(this).val().toLowerCase();
-		("#tblAfiliado *").filter(function() {
-		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		});
-	});*/
-
-	$('#cuenta_contable_debe').keypress(function(e){
+	$('#id_tipo_afectacion_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
 
-	$('#cuenta_contable_al_haber1').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-
-	$('#cuenta_contable_al_haber2').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-	
-	$('#id_tipo_afectacion').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-
-	$('#id_partida_presupuestal').keypress(function(e){
+	$('#partida_presupuestal_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -73,62 +57,7 @@ $(document).ready(function () {
 	});
 		
 	datatablenew();
-	/*	
-	$("#plan_id").select2();
-	$("#ubicacion_id").select2();
 	
-	$('#fecha_inicio').datepicker({
-        autoclose: true,
-		dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-    });
-	
-	//$("#fecha_vencimiento").datepicker($.datepicker.regional["es"]);
-	$('#fecha_vencimiento').datepicker({
-        autoclose: true,
-        dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-    });
-	*/
-	
-	/*
-    $('#tblAlquiler').dataTable({
-    	"language": {
-    	"emptyTable": "No se encontraron resultados"
-    	}
-	});
-	*/
-	/*
-	$('#tblAlquiler').dataTable( {
-            "language": {
-                "sProcessing":     "Procesando...",
-                "sLengthMenu":     "Mostrar _MENU_ registros",
-                "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningun dato disponible en esta tabla",
-                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix":    "",
-                "sSearch":         "Buscar:",
-                "sUrl":            "",
-                "sInfoThousands":  ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                        "sFirst":    "Primero",
-                        "sLast":     "ultimo",
-                        "sNext":     "Siguiente",
-                        "sPrevious": "Anterior"
-                },
-                "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-            }
-        } );
-	*/
-
 
 	$(function() {
 		$('#modalEmpresaForm #apellido_paterno').keyup(function() {
@@ -500,14 +429,14 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id').val();
-			var denominacion = $('#denominacionBus').val();
-			var cuenta_contable_debe = $('#cuenta_contable_debe').val();
-			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
-			var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
-            var id_partida_presupuestal = $('#id_partida_presupuestal').val();
-			var id_tipo_afectacion = $('#id_tipo_afectacion').val();
-			var estado = $('#estado').val();
+			var codigo = $('#codigo').val();
+			var denominacion = $('#denominacion_bus').val();
+			var cuenta_contable_debe = $('#cuenta_contable_debe_bus').val();
+			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1_bus').val();
+			var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2_bus').val();
+            var partida_presupuestal = $('#partida_presupuestal_bus').val();
+			var id_tipo_afectacion = $('#id_tipo_afectacion_bus').val();
+			var estado = $('#estado_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -515,7 +444,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,id_partida_presupuestal:id_partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,estado:estado,
+						codigo:codigo,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -531,9 +460,9 @@ function datatablenew(){
             [	
 				{
 				"mRender": function (data, type, row) {
-					var id = "";
-					if(row.id!= null)id = row.id;
-					return id;
+					var codigo = "";
+					if(row.codigo!= null)codigo = row.codigo;
+					return codigo;
 					},
 				"bSortable": false,
 				"aTargets": [0],

@@ -40,4 +40,21 @@ class Adelanto extends Model
         return $data;
 
     }
+
+    public function getDatosAdelanto($id_agremiado){
+		
+		$cad = "select (select tm.denominacion from comision_delegados cd 
+        left join tabla_maestras tm on cd.id_puesto = tm.codigo::int And tm.tipo ='94' 
+        where cd.id_agremiado = ".$id_agremiado." order by cd.id desc limit 1) puesto,
+        (select c.denominacion from comision_delegados cd 
+        left join comisiones c on cd.id_comision = c.id 
+        where cd.id_agremiado = '".$id_agremiado."' order by cd.id desc limit 1) comision
+        from comision_delegados cd2
+        where cd2.estado='1'
+        limit 1 ";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
 }

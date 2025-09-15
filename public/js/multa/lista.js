@@ -2,6 +2,35 @@
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/multa/upload_multa",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+				datatablenew();
+				/*
+                if (response != 0) {
+					
+					var extension = "";
+					extension = response.substring(response.lastIndexOf('.') + 1);
+					$("#fileExcel").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+				*/
+            }
+        });
+		return false;
+    });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
@@ -587,21 +616,16 @@ function datatablenew(){
 					"mRender": function (data, type, row) {
 						var monto = "";
 						if(row.monto!= null)monto = row.monto;
-						return monto;
+						return parseFloat(monto).toFixed(2);;
 					},
 					"bSortable": false,
 					"aTargets": [8]
 				},
 				{
 				"mRender": function (data, type, row) {
-					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-					}
-					return estado;
+					var estado_multa = "";
+					if(row.estado_multa!= null)estado_multa = row.estado_multa;
+					return estado_multa;
 				},
 				"bSortable": false,
 				"aTargets": [9]

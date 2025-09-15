@@ -42,4 +42,16 @@ class Parametro extends Model
         return $data;
 
     }
+
+    public function getParametroAnio($anio){
+
+        $cad = "select *
+                from parametros p
+                where p.estado='1' and anio = '".$anio."'
+                order by p.id desc";
+    
+		$data = DB::select($cad);
+        return $data;
+
+    }
 }

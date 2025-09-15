@@ -1,11 +1,5 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_computo_cerrado_paginado(
-p_id_periodo_comisiones character varying, 
-p_id_comision character varying,
-p_anio character varying,
-p_mes character varying,
-p_pagina character varying, 
-p_limit character varying, 
-p_ref refcursor)
+
+CREATE OR REPLACE FUNCTION public.sp_listar_computo_cerrado_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying, p_anio character varying, p_mes character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -31,19 +25,20 @@ begin
 		
 	v_where = ' Where estado=''1''  ';
 	
-	/*
+	
 	If p_id_periodo_comisiones<>'' Then
-	 v_tabla:=v_tabla||'And t1.id_periodo_comisione = '''||p_id_periodo_comisiones||''' ';
+	 v_where:=v_where||'And t1.id_periodo_comision = '''||p_id_periodo_comisiones||''' ';
 	End If;
+	
 
 	If p_anio<>'' Then
-	 v_tabla:=v_tabla||'And to_char(t0.fecha_aprobar_pago,''yyyy'') = '''||p_anio||''' ';
+	 v_where:=v_where||'And t1.anio = '''||p_anio||''' ';
 	End If;
 
 	If p_mes<>'' Then
-	 v_tabla:=v_tabla||'And to_char(t0.fecha_aprobar_pago,''mm'') = '''||p_mes||''' ';
+	 v_where:=v_where||'And t1.mes = '''||p_mes||''' ';
 	End If;
-	*/
+	
 
 	/*
 	If p_id_regional<>'' Then

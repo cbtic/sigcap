@@ -27,7 +27,7 @@ class ParametrosController extends Controller
     public function listar_parametro_ajax(Request $request){
 	
 		$parametro_model = new Parametro;
-		$p[]="";//$request->nombre;
+		$p[]=$request->anio;
         $p[]="";
         $p[]="";
         $p[]="";
@@ -89,23 +89,31 @@ class ParametrosController extends Controller
 
 		if($request->id == 0){
 			$parametro = new Parametro;
+			$parametro->id_usuario_inserta = $id_user;
 		}else{
 			$parametro = Parametro::find($request->id);
+			$parametro->id_usuario_actualiza = $id_user;
 		}
 		
 		$parametro->anio = $request->anio;
         $parametro->porcentaje_calculo_edificacion = $request->porcentaje_calculo_edificacion;
         $parametro->valor_metro_cuadrado_habilitacion_urbana = $request->valor_metro_cuadrado_habilitacion_urbana;
+		$parametro->valor_minimo_edificaciones = $request->valor_minimo_edificaciones;
         $parametro->valor_uit = $request->valor_uit;
+		$parametro->valor_minimo_hu = $request->valor_minimo_hu;
+		$parametro->valor_maximo_hu = $request->valor_maximo_hu;
         $parametro->igv = $request->igv;
-		$parametro->id_usuario_inserta = $id_user;
+		$parametro->monto_minimo_rh = $request->valor_rh;
 		$parametro->save();
     }
 
 	public function eliminar_parametro($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$parametro = Parametro::find($id);
 		$parametro->estado = $estado;
+		$parametro->id_usuario_actualiza = $id_user;
 		$parametro->save();
 
 		echo $parametro->id;

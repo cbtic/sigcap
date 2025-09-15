@@ -209,6 +209,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
 
+$(document).ready(function () {
+
+  $("#fecha").attr("disabled",true);
+
+  var fechaPagoInput = $('.fila .fecha-pago input');
+    fechaPagoInput.datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true
+    });
+
+});
 
 $("#profesion").select2();
 
@@ -263,6 +275,129 @@ function obtener_profesional(){
 	$("#monto").val(monto);*/
 	
 }
+
+$('.datepicker2').datepicker({
+  format: "dd-mm-yyyy",
+  autoclose: true,
+  container: '#openOverlayOpc modal-body'
+  //defaultDate: '01/07/2024'
+
+	});
+
+function editarDetalle(){
+
+  var inputs = document.querySelectorAll('.adelanto-input, .fecha-input');
+
+  inputs.forEach(function(input) {
+    
+    input.disabled  = false;
+
+    var fila = input.closest('tr');
+ 
+    //var fechaPagoCell = fila.querySelector('.fecha-pago input');
+    //var fechaPagoString = fechaPagoCell.innerText;
+    //var partes = fechaPagoString.split('-');
+    //var fechaPago = new Date(partes[2], partes[1] - 1, partes[0]);
+    var fechaPagoInput = fila.querySelector('.fecha-pago input');
+    var fechaPagoString = fechaPagoInput.value;
+    var partes = fechaPagoString.split('-');
+    var fechaPago = new Date(partes[2], partes[1] - 1, partes[0]);
+
+    //var fechaPago = new Date(fechaPagoString);
+    
+    var fechaActual = new Date();
+    /*var opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    var fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+    fechaFormateada = fechaFormateada.replace(/\//g, '-');*/
+    //alert(fechaActual);
+    if (fechaPago < fechaActual) {
+      if(input.classList.contains('adelanto-input')){
+        input.disabled = true;
+      }
+    }else{
+      input.disabled  = false;
+    }
+  });
+}
+
+function fn_save_detalle(){
+
+  var totalPago = 0;
+  var adelantoPagar = [];
+  var idAdelantoDetalle = [];
+  var fechas_pago = [];
+  var primera_fecha =null;
+
+  $("input[name='fecha[]']").each(function() {
+    
+    var fechaString = ($(this).val());
+    var fecha_partes = fechaString.split('-');
+    var fecha = new Date(fecha_partes[2],fecha_partes[1]-1,fecha_partes[0]);
+
+    if(primera_fecha==null || fecha < primera_fecha){
+      primera_fecha = fecha;
+    }
+
+    fechas_pago.push($(this).val());
+   
+  });
+
+  $("input[name='adelanto_pagar[]']").each(function(){
+    var monto_detalle = parseFloat($(this).val().replace(',',''))
+
+    totalPago += monto_detalle;
+    adelantoPagar.push(monto_detalle);
+    
+  });
+
+  $("input[name='id_adelanto_detalle[]']").each(function(){
+    var id_detalle = $(this).val();
+
+    idAdelantoDetalle.push(id_detalle);
+  });
+  //alert(idAdelantoDetalle);
+  var totalAdelanto = ("<?php echo $adelanto_detalle[0]->total_adelanto; ?>");
+  var fecha_prestamo = ("<?php echo $adelanto_detalle[0]->fecha_prestamo; ?>");
+  var fecha_prestamo_partes = fecha_prestamo.split('-');
+  var fechaPrestamo = new Date(fecha_prestamo_partes[2],fecha_prestamo_partes[1]-1,fecha_prestamo_partes[0]);
+  var id = "<?php echo $id; ?>";
+  var _token = "{{ csrf_token() }}";
+
+  //var fecha_prestamo_formato = new Date(fecha_prestamo);
+  //alert(fechaPrestamo);
+  //alert(fecha_actual);
+  if(totalPago==totalAdelanto){
+    //if(primera_fecha>=fechaPrestamo){
+      //alert('El total es igual');
+      $.ajax({
+            url: "/adelanto/send_detalle_adelanto",
+            type: "POST",
+            data: {
+              _token:_token,
+              id: id,
+              adelanto_pagar: JSON.stringify(adelantoPagar),
+              id_adelanto_detalle: JSON.stringify(idAdelantoDetalle),
+              fecha: JSON.stringify(fechas_pago)
+              
+            },
+            //dataType: 'json',
+            success: function(result) {
+              $('#openOverlayOpc').modal('hide');
+              //window.location.reload();
+              datatablenew();
+
+            }
+          });
+    
+    /*}else{
+      bootbox.alert("La fecha ingresada no puede ser anterior a la fecha "+fecha_prestamo);
+    }*/
+    
+  }else{
+    bootbox.alert("El total no coincide con las cuotas");
+  }
+}
+
 
 function modal_personaNuevo(){
 	$(".modal-dialog").css("width","85%");
@@ -339,7 +474,10 @@ function modal_personaNuevo(){
             <!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
-              <div class="card-body">				
+              <div class="card-body">	
+                <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id" id="id" value="<?php echo $id ?>">	
+                <!--<input type='hidden' name='total_adelanto' value='<?php //echo $adelanto_detalle->total_adelanto?>'>-->
 
                 <div class="table-responsive">
                 <table id="tblPuesto" class="table table-hover table-sm">
@@ -348,24 +486,31 @@ function modal_personaNuevo(){
                         <th>Detalle Cuota</th>
                         <th>Monto</th>
                         <th>Fecha Vencimiento</th>
-                        <th>Estado</th>
+                        <!--<th>Estado</th>-->
                     </tr>
                     </thead>
                     <tbody style="font-size:13px">
                     <?php foreach ($adelanto_detalle as $row) {?>
 										<tr style='font-size:13px'>
 											<input type='hidden' name='id_adelanto_detalle[]' value='<?php echo $row->id?>'>
-											<td class='text-left'><?php echo 'cuota '.$row->numero_cuota?></td>
-											<td class='text-left'><?php echo $row->adelanto_pagar?></td>
-											<td class='text-left'><?php echo $row->fecha_pago?></td>
-											<td class='text-left'><?php echo $row->estado?></td>
+											<td class='text-left id_cuota'><?php echo 'cuota '.$row->numero_cuota?></td>
+											<td class='text-left'><input type='text' name='adelanto_pagar[]' value='<?php echo number_format($row->adelanto_pagar, 2, '.', ',')?>' size="10" class="adelanto-input" disabled='disabled' onchange=""></td>
+											<!--<td class='text-left fecha-pago'><?php //echo $row->fecha_pago?></td>-->
+											<td class='text-left fecha-pago'><input id="fecha" name="fecha[]" class="form-control form-control-sm datepicker2 fecha-input"  value="<?php echo $row->fecha_pago?>" type="text" disabled='disabled' style="width: 140px;" onchange="editarDetalle()">
 										<?php } ?>
+                    </tr>
+                    <tr style='border-top: 1px solid #000;'>
+                      <td class='text-left' style='border-top: 1px solid #000;'><?php echo 'Total Adelanto '?></td>
+                      <td class='text-left' style='border-top: 1px solid #000;'><?php echo number_format($adelanto_detalle[0]->total_adelanto, 2, '.', ',')?></td>
+                    </tr>
 										</tbody>
                 </table>
                 </div>
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+                        <a href="javascript:void(0)" onClick="editarDetalle()" class="btn btn-sm btn-success" id="editarBtn">Editar</a>
+                        <a href="javascript:void(0)" onClick="fn_save_detalle()" class="btn btn-sm btn-success" style="font-size:12px;margin-left:10px">Guardar</a>
                       </div>
                     </div>
                   </div>

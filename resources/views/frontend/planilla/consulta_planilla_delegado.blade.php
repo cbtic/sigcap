@@ -319,6 +319,13 @@ label.form-control-sm{
 	cursor:pointer
 }
 
+.form-control[readonly]{
+	background-color:#cff4fc!important;
+	border-color:#b6effb!important;
+	color:#055160!important;
+	opacity:1
+}
+
 </style>
 
 
@@ -393,7 +400,7 @@ label.form-control-sm{
                                                 <div id="" class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <strong>
-                                                            Resultado de concurso
+                                                            Planilla de Delegados
                                                         </strong>
 														
                                                     </div>
@@ -406,7 +413,40 @@ label.form-control-sm{
 												
 												<div class="row">
 													
-													<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													
+														<?php 
+														if($periodo_activo){
+														?>
+														<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+														<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" disabled="disabled">
+															<option value="">--Periodo--</option>
+															<?php
+															foreach ($periodo as $row) {?>
+															<option value="<?php echo $row->id?>" 
+															<?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+															<?php 
+															}
+															?>
+														</select>
+														
+														<?php
+														}else{
+														?>
+														<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerAnioPerido()">
+															<option value="">--Periodo--</option>
+															<?php
+															foreach ($periodo as $row) {?>
+															<option value="<?php echo $row->id?>" 
+															<?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+															<?php 
+															}
+															?>
+														</select>
+														<?php } ?>
+													</div>
+													
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="anio" id="anio" class="form-control form-control-sm">
 															@foreach ($anio as $anio)
 																<option value="{{ $anio }}">{{ $anio }}</option>
@@ -414,7 +454,7 @@ label.form-control-sm{
 														</select>
 													</div>
 							
-													<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="mes" id="mes" class="form-control form-control-sm">
 															@foreach ($mes as $key=>$mes)
 																<option value="{{ $key }}">{{ $mes }}</option>
@@ -422,11 +462,17 @@ label.form-control-sm{
 														</select>
 													</div>
 													
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="padding-right:0px">
 														
 														<input class="btn btn-warning pull-rigth" onclick="cargarPlanillaDelegado()" value="Buscar" type="button" id="btnBuscar" />
 														
 														<input class="btn btn-success pull-rigth" onclick="generarPlanilla()" value="Generar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
+														
+														<input class="btn btn-danger pull-rigth" onclick="eliminarPlanilla()" value="Eliminar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
+														
+														<input class="btn btn-primary pull-rigth" onclick="descargarPlanilla()" value="Descargar Excel" type="button" id="btnDescargar" style="margin-left:20px" />
+														
+														<input class="btn btn-primary pull-rigth" onclick="descargarPlanillaPdf()" value="Descargar PDF" type="button" id="btnDescargarPdf" style="margin-left:20px" />
 														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
@@ -547,43 +593,12 @@ label.form-control-sm{
 
     @push('after-scripts')
     
+	<script src="{{ asset('js/planilla/planilla.js') }}"></script>
 	
 	<!--<script src="{{ asset('js/concurso/create_concurso.js') }}"></script>-->
 	<script>
 	
-	function cargarPlanillaDelegado(){
-       
-    $("#divPlanilla").html("");
-		$.ajax({
-				//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
-				url: "/planillaDelegado/obtener_planilla_delegado",
-				data : $("#frmPlanilla").serialize(),
-				type: "POST",
-				success: function (result) {  
-						$("#divPlanilla").html(result);
-				}
-		});
 	
-	}
-	
-	function generarPlanilla(){
-		
-		$.ajax({
-				url: "/planilla/send_planilla_delegado",
-				type: "POST",
-				data : $("#frmPlanilla").serialize(),
-				success: function (result) {
-						
-						if(result==false){
-							bootbox.alert("Planilla ya esta registrado"); 
-							return false;
-						}
-						
-						cargarPlanillaDelegado();
-				}
-		});
-		
-	}
 	
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();

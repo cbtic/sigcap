@@ -147,23 +147,40 @@
                                         <div class="form-group">
                                             <div style="float:left;padding-top:7px">Periodo</div>
                                                 <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                                                <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo()" >
+                                                <?php 
+                                                if($periodo_activo){
+                                                ?>
+                                                <input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo_activo->id?>">
+                                                <select name="periodo_" id="periodo_" class="form-control" onChange="obtenerPeriodo();obtenerTipoComision()" disabled="disabled">
                                                     <!--<option value="">--Selecionar--</option>-->
                                                         <?php
                                                         foreach ($periodoComision as $row) {?>
-                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
                                                         <?php 
                                                         }
                                                         ?>
                                                 </select>
-                                                </div>
+                                                <?php
+                                                }else{
+                                                ?>
+                                                <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo();obtenerTipoComision()" >
+                                                    <!--<option value="">--Selecionar--</option>-->
+                                                        <?php
+                                                        foreach ($periodoComision as $row) {?>
+                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                        <?php 
+                                                        }
+                                                        ?>
+                                                </select>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mx-auto">
                                         <div class="form-group">
                                             <div style="float:left;padding-top:7px">Tipo Comisi&oacute;n</div>
                                                 <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                                                <select name="tipo_comision" id="tipo_comision" class="form-control" onchange="obtenerTipoComision();obtenerPeriodo();">
+                                                <select name="tipo_comision" id="tipo_comision" class="form-control" onchange="obtenerPeriodo();obtenerTipoComision();">
                                                     <option value="">--Selecionar--</option>
                                                         <?php
                                                         foreach ($tipo_comision as $row) {?>
@@ -177,7 +194,7 @@
                                     </div>
                                     
                                     <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-                                        
+                                        <input class="btn btn-success pull-rigth" value="Cerrar Asignaci&oacute;n de Plaza" type="button" id="btnCerrarComision" style="margin-left:15px" />
                                     </div>
                                 </div>
                             </form>
@@ -298,7 +315,7 @@
                                         <th>Selec</th>
                                         <th>Denominaci&oacute;n</th>
                                         <th>Comisi&oacute;n</th>
-                                        <!--<th>Movilidad</th>-->
+                                        <th>D&iacute;a Semana</th>
 										<th>Nuevo Titular</th>
                                         <th>Acc.</th>
                                     </tr>

@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <link media="all" type="text/css" rel="stylesheet" href="https://app-gsf.saludpol.gob.pe:29692/css/datatables/dataTables.bootstrap.min.css">
 <script src="https://app-gsf.saludpol.gob.pe:29692/js/datatables/datatables.min.js"></script>
-
+-->
 <!--<script src="<?php echo URL::to('/') ?>/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>-->
 <!--<script src="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>-->
 <link rel="stylesheet"
@@ -91,6 +91,11 @@ body {
     font-style: italic;
 }
 
+.link-factura {
+    /*color: black;*/
+    font-size: 14px;
+}
+
 br {
     line-height: 30px;
 }
@@ -122,12 +127,21 @@ br {
 */
 @page {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media print {
   html, body {
+    /*
     width: 80mm;
     height: 297mm;
+*/
+    width: 80mm !important;   /* Ancho del rollo */
+    min-height: 100vh;        /* Altura dinámica para papel continuo */
+    margin: 2px !important;
+    padding: 0 !important;
+
   }
 
     *, :after, :before {
@@ -159,7 +173,7 @@ br {
         margin-top: 50px;
         margin-bottom: 50px;
         display: block;
-        width: 250px !important;
+        width: 650px !important;
         height: 250px !important;
     }
     h3{
@@ -184,8 +198,41 @@ br {
     .flotante,.flotanteC {
         display: none !important
     }
+
+    .no-divider {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
 }
 </style>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+var idFormaPago = $("#idFormaPago").val();
+var TipoCOmprobante = $("#idtipocomprobante").val();
+
+//alert(idFormaPago);
+
+if(idFormaPago=="2"){
+    $("#divListaCredito").show();
+}else{
+    $("#divListaCredito").hide();
+};
+
+if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
+    $("#trdocmodi").show();
+    $("#trdocmodi2").show();
+}else{
+    $("#trdocmodi").hide();
+    $("#trdocmodi2").hide();
+};
+    
+}
+);
+
+</script>
 
 @stack('before-scripts')
 
@@ -224,9 +271,20 @@ br {
                 <div class="col col-sm-12 align-self-center">
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.send')}}"
                         id="frmPesaje" autocomplete="off">
+                        <input type="hidden" id="idFormaPago" name="idFormaPago" value="{{$factura->id_forma_pago}}"/>
+                        <input type="hidden" id="idtipocomprobante" name="idtipocomprobante" value="{{$factura->tipo}}"/>
+
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                        
+
+                        
+                        
+
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                                 <div id="" class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
@@ -260,11 +318,29 @@ br {
                                                                 <p>BOLETA ELECTRONICA</p>
                                                                 @break
 
+                                                                @case('FT')
+                                                                <p>FACTURA ELECTRONICA</p>
+                                                                @break
+
+                                                                @case('NC')
+                                                                <p>NOTA DE CREDITO</p>
+                                                                @break
+
+                                                                @case('ND')
+                                                                <p>NOTA DE DEBITO</p>
+                                                                @break
+
                                                                 @default
                                                                 <p>No esta identificado el tipo de documento</p>
                                                                 @endswitch
                                                             </p>
-                                                            <p><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>                                                        </strong>
+                                                        <h3 class="divlogoimpresora">
+                                                           {{ $factura->serie }}-{{ $factura->numero }}
+                                                        </h3>
+
+                                                            <p class="d-print-none"><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
+                                                           
+                                                        </strong>
 
                                                     </div>
 													
@@ -280,7 +356,7 @@ br {
                                                                 <p> GUIA DE REMISIÓN</p>
                                                             </p>
                                                             <p>
-															
+															 
 															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">{{ $factura->serie_guia }}-{{ $factura->nro_guia }}</a>
 															
 															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">&nbsp;&nbsp;Ver Guia
@@ -295,9 +371,65 @@ br {
 														}
 													?>
 													
+                                                                                                    
+                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
+                                            
+                                                        <table>
+                                                        <tbody>
+                                                        <tr>
+                                                        <td>RUC/DNI:</td>
+                                                        <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
+                                                        </tr>
+                                                        <div class="separador">&nbsp;</div>
+                                                        <tr>
+                                                        <td>ADQUIRIENTE:</td>
+                                                        <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>DIRECCION:</td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>FECHA DE EMISIÓN:</td>
+                                                        <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>CAP :</td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
+                                                        </tr>
+
+                                                        <tr id="trdocmodi">
+                                                        <td>Documento que modifica :</td>
+                                                        <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
+                                                                @case('FT')
+                                                                 FACTURA ELECTRONICA  
+                                                                @break
+
+                                                                @case('BV')
+                                                                BOLETA ELECTRONICA   
+                                                                @break
+
+                                                                    
+                                                                @default
+                                                                <p>No esta identificado el tipo de documento</p>
+                                                                @endswitch
+
+                                                                {{ $ref_comprobante}}</span></td>
+                                                        </tr>
+                                                        
+                                                        <tr id="trdocmodi2">
+                                                            <td>Motivo o sustento :</td>
+                                                            <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
+                                                        </tr>    
+
+                                                        </tbody>
+                                                        </table>
+                                                               
+                                                    
                                                     <div class="separador">&nbsp;</div>
+
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p>Fecha de expedición: {{ $factura->fecha }}</p>
+                                                        <p> </p>
                                                     </div>
                                                     <div class="separador">&nbsp;</div>
                                                 </div>
@@ -310,8 +442,8 @@ br {
                                         <!--card-->
                                     </div>
                                 </div>
-                                <br>
-
+                                
+ 
                                 <div id="" class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
@@ -322,9 +454,9 @@ br {
                                                             <tr>
                                                                 <th class="text-center" width="8%">Cant.</th>
                                                                 <th width="37%">Descripción</th>
-                                                                <th class="text-right" width="10%">%Dcto.</th>
-                                                                <th class="text-right" width="15%">PU</th>
-                                                                <!--<th class="text-right" width="15%">IGV</th> -->
+                                                                <th class="text-right" width="15%">P.Unitario</th>
+                                                                <th class="text-right" width="10%">Dcto.</th>
+                                                                <!--<th class="text-right" width="10%">V.Unitario</th>   -->                                                                                                                     
                                                                 <th class="text-right" width="15%">Monto</th>
                                                             </tr>
                                                         </thead>
@@ -332,25 +464,41 @@ br {
                                                             @foreach ($factura_detalles as $factura_detalle)
                                                             <tr id="fila{{ $loop->iteration }}">
                                                                 <td class="text-center">
-                                                                    {{ $factura_detalle->cantidad }}</td>
+                                                                    {{ $factura_detalle->cantidad }} 
+                                                                    
+                                                                    @if($factura_detalle->id_concepto ==="26475")
+                                                                        {{" Revisiones "}}
+                                                                    @endif
+                                                                    
+                                                            
+                                                                    
+                                                                
+                                                                </td>
                                                                 <td class="text-left">
                                                                     {{ $factura_detalle->descripcion }}
                                                                 </td>
-                                                                <td class="text-right">{{ $factura_detalle->descuento }}
+
+                                                                <td class="text-right">{{ number_format($factura_detalle->precio_venta,2)  }}
                                                                 </td>
 
-                                                                <td class="text-right">{{ number_format($factura_detalle->pu,2)  }}
+                                                                <td class="text-right">{{ $factura_detalle->descuento }}
                                                                 </td>
-                                                                <!--
-                                                                <td class="text-right">
-                                                                    {{ number_format($factura_detalle->facd_igv_total,2) }}</td>
-                                                                -->
-                                                                <td class="text-right">
-                                                                    {{ number_format($factura_detalle->importe,2) }}</td>
+<!--
+                                                                <td class="text-right">{{ number_format($factura_detalle->pu,2) }}
+                                                                </td>
+                                                    -->                                                                                                                     
+                                                                <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
+                                                                </td>
                                                             </tr>
                                                             @endforeach
                                                             <tr id="fila_sub_total">
-                                                                <td class="text-right" colspan="4">OP.GRAVADAS <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right" colspan="4">
+                                                                    @if($factura->impuesto!=0)
+                                                                        {{"  OP.GRAVADAS "}}
+                                                                    @else
+                                                                        {{"  OP.INAFECTAS "}}
+                                                                    @endif                                                        
+                                                                <span class="moneda"><?php echo $modeda?></span> </td>
                                                                 <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
                                                             </tr>
                                                             <tr id="fila_igv">
@@ -372,19 +520,91 @@ br {
                                         </div>
                                         <!--card-->
                                     </div>
+                                    
                                     <div class="separador">&nbsp;</div>
+
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
                                     </div>
-                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV'){?>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    @if($factura->tipo_operacion =="1001")
+                                    <div class="separador">&nbsp;</div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                        <table>
+                                        <tbody>
+                                        <tr>
+                                        <td style="vertical-align: top;">BENEFICIARIO :</td>
+                                        <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
+                                        </tr>
                                         <div class="separador">&nbsp;</div>
-                                        <p>RUC/DNI: <span class="resaltado">{{ $factura->cod_tributario }}</span></p>
-                                        <div class="separador">&nbsp;</div>
-                                        <p>RAZON SOCIAL/NOMBRE: <span class="resaltado">{{ $factura->destinatario }}</span></p>
-                                        <div class="separador">&nbsp;</div>
-                                        <p>DIRECCION: <span class="resaltado">{{ $factura->direccion }}</span></p>
+                                        <tr>
+                                        <td style="vertical-align: top;">CUENTAS:</td>
+                                        <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
+                                        </tr>
+                                        <tr>
+                                        <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
+                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
                                     </div>
+                                    @endif
+
+                                
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
+                                    
+                                        <div class="card">
+
+                                            <div class="card-header">
+                                                <strong>                                            
+                                                    Información del crédito
+                                                </strong>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">                                                   
+                                                    <table id="tblcuotas" class="table table-hover" >
+                                                        
+                                                        <thead>                                                            
+                                                            <tr>
+                                                                <th class="text-center" width="8%">item</th>
+                                                                <th width="37%">Monto</th>
+                                                                <th width="37%">Fecha Venc.</th>                                                                    
+                                                            </tr>
+                                                        </thead>
+                                                        
+                                                        <tbody>
+                                                            @foreach ($cronograma as $cronograma_v)
+                                                            <tr id="fila{{ $loop->iteration }}">
+                                                                <td class="text-center">
+                                                                    {{ $cronograma_v->item }} 
+                                                                    
+                                                                
+                                                                </td>
+                                                                <td class="text-left">
+                                                                    {{ $cronograma_v->monto }} 
+                                                                </td>
+
+                                                                <td class="text-left">
+                                                                    {{ date('d-m-Y',strtotime($cronograma_v->fecha_vencimiento)) }} 
+
+
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="separador">&nbsp;</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
+                                    </div>
+
                                     <div class="separador">&nbsp;</div>
                                     <hr style="width:90%", size="3", color=black>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -392,6 +612,9 @@ br {
                                             utilizando su clave SOL</p>
 
                                     </div>
+
+
+
                                     <?php } ?>
                                 </div>
 
@@ -405,6 +628,10 @@ br {
             </div>
         </div>
     </div>
+
+
+    
+
 
     <!--row-->
     @endsection

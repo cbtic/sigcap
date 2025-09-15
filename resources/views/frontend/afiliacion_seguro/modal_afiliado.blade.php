@@ -152,7 +152,14 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-
+		$(document).ready(function(){
+        
+        if($('#id').val() > 0) {
+            $('#cap_').prop('readonly', true);
+			$('#fecha_').prop('readonly', true);
+			$('#id_seguro').prop('disabled', true);
+        }
+    });
 
 	});
 
@@ -178,7 +185,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var id = $('#id').val();
 		var id_regional = 5;
 		
-		var id_plan = $('#id_plan_').val();
+		var id_plan = $('#id_seguro').val();
 		var id_agremiado = $('#idagremiado_').val();
 		var fecha = $('#fecha_').val();
 		var observaciones = $('#observacion_').val();
@@ -195,11 +202,17 @@ $.mask.definitions['p'] = "[Mm]";
 				fecha: fecha,
 				observaciones: observaciones
 			},
-			//dataType: 'json',
+			dataType: 'json',
 			success: function(result) {
-				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+				var msg = result.msg;
+				if(msg!=""){
+					bootbox.alert(msg);
+					return false;
+				}
+				if(msg==""){
+					$('#openOverlayOpc').modal('hide');
+					datatablenew();
+				}
 
 			}
 		});
@@ -296,13 +309,13 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<div class="form-group">
 												<label class="control-label">Fecha</label>
-												<input readonly id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
+												<input id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
 											</div>
 										</div>
 
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Seguro</label>
-											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onChange="obtenerPlan()">
+											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onChange="">
 												<option value="">--Selecionar--</option>
 												<?php
 												foreach ($seguro as $row) { ?>
@@ -313,7 +326,8 @@ $.mask.definitions['p'] = "[Mm]";
 												?>
 											</select>
 										</div>
-										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+										
+							<!---			<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Plan</label>
 
 											<select name="id_plan_" id="id_plan_" class="form-control form-control-sm" onChange="ObtenerMonto()">
@@ -321,7 +335,7 @@ $.mask.definitions['p'] = "[Mm]";
 											</select>
 										</div>
 									</div>
-
+											-->
 									<div class="row">
 
 										<div class="col-lg-12">

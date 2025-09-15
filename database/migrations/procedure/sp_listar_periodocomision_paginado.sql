@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_periodocomision_paginado(p_descripcion character varying, p_fechaini character varying, p_fechafin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_periodocomision_paginado(p_descripcion character varying, p_tipo character varying, p_fechaini character varying, p_fechafin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -19,11 +19,16 @@ Begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' pc.id, pc.descripcion, pc.fecha_inicio, pc.fecha_fin, pc.estado ';
+	v_campos=' pc.id, pc.descripcion, pc.activo, pc.fecha_inicio, pc.fecha_fin, tm.denominacion tipo_concurso, pc.estado ';
 
-	v_tabla='from periodo_comisiones pc';
+	v_tabla='from periodo_comisiones pc
+	left join tabla_maestras tm on pc.id_tipo_concurso ::int = tm.codigo::int And tm.tipo =''101''';
 	
 	v_where = ' Where 1=1  ';
+
+	If p_tipo<>'' Then
+	 v_where:=v_where||'And pc.id_tipo_concurso = '''||p_tipo||''' ';
+	End If;
 
 	If p_descripcion<>'' Then
 	 v_where:=v_where||'And pc.descripcion ilike ''%'||p_descripcion||'%'' ';

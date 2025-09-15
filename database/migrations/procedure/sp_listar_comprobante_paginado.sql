@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+-- DROP FUNCTION public.sp_listar_comprobante_paginado(varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, refcursor);
+
+CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_forma_pago character varying, p_total character varying, p_medio_pago character varying, p_caja character varying, p_usuario character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -34,10 +36,17 @@ Begin
 
 
 	v_campos=' f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, 
-        f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, f.estado_sunat sunat, f.ruta_comprobante pdf ';
+        f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, f.estado_sunat sunat, f.ruta_comprobante pdf, u.name usuario, tm.denominacion caja,
+        f.id_forma_pago, fp.denominacion forma_pago, case when f.id_forma_pago = 2  then f.total_credito 
+		else 0 end restante_credito 
+';
         
-	v_tabla='FROM public.comprobantes f
-		  Inner Join users u On u.id = f.id_usuario_inserta ';
+	v_tabla='FROM comprobantes f 
+				left join users u on u.id = f.id_usuario_inserta 
+				left join tabla_maestras tm on tm.tipo = ''91'' and tm.codigo::int = f.id_caja
+				left join tabla_maestras fp on fp.tipo = ''104'' and fp.codigo::int = f.id_forma_pago 
+
+';
 
 	v_where = ' Where 1 = 1 ';
 
@@ -73,6 +82,30 @@ Begin
 	If p_anulado<>'' then
 	 v_where:=v_where||' And f.anulado = '''||p_anulado||''' '; 
 	End If;
+
+	If p_forma_pago<>'' then
+	 v_where:=v_where||' And f.id_forma_pago = '''||p_forma_pago||''' '; 
+	End If;
+
+	--p_medio_pago:='254';
+
+	if p_medio_pago<>'' then
+		v_where:=v_where||' And (select distinct cp.id_medio from  comprobante_pagos cp where cp.id_comprobante = f.id) = '''||p_medio_pago||''' ';
+	End If;
+
+	If p_caja <>'' then
+	 v_where:=v_where||' And f.id_caja = '''||p_caja||''' '; 
+	End If;
+
+	If p_usuario <>'' then
+	 v_where:=v_where||' And f.id_usuario_inserta = '''||p_usuario||''' '; 
+	End If;
+
+
+	If p_total<>'' then
+	 v_where:=v_where||' And f.total = '''||p_total||''' '; 
+	End If;
+
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';

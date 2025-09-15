@@ -13,6 +13,8 @@ use App\Domains\Auth\Http\Controllers\Frontend\Auth\UpdatePasswordController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\VerificationController;
 use Tabuna\Breadcrumbs\Trail;
 
+use App\Http\Controllers\Frontend\PersonaController;
+
 /*
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
@@ -89,6 +91,14 @@ Route::group(['as' => 'auth.'], function () {
         Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
         Route::post('register', [RegisterController::class, 'register']);
 
+        // Registration Proy
+        Route::get('registerProy', [RegisterController::class, 'showRegistrationProyForm'])->name('registerProy');
+        Route::post('registerProy', [RegisterController::class, 'registerProy']);
+
+        // Registration Proy
+        Route::get('registerResp', [RegisterController::class, 'showRegistrationRespForm'])->name('registerResp');
+        Route::post('registerResp', [RegisterController::class, 'registerResp']);
+
         // Password Reset
         Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
         Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -99,4 +109,12 @@ Route::group(['as' => 'auth.'], function () {
         Route::get('login/{provider}', [SocialController::class, 'redirect'])->name('social.login');
         Route::get('login/{provider}/callback', [SocialController::class, 'callback']);
     });
+	
+	Route::get('persona/obtener_persona_login/{tipo_documento}/{numero_documento}', [PersonaController::class, 'obtener_persona_login'])->name('persona.obtener_persona_login')->where('tipo_documento', '(.*)');
+    Route::get('persona/obtener_agremiado_login/{numero_cap}/{id_secret_code}', [PersonaController::class, 'obtener_agremiado_login'])->name('persona.obtener_agremiado_login')->where('numero_cap', '(.*)');
+
+    Route::get('persona/obtener_proyectista/{id_profesion}/{buscar}', [PersonaController::class, 'obtener_proyectista'])->name('persona.obtener_proyectista')->where('numero_cap', '(.*)');
+
+	Route::get('persona/obtener_responsable/{id_tipo_documento}/{buscar}', [PersonaController::class, 'obtener_responsable'])->name('persona.obtener_responsable')->where('numero_cap', '(.*)');
+
 });

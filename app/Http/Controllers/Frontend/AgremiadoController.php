@@ -18,7 +18,18 @@ use App\Models\AgremiadoSituacione;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Ubigeo;
+use App\Models\AgremiadoRole;
+use App\Models\ConcursoInscripcione;
+use App\Models\Locale;
+use App\Models\Suspensione;
+use App\Models\Concepto;
+use App\Models\Empresa;
+use App\Models\Valorizacione;
+use Carbon\Carbon;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class AgremiadoController extends Controller
 {
@@ -52,6 +63,7 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo_model = new AgremiadoTrabajo;
 		$agremiadoTraslado_model = new AgremiadoTraslado;
 		$agremiadoSituacione_model = new AgremiadoSituacione;
+		$agremiadoRol_model = new AgremiadoRole;
 		
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
@@ -74,20 +86,38 @@ class AgremiadoController extends Controller
 		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
+		//$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
 		
-		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion'));
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]="";
+		$p[]="";
+		$p[]=$id;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="t1.id";
+		$p[]="desc";
+		$p[]="1";
+		$p[]="100";
+		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		$edad = "";
+		
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol','edad'));
     }
 	
 	public function editar_agremiado($id){
 		//echo date('Y-m-d');exit();
         /*
-		$firstDate = "2019-01-01";
-		$secondDate = "2020-03-04";
+		$firstDate = "1998-07-26";
+		$secondDate = "2024-07-18";
 		$dateDifference = abs(strtotime($secondDate) - strtotime($firstDate));
 		$years  = floor($dateDifference / (365 * 60 * 60 * 24));
 		echo $years;
 		exit();
 		*/
+		
 		$agremiado = Agremiado::find($id);
 		$id_persona = $agremiado->id_persona;
 		$persona = Persona::find($id_persona);
@@ -101,7 +131,11 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo_model = new AgremiadoTrabajo;
 		$agremiadoTraslado_model = new AgremiadoTraslado;
 		$agremiadoSituacione_model = new AgremiadoSituacione;
+		$agremiadoRol_model = new AgremiadoRole;
+		$suspension_model = new Suspensione;
+		$agremiado_model = new Agremiado;
 		
+		$edad = $agremiado_model->getEdadAgremiadoById($id);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
@@ -124,49 +158,115 @@ class AgremiadoController extends Controller
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
 		
-		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion'));
+		//$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
+		
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]="";
+		$p[]="";
+		$p[]=$id;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="t1.id";
+		$p[]="desc";
+		$p[]="1";
+		$p[]="100";
+		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		//print_r($agremiado_rol);
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol','edad'));
 		
     }
 	
 	public function send(Request $request){
-
-        $sw = true;
+		
 		$msg = "";
 		$id_user = Auth::user()->id;
 		
 		$id_agremiado = $request->id_agremiado;
 		$id_persona = $request->id_persona;
 		
+		if($id_agremiado==0){
+			$agremiadoExiste = Agremiado::where("numero_cap",$request->numero_cap)->where("estado",1)->get();
+			if(count($agremiadoExiste)>0){
+				echo "1";
+				exit();
+			}
+		}
+		
+		if($id_persona==0){
+			
+			$personaExiste = Persona::where("numero_documento",$request->numero_documento)->where("estado",1)->get();
+			if(count($personaExiste)>0){
+				
+				$personaEx = Persona::where("numero_documento",$request->numero_documento)->where("estado",1)->first();
+				$id_persona = $personaEx->id;
+				//echo "2";
+				//exit();
+			}
+			
+		}
+		
+		
 		if($id_persona> 0){
 			$persona = Persona::find($id_persona);
 			
 			if($request->img_foto!=""){
+				
+				/*
 				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
 				$filepath_nuevo = public_path('img/agremiado/');
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
-				
-				$persona->foto = $request->img_foto;
+				*/
+				$path = "img/agremiado/".$request->numero_cap;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+				$filepath_nuevo = public_path('img/agremiado/'.$request->numero_cap.'/');
+
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+
+				$persona->foto = 'img/agremiado/'.$request->numero_cap.'/'.$request->img_foto;
+				//$persona->foto = $request->img_foto;
 			}
 			
 		}else{
 			$persona = new Persona;
 			$persona->estado = 1;
-			$persona->id_usuario_inserta = 1;
+			//$persona->id_usuario_inserta = 1;
+			$persona->id_usuario_inserta = $id_user;
 			
 			if($request->img_foto!="" && $persona->foto!=$request->img_foto){
+				/*
 				$filepath_tmp = public_path('img/frontend/persona/');
 				$filepath_nuevo = public_path('img/agremiado/');
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
+				*/
+				$path = "img/agremiado/".$request->numero_cap;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+				$filepath_nuevo = public_path('img/agremiado/'.$request->numero_cap.'/');
+
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+
+				$persona->foto = 'img/agremiado/'.$request->numero_cap.'/'.$request->img_foto;
+				//$persona->foto = $request->img_foto;
 				
-				$persona->foto = $request->img_foto;
 			}
-			
-			
-			
 		}
 		
 		$persona->id_tipo_documento = $request->id_tipo_documento;
@@ -175,6 +275,18 @@ class AgremiadoController extends Controller
 		$persona->apellido_materno = $request->apellido_materno;
 		$persona->nombres = $request->nombres;
 		$persona->numero_ruc = $request->numero_ruc;
+
+		//print_r($request->numero_ruc); exit();
+
+		if( $request->numero_ruc!=""){
+			$persona->desc_cliente_sunat = $request->apellido_paterno." ".$request->apellido_materno." ".$request->nombres;
+			$persona->direccion_sunat = $request->direccion;
+		}
+
+		$persona->correo = $request->email1;
+		$persona->numero_celular = $request->celular1;
+		$persona->direccion = $request->direccion;
+
 		$persona->fecha_nacimiento = $request->fecha_nacimiento;
 		$persona->id_sexo = $request->id_sexo;
 		$persona->lugar_nacimiento = $request->lugar_nacimiento;
@@ -186,10 +298,15 @@ class AgremiadoController extends Controller
 		
 		if($id_agremiado> 0){
 			$agremiado = Agremiado::find($id_agremiado);
+			$agremiado->id_usuario_actualiza = $id_user;
 		}else{
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $persona->id;
-			$agremiado->id_usuario_inserta = 1;
+
+			//$agremiado->id_usuario_inserta = 1;
+			$agremiado->id_usuario_inserta = $id_user;
+			
+			$agremiado->fecha_colegiado = $request->fecha_colegiado;
 			//$agremiado->id_situacion = "73";
 		}
 		//exit($request->id_distrito_domiciliario);
@@ -198,11 +315,13 @@ class AgremiadoController extends Controller
 		$agremiado->numero_regional = $request->numero_regional;
 		$agremiado->libro = $request->libro;
 		$agremiado->id_regional = $request->id_regional;
+		$agremiado->id_local = $request->id_local;
 		$agremiado->id_ubigeo_domicilio = $request->id_distrito_domiciliario;
 		$agremiado->folio_nacional = $request->folio_nacional;
-		$agremiado->fecha_colegiado = $request->fecha_colegiado;
+		//$agremiado->fecha_colegiado = $request->fecha_colegiado;
 		$agremiado->folio = $request->folio;
-		$agremiado->fecha_actualiza = $request->fecha_actualiza;
+		//$agremiado->fecha_actualiza = $request->fecha_actualiza;
+		$agremiado->fecha_actualiza = Carbon::now()->format('Y-m-d');
 		$agremiado->id_estado_civil = $request->id_estado_civil;
 		$agremiado->direccion = $request->direccion;
 		$agremiado->codigo_postal = $request->codigo_postal;
@@ -222,11 +341,34 @@ class AgremiadoController extends Controller
 		$agremiado->id_ubicacion = $request->id_ubicacion;
 		$agremiado->id_autoriza_tramite = $request->id_autoriza_tramite;
 		$agremiado->id_categoria = $request->id_categoria;
-		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
+		//$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
 		$agremiado->fecha_fallecido = $request->fecha_fallecido;
+		
+		if($request->id_categoria==91){
+			$agremiado->fecha_inicio_temp = $request->fecha_inicio_temp;
+			$agremiado->fecha_fin_temp = $request->fecha_fin_temp;
+			$agremiado->observacion_temp = $request->observacion_temp;
+		}else{
+			$agremiado->fecha_inicio_temp = NULL;
+			$agremiado->fecha_fin_temp = NULL;
+			$agremiado->observacion_temp = NULL;
+		}
+		
+		$agremiado_model = new Agremiado;
+		
+		if($request->id_situacion==83){	
+			$agremiado_model->agremiado_cuota_fallecido('i',$request->id_agremiado,$request->fecha_fallecido);
+		}
+		
+		if($agremiado->id_situacion==83 && $request->id_situacion!=83){
+			$agremiado_model->agremiado_cuota_fallecido('d',$request->id_agremiado,"");
+		}
+		
 		//$agremiado->estado = 1;
+		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->save();
+		
 		
 		
 	}
@@ -258,7 +400,10 @@ class AgremiadoController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		return view('frontend.agremiado.all',compact('region','situacion_cliente'));
+		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
+		$act_gremial_cliente = $tablaMaestra_model->getMaestroByTipo(46);
+		
+		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente','act_gremial_cliente'));
 		
 	}
 	
@@ -272,6 +417,8 @@ class AgremiadoController extends Controller
 		$p[]=$request->fecha_inicio;
 		$p[]=$request->fecha_fin;
 		$p[]=$request->id_situacion;
+		$p[]=$request->id_categoria;
+		$p[]=$request->id_act_gremial;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
@@ -322,10 +469,14 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_estudio(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoEstudio = new AgremiadoEstudio;
+			$agremiadoEstudio->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoEstudio = AgremiadoEstudio::find($request->id);
+			$agremiadoEstudio->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoEstudio->id_agremiado = $request->id_agremiado;
@@ -337,7 +488,7 @@ class AgremiadoController extends Controller
 		$agremiadoEstudio->libro = $request->libro;
 		$agremiadoEstudio->folio = $request->folio;
 		$agremiadoEstudio->estado = 1;
-		$agremiadoEstudio->id_usuario_inserta = 1;
+		//$agremiadoEstudio->id_usuario_inserta = 1;
 		$agremiadoEstudio->save();
 			
     }
@@ -361,17 +512,21 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_idioma(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoIdioma = new AgremiadoIdioma;
+			$agremiadoIdioma->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoIdioma = AgremiadoIdioma::find($request->id);
+			$agremiadoIdioma->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoIdioma->id_agremiado = $request->id_agremiado;
 		$agremiadoIdioma->id_idioma = $request->id_idioma;
 		$agremiadoIdioma->id_grado_conocimiento = $request->id_grado_conocimiento;
 		$agremiadoIdioma->estado = 1;
-		$agremiadoIdioma->id_usuario_inserta = 1;
+		//$agremiadoIdioma->id_usuario_inserta = 1;
 		$agremiadoIdioma->save();
 			
     }
@@ -395,10 +550,14 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_parentesco(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoParenteco = new AgremiadoParenteco;
+			$agremiadoParenteco->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoParenteco = AgremiadoParenteco::find($request->id);
+			$agremiadoParenteco->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoParenteco->id_agremiado = $request->id_agremiado;
@@ -407,7 +566,7 @@ class AgremiadoController extends Controller
 		$agremiadoParenteco->apellido_nombre = $request->apellido_nombre;
 		$agremiadoParenteco->fecha_nacimiento = $request->fecha_nacimiento;
 		$agremiadoParenteco->estado = 1;
-		$agremiadoParenteco->id_usuario_inserta = 1;
+		//$agremiadoParenteco->id_usuario_inserta = 1;
 		$agremiadoParenteco->save();
 			
     }
@@ -464,10 +623,15 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_trabajo(Request $request){
 		
+
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoTrabajo = new AgremiadoTrabajo;
+			$agremiadoTrabajo->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoTrabajo = AgremiadoTrabajo::find($request->id);
+			$agremiadoTrabajo->id_usuario_actualiza = $id_user;
 		}
 		/*
 		$id_departamento = str_pad($request->id_departamento_trabajo, 2, "0", STR_PAD_LEFT);
@@ -490,17 +654,21 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo->celular = $request->celular;
 		$agremiadoTrabajo->email = $request->email;
 		$agremiadoTrabajo->estado = 1;
-		$agremiadoTrabajo->id_usuario_inserta = 1;
+		//$agremiadoTrabajo->id_usuario_inserta = 1;
 		$agremiadoTrabajo->save();
 		
     }
 	
 	public function send_agremiado_situacion(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoSituacion = new AgremiadoSituacione;
+			$agremiadoSituacion->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoSituacion = AgremiadoSituacione::find($request->id);
+			$agremiadoSituacion->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoSituacion->id_agremiado = $request->id_agremiado;
@@ -510,17 +678,31 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->fecha_fin = $request->fecha_fin;
 		$agremiadoSituacion->ruta_documento = $request->ruta_documento;
 		$agremiadoSituacion->estado = 1;
-		$agremiadoSituacion->id_usuario_inserta = 1;
+		//$agremiadoSituacion->id_usuario_inserta = 1;
 		$agremiadoSituacion->save();
+		
+		$agremiado = Agremiado::find($request->id_agremiado);
+		$agremiado->id_ubicacion = 336; 
+		$agremiado->id_situacion = 267; 
+		$agremiado->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_extranjero('i',$request->id_agremiado,$request->fecha_inicio,$fecha_fin);
 		
     }
 	
 	public function send_agremiado_traslado(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoTraslado = new AgremiadoTraslado;
+			$agremiadoTraslado->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoTraslado = AgremiadoTraslado::find($request->id);
+			$agremiadoTraslado->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoTraslado->id_agremiado = $request->id_agremiado;
@@ -530,8 +712,18 @@ class AgremiadoController extends Controller
 		$agremiadoTraslado->numero_regional = $request->numero_regional;
 		$agremiadoTraslado->observacion = $request->observacion;
 		$agremiadoTraslado->estado = 1;
-		$agremiadoTraslado->id_usuario_inserta = 1;
+		//$agremiadoTraslado->id_usuario_inserta = 1;
 		$agremiadoTraslado->save();
+		
+		$agremiado = Agremiado::find($request->id_agremiado);
+		$agremiado->id_regional = $request->id_region;
+		$agremiado->id_ubicacion = 335;
+		$agremiado->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_traslado('i',$request->id_agremiado,$request->fecha_inicio,$fecha_fin);
 		
     }
 	
@@ -581,6 +773,14 @@ class AgremiadoController extends Controller
 		$agremiadoTraslado->estado= "0";
 		$agremiadoTraslado->save();
 		
+		$agremiado = Agremiado::find($agremiadoTraslado->id_agremiado);
+		$agremiado->id_regional = 5;
+		$agremiado->id_ubicacion = 334;
+		$agremiado->save();
+		
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_traslado('d',$agremiadoTraslado->id_agremiado,"","");
+		
 		echo "success";
 
     }
@@ -591,10 +791,24 @@ class AgremiadoController extends Controller
 		$agremiadoSituacione->estado= "0";
 		$agremiadoSituacione->save();
 		
+		$agremiado = Agremiado::find($agremiadoSituacione->id_agremiado);
+		$agremiado->id_ubicacion = 334;
+		$agremiado->save();
+		
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_extranjero('d',$agremiadoSituacione->id_agremiado,"","");
+		
 		echo "success";
 
     }
 	
+	public function automatico_agremiado_inhabilita_tresm(){
+		
+		$agremiado_model = new Agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_inhabilita_tresm();
+		
+	}
+
 	public function importar_agremiado_cuota(){
 		
 		$agremiado_model = new Agremiado;
@@ -616,11 +830,18 @@ class AgremiadoController extends Controller
 		$agremiado_model = new Agremiado;
 		$data = $agremiado_model->crud_automatico_agremiado_cuota_vitalicio();
 		
+	}
+	
+	public function agremiado_inhabilita_fraccionamiento(){
+		
+		$agremiado_model = new Agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_inhabilita_fraccionamiento();
+		
 	} 
 	
 	public function importar_agremiado($fecha){ 
 		
-		$fecha = "17-08-2023";
+		//$fecha = "12-02-2024";
 		/*************WEB SERVICE - LEER TOKEN*****************/
 		
 		$data_string = '{"email":"pbravogutarra@gmail.com","password":"ua5DhY3oFDZ7aKg"}';
@@ -649,7 +870,9 @@ class AgremiadoController extends Controller
 		/*************WEB SERVICE - LEER AGREMIADO*****************/
 		
 		//$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha=17-08-2023');
-		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha='.$fecha);
+		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=11&fecha='.$fecha);
+		//$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=5&fecha='.$fecha);
+		
 		curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch2, CURLOPT_HTTPHEADER, array('x-token: '.$token));
 		curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);
@@ -679,25 +902,60 @@ class AgremiadoController extends Controller
 			$id_distrito_sol = str_pad($solicitud->iddistrito, 2, "0", STR_PAD_LEFT);
 			$IdUbigeoDomicilio = $id_departamento_sol.$id_provincia_sol.$id_distrito_sol;
 			
-			$persona = new Persona;
-			$persona->id_tipo_documento = $this->equivalenciaTipoDocumento($solicitud->idtipodocumento);
-			$persona->numero_documento = $solicitud->numerodocumento;
-			$persona->apellido_paterno = $solicitud->apellidopaterno;
-			$persona->apellido_materno = $solicitud->apellidomaterno;
-			$persona->nombres = $solicitud->nombre;
-			$persona->fecha_nacimiento = $solicitud->fechanacimiento;
-			//$persona->sexo = $sexo;
-			$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
-			$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
-			$persona->id_ubigeo_nacimiento = "150101";
-			$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
-			$persona->id_nacionalidad = 16;
+			$id_persona = 0;
+			$personaExiste = Persona::where("numero_documento",$solicitud->numerodocumento)->where("estado",1)->get();
+			if(count($personaExiste)>0){
+				
+				$personaEx = Persona::where("numero_documento",$solicitud->numerodocumento)->where("estado",1)->first();
+				$id_persona = $personaEx->id;
+				
+			}
 			
-			$persona->id_tipo_persona = 1;
-			$persona->estado = 1;
-			$persona->id_usuario_inserta = 1;
-			$persona->save();
-			$id_persona = $persona->id;
+			if($id_persona == 0){
+			
+				$persona = new Persona;
+				$persona->id_tipo_documento = $this->equivalenciaTipoDocumento($solicitud->idtipodocumento);
+				$persona->numero_documento = $solicitud->numerodocumento;
+				$persona->apellido_paterno = $solicitud->apellidopaterno;
+				$persona->apellido_materno = $solicitud->apellidomaterno;
+				$persona->nombres = $solicitud->nombre;
+				$persona->fecha_nacimiento = $solicitud->fechanacimiento;
+				//$persona->sexo = $sexo;
+				$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
+				$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
+				$persona->id_ubigeo_nacimiento = "150101";
+				$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
+				
+				$persona->direccion = $solicitud->domicilio;
+				$persona->numero_celular = $solicitud->numerocelular;
+				$persona->correo = $solicitud->correoelectronico;
+				
+				$persona->id_nacionalidad = 16;
+				$persona->id_tipo_persona = 1;
+				$persona->estado = 1;
+				$persona->id_usuario_inserta = 1;
+				$persona->save();
+				$id_persona = $persona->id;
+			
+			}else{
+				$persona = Persona::find($id_persona);
+				$persona->apellido_paterno = $solicitud->apellidopaterno;
+				$persona->apellido_materno = $solicitud->apellidomaterno;
+				$persona->nombres = $solicitud->nombre;
+				$persona->fecha_nacimiento = $solicitud->fechanacimiento;
+				$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
+				$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
+				$persona->id_ubigeo_nacimiento = "150101";
+				$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
+				$persona->direccion = $solicitud->domicilio;
+				$persona->numero_celular = $solicitud->numerocelular;
+				$persona->correo = $solicitud->correoelectronico;
+				$persona->id_nacionalidad = 16;
+				$persona->id_tipo_persona = 1;
+				$persona->estado = 1;
+				$persona->id_usuario_inserta = 1;
+				$persona->save();
+			}
 			
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $id_persona;
@@ -733,8 +991,8 @@ class AgremiadoController extends Controller
 			$agremiado->clave = 0;
 			$agremiado->id_ubicacion = 334;
 			
-			//$agremiado->id_situacion = "74";
-			$agremiado->id_situacion = "73";
+			$agremiado->id_situacion = "74";
+			//$agremiado->id_situacion = "73";
 			$agremiado->id_usuario_inserta = 1;
 			$agremiado->save();
 			$id_agremiado = $agremiado->id;	
@@ -829,6 +1087,23 @@ class AgremiadoController extends Controller
 				
 			}
 			
+			$data_string3 = '{"idSolicitud":'.$solicitud->idsolicitud.'}';
+			$ch3 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/');		
+			curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch3, CURLOPT_POSTFIELDS, $data_string3);
+			curl_setopt($ch3, CURLOPT_HTTPHEADER, array('x-token: '.$token, 'Content-Type: application/json'));
+			curl_setopt($ch3, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($ch3, CURLOPT_SSL_VERIFYPEER, false);
+			
+			$resultWebApi3 = curl_exec($ch3);
+			
+			if($errno = curl_errno($ch3)) {
+				$error_message = curl_strerror($errno);
+				echo "cURL error ({$errno}):\n {$error_message}";
+			}
+			
+			$dataWebApi3 = json_decode($resultWebApi3);
 			
 		}
 		
@@ -1476,7 +1751,31 @@ class AgremiadoController extends Controller
 	
 	public function obtener_agremiado($tipo_documento,$numero_documento){
 
-        $agremiado_model = new Agremiado;
+		$agremiado_model = new Agremiado;
+		if($tipo_documento=="87"){
+
+			//print_r("hi");exit();
+			$resultado = $agremiado_model->getAgremiadoLiquidacion($numero_documento);
+
+			if(isset($resultado->numero_documento)){
+				//echo("DNI");
+				$tipo_documento = $resultado->id_tipo_documento;
+				$numero_documento = $resultado->numero_documento;
+				//echo($resultado->numero_documento);
+
+			}else if(isset($resultado->ruc)){
+			//	echo("RUC");
+				$tipo_documento="79";
+				$numero_documento=$resultado->ruc;
+
+			}
+
+		}
+
+		//print_r($resultado);
+		//exit();
+        
+		$agremiado_model = new Agremiado;
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
         $agremiado = $agremiado_model->getAgremiado($tipo_documento,$numero_documento);
@@ -1485,6 +1784,394 @@ class AgremiadoController extends Controller
         echo json_encode($array);
 
     }
+
+	public function obtener_representante($tipo_documento,$numero_documento){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getRepresentante($tipo_documento,$numero_documento);
+
+		if(!$agremiado && $tipo_documento=="79"){
+/*
+			$persona_buscar = Persona::where("numero_ruc",$numero_documento)->where("estado","1")->first();
+            $dni = $persona_buscar->numero_documento;
+
+			if($dni){
+				$empresa = new Empresa;				
+				$empresa->ruc = $persona_buscar->numero_ruc ;
+				$empresa->nombre_comercial = $persona_buscar->desc_cliente_sunat;
+				$empresa->razon_social = $persona_buscar->desc_cliente_sunat;
+				$empresa->telefono = $persona_buscar->numero_celular;
+				$empresa->correo = $persona_buscar->correo;
+				$empresa->direccion = $persona_buscar->direccion;
+				$empresa->id_usuario_inserta = 1;
+				$empresa->save();				
+			}
+*/
+			$persona_buscar = Persona::where("numero_ruc", $numero_documento)->where("estado", "1")->first();
+
+			if ($persona_buscar) {
+				$dni = $persona_buscar->numero_documento ?? null;
+				
+				if ($dni) {
+					$empresa = new Empresa;                
+					$empresa->ruc = $persona_buscar->numero_ruc;
+					$empresa->nombre_comercial = $persona_buscar->desc_cliente_sunat ?? '';
+					$empresa->razon_social = $persona_buscar->desc_cliente_sunat ?? '';
+					$empresa->telefono = $persona_buscar->numero_celular ?? '';
+					$empresa->email = $persona_buscar->correo ?? '';
+					$empresa->direccion = $persona_buscar->direccion ?? '';
+					$empresa->id_usuario_inserta = 1;
+					$empresa->save();                
+				}
+			}
+
+			$agremiado = $agremiado_model->getRepresentante($tipo_documento,$numero_documento);
 			
+		}
+		//print_r($agremiado);
+		//exit();
+		
+
+		/*
+		if( $agremiado && $tipo_documento=="79"){  //RUC
+			echo($agremiado)
+		}
+			*/
+
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
+
+	public function obtener_datos_agremiado($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatos($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
+	public function obtener_datos_agremiado_proyectista($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosProyectista($numero_cap);
+
+		if (!$agremiado) {
+			$sw = false;
+		}
+
+        return response()->json([
+			"sw" => $sw,
+			"agremiado" => $agremiado
+		]);
+
+    }
+
+	public function obtener_datos_agremiado_id($id){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosById($id);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
+	public function obtener_datos_agremiado_coordinador_zonal($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosCoordinadorZonal($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
+	public function obtener_datos_agremiado_revisor_urbano($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+		$agremiado2 = Agremiado::where("numero_cap",$numero_cap)->where("estado","1")->first();
+		if($agremiado2)
+		{
+			$agremiado = $agremiado_model->getAgremiadoDatosRevisorUrbano($numero_cap);
+			$array["sw"] = $sw;
+			$array["agremiado"] = $agremiado;
+			echo json_encode($array);
+		}else {
+			$array["agremiado"] = "0";
+			echo json_encode($array);}
+        
+    }
+
+	public function obtener_local($id_regional){
+		
+		$local_model = new Locale;
+		$local = $local_model->getLocal($id_regional);
+		echo json_encode($local);
+	}
+
+	public function modal_suspension($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		$agremiado_model = new Agremiado;
+		
+		if($id>0){
+			$suspension = Suspensione::find($id);
+		}else{
+			$agremiado = $agremiado_model->getAgremiadoAll();
+			$suspension = new Suspensione;
+
+		}
+		
+		$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.agremiado.modal_suspension',compact('id','suspension','agremiado'));
+	
+	}
+
+	public function send_agremiado_suspension(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$suspension = new Suspensione;
+			$suspension->id_usuario_inserta = $id_user;
+		}else{
+			$suspension = Suspensione::find($request->id);
+			$suspension->id_usuario_actualiza = $id_user;
+		}
+		
+		$suspension->id_agremiado = $request->id_agremiado;
+		$suspension->fecha_inicio = $request->fecha_inicio;
+		$suspension->fecha_fin = $request->fecha_fin;
+		$suspension->documento = $request->ruta_documento;
+		//$suspension->estado = 1;
+		//$suspension->id_usuario_inserta = $id_user;
+		$suspension->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_suspension('i',$request->id_agremiado,$request->fecha_inicio,$fecha_fin);
+		
+		
+			
+    }
+	
+	public function obtener_suspension($id_agremiado){
+
+        $suspension_model = new Suspensione;
+        $sw = true;
+        $suspension_lista = $suspension_model->listar_suspension_agremiado($id_agremiado);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
+
+    }
+
+	public function exportar_listar_agremiado($id_regional, $numero_cap, $numero_documento, $agremiado, $fecha_inicio, $fecha_fin, $id_situacion, $id_categoria, $id_act_gremial) {
+		
+		if($id_regional==0)$id_regional = "";
+		if($numero_cap==0)$numero_cap = "";
+		if($numero_documento==0)$numero_documento = "";
+		if($agremiado=="0")$agremiado = "";
+		if($fecha_inicio==0)$fecha_inicio = "";
+		if($fecha_fin==0)$fecha_fin = "";
+		if($id_situacion==0)$id_situacion = "";
+		if($id_categoria==0)$id_categoria = "";
+		if($id_act_gremial==0)$id_act_gremial = "";
+	
+		$agremiado_model = new Agremiado;
+		$p[]=$id_regional;
+		$p[]=$numero_cap;
+		$p[]=$numero_documento;
+		$p[]=$agremiado;
+		$p[]=$fecha_inicio;
+		$p[]=$fecha_fin;
+		$p[]=$id_situacion;
+		$p[]=$id_categoria;
+		$p[]=$id_act_gremial;
+		$p[]=1;
+		$p[]=25000;
+		$data = $agremiado_model->listar_agremiado_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion", "Categoria", "Act. Gremial"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->tipo_documento, $r->numero_documento, $r->numero_cap,$r->region,$r->fecha_colegiado, $r->agremiado, $r->fecha_nacimiento, $r->situacion, $r->categoria, $r->act_gremial));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_agremiados.xlsx');
+		
+    }
+
+	public function consulta_reporte_deuda(){
+
+		/*$agremiado_model = new Agremiado;
+		$agremiado = $agremiado_model->getTipoNombre();*/
+		$tablaMaestra_model = new TablaMaestra;
+		$concepto_model = new Concepto;
+
+		$concepto = $concepto_model->getConceptoAllDenominacion();
+		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+		
+		return view('frontend.agremiado.all_deuda',compact('mes','concepto'));
+	
+	}
+
+	public function listar_reporte_deudas_ajax(Request $request){
+	
+		$valorizacion_model = new Valorizacione;
+		$p[]=$request->anio;
+		$p[]=$request->concepto;
+		$p[]=$request->mes;
+		$p[]=$request->pago;
+        $p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $valorizacion_model->listar_reporte_deudas_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	}
+
+	public function exportar_lista_deudas($anio, $concepto, $mes, $pago) {
+		
+		if($anio==0)$anio = "";
+		if($concepto==0)$concepto = "";
+		if($mes==0)$mes = "";
+		if($pago==0)$pago = "";
+	
+		$valorizacion_model = new Valorizacione;
+		$p[]=$anio;
+		$p[]=$concepto;
+		$p[]=$mes;
+		$p[]=$pago;
+        $p[]=1;
+		$p[]=1;
+		$p[]=10000;
+		$data = $valorizacion_model->listar_reporte_deudas_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Beneficiario","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion","Serie","Numero", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->beneficiario, $r->concepto,$r->plan,$r->edad, $r->monto, $r->pago, $r->serie, $r->numero, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_deudas.xlsx');
+		
+    }
+
+	public function obtener_proyectista($id_agremiado){
+
+        $derechoRevision_model = new DerechoRevision;
+        $sw = true;
+        $suspension_lista = $suspension_model->listar_suspension_agremiado($id_agremiado);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
+
+    }
+
+	public function listar_valorizacion_periodo_deuda(Request $request){
+       
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getGeneraAnioDeuda();
+
+        //print_r($resultado);exit();
+		return $resultado;
+
+    }
+
+	public function validar_agremiado_multa($numero_cap){
+
+		$agremiado_model = new Agremiado;
+
+		$agremiado = $agremiado_model->getAgremiado('85',$numero_cap);
+
+		$valorizaciones_model = new Valorizacione();
+		$agremiado_multa = $valorizaciones_model->getAgremiadoMulta($agremiado->id);
+
+		echo json_encode($agremiado_multa);
+
+	}
+
+	public function modal_generar_cuota_agremiado($id){
+
+		$agremiado = new Agremiado;
+		//dd($id);exit();
+
+		return view('frontend.agremiado.modal_generar_cuota_agremiado',compact('id','agremiado'));
+	
+	}
+
+	public function send_generar_cuotas($id_agremiado, $anio_inicio, $mes_inicio ,$fecha_fin){
+	
+		$agremiado_model = new Agremiado;
+		$p[]=$anio_inicio;
+		$p[]=$mes_inicio;
+		$p[]=$fecha_fin;
+		$p[]=$id_agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_cuota_fecha_inicio_individual($p);
+		
+	}
+
 }
+
+class InvoicesExport implements FromArray
+{
+	protected $invoices;
+
+	public function __construct(array $invoices)
+	{
+		$this->invoices = $invoices;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
+}
+
+
+
 

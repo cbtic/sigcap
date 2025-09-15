@@ -119,7 +119,7 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre">
+						<input class="form-control form-control-sm" id="anio" name="anio" placeholder="Año">
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -143,10 +143,14 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Año</th>
-                            <th>Porcentaje calculo Edificaciones</th>
-                            <th>Valor metro cuadrado habilitacion urbana</th>
+                            <th>% C&aacute;lculo Edificaciones</th>
+                            <th>Valor M&iacute;nimo % de UIT - Edificaciones</th>
+                            <th>Valor m2 HU</th>
+                            <th>Costo M&iacute;nimo - HU</th>
+                            <th>Valor M&aacute;ximo Ha (m2) - HU</th>
                             <th>Valor UIT</th>
                             <th>IGV</th>
+                            <th>Aplica Tributo Mayor a (RH)</th>
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>

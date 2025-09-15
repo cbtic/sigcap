@@ -7,14 +7,19 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
-	$('#btnNuevo').click(function () {
-		modalPersona(0);
+	$('#btnCalcular').click(function () {
+		fn_calcular();
 	});
 		
 	cargarFondoComun();
 	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
+
+	$('#btnDescargar').on('click', function () {
+		DescargarPdfFondoComun()
+
+	});
 	
 	/*
 	$('#fecha_inicio').datepicker({
@@ -475,7 +480,7 @@ function datatablenew() {
 					fnCallback(result);
 				},
 				"error": function (msg, textStatus, errorThrown) {
-					//location.href="login";
+					//location.href="login";	2
 				}
 			});
 		},
@@ -663,16 +668,54 @@ function cargarFondoComun() {
 			$("#divPlanilla").html(result);
 		}
 	});
+}
 
+//obtenerAnioPerido();
+
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
 }
 
 function fn_calcular(){
 	//var anio = $('#anio').val();
 	//var mes = $('#mes').val();
+    var msg = "";
+    var periodo = $('#id_periodo').val();
+	
+	if(periodo == "")msg += "Debe seleccionar el Periodo a Generar <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
+
 	var p = {};
 	p.anio =  $('#anio').val();
 	p.mes = $('#mes').val();
+	p.periodo  = $('#id_periodo').val();
 
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
 	//alert(mes);
     $.ajax({
             url: "/fondoComun/calcula_fondo_comun",
@@ -681,7 +724,9 @@ function fn_calcular(){
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				cargarFondoComun();
+				$('.loader').hide();	
             }
+			
     });
 }
 
@@ -730,6 +775,21 @@ function validarComprobanteSunat() {
 		}
 	});
 
+
+}
+
+function DescargarPdfFondoComun(){
+
+	var periodo = $('#id_periodo_').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+
+	var href = '/fondoComun/descargar_pdf_fondo_comun/'+periodo+'/'+anio+'/'+mes;
+	window.open(href, '_blank');
 
 }
 

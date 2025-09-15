@@ -10,6 +10,7 @@ use App\Models\ComisionDelegado;
 use App\Models\Comisione;
 use App\Models\TablaMaestra;
 use App\Models\Municipalidade;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 
 class FondoComunController extends Controller
@@ -30,21 +31,21 @@ class FondoComunController extends Controller
 
         $municipalidad_model = new Municipalidade;
 
-        $municipalidad = $municipalidad_model -> getMunicipalidadAll();
+        $municipalidad = $municipalidad_model->getMunicipalidadAll();
 
-		$anio = range(date('Y'), date('Y') - 20); 
-		/*
+	
+		$anio = range(date('Y'), date('Y') - 20); 		
 		$mes = [
             '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
             '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
             '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
         ];
-		*/
+		
 
 		$tablaMaestra_model = new TablaMaestra;
 
-		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+		//$mes = $tablaMaestra_model->getMaestroByTipo(116);
 
 		$mes_actual = date("m");
 
@@ -55,16 +56,24 @@ class FondoComunController extends Controller
 
 		$comision_model = new Comisione;
 		
-		$comision = $comision_model->getComisionAll("","","1");
-		
-		$periodo = $periodoComisione_model->getPeriodoAll();
+		$comision = $comision_model->getComisionAll("","","","1");
 
-        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad'));
+
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+
+
+		//print_r($mes); exit();
+
+        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad','periodo_activo', 'periodo_ultimo'));
+		
     }
 
     public function listar_fondo_comun_ajax(Request $request){
 	
 		$fondo_comun_model = new FondoComun;
+		$p[]=$request->id_periodo;
 		$p[]=$request->anio;
 		$p[]=$request->mes;
 		$p[]=$request->idMunicipalidad;
@@ -72,6 +81,8 @@ class FondoComunController extends Controller
 		$p[]=$request->credipago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
+
+		//print_r($p); exit();
 
 		$data = $fondo_comun_model->listar_fondo_comun_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
@@ -92,9 +103,12 @@ class FondoComunController extends Controller
 		//exit("hola");
 		$anio =$request->anio;
 		$mes =$request->mes;
+		$periodo =$request->periodo;
+
+		//print_r($periodo); exit();
 
 		$fondo_comun_model = new FondoComun;
-		$data = $fondo_comun_model->calcula_fondo_comun($anio, $mes);
+		$data = $fondo_comun_model->calcula_fondo_comun($periodo ,$anio, $mes);
 
 		$result["aaData"] = $data;
 
@@ -105,13 +119,74 @@ class FondoComunController extends Controller
 		
 		$anio = $request->anio;
 		$mes = $request->mes;
-		$municipalidad = $request->idMunicipalidad;
+		$periodo = $request->id_periodo;
 
 		$fondo_comun_model = new FondoComun;
-		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $municipalidad);
+		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $periodo);
 
-        return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun'));
+        return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun','anio','mes'));
 
     }
+
+	public function fondoComun_pdf($id_ubigeo,$anio,$mes)
+	{
+		$fondo_comun_model = new FondoComun();
+
+		$municipalidad_model = new Municipalidade();
+
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$municipalidad = $municipalidad_model->getIdUbigeoByMunicipalidad($id_ubigeo);
+		$municipalidad_denominacion = $municipalidad[0]->denominacion;
+		//var_dump($municipalidad_denominacion);exit();
+		$fondoComun = $fondo_comun_model->ListarDetalleFondoComun($id_ubigeo, $anio, $mes);
+		//var_dump($fondoComun);exit();
+
+		$pdf = Pdf::loadView('frontend.fondoComun.fondoComun_pdf',compact('fondoComun','municipalidad_denominacion','anio','mesEnLetras'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('fondoComun_pdf.pdf');
+	}
+
+	public function descargar_pdf_fondo_comun($periodo,$anio,$mes)
+	{
+
+		if($periodo==0)$periodo = "";
+		if($anio==0)$anio = "";
+		if($mes==0)$mes = "";
+
+		$fondo_comun_model = new FondoComun;
+		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $periodo);
+
+		$periodo_actual = PeriodoComisione::find($periodo);
+
+		$denominacion_periodo = $periodo_actual->descripcion;
+
+		$mes = ltrim($mes,'0');
+
+		$mesEnLetras = $this->mesesALetras($mes);
+		
+		$pdf = Pdf::loadView('frontend.fondoComun.descargar_pdf_fondo_comun',compact('fondoComun','denominacion_periodo','mesEnLetras','anio'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('descargar_pdf_fondo_comun.pdf');
+	}
+
+	function mesesALetras($mes) { 
+		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
+		return $meses[$mes];
+	}
 	
 }

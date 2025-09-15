@@ -22,7 +22,7 @@ class Multa extends Model
 
     }
 
-    public function listar_multas_ajax($p){
+    public function listar_multa_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_multa_paginado',$p);
 

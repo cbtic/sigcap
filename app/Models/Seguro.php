@@ -23,10 +23,26 @@ class Seguro extends Model
 
     function getSeguroAll(){
 
+        $cad = "select s.*
+        from seguros s
+        where s.estado='1'
+        and exists 
+        (select 1 from seguros_planes sp 
+        where sp.id_seguro = s.id
+        and current_date between sp.fecha_inicio and sp.fecha_fin)
+        order by s.nombre";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+
+    function getPlanId($p){
+
         $cad = "select *
-                from seguros
-                where estado='1' 
-                order by nombre ";
+                from seguro_planes
+                where estado='1' and id_seguro=". $p . 
+                " order by nombre ";
     
 		$data = DB::select($cad);
         return $data;

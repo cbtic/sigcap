@@ -148,27 +148,73 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													
+                        <?php 
+                        if($periodo_activo){
+                        ?>
+                        <input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+                        <select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" disabled="disabled">
+                            <option value="">--Periodo--</option>
+                            <?php
+                            foreach ($periodo as $row) {?>
+                            <option value="<?php echo $row->id?>" 
+                            <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+                            <?php 
+                            }
+                            ?>
+                        </select>
+                        
+                        <?php
+                        }else{
+                        ?>
+                        <select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerAnioPerido()">
+                            <option value="">--Periodo--</option>
+                            <?php
+                            foreach ($periodo as $row) {?>
+                            <option value="<?php echo $row->id?>" 
+                            <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+                            <?php 
+                            }
+                            ?>
+                        </select>
+                        <?php } ?>
+                    </div>
 				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N&uacute;mero CAP">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
 					</div>
-                    
+
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="mes_reintegro_bus" id="mes_reintegro_bus" class="form-control form-control-sm" onChange="">
+                            <option value="">--Selecionar Mes--</option>
+                            <?php
+                            foreach ($mes as $row) {
+                            ?>
+                            <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 						
                         <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
                         <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
-
+                        <input class="btn btn btn-secondary" value="Descargar Pdf" name="descargar" type="button" id="btnDescargar" style="margin-left:15px" /> 
 					</div>
 				</div>
 				
@@ -180,7 +226,8 @@
                         <tr style="font-size:13px">
                             <th>N° CAP</th>
                             <th>Nombre</th>
-                            <th>Monto</th>
+                            <th>Tiene Recibo</th>
+							<th>Monto</th>
                             <th>N° Cuotas</th>
                             <th>Fecha</th>
                             <th>Estado</th>

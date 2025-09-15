@@ -31,12 +31,18 @@ $(document).ready(function () {
 		//modalComision(0);
 		fn_guardar();
 	});
+	
+	$('#btnCerrarComision').click(function () {
+		fn_cerrar_comision();
+	});
 
 	$('#btnNuevoComision').click(function () {
-		modalDiaSemana(0);
+		var tipo_comision = $("#tipo_comision").val();
+		if(tipo_comision==2)fn_guardarMunicipalidadIntegrada();
+		else modalDiaSemana(0);
 		//fn_guardarMunicipalidadIntegrada();
 	});
-		
+	
 	//datatablenew();
 	cargarMunicipalidades();
 
@@ -193,9 +199,9 @@ function cargarMunicipalidadesIntegradas(){
     
 	//$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
 	//$("#tblMunicipalidadIntegrada tbody").html("");
-	var periodo = $("#periodo").val();
+	var periodo = $("#frmAfiliacion #periodo").val();
 	var tipo_agrupacion = $("#tipo_agrupacion").val();
-	var tipo_comision = $("#tipo_comision").val();
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
 	if(tipo_comision=="")tipo_comision="0";
 	
 	$.ajax({
@@ -224,16 +230,33 @@ function cargarMunicipalidadesIntegradas(){
 	
 }
 
+function modalMunicipalidadIntegrada(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_municipalidadesIntegrada/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 function cargarComisiones(){
 	
+	var periodo = $("#frmAfiliacion #periodo").val();
 	var cad_id = $("#cad_id").val();
 	if(cad_id=="")cad_id="0";
 
 	var estado = $("#estado").val();
-	var tipo_comision = $("#tipo_comision").val();
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
 	
 	$.ajax({
-			url: "/comision/obtener_comision/"+tipo_comision+"/"+cad_id+"/"+estado,
+			url: "/comision/obtener_comision/"+periodo+"/"+tipo_comision+"/"+cad_id+"/"+estado,
 			type: "GET",
 			success: function (result) {  
 			
@@ -834,10 +857,23 @@ function eliminarComision(id,estado){
 
 function fn_eliminar_muniIntegrada(id,estado){
 	
+	/*
+	var periodo = $("#frmAfiliacion #periodo").val();
+	var cad_id = $("#cad_id").val();
+	if(cad_id=="")cad_id="0";
+
+	var estado = $("#estado").val();
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
+	*/
     $.ajax({
             url: "/comision/eliminar_muniIntegrada/"+id+"/"+estado,
             type: "GET",
+			dataType: 'json',
             success: function (result) {
+				if(result.msg!=""){
+					bootbox.alert(result.msg);
+					return false;	
+				}
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				datatablenew();
 				cargarMunicipalidadesIntegradas();
@@ -850,8 +886,13 @@ function fn_eliminar_comision(id,estado){
     $.ajax({
             url: "/comision/eliminarComision/"+id+"/"+estado,
             type: "GET",
+			dataType: 'json',
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
+				if(result.msg!=""){
+					bootbox.alert(result.msg);
+					return false;	
+				}
 				datatablenew();
 				cargarComisiones();
             }
@@ -878,10 +919,31 @@ function fn_guardar(){
             data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
 			dataType: 'json',
             success: function (result) {
-					//datatablenew();
-					cargarMunicipalidades();
-					cargarMunicipalidadesIntegradas();
-					cargarComisiones();
+				
+					if(result.obs!=""){
+
+						//bootbox.alert("Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada");
+						//return false;
+
+						bootbox.confirm({ 
+							size: "small",
+							message: "Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada, desea volver a registrar", 
+							callback: function(result){
+								if (result==true) {
+									fn_guardar_nuevo();
+								}
+							}
+						});
+
+
+					}else{
+
+						cargarMunicipalidades();
+						cargarMunicipalidadesIntegradas();
+						cargarComisiones();
+
+					}	
+				
 					
 				if(result.sw=='false'){
 					Swal.fire("El RUC ingresado ya existe !!!")
@@ -890,6 +952,45 @@ function fn_guardar(){
             }
     });
 }
+
+function fn_guardar_nuevo(){
+
+	var msg = "";
+    var periodo = $("#periodo").val();
+	var tipo_comision = $("#tipo_comision").val();
+	
+	if(periodo=="")msg += "Debe seleccionar un periodo<br>";
+	if(tipo_comision=="")msg += "Debe seleccionar un tipo de comision<br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+    $.ajax({
+			url: "/comision/send_comision_nuevo",
+            type: "POST",
+            data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+			dataType: 'json',
+            success: function (result) {
+				
+					/*
+					if(result.obs!=""){
+
+						bootbox.alert("Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada");
+						return false;
+
+					}
+					*/
+				
+					cargarMunicipalidades();
+					cargarMunicipalidadesIntegradas();
+					cargarComisiones();
+						
+            }
+    });
+}
+
 
 
 function fn_guardarMunicipalidadIntegrada(){
@@ -930,4 +1031,62 @@ function modalAsignarDelegado(id){
 
 }
 
+function fn_cerrar_comision(){
+
+	var periodo = $("#frmAfiliacion #periodo").val();
+	var tipo_comision=$("#frmAfiliacion #tipo_comision").val();
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+    $.ajax({
+			url: "/comision/send_asignar_agremiado_rol",
+            type: "POST",
+            data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+            success: function (result) {  
+				bootbox.alert("Se cerro correctamente la asignaci&oacute;n de plaza"); 
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
+				$('#openOverlayOpc').modal('hide');
+				$('.loader').hide();
+				return false;
+            }
+    });
+}
+
+function eliminarMunicipalidadDetalle(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar la Municipalidad del detalle?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_municipalidad_detalle(id);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_municipalidad_detalle(id){
+	
+    $.ajax({
+            url: "/comision/eliminar_municipalidad_detalle/"+id,
+            type: "GET",
+            success: function (result) {
+				cargarMunicipalidadDetalle();
+				limpiar();
+				
+				obtenerPeriodo();
+				obtenerTipoComision();
+                
+				//datatablenew();
+				//cargarMunicipalidadesIntegradas();
+            }
+    });
+}
 

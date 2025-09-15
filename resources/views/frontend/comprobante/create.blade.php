@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <link media="all" type="text/css" rel="stylesheet" href="https://app-gsf.saludpol.gob.pe:29692/css/datatables/dataTables.bootstrap.min.css">
 <script src="https://app-gsf.saludpol.gob.pe:29692/js/datatables/datatables.min.js"></script>
-
+-->
 <!--<script src="<?php echo URL::to('/') ?>/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>-->
 <!--<script src="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>-->
 
@@ -55,19 +55,37 @@
             // console.log('Opción seleccionada:', $(this).val());
             //print_r($(this).val());
             if ($(this).val() == 1) {
-
                 OcultarTarjeta();
+                MostrarMedioPago();                
             }
+
+            //alert($(this).val());
 
             if ($(this).val() == 2) {
                 MostrarTarjeta();
+                OcultarMedioPago();
+
+                var id_tipooperacion = $('#id_tipooperacion_').val();
+                var monto_detraccion = $('#monto_detraccion').val();
 
                 $('#numcuota_').val("1");
-                var $total = $('#total_fac').val();
+                var $total = $('#total_fac_').val();
+                //alert($total);
+
+                if(id_tipooperacion=='2')$total = Number($total) - Number(monto_detraccion);
+
+                if($("#chkRetencion").is(':checked')) {
+                    var retencion = $('#monto_retencion').val();
+                    total = total- Number(retencion);
+	            }
                 //alert($('#totalP').val());
+
                 $('#totalcredito_').val($total)
                 $('#plazo_ ').val("30");
                 generarCuotas();
+
+                $('#estado_pago').val("P");
+                
             }
             //
         });
@@ -101,9 +119,19 @@
         tarjeta.style.display = 'inline';
     }
 
+    function MostrarMedioPago() {
+        var MedioPago = document.getElementById('card_MedioPago');
+        MedioPago.style.display = 'inline';
+    }
+
     function OcultarTarjeta() {
         var tarjeta = document.getElementById('card_cuotas');
         tarjeta.style.display = 'none';
+    }
+
+    function OcultarMedioPago() {
+        var MedioPago = document.getElementById('card_MedioPago');
+        MedioPago.style.display = 'none';
     }
 
     var cuentaproductos = 0;
@@ -137,6 +165,9 @@
 
     function generarCuotas() {
 
+        var cantidad = $("#tblConceptos tr").length;
+        if (cantidad > 1) $("#tblConceptos tr").remove();
+
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
         var total = $('#totalcredito_').val();
@@ -144,14 +175,36 @@
         var d = new Date();
         //fecha_cuota = FormatFecha(sumarDias(d, plazo))
 
+        var newRow = "";
         for (let i = 0; i < nroCuotas; i++) {
-            n++;
+
             fecha_cuota = FormatFecha(sumarDias(d, 30));
 
-            total_frac = parseFloat((total) / (nroCuotas)).toFixed(1);
+            total_frac = parseFloat((total) / (nroCuotas)).toFixed(2);
 
-            $('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td>   <td width="10%"> <input type="text"  name="importe_" id="importe_" value="' + total_frac + '" class="form-control form-control-sm"></td>  </td>   <td width="10%"> <input type="date"  name="fechacuota_" id="fechacuota_" value="' + fecha_cuota + '" class="form-control form-control-sm"></td>  </tr> ');
-            $('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][Monto]" value=""> </td>');
+            newRow = "";
+            if (i == 0) {
+                n = 1
+                newRow += '<tr>';
+                newRow += '<td width="5%">' + n + '</td>  ';
+                newRow += '<td> <input  name="credito[' + n + '][total_frac]" value="' + total_frac + '" > </td>';
+                newRow += '<td> <input  name="credito[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker "> </td>';
+
+
+                newRow += '</tr>';
+            } else {
+                n++;
+                newRow += '<tr>';
+                newRow += '<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> ';
+                newRow += '<td> <input  name="credito[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
+                newRow += '<td> <input  name="credito[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker  "> </td>';
+
+
+                newRow += '</tr>';
+            }
+
+            //alert(newRow);
+            $('#tblConceptos tbody').append(newRow);
         }
 
     }
@@ -274,6 +327,87 @@
         background: #3c8dbc;
         color: #FFFFFF;
     }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
+
+
+    /* End - Overriding styles for this page */
+    /*********************************************************/
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 42px;
+        height: 24px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+
+
+
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    inpu        t:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .no {
+        padding-right: 3px;
+        padding-left: 0px;
+        display: block;
+        width: 20px;
+        float: left;
+        font-size: 11px;
+        text-align: right;
+        padding-top: 5px
+    }
+
+    .si {
+        padding-right: 0px;
+        padding-left: 3px;
+        display: block;
+        width: 20px;
+        float: left;
+        font-size: 11px;
+        text-align: left;
+        padding-top: 5px
+    }
 </style>
 
 
@@ -316,7 +450,18 @@
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmFacturacion" name="frmFacturacion" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
-                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
+                        <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
+                        <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
+                        <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
+                        <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
+                        <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
+                        <input type="hidden" name="tipo_documento_b" id="tipo_documento_b" value="<?php echo $tipo_documento_b; ?>">
+                        
+                        <input type="hidden" name="persona2" id="persona2" value="">
+                        <input type="hidden" name="ubicacion2" id="ubicacion2" value="">
+
+
+                        <input type="hidden" name="TipoF" id="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
                                                                     } ?>">
                         <input type="hidden" name="vestab" value="1">
@@ -341,6 +486,16 @@
                         <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {
                                                                             echo $facturas->id;
                                                                         } ?>">
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <?php
+                                $disabled = "disabled='disabled'";
+                                ?>
+                            </div>
+                        </div>
+
+
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div id="" class="row">
@@ -363,7 +518,7 @@
                                                             <select name="serieF" id="serieF" class="form-control form-control-sm">
                                                                 <?php if ($trans == 'FA' || $trans == 'FN') { ?>
                                                                     <?php foreach ($serie as $row) : ?>
-                                                                        <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
+                                                                        <option value="<?php echo $row->denominacion ?>" <?php if($row->predeterminado == '1')echo "selected='selected'"?>><?php echo $row->denominacion ?></option>                                                                        
                                                                     <?php endforeach; ?>
                                                                 <?php } ?>
                                                                 <?php if ($trans == 'FE') { ?>
@@ -401,7 +556,7 @@
                                                             <option value="">--Selecionar--</option>
                                                             <?php
                                                             foreach ($tipooperacion as $row) { ?>
-                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == "0101") echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
                                                             <?php
                                                             }
                                                             ?>
@@ -423,6 +578,7 @@
                                                     </div>
 
                                                 </div>
+
                                                 <div id="" class="row">
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <label class="form-control-sm">RUC/DNI</label>
@@ -434,12 +590,12 @@
                                                                                                                                                     echo $comprobante->cod_tributario;
                                                                                                                                                 } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
-                                                        <button type="button" data-toggle="modal" data-target="#duenoCargaModal" id="" class="btn btn-link btn-xsm">Buscar Empresa</button>
+                                                        
                                                     </div>
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Razón Social/Nombre</label>
-                                                            <input type="text" name="numero_documento" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="razon_social" readonly id="razon_social" value="<?php if ($trans == 'FA') {
                                                                                                                                                     echo $empresa->razon_social;
                                                                                                                                                 }
                                                                                                                                                 if ($trans == 'FE') {
@@ -450,7 +606,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="direccion"  id="direccion" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->direccion;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
@@ -461,20 +617,199 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Email</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="email"  id="email" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->email;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
-                                                                                                                                            echo $comprobante->correo_des;
+                                                                                                                                            echo $comprobante->email;
                                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div id="" class="row">
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="form-control-sm">RUC/DNI</label>
+                                                        <div class="input-group">
+                                                            <!--
+                                                            <input type="text" name="numero_documento2"  id="numero_documento2" value="" placeholder="" class="form-control form-control-sm">
+                                                                                                                                    -->
+
+                                                            <input class="form-control input-sm text-uppercase" type="text" name="numero_documento2" id="numero_documento2" autocomplete="OFF" maxlength="12" required="" tabindex="0">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerRepresentante()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                                            </span>
+                                                        </div>                                                        
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Razón Social/Nombre</label>
+                                                            <input type="text" name="razon_social2" readonly id="razon_social2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Dirección</label>
+                                                            <input type="text" name="direccion2"  id="direccion2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Email</label>
+                                                            <input type="text" name="email2"  id="email2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                                <div id="fsFiltro" class="card-body">
+                                            
+                                            <div id="" class="row"   >
+                                            
+                                            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"> 
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm"> <strong> <?php  use Carbon\Carbon; 
+                                                                                                
+                                                                                              if ($trans == 'FA') {
+                                                                                                                             if ($nc) {
+                                                                                                                                $fecha=Carbon::parse($nc->fecha);
+                                                                                                                                echo 'El concepto esta asociado a una Nota de crédito con fecha ' . $fecha->format('d/m/Y');
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->numero;;
+                                                                                                                        } ?></strong></label>
+                                                        
+                                                            
+                                                    </div>
+                                                     
+                                                    
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Serie</label>
+                                                        
+                                                        <input type="text" name="serienc"  id="serieNC" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                            echo $nc->serie;
+                                                                                                                            }
+                                                                                                                            
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->serie;
+                                                                                                                            print_r( '$nc->seriec fe');
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                         
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF" style="display:none">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Número</label>
+                                                        <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                            echo $nc->numero;
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->numero;;
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                            
+                                                    </div>
+                                                     
+                                                    
+                                                </div>
+                                                
+                                                
+                                            
+
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        
+                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                             echo $nc->id_nc;
+                                                                                                                            }
+                                                                                                                            else
+                                                                                                                            {
+                                                                                                                                echo 0;
+
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                            echo $nc->fecha;
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                            echo $nc->fecha;
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        <input type="hidden" name="nc_nro_operacion" readonly id="nc_nro_operacion" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                            echo $nc->nro_operacion;
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                                if ($nc) {
+                                                                                                                            echo $nc->id;
+                                                                                                                                }
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        <input type="hidden" name="nc_monto" readonly id="nc_monto" value="<?php if ($trans == 'FA') {
+                                                            if ($nc) {
+                                                                                                                            echo $nc->monto;
+                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        <input type="hidden" name="nc_id_medio" readonly id="nc_id_medio" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {   
+                                                                                                                                if ($nc) { 
+                                                                                                                            echo $nc->id_medio;
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $nc->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        
+                                                        <input type="hidden" name="afecta_ingreso" readonly id="afecta_ingreso" value="<?php if ($trans == 'FN') {
+                                                                                                                            if ($nc) {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                            }
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>                                                                                                
+
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo de Operación</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
@@ -522,13 +857,23 @@
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Serie TR</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="numero_documento" id="numero_documento" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo $nc->serie;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Número TR</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="numero_documento" id="numero_documento" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo $nc->numero;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -575,12 +920,12 @@
                                                     <tr>
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
-                                                        <th width="40%">Descripción</th>
-                                                        <th width="40%">%Dscto.</th>
-                                                        <th class="text-right" width="15%">PU</th>
-                                                        <th class="text-right" width="15%">IGV</th>
-                                                        <th class="text-right" width="15%">P.Venta</th>
-                                                        <th class="text-right" width="15%">Total</th>
+                                                        <th width="35%">Descripción</th>
+                                                        <th class="text-right" width="10%">PU</th>                                                        
+                                                        <th class="text-right" width="10%">V.Venta</th>
+                                                        <th class="text-right" width="10%">Dscto.</th>
+                                                        <th class="text-right" width="10%">IGV</th>
+                                                        <th class="text-right" width="10%">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -594,7 +939,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                            s
+
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
@@ -602,6 +947,19 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
 
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac['id_concepto'] ?>" />
+
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][cantidad]" value="<?php echo $fac['cantidad'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['total'] ?>" />
+
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac['pu'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac['pv'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac['valor_venta_bruto'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['vv'] ?>" />                                                           
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][abreviatura]" value="<?php echo $fac['abreviatura'] ?>" />
+
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][unidad_medida_item]" value="<?php echo $fac['unidad_medida_item'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][unidad_medida_comercial]" value="<?php echo $fac['unidad_medida_comercial'] ?>" />
 
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
@@ -621,29 +979,38 @@
                                                                         echo $fac['descripcion'];
                                                                     } ?>
                                                                 </td>
-
-                                                                <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                            echo $fac['descuento'];
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                            if ($adelanto == 'S') {
+                                                                                                echo ($MonAd - $MonAd * 0.18);
+                                                                                            } else {
+                                                                                                echo number_format($fac['pv'],2);
+                                                                                            }
                                                                                         }
                                                                                         if ($trans == 'FE') {
-                                                                                            echo $fac['descuento'];
+                                                                                            echo number_format($fac['importe'], 2); 
                                                                                         } ?></td>
 
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo $fac['pu'];
+                                                                                                echo number_format($fac['vv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
-                                                                                            echo number_format($fac['importe'], 2);
+                                                                                            echo number_format($fac['pu'], 2);
                                                                                         } ?></td>
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                            echo number_format($fac['descuento']);
+                                                                                        }
+                                                                                        if ($trans == 'FE') {
+                                                                                            echo $fac['descuento'];
+                                                                                        } ?></td>                                                                                        
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo $fac['igv'];
+                                                                                                echo number_format($fac['igv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
@@ -651,19 +1018,9 @@
                                                                                         } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
-                                                                                                echo ($MonAd - $MonAd * 0.18);
-                                                                                            } else {
-                                                                                                echo $fac['pv'];
-                                                                                            }
-                                                                                        }
-                                                                                        if ($trans == 'FE') {
-                                                                                            echo number_format($fac['pu'], 2);
-                                                                                        } ?></td>
-                                                                <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                            if ($adelanto == 'S') {
                                                                                                 echo $MonAd;
                                                                                             } else {
-                                                                                                echo $fac['total'];
+                                                                                                echo number_format($fac['total'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
@@ -686,6 +1043,26 @@
                                                             </tr>
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
                                                         <?php } ?>
+                                                    <?php } ?>
+
+                                                    <?php
+                                                    $n = 0;
+                                                    foreach ($valorizad as $key => $val) {
+                                                    ?>
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id]" value="<?php echo $val['id'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][fecha]" value="<?php echo $val['fecha'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][denominacion]" value="<?php echo $val['denominacion'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][descripcion]" value="<?php echo $val['descripcion'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][monto]" value="<?php echo $val['monto'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][moneda]" value="<?php echo $val['moneda'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id_moneda]" value="<?php echo $val['id_moneda'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][descuento]" value="<?php echo $val['descuento'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][cod_contable]" value="<?php echo $val['cod_contable'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id_concepto]" value="<?php echo $val['id_concepto'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
+
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][cantidad]" value="<?php echo $val['cantidad'] ?>" />
+
                                                     <?php } ?>
 
                                                     <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />
@@ -728,7 +1105,15 @@
                                                     </tr>
                                                     <tr>
                                                         <th></th>
-                                                        <th>Ope Gravadas</th>
+                                                        <th>
+                                                        @if($igv!=0)
+                                                            {{"  OP.GRAVADAS "}}
+                                                        @else
+                                                            {{"  OP.INAFECTAS "}}
+                                                        @endif 
+                                                            
+                                                        
+                                                        </th>
                                                         <th></th>
                                                         <th></th>
                                                         <th class="text-right"><span id="gravadas"></span> <?php if ($trans == 'FA') {
@@ -777,7 +1162,34 @@
                                                                                                             } ?></th>
 
                                                         <input type="hidden" name="total_fac" id="total_fac" value="<?php echo number_format($total, 2); ?>">
+
+                                                        <input type="hidden" name="total_fac_" id="total_fac_" value="<?php echo $total; ?>">
+
                                                     </tr>
+
+                                                    <tr style="display:none" id="tr_total_pagar">
+                                                        <th></th>
+                                                        <th>Total a Pagar</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        
+                                                        <th style="padding-bottom:0px;margin-bottom:0px">
+                                                            <input type="text" readonly name="total_pagar" id="total_pagar" value="0" class="form-control form-control-sm text-center">
+                                                        </th>
+
+                                                    </tr>  
+                                                    
+                                                    <tr style="display:none" id="tr_total_pagar_abono">
+                                                        <th></th>
+                                                        <th>Total a Pagar</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        
+                                                        <th style="padding-bottom:0px;margin-bottom:0px">
+                                                            <input type="text" readonly name="total_pagar_abono" id="total_pagar_abono" value="0" class="form-control form-control-sm text-center">
+                                                        </th>
+
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
@@ -812,11 +1224,11 @@
                                             <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Estado de Pago</label>
-                                                    <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                        <option value="P">
-                                                            <?php echo "Pendiente" ?></option>
+                                                    <select name="estado_pago" id="estado_pago" class="form-control form-control-sm" >
                                                         <option value="C">
                                                             <?php echo "Cancelado" ?></option>
+                                                        <option value="P">
+                                                            <?php echo "Pendiente" ?></option>                                                            
                                                     </select>
                                                 </div>
                                             </div>
@@ -844,6 +1256,113 @@
                                     <!--card-body-->
                                 </div>
                                 <!--card-->
+
+                                <br>
+
+                                <div class="card" id="card_MedioPago" >
+                                    <div class="card-header">
+                                        <strong>                                            
+                                            Medios de Pago
+                                        </strong>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="table-responsive overflow-auto" style="max-height: 500px;">
+
+                                            <div style="display:none">
+                                                <select class="form-control" id="idMedioPagoTemp" tabindex="16" style="width: 500px"> 
+                                                    <option value="">Seleccionar Medio de Pago</option>
+                                                    <?php foreach ($medio_pago as $row) : ?>
+                                                        <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar Pago(s)</button>
+
+                                            <table id="tblMedioPago" class="table table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">Medio</th>
+                                                        <th width="10%">Monto</th>
+                                                        <th width="15%">Nro Operacion</th>
+                                                        <th width="25%">Descripción</th>
+                                                        <th width="10%">F.Vencimiento</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="card" id="card_cuotas">
+                                    <div class="card-header">
+                                        <div id="" class="row">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <strong>
+                                                    Cuotas
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="fsFiltro" class="card-body">
+                                        <div id="" class="row">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Nume. Cuotas</label>
+                                                    <input type="text" name="numcuota_" id="numcuota_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Monto total del credito</label>
+                                                    <input type="text" name="totalcredito_" id="totalcredito_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Plazo en dias</label>
+                                                    <input type="text" name="plazo_" id="plazo_" value="" placeholder="" class="form-control form-control-sm">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm"></label>
+                                                    <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarCuotas()">
+                                                        <i class="fas fa-plus-circle"></i> Cuotas
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <?php $seleccionar_todos = "style='display:block'"; ?>
+                                            <div class="table-responsive">
+                                                <table id="tblConceptos" class="table table-hover table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:13px">
+                                                            <th>Id</th>
+                                                            <th>Importe</th>
+                                                            <th>Fecha</th>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody style="font-size:13px">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
 
                                 <?php if ($smodulo == 32) { ?>
@@ -876,11 +1395,13 @@
 
 
                             </div>
+
+                            
                             <!--card-->
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                <div class="card">
+                                <div class="card" id="card_impuesto">
                                     <div class="card-header">
-                                        <div id="" class="row">
+                                        <div  class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <strong>
                                                     Impuestos
@@ -889,178 +1410,208 @@
                                         </div>
                                     </div>
                                     <div id="fsFiltro" class="card-body">
+
                                         <div id="" class="row">
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Descuento Global</label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div id="" class="row">
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto de Percepción</label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                 <div class="form-group">
                                                     <label class="form-control-sm"></label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto Total</label>
-                                                    <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    <input type="text" name="monto_total" id="monto_total" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Tipo de Cambio</label>
+                                                    <input type="text" name="tipo_cambio" id="tipo_cambio" value="<?php echo $tipo_cambio; ?>" placeholder="" class="form-control form-control-sm" readonly;>
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div id="" class="row">
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-sm">porcentaje Detracción</label>
-                                                    <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    <label class="form-control-sm">Porcentaje Detracción</label>
+                                                    <input type="text" name="porcentaje_detraccion" id="porcentaje_detraccion" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto Detracción</label>
-                                                    <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    <input type="text" name="monto_detraccion" id="monto_detraccion" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-sm"></label>
-                                                    <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    <label class="form-control-sm"> Nro. Cta. BN</label>
+                                                    <input type="text" name="nc_detraccion" id="nc_detraccion" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Tipo de Detraccion:</label>
-                                                    <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                    <select name="tipo_detraccion" id="tipo_detraccion" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                         <option value="">
                                                             <?php echo "" ?></option>
                                                         <option value="004">
                                                             <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central" ?></option>
                                                         <option value="017">
-                                                            <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central – Servicio de Transporte de Pasajeros" ?></option>
+                                                            <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central - Servicio de Transporte de Pasajeros" ?></option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Afecta a:</label>
-                                                    <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                    <select name="afecta_a" id="afecta_a" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                         <option value="">
                                                             <?php echo "" ?></option>
-                                                        <option value="022">
-                                                            <?php echo "Otro servicios empresariales" ?></option>
-                                                        <option value="017">
-                                                            <?php echo "Contratos de construcción" ?></option>
+                                                            <option value="037">
+                                                            <?php echo "Demás servicios gravados con el IGV" ?></option>
+                                                            <option value="022">
+                                                                <?php echo "Otro servicios empresariales" ?></option>
+                                                            <option value="017">
+                                                                <?php echo "Contratos de construcción" ?></option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Medio de Pago:</label>
-                                                    <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                        <option value="">
-                                                            <?php echo "" ?></option>
-                                                        <option value="004">
-                                                            <?php echo "Efectivo" ?></option>
-                                                        <option value="017">
-                                                            <?php echo "Deposito en cuenta" ?></option>
+
+                                                    <select name="medio_pago" id="medio_pago" class="form-control form-control-sm" onChange="">
+                                                        <option value=""> <?php echo "" ?></option>
+                                                        <?php
+                                                        foreach ($forma_pago as $row) { ?>
+                                                            <option value="<?php echo $row->codigo ?>" ><?php echo $row->denominacion ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
+
                                                 </div>
                                             </div>
 
                                         </div>
+                                        <div id="" class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label form-control-sm">Observaciones</label>
+                                                    <textarea id="observacion" name="observacion" class="form-control form-control-sm"><?php //echo $->observacion?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <!--card-body-->
                                 </div>
                                 <!--card-->
                             </div>
-                        </div>
 
-                        <div class="card" id="card_cuotas">
-                            <div class="card-header">
-                                <div id="" class="row">
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                        <strong>
-                                            Cuotas
-                                        </strong>
+                            <!--
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="card" id="card_cuotas">
+                                    <div class="card-header">
+                                        <div id="" class="row">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <strong>
+                                                    Cuotas
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="fsFiltro" class="card-body">
+                                        <div id="" class="row">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Nume. Cuotas</label>
+                                                    <input type="text" name="numcuota_" id="numcuota_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Monto total del credito</label>
+                                                    <input type="text" name="totalcredito_" id="totalcredito_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Plazo en dias</label>
+                                                    <input type="text" name="plazo_" id="plazo_" value="" placeholder="" class="form-control form-control-sm">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm"></label>
+                                                    <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarCuotas()">
+                                                        <i class="fas fa-plus-circle"></i> Cuotas
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <?php $seleccionar_todos = "style='display:block'"; ?>
+                                            <div class="table-responsive">
+                                                <table id="tblConceptos" class="table table-hover table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:13px">
+                                                            <th>Id</th>
+                                                            <th>Importe</th>
+                                                            <th>Fecha</th>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody style="font-size:13px">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="fsFiltro" class="card-body">
-                                <div id="" class="row">
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm">Nume. Cuotas</label>
-                                            <input type="text" name="numcuota_" id="numcuota_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
 
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm">Monto total del credito</label>
-                                            <input type="text" name="totalcredito_" id="totalcredito_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
+                                                    -->
+                                                    
 
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm">Plazo en dias</label>
-                                            <input type="text" name="plazo_" id="plazo_" value="" placeholder="" class="form-control form-control-sm">
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm"></label>
-                                            <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarCuotas()">
-                                                <i class="fas fa-plus-circle"></i> Cuotas
-                                            </button>
-                                        </div>
-                                    </div>
-
-
-                                    <?php $seleccionar_todos = "style='display:block'"; ?>
-                                    <div class="table-responsive">
-                                        <table id="tblConceptos" class="table table-hover table-sm">
-                                            <thead>
-                                                <tr style="font-size:13px">
-                                                    <th>Id</th>
-                                                    <th>Importe</th>
-                                                    <th>Fecha</th>
-                                                </tr>
-
-                                            </thead>
-                                            <tbody style="font-size:13px">
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--card-body-->
                         </div>
+
+
 
 
                 </div>
             </div>
+           
 
             <div class="col-lg-3 col-md-8 col-sm-8 col-xs-8">
                 <div class="form-group">
                     <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
                 </div>
+                <!--
                 <div class="form-group">
-                    <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
+                    <button type="button" id="calcela" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
                 </div>
+                                                    -->
             </div>
             <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>--> <br>
             </form>
@@ -1069,9 +1620,42 @@
 </div>
 
 </div>
+<script>
+        function ValidaNC() {
+            var tipo_documento = "NC";
+		    var serie = $("#serieNC").val();
+		    var numero = $("#numeroNC").val();
+		    var hoy = new Date().toISOString().split("T")[0];
+              
+            if ($('#id_comprobante_ncdc').val()!="0"){
+                if	($('#nc_fecha').val().split(" ")[0]===hoy) {
+							
+							$('#afecta_ingreso').val("C");
+							$("#idMedio0").val($('#nc_id_medio').val()).trigger("change");
+							$("#nroOperacion0").val($('#nc_nro_operacion').val());
+							$("#monto0").val($('#nc_monto').val() );
+                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " - " + numero  );
+							
+						}	
+						else {
+							
+							$('#afecta_ingreso').val("C");
+                            $("#idMedio0").val("91").trigger("change");
+                            $("#monto0").val($('#nc_monto').val() );
+                            $("#total_pagar").val($('#nc_monto').val() );
+                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " - " + numero );
+                            
+                            
 
-<!--row-->
-@endsection
+							//$("#idMedio0").val("91").trigger("change");
+						
+						}
+        }
+    }
+
+        // Ejecutar la función cuando la página esté completamente cargada
+        window.onload = ValidaNC;
+    </script>
 
 
 

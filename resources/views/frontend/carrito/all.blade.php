@@ -1,0 +1,1694 @@
+<!--<script src="<?php echo URL::to('/') ?>/js/manifest.js"></script>
+<script src="<?php echo URL::to('/') ?>/js/vendor.js"></script>
+<script src="<?php echo URL::to('/') ?>/js/frontend.js"></script>-->
+
+
+<link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<!--<link rel="stylesheet" type="text/css" href="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.css">-->
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
+
+
+
+<link href="https://plantillashtmlgratis.com/wp-content/themes/helium-child/vista_previa/page280/multishop/css/style.css" rel="stylesheet">
+    
+
+<style>
+    
+	#tblAfiliado tbody tr{
+		font-size:13px
+	}
+    .table-sortable tbody tr {
+        cursor: move;
+    }
+	/*
+    #global {        
+        width: 95%;        
+        margin: 15px 15px 15px 15px;     
+        height: 380px !important;        
+        border: 1px solid #ddd;
+        overflow-y: scroll !important;
+    }
+	*/
+	#global {
+        height: 650px !important;
+        width: auto;
+        border: 1px solid #ddd;
+		margin:15px
+       /* background: #f1f1f1;*/
+        /*overflow-y: scroll !important;*/
+    }
+	
+    .margin{
+
+        margin-bottom: 20px;
+    }
+    .margin-buscar{
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    /*.row{
+        margin-top:10px;
+        padding: 0 10px;
+    }*/
+    .clickable{
+        cursor: pointer;   
+    }
+
+    /*.panel-heading div {
+        margin-top: -18px;
+        font-size: 15px;        
+    }
+    .panel-heading div span{
+        margin-left:5px;
+    }*/
+    .panel-body{
+        display: block;
+    }
+	
+	.dataTables_filter {
+	   display: none;
+	}
+
+.loader {
+	width: 100%;
+	height: 100%;
+	/*height: 1500px;*/
+	overflow: hidden; 
+	top: 0px;
+	left: 0px;
+	z-index: 10000;
+	text-align: center;
+	position:absolute; 
+	background-color: #000;
+	opacity:0.6;
+	filter:alpha(opacity=40);
+	display:none;
+}
+
+.dataTables_processing {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px!important;
+	font-size: 1.7em;
+	border: 0px;
+	margin-left: -17%!important;
+	text-align: center;
+	background: #3c8dbc;
+	color: #FFFFFF;
+}
+
+.seccion-principal{
+    padding-top: 15px!important;
+}
+
+.seccion-principal>.titulo{
+    margin-bottom: 5px!important;
+}
+
+/***************************/
+/*
+.pb-1, .py-1 {
+    padding-bottom: 0.25rem !important;
+}
+
+@media (min-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+@media (min-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+    }
+}
+@media (min-width: 576px) {
+    .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+
+
+
+.product-item {
+    transition: .5s;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+}
+.bg-light {
+    background-color: #FFFFFF !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+
+.position-relative {
+    position: relative !important;
+}
+.overflow-hidden {
+    overflow: hidden !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+.text-center {
+    text-align: center !important;
+}
+.pb-4, .py-4 {
+    padding-bottom: 1.5rem !important;
+}
+.pt-4, .py-4 {
+    padding-top: 1.5rem !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+h6, .h6 {
+    font-size: 1rem;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #3D464D;
+}
+a {
+    color: #FFD333;
+    text-decoration: none;
+    background-color: transparent;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.text-center {
+    text-align: center !important;
+}
+
+.mt-2, .my-2 {
+    margin-top: 0.5rem !important;
+}
+.align-items-center {
+    align-items: center !important;
+}
+.justify-content-center {
+    justify-content: center !important;
+}
+.d-flex {
+    display: flex !important
+;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+.text-center {
+    text-align: center !important;
+}
+*/
+
+.product-item-hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.btn-secondary {
+    color:#FFFFFF!important
+}
+
+.tit_1{
+    font-weight: 300;
+    /*line-height: 110%;*/
+    line-height: 220%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 20px;
+    padding-top:8px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+
+}
+
+.tit_2{
+    font-weight: 300;
+    line-height: 110%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 35px;
+    padding-top:8px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+}
+
+
+.seccion-sidebar{
+    width: 360px !important
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 100%
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width:540px
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width:720px
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width:960px
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width:1440px!important
+    }
+}
+
+
+</style>
+
+@extends('frontend.layouts.app_carrito')
+
+@section('title', ' | ' . __('labels.frontend.contact.box_title'))
+
+@section('breadcrumb')
+<ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
+        <li class="breadcrumb-item text-primary">Inicio</li>
+            <li class="breadcrumb-item active">Consulta de Agremiados</li>
+        </li>
+    </ol>
+@endsection
+
+@section('content')
+
+    <!--<ol class="breadcrumb" style="padding-left:120px;margin-top:0px">
+        <li class="breadcrumb-item text-primary">Inicio</li>
+            <li class="breadcrumb-item active">Consulta de Afiliados</li>
+        </li>
+    </ol>
+    -->
+
+
+
+
+
+
+
+<div id="pageTickets" class="container">
+	
+	<section class="seccion-principal seccion-tickets" style="height: 837.984px;">
+		<h1 class="titulo">
+			
+			Estado de Cuenta
+			<small class="descriptivo">Deudas</small>
+			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
+		</h1>
+		<div class="card">
+			<div class="card-body">
+				<div id="divUltimosTicket" class="elegirOpeDer boxInfo">
+					
+
+
+
+
+
+<div id="confirmarEliminar">
+	<div class="alert alert-success mb-3" style="display: none;">El ticket se eliminó correctamente.</div>
+</div>
+
+@if($agremiado->actividad=="SUSPENDIDO")
+<div class="alert alert-danger">
+    No puede realizar pagos porque esta suspendido
+</div>
+@endif
+
+<div class="tickets-desktop">
+	<div class="container">
+		<div class="tablaflex tablaflex-tickets">
+			<div id="selEstadoHist">
+				<form id="filtrar" name="filtrar" action="sistema/inicioElegirOperacion.action" method="post" novalidate="">
+					
+					<input type="hidden" name="numPagina" value="1" id="num_pagina">
+				</form>
+
+
+
+
+			</div>
+			
+			<div class="tbody">
+			
+			</div>
+
+<div id="dialog-confirm" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+				</button>
+				<h4 class="modal-title">¿Está seguro de eliminar el ticket?</h4>
+			</div>
+			<div class="modal-body">
+				Recuerda que una vez <span id="s_accion">eliminado</span> el ticket, el pago que efectúes no generará constancia y no podrás realizar el trámite ante la entidad correspondiente
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-linear" data-dismiss="modal">No</button>
+				<button id="btn-del-item-carrito" type="button" class="btn btn-primary" data-dismiss="modal">Si, eliminar</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="tickets-mobile">
+	
+</div>
+
+
+
+
+
+
+
+	<div class="row no-tickets">
+		<!--<p>No existen tickets de pago generados.</p>-->
+
+        <div class="container-fluid pt-0 pb-3">
+
+
+        <div class="form-group form-group-btn form-navigation">
+            
+            @if($prontopago[0]->msg=='ok')
+            <a href="javascript:void(0);" class="btn btn-secondary pull-left" style="float:left" onclick="agregarProntoPagoAlCarrito({{ $id_persona }})">GENERAR PRONTOPAGO</a>
+            @endif
+
+            <a href="/carrito/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
+        </div>
+        
+
+        <form id="form-agregar-carrito" action="{{ url('carrito/item') }}" method="POST">
+        @csrf
+        <input type="hidden" name="valorizacion_id" id="item-id-input">
+        <input type="hidden" name="cantidad" id="cantidad" value="1">
+
+        <input type="hidden" readonly name="Exonerado" id="Exonerado" value="" class="form-control form-control-sm">
+        <input type="hidden" readonly name="mes_deuda" id="mes_deuda" value="" class="form-control form-control-sm">
+        <input type="hidden" readonly name="anio_deuda" id="anio_deuda" value="" class="form-control form-control-sm">
+        
+        <input type="hidden" readonly name="actividad" id="actividad" value="{{$agremiado->actividad}}">
+
+        <div class="row">
+
+            <!--
+            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <select id="cboPeriodo_b" name="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <select id="cboMes_b" name="cboMes_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                        <option value="" selected>Todas cuotas</option>
+                        <option value="1">Cuotas vencidas</option>
+                        <option value="0">Cuotas pendientes</option>
+                    </select>
+                </div>
+            </div>
+            -->
+            <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    
+                    <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()"><br />
+
+                    <!--
+                    <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
+                    <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y Cuota Gremial Vencido</label>
+                    -->
+
+                    </select>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-lg-1 col-md-3 col-sm-12 col-xs-12">
+                <div class="form-group form-group-sm">
+                    <input class="form-check-input" type="checkbox"  id="chkExonerado"  value="false" onchange="">
+                    <label class="form-check-label">
+                        Exonerados
+                    </label>
+                </div>
+            </div>
+            -->
+
+        </div>
+
+        <div class="table-responsive overflow-auto" style="max-height: 350px">
+            <table id="tblValorizacion" class="table table-hover table-sm">
+                <thead>
+                    <tr style="font-size:13px">
+                        <!--
+                        <th width="5%" style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
+                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php //echo $seleccionar_todos ?>>
+                        </th>
+                        -->
+                        <th width="5%">Nro</th>
+                        <th width="10%">Fecha</th>
+                        <th width="40%">Concepto</th>
+                        <th width="10%">Fecha Vencimiento</th>                                                        
+                        <th width="10%" class="text-center">P.Unit.</th>                                                        
+                        <th width="10%" class="text-center">Cantidad</th>
+                        <th width="10%"class="text-center">Total</th>
+                        <th width="10%"class="text-center">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+
+
+                </tfoot>
+            </table>
+        </div>
+
+
+
+
+        <!--
+        <div class="row px-xl-0">        
+            <?php foreach($carrito_deuda as $row){?> 
+            <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
+                <div class="product-item bg-light mb-3">
+                    <div class="product-img position-relative overflow-hidden">                        
+                        
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="">{{$row->descripcion}}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>S/. {{$row->valor_unitario}}</h5>
+                            </div>
+                            <small class="text-body">Vence: {{ date('d-m-Y',strtotime($row->fecha)) }} </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php }?>
+        </div>
+        -->
+
+        </form>
+
+        <div class="form-group form-group-btn form-navigation">
+            <a href="/carrito/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
+        </div>
+        
+    </div>
+
+<script>
+    
+    function verItem(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        //carrito/item
+        form.submit();
+    }
+
+    function agregarAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.action = '/carrito/agregar'; 
+        form.submit();
+    }
+
+    function agregarProntoPagoAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.action = '/carrito/agregar_prontopago'; 
+        form.submit();
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!--
+		<div class="form-group-btn">
+			<button type="button" class="btn btn-secondary" id="add-pay">Agregar un pago</button>
+		</div>
+        -->
+
+	</div>
+
+
+
+
+				</div>
+			</div>
+
+		</div>
+	</section>
+	
+	<section class="seccion-sidebar" style="visibility: visible;padding-top:15px">
+
+            <div class="tit_1">Situacion : </div>
+            <div class="tit_2">{{$agremiado->situacion}}</div>
+            <div style="clear:both"></div>
+            <div class="tit_1">Actividad : </div>
+            <div class="tit_2">{{$agremiado->actividad}}</div>
+
+            <div style="clear:both;padding-top:20px"></div>
+            
+            <h4 class="titulo" style="position:static"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+				Información
+			</h4>
+
+            <div style="clear:both;padding-top:20px"></div>
+
+		<div class="card">
+			<!--
+            <h4 class="titulo" style="position:static"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+				Información
+			</h4>
+            -->
+
+			<div class="card-body">
+				<h6 class="subtitulo">¿Cómo pagar mis deudas?</h6>
+				<p>Si tu deuda aún está pendiente de pago, puedes continuar con el proceso haciendo clic sobre el botón.</p>
+				<p>Recuerda, se muestran en este listado todas las deudas generados.</p>
+				<!-- dinamico -->
+				<h6 class="subtitulo">¿Que deudas aparecen?</h6>
+				<p>Debido a que el concepto seleccionado es un servicio solo se podrá pagar por esta opción las deudas como CUOTA GREMIAL, FRACCIONAMIENTO y MULTAS.</p>
+			</div>
+		</div>
+	</section>
+</div>
+
+<div class="modal modal-ticket fade" id="detalleHistorico" tabindex="-1" role="dialog" aria-hidden="true">
+	
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="dialog-detalleHistorico">
+		</div>
+	</div>
+</div>
+
+
+
+		</main>
+		<div class="fondo-curva">
+			<img src="https://pagalo.pe/imagenes/new/curva.svg" class="curva"></div>
+		</div>
+	
+
+	
+	<div class="btn-sidebar" id="btn-sidebar" data-toggle="modal" data-target="#modalSidebar" style="display: none;"><i class="icon icon-pagalo-info" aria-hidden="true" title="Informacion"></i></div>
+	<div class="modal-sidebar modal fade" id="modalSidebar" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+						<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+					</button>
+					<div class="contenido"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<footer>
+		
+
+
+<div class="footer">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-lg-8 col-12 footer-izquierdo">
+				<div class="brand">
+					<a href="/home" title="CAP">
+						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
+					</a>
+				</div>
+				<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
+				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
+				<div class="contacto collapse" id="footerInfo">
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 4710739.</p>
+					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
+				</div>
+			</div>
+			
+			<!--<div class="col-lg-4 col-12 footer-derecho">
+				<div class="footer-menu">
+					<div class="row">
+						<div class="col">
+							<h4 class="subtitulo">Págalo.pe</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="opciones">
+							<ul class="col-lg-6 col-12">
+								<li><span class="open-modal-faq-1 link link-sm">¿Qué es?</span></li>
+								<li><span class="open-modal-faq-2 link link-sm vista-previa link-video" data-toggle="modal" data-src="https://www.youtube.com/embed/6faiVzbvfgY" data-target="#modalVideo">¿Cómo pagar?</span></li>
+								<li><span class="open-modal-faq-3 link link-sm">¿Qué puedo pagar?</span></li>
+							</ul>
+							<ul class="col-lg-6 col-12">
+								<li><span class="link link-sm link-agencias" data-toggle="modal" data-src="https://appmovil.bn.com.pe/Ubicanos/" data-target="#modalAgencias">Ubicar agencias</span></li>
+								<li><span class="link link-sm link-faq" data-toggle="modal" data-target="#modalFaq">Preguntas frecuentes</span></li>
+								<li><span class="link link-sm link-terminos" data-toggle="modal" data-target="#modalTerminos">Términos y condiciones</span></li>
+							</ul>
+						</div>	
+					</div>
+				</div>
+			</div>-->
+		</div>
+	</div>
+</div>
+
+
+<div class="modal-faq modal fade fullscreen-lg" id="modalAgencias" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="iframe-modal-container">
+					<iframe src="" id="iframeAgencias" class="iframe-modal" scrolling="no"></iframe>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<div class="modal-faq modal fade fullscreen-xs" id="modalFaq" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+				</button>
+				<h3 class="titulo">Preguntas Frecuentes</h3>
+			</div>
+			<div class="modal-body">
+				
+
+<div class="list-group" id="accordionFaq">
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseAlfa" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseAlfa" id="headingAlfa">
+            <span class="num">1.</span>
+            <span class="texto">¿Qué es <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingAlfa" class="respuesta collapse" data-parent="#accordionFaq" id="collapseAlfa">
+            <div class="expansion-panel-body">
+                <p><strong>Págalo.pe</strong> es una plataforma digital para simplificar el pago de tasas y servicios para trámites en diferentes entidades públicas, sin necesidad de ir a una agencia del Banco de la Nación.</p>
+                <p>Es muy sencillo, tan solo ingresa y regístrate en la página web <strong>www.pagalo.pe</strong> y podrás pagar una o varias tasas al instante con cualquier tarjeta Visa, MasterCard o American Express de cualquier entidad financiera, billetera electrónica YAPE o en efectivo en nuestros Agentes Multired.</p>
+                <p>Posteriormente recibirás en tu correo electrónico (en formato PDF) el voucher del cargo de tu tarjeta de débito ó crédito por la compra efectuada y la constancia de pago individual por cada tasa pagada.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseBeta" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseBeta" id="headingBeta">
+            <span class="num">2.</span>
+            <span class="texto">¿Qué puedo pagar en <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingBeta" class="respuesta collapse" data-parent="#accordionFaq" id="collapseBeta">
+            <div class="expansion-panel-body">
+                <ul>
+                    <li><strong>Pago de tasas:</strong> Paga por tus trámites ante las entidades públicas.</li>
+                    <li><strong>Multas:</strong> Paga tus multas de Indecopi, multas electorales, multas de Migraciones, multas PNP.</li>
+                    <li><strong>Servicios:</strong> Paga tus aportes al SIS, ESSALUD, entre otras.</li>
+                    <li><strong>SUNAT:</strong> Paga el Número de pago Sunat - NPS, Número de pago de detracciones - NPD, Nuevo Registro Único Simplificado - NRUS, Pago de valor, Boleta de pagos varios y Arrendamiento.</li>
+                </ul>
+                <blockquote><a href="https://www.bn.com.pe/ciudadanos/servicios-adicionales/tasas-pagalo-pe.pdf" target="tasas" class="link link-sm">Conoce aquí todas las tasas disponibles a pagar (PDF)</a> <i class="icon icon-pagalo-external"></i></blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapsUno" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseGamma" id="headingUno">
+            <span class="num">3.</span>
+            <span class="texto">¿Cómo usar <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingUno" class="respuesta collapse" data-parent="#accordionFaq" id="collapseGamma">
+            <div class="expansion-panel-body">
+                <ol>
+                    <li>Ingresa tu usuario y contraseña. Si aún no tienes cuenta regístrate aquí.</li>
+                    <li>Busca y selecciona el trámite que deseas pagar y agrégalo al carrito de compras.</li>
+                    <li>Paga al instante con cualquier tarjeta Visa, Mastercard o American Express.</li>
+                    <li>Recibirás en tu correo la constancia de pago, la cual debes presentar a la entidad seleccionada.</li>
+                </ol>
+               <!--<blockquote><span id="linkVideo" data-toggle="modal" data-src="https://www.youtube.com/embed/NFWSFbqL0A0" data-target="#modalVideo" class="link link-sm link-video">Ver video gu&iacute;a <i class="icon icon-pagalo-video"></i></span></blockquote>-->
+                <blockquote><span id="linkVideo" data-toggle="modal" data-src="https://www.youtube.com/embed/6faiVzbvfgY" data-target="#modalVideo" class="link link-sm link-video">Ver video guía <i class="icon icon-pagalo-video"></i></span></blockquote>
+ 
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapsUno" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseUno" id="headingUno">
+            <span class="num">4.</span>
+            <span class="texto">¿Registrarse como usuario a <strong>Págalo.pe</strong> (afiliarse) tiene algún costo?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingUno" class="respuesta collapse" data-parent="#accordionFaq" id="collapseUno">
+            <div class="expansion-panel-body">
+                <p>No, el proceso de registro como usuario de <strong>Págalo.pe</strong> es gratuito y no significará para usted costo alguno (ni en el momento de la afiliación, ni en un momento posterior).</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseDos" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseDos" id="headingDos">
+            <span class="num">5.</span>
+            <span class="texto">¿Hay forma de recuperar mi clave de acceso en caso de olvido?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingDos" class="respuesta collapse" data-parent="#accordionFaq" id="collapseDos">
+            <div class="expansion-panel-body">
+                <p>Sí, para tal efecto debes hacer clic sobre el link "Recuperar contraseña" y la aplicación informática le solicitará registre la dirección de correo electrónico con la que se afilió a <strong>Págalo.pe</strong> a donde le enviará un código de verificación que deberá registrar junto a su nueva clave de acceso para confirmar la operación.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseTres" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseTres" id="headingTres">
+            <span class="num">6.</span>
+            <span class="texto">¿Puedo pagar varias tasas a la vez como parte de una misma transacción (compra online)?
+            </span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingTres" class="respuesta collapse" data-parent="#accordionFaq" id="collapseTres">
+            <div class="expansion-panel-body">
+                <p>Sí, <strong>Págalo.pe</strong> permite seleccionar varias tasas y agregarlas a un carrito de compras, de tal forma que finalmente se efectúa un solo cargo a su tarjeta
+                de débito/crédito.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseCuatro" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseCuatro" id="headingCuatro">
+            <span class="num">7.</span>
+            <span class="texto">¿Cuántas tasas puede agregar al carrito de compras como parte de una misma transacción (compra online)?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingCuatro" class="respuesta collapse" data-parent="#accordionFaq" id="collapseCuatro">
+            <div class="expansion-panel-body"><p>Usted puede agregar hasta 9 ítems (tasas) al carrito de compras.</p></div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseCinco" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseCinco" id="headingCinco">
+            <span class="num">8.</span>
+            <span class="texto">¿Puedo pagar varios servicios a la vez como parte de una misma transacción (compra online)? </span>
+        <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingFive" class="respuesta collapse" data-parent="#accordionFaq" id="collapseCinco">
+            <div class="expansion-panel-body"><p>No, los pagos considerados servicios como pago de aportes al SIS, Multas Electorales, Multas Indecopi, entre otros, solo se pueden pagar uno por uno, por lo que no se pueden agregar a un carrito de compras ni combinar con otras tasas.</p></div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseSeis" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseSeis" id="headingSeis">
+            <span class="num">9.</span>
+            <span class="texto">¿Existe un importe máximo de pago por cada compra online que efectúe a través de <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingSeis" class="respuesta collapse" data-parent="#accordionFaq" id="collapseSeis">
+            <div class="expansion-panel-body">
+                <p>No existe importe máximo posible de pago a través de <strong>Págalo.pe</strong>. El límite lo da la línea de crédito o saldo disponible en su tarjeta (dependiendo si la tarjeta es de crédito o débito respectivamente). Por su parte, el limite para pagar por Agente Multired del BN es de S/1,000.00 por ticket.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseSiete" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseSiete" id="headingSiete">
+            <span class="num">10.</span>
+            <span class="texto">¿Se cargará un costo o comisión adicional a mi tarjeta por pagar tasas/servicios a través de <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingSiete" class="respuesta collapse" data-parent="#accordionFaq" id="collapseSiete">
+            <div class="expansion-panel-body">
+                <p>No, solo se cargará a su tarjeta el importe de la tasa o servicios que usted ha seleccionado para pago. No se aplicarán cargos adicionales a su tarjeta por
+                comisiones u otros gastos financieros.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseOcho" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOcho" id="headingOcho">
+            <span class="num">11.</span>
+            <span class="texto">¿A través de que medio de pago puedo efectivizar la compra?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingOcho" class="respuesta collapse" data-parent="#accordionFaq" id="collapseOcho">
+            <div class="expansion-panel-body">
+                <p>Usted puede emplear tarjetas de débito o crédito de las marcas Visa, Mastercard y American Express, emitidas por cualquier entidad financiera. También puedes efectuar el pago de tu ticket a través de los Agentes Multired del BN, recuerda que el importe máximo de pago por el agente es de S/1,000.00 y no se cobran comisiones.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseNueve" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseNueve" id="headingNueve">
+            <span class="num">12.</span>
+            <span class="texto">¿Cuánto tiempo debo esperar para continuar con mi trámite ante la entidad pública una vez efectuado el pago de la tasa/servicio a través de <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingNueve" class="respuesta collapse" data-parent="#accordionFaq" id="collapseNueve">
+            <div class="expansion-panel-body">
+                <p>Usted puede continuar inmediatamente con el trámite ante las entidades públicas, ya que los pagos son notificados en línea a estas, contando las mismas con los mecanismos que le permiten verificar la autenticidad de estas operaciones en todo momento.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseDiez" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseDiez" id="headingDiez">
+            <span class="num">13.</span>
+            <span class="texto">¿Cómo obtengo las constancias de pago de las tasas compradas a través de <strong>Págalo.pe</strong>?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingDiez" class="respuesta collapse" data-parent="#accordionFaq" id="collapseDiez">
+            <div class="expansion-panel-body">
+                <p>Confirmada la transacción, la constancia o constancias de pago en formato PDF (dependiendo si pago una o varias tasas como parte de la compra) serán enviadas automáticamente a la dirección de correo electrónico con la que se afilió a <strong>Págalo.pe</strong> y que utiliza para logearse al servicio.</p>
+                <p>Adicionalmente, si el pago se efectuó en línea le llegará también en el mismo correo el voucher del cargo a la tarjeta de crédito o débito que empleo para efectivizar la transacción.</p>
+                <p>Adicionalmente en la pantalla principal del aplicativo usted cuenta con una consulta de los últimos pagos efectuados a través de esta plataforma online, pudiendo descargar las constancias de pago de las tasas que forman parte de estas transacciones.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseOnce" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOnce" id="headingOnce">
+            <span class="num">14.</span>
+            <span class="texto">¿Los pagos efectuados a través de <strong>Págalo.pe</strong> pueden ser anulados o extornados en caso de un error al registrar los datos requeridos para el pago de una tasa?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingOnce" class="respuesta collapse" data-parent="#accordionFaq" id="collapseOnce">
+            <div class="expansion-panel-body">
+                <p>No existen anulaciones o extornos en <strong>Págalo.pe</strong>. Las solicitudes de corrección de datos o de devolución de los importes pagados deben ser gestionadas ante la entidad pública titular de las tasa/servicio.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseDoce" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseDoce" id="headingDoce">
+            <span class="num">15.</span>
+            <span class="texto">¿Qué hacer si el pago con mi tarjeta de débito/crédito es denegado?</span>
+            <div class="flecha expansion-panel-icon">
+                <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+                <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+            </div>
+        </a>
+        <div aria-labelledby="headingDoce" class="respuesta collapse" data-parent="#accordionFaq" id="collapseDoce">
+            <div class="expansion-panel-body">
+                <p>Debe usted ponerse en contacto con su Banco (el emisor de su tarjeta de débito o crédito) y pedirle le indique el motivo de la denegación del pago.</p>
+            </div>
+        </div>
+    </div>
+    <div class="expansion-panel list-group-item collapse">
+        <a aria-controls="collapseTrece" aria-expanded="false" class="pregunta expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseTrece" id="headingTrece">
+            <span class="num">16.</span>
+            <span class="texto">¿La fecha de pago varía si se realiza un pago después de las 9:00 p. m. o en días feriados?</span>
+        <div class="flecha expansion-panel-icon">
+            <i class="collapsed-show icon icon-pagalo-chevron-down"></i>
+            <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
+        </div>
+        </a>
+        <div aria-labelledby="headingTrece" class="respuesta collapse" data-parent="#accordionFaq" id="collapseTrece">
+            <div class="expansion-panel-body">
+                <p>Si, los pagos realizados después de las  09:00 p.m. o en días feriados tienen como fecha de pago el siguiente día hábil.</p>
+            </div>
+        </div>
+    </div>
+</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<div class="modal-terminos modal fade fullscreen-xs" id="modalTerminos" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+					</button><button class="sr-only">Cerrar</button>
+				
+				<h3 class="titulo">Términos y Condiciones</h3>
+			</div>
+			<div class="modal-body">
+				
+
+<article class="contenido">
+    <p>El acceso y uso de este sitio web del Banco de la Nación se rige por los Términos y Condiciones descritos en este documento, así como por la legislación peruana vigente que aplique; para tal efecto en adelante al ciudadano que hace uso de este site se le denominará "usuario".</p>
+    <p>Usted declara conocer que la aceptación de estos términos y condiciones es de carácter libre y voluntaria.</p>
+    <p>Es requisito indispensable para comprar en esta Ventanilla Virtual del Banco de la Nación la aceptación de los Términos y Condiciones que se describen a continuación. Todo usuario que realice una compra en este sitio web, declara y reconoce, por el solo hecho de haber efectuado la compra, que conoce y acepta todos y cada uno de estos Términos y Condiciones.</p>
+    <p>El Banco de la Nación se reserva el derecho de actualizar y/o modificar los Términos y Condiciones que detallamos a continuación en cualquier momento, sin previo aviso. Por esta razón recomendamos revisar los Términos y Condiciones cada vez que utilice este sitio web.</p>
+    <p>A continuación se exponen dichas condiciones:</p>
+    <h6 class="subtitulo">1. OBJETO</h6>
+    <p>El Banco de la Nación pone a disposición de la ciudadanía este sitio web (ventanilla virtual) que permite efectuar el pago online de tasas/servicios de entidades públicas con tarjetas de crédito o débito de cualquier entidad financiera.</p>
+    <h6 class="subtitulo">2. DERECHOS DEL USUARIO DE ESTE SITIO</h6>
+    <p>La sola visita a este sitio web no impone al usuario obligación alguna, a menos que haya aceptado de manera expresa las condiciones ofrecidas por el Banco de la Nación, en la forma indicada en estos términos y condiciones.</p>
+    <p>El usuario goza de todos los derechos establecidos según la legislación vigente en el Perú sobre protección al consumidor.</p>
+    <p>El Banco de la Nación efectuará permanentemente todos los esfuerzos por asegurar la disponibilidad de este sitio web las 24 horas, los siete días de la semana, sin interrupciones. Sin embargo, y debido a la naturaleza misma del internet (a través del cual opera este servicio) no es posible garantizar al 100% tales extremos.</p>
+    <p>El Banco de la Nación efectuará permanentemente todos los esfuerzos por asegurar la disponibilidad de este sitio web las 24 horas, los siete días de la semana, sin interrupciones. Sin embargo, y debido a la naturaleza misma del internet (a través del cual opera este servicio) no es posible garantizar al 100% tales extremos.</p>
+    <p>Por otro lado, el acceso por parte del usuario a esta ventanilla virtual podría ocasionalmente verse suspendido debido a la realización de trabajos mantenimiento o actualización del sitio web con nuevas funcionalidades que tengan por objetivo brindarle un mejor servicio. Al respecto, procuraremos reducir en lo posible la frecuencia y duración de tales suspensiones.</p>
+    <h6 class="subtitulo">3. REGISTRO DEL USUARIO (AFILIACION AL SERVICIO)</h6>
+    <p>Requisito indispensable para acceder y posteriormente efectivizar compras en este sitio web es que estés previamente registrado como usuario del servicio.</p>
+    <p>Los datos necesarios para este registro son: tu nombre completo, tipo y número de documento de identidad, una dirección de correo electrónico (que el Banco empleará en adelante para enviar comunicaciones al usuario relacionadas al proceso de afiliación, así como a las compras que efectúe en este site) y una clave de acceso a este sitio web que deberás definir y luego confirmar.</p>
+    <p>Para que el registro como usuario de esta plataforma de pagos online se efectivice debes finalmente aceptar los términos y condiciones descritos en este documento.</p>
+    <h6 class="subtitulo">4. CONDICIONES DE COMPRA</h6>
+    <ol>
+        <li>Este sitio web es de uso exclusivo para el pago de tasas y servicios de entidades del estado.</li>
+        <li>Solo podrá efectuar compras en esta ventanilla virtual el ciudadano previamente registrado como usuario del servicio.</li>
+        <li>El usuario podrá agregar al carrito de compras tasas/servicios de diferentes entidades como parte de un mismo ticket de compra.</li>
+        <li>Cada ticket de compra puede contener como máximo 9 ítems (tasas o servicios de entidades del estado).</li>
+        <li>Por su seguridad el Banco de la Nación podría limitar el número máximo de compras que el usuario puede efectuar en el día.</li>
+        <li>El pago con tarjeta de crédito/débito está sujeto a la aprobación del emisor de la tarjeta.</li>
+        <li>Las constancias de pago correspondientes a cada tasa o servicio objeto de la compra serán enviados en formato PDF al Email del usuario (el que registró durante su afiliación al servicio).</li>
+        <li>Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente. </li>
+    </ol>
+    <h6 class="subtitulo">5. MEDIOS DE PAGO QUE SE PODRÁ UTILIZAR</h6>
+    <p>Las compras realizadas en esta ventanilla virtual (págalo.pe) podrán efectivizarse empleando los siguientes medios de pago:</p>
+    <ol style="list-style: lower-latin;">
+        <li><strong>Tarjetas de crédito y débito Visa.</strong></li>
+        <p>Dependiendo del nivel de riesgo, producto de la calificación dada a la operación por parte del procesador de pago, se solicitará al titular de la tarjeta de crédito/débito confirmar la operación autenticándose en Verified by Visa, por lo que previamente deberá estar afiliado a este sistema de autentificación en línea.</p>
+        <p>De no encontrarse afiliado, deberá consultar con su Banco sobre el procedimiento de afiliación a Verified by Visa.</p>
+        <li><strong>Tarjetas de crédito y débito Mastercard</strong></li>
+        <p>Dependiendo del nivel de riesgo, producto de la calificación dada a la operación por parte del procesador de pago, se solicitará al titular de la tarjeta de crédito/débito confirmar la operación autenticándose en Mastercard SecureCode, por lo que previamente deberá estar afiliado a este sistema de autentificación en línea. De no encontrarse afiliado, deberá consultar con su Banco sobre el procedimiento de afiliación a Mastercard SecureCode.</p>
+        <li><strong>Tarjetas de crédito y débito American Express</strong></li>
+        <p>Dependiendo del nivel de riesgo, producto de la calificación dada a la operación por parte del procesador de pago, se solicitará al titular de la tarjeta de crédito/débito confirmar la operación autenticándose en American Express Safekey, por lo que previamente deberá estar afiliado a este sistema de autentificación en línea. De no encontrarse afiliado, deberá consultar con su Banco sobre el procedimiento de afiliación a American Express Safekey.</p>
+        <p>Para los pagos con tarjeta de crédito/débito:</p>
+        <ul style="list-style: disc;">
+            <li>El uso, condiciones de pago y otras condiciones aplicables a las tarjetas de crédito, son de exclusiva responsabilidad del emisor de su tarjeta.</li>
+            <li>De no realizarse la transacción de manera correcta y ser interrumpida esta antes de que el usuario pueda recibir el voucher electrónico de compra  (por time out), o exceder el tiempo establecido, la retención se libera y la compra queda anulada automáticamente y sin cargo alguno.</li>
+            <li>El Banco de la Nación procesa los pagos vía procesadores de pago locales, aplicando el cobro a su tarjeta de débito/crédito en moneda local. Sin embargo, si usted utiliza una tarjeta de crédito/débito emitida en el extranjero, el emisor de esta podría cargar el importe del pago en dólares norteamericanos, utilizando una tasa de cambio que fije el banco internacional de forma unilateral y en correspondencia a las condiciones de uso que tenga acordada para su tarjeta con dicha entidad.</li>
+        </ul>
+        <li><strong>En Efectivo</strong></li>
+        <p>El usuario podrá efectuar el pago en efectivo en cualquier Agente Multired del Banco de la Nación, para cuyo efecto deberá proporcionar el número de ticket de compra generado en Págalo.pe.</p>
+        <p>El límite máximo para pagos en efectivo por ticket es S/1,000.00.</p>
+    </ol>
+    <h6 class="subtitulo">6. ANULACIONES Y CORRECCIONES</h6>
+    <p>Procesado el pago (con tarjeta de crédito/débito) este es notificado en línea a la entidad proveedora de la tasa/servicio; por lo que a partir de ese momento este no puede ser anulado, ni sus datos actualizados. Toda gestión posterior debe ser efectuada ante la entidad beneficiaria del pago.</p>
+    <h6 class="subtitulo">7. DELIMITACIÓN DE RESPONSABILIDADES DEL BANCO</h6>
+    <p>El Banco de la Nación, no se responsabiliza por los errores del usuario en el registro de los datos requeridos para la compra de las tasas/servicios en esta ventanilla virtual. Es responsabilidad del usuario verificar toda la información registrada antes de proceder con el pago.</p>
+    <p>El Banco de la Nación no se responsabiliza frente a los daños o molestias causadas al usuario por la denegación de pago con sus tarjetas de crédito/débito, siendo esto responsabilidad del emisor de las tarjetas.</p>
+    <h6 class="subtitulo">8. CONSULTAS Y RECLAMOS</h6>
+    <p>Toda duda o consulta relacionada a la operatividad o uso de este sitio web deberá ser presentada a través del Contact Center del Banco de la Nación, comunicándose a los teléfonos fijos (01)4424470; (01)4405305; línea gratuita desde teléfonos fijos: 0-800-10700.</p>
+    <p>Los reclamos y/o solicitudes de devolución de los importes pagados, producto de errores en los datos consignados durante el proceso de compra, deberán ser canalizados por el usuario ante la entidad del estado proveedora de la tasa/servicio cuyo pago se materializó a través de esta ventanilla virtual.</p>
+    <p>Los reclamos relacionados a la denegación o al no reconocimiento de los pagos online con tarjetas de crédito/débito deben ser presentados por los titulares de las mismas ante las entidades financieras emisoras de estas tarjetas de crédito/débito.</p>
+    <h6 class="subtitulo">9. TRATAMIENTO DE DATOS PERSONALES</h6>
+    <p>Los datos personales proporcionados por el usuario al Banco serán almacenados en el banco de datos de clientes del Banco de la Nación, con domicilio en av. Javier Prado Este 2499 San Borja.</p>
+    <p>El Banco de la Nación se obliga a proteger este bancos de datos con todas las medidas de seguridad (técnicas y organizativas) necesarias para evitar la modificación, pérdida, o el acceso no autorizado a los datos del usuario.</p>
+    <p>Respecto a los datos personales proporcionados por el USUARIO durante su afiliación a págalo.pe: los relacionados a la identidad de la persona (documento de identidad y nombre) son utilizados únicamente para registrarlo en nuestra base de datos como usuario de esta plataforma de pagos en línea. Por otro lado, respecto a los datos de contacto, la dirección de correo electrónico es utilizada para enviar al USUARIO las constancias de pago de las tasas (cada vez que este efectúe una compra a través de págalo.pe) y el número de teléfono móvil será utilizado eventualmente por el personal del Banco para ponerse en contacto con el USUARIO en caso de tener que proporcionarle información solicitada por este como parte de una consulta o reclamo.</p>
+    <p>Usted puede en cualquier momento revocar la autorización al Banco de la Nación para el tratamiento de sus datos personales. Así mismo, usted puede ejercer sus derechos de acceso, rectificación, cancelación y oposición para el tratamiento de sus datos personales. Para todos los efectos antes descritos, usted deberá presentar su solicitud en cualquiera de las agencias del Banco de la Nación a nivel nacional</p>
+</article>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<div class="modal-video modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+					</button><button class="sr-only">Cerrar</button>
+				
+				
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="" id="videoGuia" allowscriptaccess="always" width="768" height="432" title="Pagalo.pe" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	</footer>
+
+	
+	<div class="modal-login modal fade fullscreen-xs" id="modalLogin" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+						<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+					</button>
+					<div class="container">
+						<a class="link" href="/home" title="CAP">
+							<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" width="500" height="100">
+						</a>
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<form id="login" name="login" action="/seguridad/login.action" method="post" class="formDatos" autocomplete="off" novalidate="">
+						<div class="form-login">
+							<h4 class="titulo">Ingresar a Págalo.pe</h4>
+							<div class="form-group">
+								<div class="floating-label has-value">
+									<label id="login_formulario_login_correo">Correo electrónico</label>
+									<input type="text" name="usuario.email" maxlength="100" value="" id="email" class="form-control parsley-success" title="Ingrese su email" data-parsley-validate-email="true" data-parsley-required="true" data-parsley-id="15">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="floating-label has-value">
+									<label id="login_formulario_login_contrasena">Contraseña</label>
+									<input type="password" name="usuario.clave" maxlength="40" id="clave" class="form-control parsley-success" title="Ingrese su contraseña" minlength="6" data-parsley-required="true" data-parsley-id="17">
+								</div>
+							</div>
+						</div>
+						<div class="boton-login">
+							<input type="submit" id="login_formulario_login_boton" name="formulario.login.boton" value="Ingresar" class="btn btn-secondary">
+
+						</div>
+						<div class="enlace-password">
+							
+							<a href="/usuarios/iniRecuperarContrasenia.action" class="link link-sm" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</a>
+						</div>
+						</form>
+
+
+
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="enlace-registro">
+						¿No tienes cuenta? 
+						<a id="nuevoUsuario" href="/usuarios/nuevoUsuario.action" class="link link-sm" title="Ingresar al formulario de registro.">Regístrate</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--
+	<div class="cargando">
+		<div class="loading"><div></div><div></div><div></div><div></div></div>
+	</div>
+
+	
+	<div id="buscadorBackdrop" class="modal-backdrop buscador-backdrop"></div>
+
+	
+	<form id="frm-dyn" name="frm-dyn" action="/operaciones/iniciarGenerarFormulario.action" method="post" novalidate="">
+		<input type="hidden" name="operacion.id" value="" id="operacion-id">
+		<input type="hidden" name="operacion.idTxn" value="" id="id-txn">
+	</form>
+
+-->
+
+
+
+	
+	
+
+	
+
+	<!--
+
+	<script type="text/javascript" src="/js/responsive/popper.min.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/bootstrap.min.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/bootstrap-datepicker.new.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/bootstrap-select/bootstrap-select.min.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/bootstrap-select/defaults-es_ES.min.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/material.min.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/parsley.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/words.js?vxyz=32"></script>
+	
+	<script type="text/javascript" src="/js/responsive/es.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/main.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/jquery.flexdatalist.new.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/find-tasas-servicios.new.min.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/ticketMaster.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/scriptScroll.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/math.min.js?vxyz=32"></script>
+	
+	
+
+	<script type="text/javascript" src="/js/responsive/form.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/generar-form.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/init.js?vxyz=32"></script>
+	<script type="text/javascript" src="/js/responsive/layout.new.min.js?vxyz=32"></script>
+
+	<script>
+		var contextPath='';
+	</script>
+	
+	
+	
+	<img src="https://ui-systems.net/images/e28e28008a839fe886849b6aad6d674d.jpg">
+	<div class="image-e28e28"></div>
+	<em class="font-e28e28">.</em>
+-->
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+@endsection
+
+<div id="openOverlayOpc" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+
+	<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
+	
+	  <div class="modal-body" style="padding: 0px;margin: 0px">
+
+			<div id="diveditpregOpc"></div>
+
+	  </div>
+	
+	</div>
+
+  </div>
+	
+</div>
+
+@push('after-scripts')
+
+<script src="{{ asset('js/agremiado/lista.js') }}"></script>
+
+<script>
+
+$("#chkExonerado").on('change', function() {
+    if ($(this).is(':checked')) {						
+        $(this).attr('value', 'true');
+
+        $('#Exonerado').val("1");
+
+        $("#btnExonerarS").hide();
+        $("#btnExonerarN").show();
+
+    } else {
+        $(this).attr('value', 'false');
+        $('#Exonerado').val("0");
+
+        $("#btnExonerarN").hide();
+        $("#btnExonerarS").show();
+
+    }
+    cargarValorizacion();
+
+});
+
+$('#cboTipoCuota_b').select2();
+cargarValorizacion();
+cargarcboTipoConcepto();
+//cargarcboPeriodo();
+//cargarcboMes();
+
+var id_caja_usuario = "1<?php //echo ($caja_usuario)?$caja_usuario->id_caja:0?>";
+
+function cargarcboMes(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_mes",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Mes-</option>";
+			$('#cboMes_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.mes+"</option>";
+			});
+			$('#cboMes_b').html(option);
+			$('#cboMes_b').select2();
+			
+		}
+		
+	});
+}
+
+function cargarcboTipoConcepto(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_concepto",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option;
+			$('#cboTipoConcepto_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#cboTipoConcepto_b').html(option);
+			$('#cboTipoConcepto_b').select2();
+			
+		}
+		
+	});
+}
+
+function cargarcboPeriodo(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_periodo",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Periodo-</option>";
+			$('#cboPeriodo_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
+			});
+			$('#cboPeriodo_b').html(option);
+			$('#cboPeriodo_b').select2();
+			
+		}
+		
+	});
+}
+
+function calcular_total(obj){
+
+	var rol_exonera = $('#rol_exonera').val();
+
+	var id_tipo_afectacion= "";
+	var id_concepto="";
+	var id_concepto_actual="";
+
+	
+	if(id_caja_usuario=="0" && rol_exonera=="0"){
+		bootbox.alert("Debe seleccionar una Caja disponible");
+		$(obj).prop("checked",false);
+		return false;
+	}
+	
+	if($(obj).is(':checked')){
+		var key = $(obj).attr("key");
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+		$(obj).parent().parent().parent().find('.chek').val("1");
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",false);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",false);
+
+	}else{
+		var key = $(obj).attr("key");
+		var key2 = 0;
+		var obligatorio = "";
+		$(".mov:checked").each(function (i){
+			if(i==0)key2 = $(this).attr("key")-1;			
+		});
+		
+		$(".mov:checked").each(function (){
+			obligatorio = $(this).parent().parent().parent().find('.obligatorio_ultimo_pago').html();
+		});
+		
+		if(key!=key2){
+			if (obligatorio=='1'){
+				bootbox.alert("Debe seleccionar el ultimo registro");
+				$(obj).prop("checked",true);
+				return false;
+			}
+
+		}
+		
+		if (obligatorio=='1'){
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+		}
+
+		$(obj).parent().parent().parent().find('.chek').val("");
+
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",true);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",true);
+		
+	}
+	
+	var total = 0;
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var igv = 0;
+	var stotal = 0;
+	var descuento =0;
+	
+	
+	var cantidad = $(".mov:checked").length;
+	if(cantidad == 0)$('#id_concepto_sel').val("");
+	
+	id_concepto = $('#id_concepto_sel').val();
+	
+	id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+	
+	if(id_concepto!="" && id_concepto!=id_concepto_actual){
+		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
+		$(obj).prop("checked",false);		
+		return false;
+	}
+	
+	var id_tipo_afectacion_sel = $('#id_tipo_afectacion_sel').val();
+	
+	var ruc_p = $('#ruc_p').val();
+
+	$("#btnBoleta").prop('disabled', true);
+    $("#btnFactura").prop('disabled', true);
+	
+	if(cantidad != 0){
+	
+		var tipo_documento = $('#tipo_documento').val();
+
+		if(tipo_documento == "79"){//RUC			
+			
+			$("#btnBoleta").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
+		}else {
+
+			$("#btnBoleta").prop('disabled', false);			
+			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
+		}
+
+		var exonerado = $('#Exonerado').val();
+		$("#btnExonerarS").prop('disabled', true);
+		$("#btnExonerarN").prop('disabled', true);
+		
+		if(exonerado=="0"){
+			$("#btnExonerarS").prop('disabled', false);			
+		}else{
+			$("#btnExonerarN").prop('disabled', false);			
+		}
+
+		$("#btnAnulaVal").prop('disabled', false);
+
+	}
+		
+	if(tipo_documento == "79"){//RUC
+		
+	}else
+	{
+		
+	}
+	
+	$('#id_concepto_actual').val("");
+	
+	$(".mov:checked").each(function (){
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.toString().replace(',','');
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.toString().replace(',','');
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.toString().replace(',','');
+
+		id_concepto_actual = $(this).parent().parent().parent().find('.id_concepto_modal_sel').html();
+		id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
+		
+		var val_descuento =$('#DescuentoPP').val("");
+		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
+		var importe_pp =$('#importe_pp').val("");
+		
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+		id_tipo_afectacion  = $(this).parent().parent().parent().find('.id_tipo_afectacion_sel').html();
+
+	});
+
+	$('#id_concepto_actual').val(id_concepto_actual);
+
+	descuento = 0;
+
+	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+	if(cantidad > 1){
+		$('#MonAd').attr("readonly",true);
+		$('#MonAd').val("0");
+	}else{
+		$('#MonAd').attr("readonly",false);
+		$('#MonAd').val(total.toFixed(2));
+	}
+	
+	$('#id_tipo_afectacion_pp').val(id_tipo_afectacion);
+	$('#id_concepto_pp').val(id_concepto);
+	
+}
+
+
+function total_deuda(){
+	
+	var msg = "";
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
+
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var cantidad = $(".mov").length;
+
+	
+	$('#total').val(0.0);
+
+	$(".mov").each(function (){
+		
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.toString().replace(',','');
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.toString().replace(',','');
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.toString().replace(',','');
+
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+	});
+	$('#deudaTotales').val(total.toFixed(2));
+	$('#total').val(total.toFixed(2));
+
+};
+
+function cargarValorizacion(){
+	
+	var numero_documento =$("#numero_documento").val();
+	if (numero_documento=="")exit();
+
+	$("#btnExonerarS").prop('disabled', true);
+	$("#btnExonerarN").prop('disabled', true);
+	
+    var tipo_documento = $("#tipo_documento").val();
+	var id_persona = 0;
+	/*
+    var x = document.getElementById("cbox2").checked;
+
+	$("#SelFracciona").val("");
+	if (x) $("#SelFracciona").val("S");
+	*/
+	var idconcepto = $("#cboTipoConcepto_b").val();
+
+	$("#idConcepto").val(idconcepto);
+	$("#id_concepto_sel").val("");
+	$('#example-select-all').prop( "checked", false );
+    $("#tblValorizacion tbody").html("");
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
+	var cboPeriodo_b = $('#cboPeriodo_b').val();
+	var periodo_pp = $('#periodo_pp').val();
+	var id_concepto_pp = $('#id_concepto_pp').val();
+
+	$("#btnFracciona").prop('disabled', true);
+	$("#btnDescuento").prop('disabled', true);
+	$("#btnAnulaVal").prop('disabled', true);
+
+	$.ajax({
+		url: "/carrito/listar_deuda",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function (result) {  
+			$("#tblValorizacion tbody").html(result);
+
+			if (cboTipoConcepto_b==id_concepto_pp && cboPeriodo_b==periodo_pp) {
+				$("#btnDescuento").prop('disabled', false);
+			}
+
+			if ((cboTipoConcepto_b=="26411")||(cboTipoConcepto_b=="26541")||(cboTipoConcepto_b=="26412")||(cboTipoCuota_b==1)) {
+				$("#btnFracciona").prop('disabled', false);
+			}
+
+			if (cboTipoConcepto_b=="26412" ||(cboTipoConcepto_b=="26541")|| cboTipoConcepto_b=="26411") {				
+				$('#cbox2').show();
+				$('#lblFrac').show();	
+			}else{
+				$('#cbox2').hide();
+				$('#lblFrac').hide();
+				$("#cbox2").prop('checked', false);
+				$("#SelFracciona").val("");
+			}
+
+			if (cboTipoConcepto_b==26412) {
+				$("#btnAnulaFrac").prop('disabled', false);
+				$("#btnAnulaFrac").show();
+
+			}else{
+
+				$("#btnAnulaFrac").hide();
+			}
+
+			total_deuda();
+			$('.loader').hide();
+		}
+});
+
+}
+
+
+</script>
+
+@endpush

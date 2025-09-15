@@ -153,7 +153,7 @@
 				<div class="row">
 					<div class="col-sm-5">
 						<h4 class="card-title mb-0 text-primary">
-							Fondo Com&uacute;n <!--<small class="text-muted">Usuarios activos</small>-->
+							Fondo Com&uacute;n  <!--<small class="text-muted">Usuarios activos</small>-->
 						</h4>
 					</div><!--col-->
 				</div>
@@ -174,50 +174,84 @@
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
+							
+								<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+									<?php 
+									if($periodo_activo){
+									?>
+									<input type="hidden" name="id_periodo" id="id_periodo" value="<?php echo $periodo_activo->id?>">
+									<select name="id_periodo_" id="id_periodo_" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" disabled="disabled">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPerido()">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
+								</div>
 
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<select name="anio" id="anio" class="form-control form-control-sm">
 										@foreach ($anio as $anio)
-										<option value="{{ $anio }}">{{ $anio }}</option>
+											<option value="{{ $anio }}">{{ $anio }}</option>
+										@endforeach
+									</select>
+
+								</div>
+
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<select name="mes" id="mes" class="form-control form-control-sm">
+										@foreach ($mes as $key=>$mes)
+											<option value="{{ $key }}">{{ $mes }}</option>
 										@endforeach
 									</select>
 								</div>
-
-								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-
-
-									<select name="mes" id="mes" class="form-control form-control-sm">
-										<?php
-										foreach ($mes as $row) { ?>
-											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $mes_actual) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-										<?php
-										}
-										?>
-									</select>
-								</div>
-
+									
+<!--
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 									<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
 										<option value="">--Seleccionar Municipalidad--</option>
-										<?php
+										<//?php
 										foreach ($municipalidad as $row) { ?>
-											<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
-										<?php
-										}
-										?>
+											<option value="<//?php echo $row->id ?>" <//?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><//?php echo $row->denominacion ?></option>
+										<//?php}?>
 									</select>
 								</div>
-								<!--
-								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-									<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
-								</div>
+
 									-->
 
-								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
-									<input class="btn btn-warning pull-rigth" value="Buscar" type="button" onclick="cargarFondoComun()" id="btnBuscar" />
-									<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular" onclick="fn_calcular()" style="margin-left:15px" />
+								<!--
+
+									-->
+
+								<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+									<input class="btn btn-warning pull-rigth" value="Buscar" type="button"  id="btnBuscar" />									
 								</div>
 
+								<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+									<input class="btn btn-success pull-rigth" value="Calcular" type="button"  id="btnCalcular" />
+								</div>
+
+								<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+									<input class="btn btn btn-secondary" value="Descargar Pdf" name="descargar" type="button" id="btnDescargar"/> 
+								</div>
 							</div>
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
