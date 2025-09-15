@@ -24586,7 +24586,7 @@ a {
 			<div class="navbar-brand">
 				<a class="link" href="/home" title="Págalo.pe">
 					<!--<img class="logo" src="https://pagalo.pe/imagenes/new/logo-pagalo.svg" width="500" height="100" alt="Págalo.pe - Banco de la Nación">-->
-					<img class="logo" src="http://127.0.0.1:8000/img/logo-sin-fondo2.png" width="500" height="100" alt="Págalo.pe - Banco de la Nación">
+					<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" width="500" height="100" alt="Págalo.pe - Banco de la Nación">
 				</a>
 			</div>
 

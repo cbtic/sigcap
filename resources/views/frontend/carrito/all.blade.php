@@ -693,21 +693,21 @@ div {
 			
 			<div class="col-lg-8 col-12 footer-izquierdo">
 				<div class="brand">
-					<a href="/home" title="Págalo.pe - Banco de la Nación">
-						<img class="logo" src="http://127.0.0.1:8000/img/logo-sin-fondo.png" width="500" height="100" alt="Págalo.pe - Banco de la Nación">
+					<a href="/home" title="CAP">
+						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
 					</a>
 				</div>
-				<strong class="titulo">Banco de la Nación | Ministerio de Economía y Finanzas</strong>
+				<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
-					<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>
-					<p>Oficina Principal: Av. Javier Prado Este 2499, San Borja. Central telefónica: 519-20 00.</p>
-					<p>Atención en oficinas administrativas: lunes a viernes de 8:30 a 17:30 horas. Refrigerio de: 13 a 14 horas.</p>
-					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 9:00 a 17:00 horas (horario corrido).</p>
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 4710739.</p>
+					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
 			</div>
 			
-			<div class="col-lg-4 col-12 footer-derecho">
+			<!--<div class="col-lg-4 col-12 footer-derecho">
 				<div class="footer-menu">
 					<div class="row">
 						<div class="col">
@@ -729,7 +729,7 @@ div {
 						</div>	
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div>
@@ -1143,8 +1143,8 @@ div {
 						<i class="icon icon-pagalo-close" aria-hidden="true"></i>
 					</button>
 					<div class="container">
-						<a class="link" href="/home" title="Págalo.pe">
-							<img class="logo" src="http://127.0.0.1:8000/img/logo-sin-fondo2.png" width="500" height="100">
+						<a class="link" href="/home" title="CAP">
+							<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" width="500" height="100">
 						</a>
 					</div>
 				</div>

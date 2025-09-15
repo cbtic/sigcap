@@ -89,8 +89,10 @@ class Persona extends Model
 
         $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
 		from personas p 
-		left join agremiados a on p.id=a.id_persona
-		Where p.id_tipo_documento='" . $tipo_documento . "' And p.numero_documento='" . $numero_documento . "'";
+		left join agremiados a on p.id = a.id_persona
+		where p.id_tipo_documento = '" . $tipo_documento . "' 
+        and p.numero_documento = '" . $numero_documento . "'
+        and p.estado = '1' ";
 
         $data = DB::select($cad);
         return $data[0];

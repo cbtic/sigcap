@@ -345,7 +345,7 @@
                                             
                                             <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-top:30px">
-                                                <button type="button" onclick="guardarFactura()" class="btn btn-primary" id="btnGenTicket">GUARDAR FACTURA</button> 
+                                                <button type="button" onclick="guardarFactura()" class="btn btn-primary" id="btnGenTicket">{{$btn_titulo}}</button> 
                                             </div>
                                             </div>
                                         </div>
