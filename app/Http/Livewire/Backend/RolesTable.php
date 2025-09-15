@@ -39,5 +39,5 @@ class RolesTable extends DataTableComponent
     public function rowView(): string
     {
         return 'backend.auth.role.includes.row';
-    }
+    }    
 }
