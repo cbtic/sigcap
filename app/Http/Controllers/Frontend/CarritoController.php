@@ -72,13 +72,13 @@ class CarritoController extends Controller
 		$trans = $request->trans;
 		$TipoF = $request->TipoF;
         
-        if ($TipoF == 'FT') {$titulo = 'Nueva Factura';}
-        if ($TipoF == 'BV') {$titulo = 'Nueva Boleta de Venta';}
-        if ($TipoF == 'NCF') {$titulo = 'Nueva Nota Crédito Factura';}
-        if ($TipoF == 'NCB') {$titulo = 'Nueva Nota Crédito Boleta de Venta';}
-        if ($TipoF == 'NDF') {$titulo = 'Nueva Nota Dévito Factura';}
-        if ($TipoF == 'NDB') {$titulo = 'Nueva Nota Dévito Boleta de Venta';}
-        if ($TipoF == 'TK') {$titulo = 'Nuevo Ticket';}
+        if ($TipoF == 'FT') {$titulo = 'Nueva Factura';$btn_titulo = 'GUARDAR FACTURA';}
+        if ($TipoF == 'BV') {$titulo = 'Nueva Boleta de Venta';$btn_titulo = 'GUARDAR BOLETA';}
+        if ($TipoF == 'NCF') {$titulo = 'Nueva Nota Crédito Factura';$btn_titulo = 'GUARDAR NOTA';}
+        if ($TipoF == 'NCB') {$titulo = 'Nueva Nota Crédito Boleta de Venta';$btn_titulo = 'GUARDAR NOTA';}
+        if ($TipoF == 'NDF') {$titulo = 'Nueva Nota Dévito Factura';$btn_titulo = 'GUARDAR NOTA';}
+        if ($TipoF == 'NDB') {$titulo = 'Nueva Nota Dévito Boleta de Venta';$btn_titulo = 'GUARDAR NOTA';}
+        if ($TipoF == 'TK') {$titulo = 'Nuevo Ticket';$btn_titulo = 'GUARDAR TICKET';}
 
 		$empresa_model = new Empresa;
 		$serie_model = new TablaMaestra;
@@ -179,7 +179,7 @@ class CarritoController extends Controller
 		$pedido_item = PedidoItem::where("pedido_id",$request->id_pedido)->get();
 		
         //print_r($empresa);
-		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido','titulo','empresa'));
+		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido','titulo','empresa','btn_titulo'));
 
 	}
 

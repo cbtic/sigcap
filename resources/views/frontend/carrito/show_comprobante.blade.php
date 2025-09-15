@@ -178,7 +178,20 @@
 				<div class="item"><i class="icon fas fa-receipt" aria-hidden="true" title="Resumen de pago"></i></div>
 			</div>
 			
-			<span class="titulo-entidad">Factura</span>
+			<span class="titulo-entidad">
+
+                @switch($factura->tipo)
+                    @case('FT')
+                    Factura
+                    @break
+                    @case('BV')
+                    Boleta
+                    @break
+                    @default
+                    No esta identificado el tipo de documento
+                @endswitch
+
+            </span>
 			
 			<!--<small class="descriptivo">Información del pago</small>-->
 			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
