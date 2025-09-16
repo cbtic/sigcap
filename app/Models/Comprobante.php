@@ -456,13 +456,7 @@ class Comprobante extends Model
         where cp.id_comprobante = f.id
         --order by cp.id
 ) medio_pago,
-        (select cp.descripcion  
-		from comprobante_pagos cp 
-		inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
-		
-        where cp.id_comprobante = f.id
-        
-        ) descripcion
+        '' descripcion
   FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
         inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
