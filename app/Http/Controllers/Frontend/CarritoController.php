@@ -52,7 +52,7 @@ class CarritoController extends Controller
 		//$agremiado_model = new Agremiado;
 		$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
 		$agremiado = $carrito_model->getAgremiado($tipo_documento,$id_persona);
-
+		//print_r($agremiado);exit();
 		$p[]=$id_persona;
 		$p[]="v";
 		$prontopago = $carrito_model->genera_prontopago($p);
@@ -199,6 +199,7 @@ class CarritoController extends Controller
 
 		$SelFracciona = $request->SelFracciona;
         $Exonerado = $request->Exonerado;
+		$actividad = $request->actividad;
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
 
@@ -219,7 +220,7 @@ class CarritoController extends Controller
 		$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
 
 
-		return view('frontend.carrito.lista_valorizacion',compact('carrito_deuda'));
+		return view('frontend.carrito.lista_valorizacion',compact('carrito_deuda','actividad'));
 
 	}
 

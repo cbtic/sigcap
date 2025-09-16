@@ -1,9 +1,9 @@
 <x-forms.patch :action="route('frontend.user.perfil.update')">
     <div class="form-group row">
-        <label for="numero_ruc" class="col-md-3 col-form-label text-md-right">@lang('N° RUC')</label>
+        <label for="numero_ruc" class="col-md-3 col-form-label text-md-right">@lang('N° RUC Personal')</label>
 
         <div class="col-md-9">
-            <input type="text" name="numero_ruc" class="form-control" placeholder="{{ __('N° RUC') }}" value="{{ old('numero_ruc') ?? $logged_in_user->persona->numero_ruc }}" required autofocus autocomplete="numero_ruc" />
+            <input type="text" name="numero_ruc" class="form-control" placeholder="{{ __('N° RUC') }}" value="{{ old('numero_ruc') ?? $logged_in_user->persona->numero_ruc }}" required autofocus autocomplete="numero_ruc" pattern="10[0-9]{9}" title="El RUC debe comenzar con 10 y tener 11 dígitos" />
         </div>
     </div><!--form-group-->
 
@@ -24,7 +24,7 @@
     </div><!--form-group-->
 
     <div class="form-group row">
-        <label for="correo" class="col-md-3 col-form-label text-md-right">@lang('Correo')</label>
+        <label for="correo" class="col-md-3 col-form-label text-md-right">@lang('Correo Electr&oacute;nico para Facturaci&oacute;n')</label>
 
         <div class="col-md-9">
             <input type="text" name="correo" class="form-control" placeholder="{{ __('Correo') }}" value="{{ old('correo') ?? $logged_in_user->persona->correo }}" required autofocus autocomplete="correo" />
