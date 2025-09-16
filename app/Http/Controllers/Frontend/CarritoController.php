@@ -86,7 +86,7 @@ class CarritoController extends Controller
 
 		if ($trans == 'FA'){
             $serie = $serie_model->getMaestroC('95',$TipoF); 
-            $serie_default = $serie[0]->predeterminado;
+			$serie_default = $serie[0]->predeterminado;
             $MonAd = 0;
             $total   = 100;//$request->total;
             $stotal   = 100;//$request->stotal;            
@@ -178,8 +178,25 @@ class CarritoController extends Controller
 		$pedido = Pedido::find($request->id_pedido);
 		$pedido_item = PedidoItem::where("pedido_id",$request->id_pedido)->get();
 		
+		$sw = true;
+
+		if(isset($pedido_item[0]->valorizacion_id) &&  $pedido_item[0]->valorizacion_id>0){
+			$valorizacionTmp = Valorizacione::find($pedido_item[0]->valorizacion_id);
+
+			$conceptos_permitidos = [26411, 26461, 26412, 26670, 26556, 26579, 26580, 26651];
+
+			if(isset($valorizacionTmp->id_concepto)){
+				
+				if (in_array($valorizacionTmp->id_concepto, $conceptos_permitidos)) {
+					$sw = false;
+				}
+			}			
+
+		}
+
         //print_r($empresa);
-		return view('frontend.carrito.show_ajax',compact('trans','serie','empresa','pedido_item','pedido','titulo','empresa','btn_titulo'));
+		//echo $serie_default;exit();
+		return view('frontend.carrito.show_ajax',compact('trans','serie_default','serie','empresa','pedido_item','pedido','titulo','empresa','btn_titulo','sw'));
 
 	}
 
@@ -293,7 +310,7 @@ class CarritoController extends Controller
 		$carrito_model = new Carrito;
 		if($carrito){
 			$carrito_items = $carrito_model->getCarritoDetalle($carrito->id);
-			$total_general = $carrito_items[0]->total_general;
+			$total_general = isset($carrito_items[0]->total_general)?$carrito_items[0]->total_general:0;
 		}else{
 			$carrito_items = NULL;
 		}
@@ -357,12 +374,24 @@ class CarritoController extends Controller
 
         if ($item) {
             // Si ya existe, actualizar cantidad y total
+			/*
             $item->cantidad += $request->cantidad;
             $item->total = $item->cantidad * $item->precio_unitario;
             $item->save();
-			
+			*/
         } else {
             // Si no existe, crear nuevo item
+
+			$itemFirst = CarritoItem::where('carrito_id', $carrito->id)->first();
+
+			if($itemFirst){
+				$valorizacionTmp = Valorizacione::find($itemFirst->valorizacion_id);
+				
+				if($valorizacionTmp->id_concepto != $valorizacion->id_concepto){
+					return redirect('/carrito')->with('success', 'No se puede ingresar un Concepto diferente, filtre el mismo concepto');
+				}
+			}
+
             $item = CarritoItem::create([
                 'carrito_id'          => $carrito->id,
                 'valorizacion_id'     => $valorizacion->id,
@@ -863,8 +892,30 @@ class CarritoController extends Controller
 		$ubicacion_id=$usuario->id_persona;
 		$id_persona_act=$usuario->id_persona;
 		$total = $pedido->total_general;
+
 		$ubicacion_id2="0";
 		$id_persona2="0";
+
+		if(isset($request->persona2) && $request->persona2>0){
+			$id_persona2=$request->persona2;
+
+			if ($id_persona2 != '') {
+				$id_persona_act = $id_persona2;
+				$id_persona = '0';
+			}
+		}
+
+		if(isset($request->ubicacion2) && $request->ubicacion2>0){
+			$ubicacion_id2=$request->ubicacion2;
+
+			if ($ubicacion_id2 != '') {
+				$id_ubicacion_act = $ubicacion_id2;
+				$ubicacion_id = '0';
+			}
+
+			if ($ubicacion_id == '0') $ubicacion_id = $ubicacion_id2;
+		}		
+
 		$id_caja=143;
 		$descuento=0;
 		$id_user=$usuario_id;
