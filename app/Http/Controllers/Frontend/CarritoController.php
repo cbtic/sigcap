@@ -187,11 +187,15 @@ class CarritoController extends Controller
 
 			if(isset($valorizacionTmp->id_concepto)){
 				
-				if (in_array($valorizacionTmp->id_concepto, $conceptos_permitidos) || $valorizacionTmp->id_concepto == "0") {
+				if (in_array($valorizacionTmp->id_concepto, $conceptos_permitidos)) {
 					$sw = false;
 				}
 			}			
 
+		}
+
+		if($valorizacionTmp->id_concepto == "0"){
+			$sw = false;
 		}
 
         //print_r($empresa);
