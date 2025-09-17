@@ -597,6 +597,11 @@
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
                                                     utilizando su clave SOL</p>
+                                                <p>Sírvase a verificar su comprobante de pago, en caso de cambio o devolución 
+                                                    solo se procederá siempre y cuando se solicita en el mismo mes de emisión del 
+                                                    comprobante (se cobran gastos administrativos y bancarios).</p>
+                                                <p>PARA MAYOR INFORMACIÓN PUEDE CONTACTARSE AL 6271200 ANEXO 181,182 Y 184 O AL CORREO caja@limacap.org.</p>
+
 
                                             </div>
 
