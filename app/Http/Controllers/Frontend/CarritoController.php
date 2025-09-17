@@ -180,22 +180,27 @@ class CarritoController extends Controller
 		
 		$sw = true;
 
-		if(isset($pedido_item[0]->valorizacion_id) &&  $pedido_item[0]->valorizacion_id>0){
-			$valorizacionTmp = Valorizacione::find($pedido_item[0]->valorizacion_id);
+		if(isset($pedido_item[0]->valorizacion_id)){
 
-			$conceptos_permitidos = [26411, 26461, 26412, 26670, 26556, 26579, 26580, 26651];
+			if($pedido_item[0]->valorizacion_id>0){
 
-			if(isset($valorizacionTmp->id_concepto)){
+				$valorizacionTmp = Valorizacione::find($pedido_item[0]->valorizacion_id);
+
+				$conceptos_permitidos = [26411, 26461, 26412, 26670, 26556, 26579, 26580, 26651];
+
+				if(isset($valorizacionTmp->id_concepto)){
+					
+					if (in_array($valorizacionTmp->id_concepto, $conceptos_permitidos)) {
+						$sw = false;
+					}
+				}			
 				
-				if (in_array($valorizacionTmp->id_concepto, $conceptos_permitidos)) {
-					$sw = false;
-				}
-			}			
+			}
 
-		}
-
-		if($valorizacionTmp->id_concepto == "0"){
-			$sw = false;
+			if($pedido_item[0]->valorizacion_id == "0"){
+				$sw = false;
+			}
+			
 		}
 
         //print_r($empresa);
