@@ -65,6 +65,7 @@ use App\Http\Controllers\Frontend\TipoCambioController;
 use App\Http\Controllers\Frontend\CorreoController;
 use App\Http\Controllers\Frontend\SuspensionController;
 use App\Http\Controllers\Frontend\CarritoController;
+use App\Http\Controllers\Frontend\PedidoController;
 
 use App\Http\Controllers\Frontend\EncuestaController;
 
@@ -104,6 +105,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('carrito/cargar_comprobante', [CarritoController::class, 'cargar_comprobante'])->name('carrito.cargar_comprobante');
     Route::post('carrito/send_comprobante', [CarritoController::class, 'send_comprobante'])->name('carrito.send_comprobante');
     Route::get('carrito/ver_comprobante/{id}', [CarritoController::class, 'ver_comprobante'])->name('carrito.ver_comprobante');
+
+    Route::get('pedido', [PedidoController::class, 'index'])->name('pedido');
+    Route::post('pedido/listar_pedido', [PedidoController::class, 'listar_pedido'])->name('pedido.listar_pedido');
+    Route::get('pedido/show/{id}', [PedidoController::class, 'show'])->name('pedido.show');
+
 });
 
 //Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');

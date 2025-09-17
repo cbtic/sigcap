@@ -385,9 +385,10 @@ class CarritoController extends Controller
 			$itemFirst = CarritoItem::where('carrito_id', $carrito->id)->first();
 
 			if($itemFirst){
+
 				$valorizacionTmp = Valorizacione::find($itemFirst->valorizacion_id);
 				
-				if($valorizacionTmp->id_concepto != $valorizacion->id_concepto){
+				if($valorizacionTmp && $valorizacionTmp->id_concepto != $valorizacion->id_concepto){
 					return redirect('/carrito')->with('success', 'No se puede ingresar un Concepto diferente, filtre el mismo concepto');
 				}
 			}
