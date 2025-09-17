@@ -982,14 +982,15 @@ class CarritoController extends Controller
 				//$facturaDet_upd->unidad = $value['unidad_medida_item'];
 				$facturaDet_upd->save();
 			}
-		
-			$valoriza_upd = Valorizacione::find($value->valorizacion_id);                       
-			$valoriza_upd->id_comprobante = $id_factura;
-			$valoriza_upd->pagado = "1";
-			$valoriza_upd->valor_unitario = $value->precio_unitario;
-			$valoriza_upd->cantidad = $value->cantidad;
-			$valoriza_upd->save();
 			
+			if(isset($value->valorizacion_id) && $value->valorizacion_id>0){
+				$valoriza_upd = Valorizacione::find($value->valorizacion_id);
+				$valoriza_upd->id_comprobante = $id_factura;
+				$valoriza_upd->pagado = "1";
+				$valoriza_upd->valor_unitario = $value->precio_unitario;
+				$valoriza_upd->cantidad = $value->cantidad;
+				$valoriza_upd->save();
+			}
         }
 		
 
