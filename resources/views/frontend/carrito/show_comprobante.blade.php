@@ -433,10 +433,12 @@
                                                                 <td>FECHA DE EMISIÓN:</td>
                                                                 <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
                                                                 </tr>
+                                                                @if($datos->numero_cap!="")
                                                                 <tr>
                                                                 <td>CAP :</td>
                                                                 <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
                                                                 </tr>
+                                                                @endif
                                                                 </tbody>
                                                                 </table>    
                                                             </div>
@@ -757,6 +759,7 @@
                 <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
             </div>
         </a>
+        
         <div aria-labelledby="headingBeta" class="respuesta collapse" data-parent="#accordionFaq" id="collapseBeta">
             <div class="expansion-panel-body">
                 <ul>

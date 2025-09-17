@@ -67,7 +67,8 @@ foreach ($carrito_deuda as $key => $row):
 	*/
 
 	if ($n!=1) {
-		if ($obligatorio =="1")$disabled = "disabled";
+		//if ($obligatorio =="1")
+			$disabled = "disabled";
 	}
 
 	if($actividad=="SUSPENDIDO")$disabled = "disabled";
