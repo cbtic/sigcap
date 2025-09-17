@@ -334,7 +334,18 @@ class CarritoController extends Controller
 			'amount' => $total_general
 		]);
 		
-		return view('frontend.carrito.all_detalle',compact('carrito_items','total_general','purchaseNumber','merchantId','sesion','urlJs'));
+		//return view('frontend.carrito.all_detalle',compact('carrito_items','total_general','purchaseNumber','merchantId','sesion','urlJs'));
+
+		return response()->view('frontend.carrito.all_detalle', compact(
+			'carrito_items',
+			'total_general',
+			'purchaseNumber',
+			'merchantId',
+			'sesion',
+			'urlJs'
+		))->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+		->header('Pragma', 'no-cache')
+		->header('Expires', '0');
 
     }
 
@@ -997,7 +1008,9 @@ class CarritoController extends Controller
         $facturas_model->registrar_deuda_persona($id_persona);
         
 		//return $id_factura;
-
+		$pedido->id_comprobante = $id_factura;
+		$pedido->save();
+		
 		return response()->json([
             'sw' => true,
             'id_factura' => $id_factura,

@@ -34,7 +34,12 @@ foreach ($pedido as $key => $row):
 		<td class="text-left"><?php if(isset($data->dataMap))echo $data->dataMap->CARD." (".$data->dataMap->BRAND.")"; ?></td>
 		<td class="text-left"><?php if(isset($data->order))echo $data->order->amount. " ".$data->order->currency; ?></td>
 		<td>
-            <a class="btn btn-square link link-icon" href="pedido/show/{{$row->id}}" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
+			@if(isset($row->id_comprobante))
+			<a class="btn btn-square link link-icon" target="_blank" href="carrito/ver_comprobante/{{$row->id_comprobante}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-file-alt" style="line-height:unset !important;"></i></a>
+			@else
+			<a class="btn btn-square link link-icon" href="pedido/show/{{$row->id}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></a>
+			@endif
+
 		</td>
 
 	</tr>

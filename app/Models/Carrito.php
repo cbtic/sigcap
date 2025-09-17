@@ -86,6 +86,7 @@ where c.id=".$id_carrito;
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 left join carrito_items ci on v.id=ci.valorizacion_id 
+                left join pedido_items pi on v.id=pi.valorizacion_id
                 ".$tlb_liquidacion."
                 where v.id_persona = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
@@ -99,6 +100,7 @@ where c.id=".$id_carrito;
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
                 and ci.id is null
+                and pi.id is null
             order by v.fecha asc
              ".$filas."
 			";
