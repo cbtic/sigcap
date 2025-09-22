@@ -13,9 +13,11 @@ use App\Models\User;
 use App\Models\Persona;
 use App\Models\Comprobante;
 use App\Models\ComprobanteDetalle;
+use App\Models\ComprobantePago;
 use App\Models\Valorizacione;
 use App\Models\TablaMaestra;
 use App\Models\Empresa;
+use App\Models\CajaIngreso;
 use Auth;
 use App\Services\VisaService;
 use Monolog\Logger;
@@ -26,6 +28,7 @@ use DateTime;
 use Barryvdh\DomPDF\Facade\Pdf;
 use stdClass;
 use Illuminate\Contracts\View\View;
+use Carbon\Carbon;
 
 class CarritoController extends Controller
 {
@@ -901,6 +904,8 @@ class CarritoController extends Controller
 
 	public function send_comprobante(Request $request)
 	{
+
+		$caja_ingreso_model = new CajaIngreso;
 		$pedido = Pedido::find($request->id_pedido);
 		
 		$facturas_model = new Comprobante;
@@ -937,7 +942,7 @@ class CarritoController extends Controller
 			if ($ubicacion_id == '0') $ubicacion_id = $ubicacion_id2;
 		}		
 
-		$id_caja=143;
+		$id_caja=12;//$caja_ingreso_model->getCajaCarritoHoy();//143;
 		$descuento=0;
 		$id_user=$usuario_id;
 		$id_moneda=1;
@@ -1004,10 +1009,22 @@ class CarritoController extends Controller
 			}
         }
 		
+		$comprobantePago = new ComprobantePago;
+		$comprobantePago->id_medio = 547;
+		$comprobantePago->fecha = Carbon::now()->format('Y-m-d');
+		$comprobantePago->item = 1;
+		$comprobantePago->nro_operacion = "";//transactionId;
+		$comprobantePago->id_comprobante = $id_factura;
+		$comprobantePago->descripcion = "";
+		$comprobantePago->monto = $factura->total;
+		$comprobantePago->fecha_vencimiento = Carbon::now()->format('Y-m-d');
+		$comprobantePago->id_usuario_inserta = 143;
+		$comprobantePago->save();
 
         $facturas_model->registrar_deuda_persona($id_persona);
         
 		//return $id_factura;
+		//echo "id_factura:".$id_factura;
 		$pedido->id_comprobante = $id_factura;
 		$pedido->save();
 		

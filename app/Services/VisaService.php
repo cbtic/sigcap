@@ -31,19 +31,20 @@ class VisaService
             'antifraud' => [
                 'clientIp' => request()->ip(),
                 'merchantDefineData' => [
-                    'MDD4' => "integraciones.guillermo@necomplus.com",
-                    'MDD32' => '250376',
-                    'MDD75' => 'Registrado',
-                    'MDD77' => '7'
+                    'MDD4' => "integraciones.guillermo@necomplus.com",//correo electronico del cliente
+                    'MDD32' => '250376',//id_cliente  dni o correo  //id_persona
+                    'MDD75' => 'Registrado',//registrado, invitado, empleado
+                    'MDD77' => '7'//fecha actual - fecha colegiatura
                 ],
             ],
+            //comentar
             'dataMap' => [
                 'cardholderCity' => 'Lima',
                 'cardholderCountry' => 'PE',
-                'cardholderAddress' => 'Av Principal A-5. Campoy',
+                'cardholderAddress' => 'Av Principal A-5. Campoy',//direccion del agremiado
                 'cardholderPostalCode' => '15046',
                 'cardholderState' => 'LIM',
-                'cardholderPhoneNumber' => '986322205'
+                'cardholderPhoneNumber' => '986322205'//telefono del agremiado
             ]
         ];
 
@@ -72,8 +73,8 @@ class VisaService
                 'urlAddress' => request()->fullUrl(),
                 'partnerIdCode' => '',
                 'serviceLocationCityName' => 'LIMA',
-                'serviceLocationCountrySubdivisionCode' => 'LIMA',
-                'serviceLocationCountryCode' => 'PER',
+                'serviceLocationCountrySubdivisionCode' => 'LIM',
+                'serviceLocationCountryCode' => 'PE',
                 'serviceLocationPostalCode' => '15074'
             ]
         ];

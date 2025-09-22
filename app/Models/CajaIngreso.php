@@ -867,4 +867,20 @@ class CajaIngreso extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function getCajaCarritoHoy(){
+
+        $cad = "select id::int 
+from caja_ingresos ci 
+where ci.id_usuario=143 
+and ci.id_caja=12 
+and to_char(ci.fecha_inicio,'dd-mm-yyyy')=to_char(now(),'dd-mm-yyyy') 
+limit 1";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        if(isset($data))return $data[0]->id;
+    }
+
+
 }
