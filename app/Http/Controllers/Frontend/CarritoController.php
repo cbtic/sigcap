@@ -317,6 +317,10 @@ class CarritoController extends Controller
 
 		$total_general=0;
 		$usuario = Auth::user();
+
+		$user_model = new User;
+		$datos_usuario = $user_model->getDatosCarritoByIdUsuario($usuario->id);
+
     	$carrito = Carrito::where('usuario_id', $usuario->id)->with('items')->first();
 		//print_r($carrito);exit();
 		$carrito_model = new Carrito;
@@ -328,7 +332,7 @@ class CarritoController extends Controller
 		}
 
 		$token = $visa->generateToken();
-		$sesion = $visa->generateSession($total_general, $token);
+		$sesion = $visa->generateSession($total_general, $token, $datos_usuario);
 		$purchaseNumber = $visa->generatePurchaseNumber();
 		
 		// guardo en sesión
@@ -576,6 +580,9 @@ class CarritoController extends Controller
 	public function finalizar(Request $request,VisaService $visa)
     {
 		
+		$user_model = new User;
+		$datos_usuario = $user_model->getDatosCarritoByIdUsuario(auth()->id());
+
 		$transactionToken = $request->transactionToken;
 		$email = $request->customerEmail;
 		//$amount = $request->amount;
@@ -601,7 +608,7 @@ class CarritoController extends Controller
 		} 
 
 		$token = $visa->generateToken();
-		$data = $visa->generateAuthorization($amount, $purchaseNumber, $transactionToken, $token);
+		$data = $visa->generateAuthorization($amount, $purchaseNumber, $transactionToken, $token, $datos_usuario);
 		
 		$carrito = Carrito::where('usuario_id', auth()->id())->first();
 
@@ -1027,7 +1034,7 @@ class CarritoController extends Controller
 		//echo "id_factura:".$id_factura;
 		$pedido->id_comprobante = $id_factura;
 		$pedido->save();
-		
+
 		return response()->json([
             'sw' => true,
             'id_factura' => $id_factura,

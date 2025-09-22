@@ -261,9 +261,30 @@
                                     <?php
                             }
                             } else {
-                            //$c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
-                            ?>
+                                $c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
+                                ?>
 
+                                    <div class="alert alert-success" role="alert">
+                                        <?php echo $data->data->ACTION_DESCRIPTION;?>
+                                    </div>
+
+                                    <div class="form-section current">		
+                                        <div class="input-group mb-3 flex-100">
+                                            <input type="hidden" name="fieldsForm[0].datoEnvio" value="codConcepto" data-parsley-group="block-0">
+                                            <div class="floating-label has-value">
+                                                <label for="codConcepto">Número de pedido</label>
+                                                <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="{{$purchaseNumber}}" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="input-group mb-3 flex-100">
+                                            <input type="hidden" name="fieldsForm[1].datoEnvio" value="costoTasa" data-parsley-group="block-0">
+                                            <div class="floating-label has-value">	
+                                                <label for="costoTasa">Fecha y hora del pedido</label>
+                                                <input class="form-control" type="text" id="cantidad" name="cantidad" required="" readonly="" value="<?php echo $c[4].$c[5]."/".$c[2].$c[3]."/".$c[0].$c[1]." ".$c[6].$c[7].":".$c[8].$c[9].":".$c[10].$c[11]; ?>" data-id="835" data-dato-boton="0" data-parsley-group="block-0">
+                                            </div>		
+                                        </div>
+                                </div>
 
                             <?php
                                 }
@@ -292,14 +313,12 @@
                             
                             <div class="col-10 col-md-8">
                                 <div class="alert alert-warning text-center shadow rounded-3 p-4">
+                                <?php
+                                if (isset($data->dataMap)) { //echo "entra 1";
+                                    if ($data->dataMap->STATUS == "Authorized") { 
+                                ?>
                                     <h4 class="mb-3">📑 Datos del comprobante</h4>
                                     <p class="mb-0" style="font-size:17px">Aquí aparecerá la información relacionada con tu comprobante, por favor selecciona el tipo de comprobante que deseas generar.</p>
-                                    
-                                    <!--
-                                    <p class="fw-bold mb-0">Dispones de dos opciones: 
-                                        <span class="text-success">Factura</span> o <span class="text-primary">Boleta</span>.
-                                    </p>
-                                    -->
 
                                     <div class="w-100 clearfix" style="padding-top:20px">
                                         <input class="btn btn-secondary float-left" 
@@ -308,6 +327,14 @@
                                             value="Boleta" type="button" id="btnBoleta" onclick="cargarComprobante(2)">
                                     </div>
 
+                                <?php
+                                    }
+                                }else{
+                                ?>
+                                    <p class="mb-0" style="font-size:17px">No se pueden generar comprobantes, intente con otra tarjeta.</p>
+                                <?php
+                                }
+                                ?>
                                 </div>
                             </div>
                             

@@ -23,7 +23,7 @@ class VisaService
         return $response->body();
     }
 
-    public function generateSession($amount, $token)
+    public function generateSession($amount, $token, $datos_usuario)
     {
         $session = [
             'channel' => 'web',
@@ -31,20 +31,26 @@ class VisaService
             'antifraud' => [
                 'clientIp' => request()->ip(),
                 'merchantDefineData' => [
+                    /*
                     'MDD4' => "integraciones.guillermo@necomplus.com",//correo electronico del cliente
                     'MDD32' => '250376',//id_cliente  dni o correo  //id_persona
                     'MDD75' => 'Registrado',//registrado, invitado, empleado
                     'MDD77' => '7'//fecha actual - fecha colegiatura
+                    */
+                    'MDD4' => $datos_usuario->email,
+                    'MDD32' => $datos_usuario->id_persona,
+                    'MDD75' => 'Registrado',
+                    'MDD77' => $datos_usuario->dias
                 ],
             ],
             //comentar
             'dataMap' => [
-                'cardholderCity' => 'Lima',
+                'cardholderCity' => $datos_usuario->departamento,//'Lima',
                 'cardholderCountry' => 'PE',
-                'cardholderAddress' => 'Av Principal A-5. Campoy',//direccion del agremiado
-                'cardholderPostalCode' => '15046',
-                'cardholderState' => 'LIM',
-                'cardholderPhoneNumber' => '986322205'//telefono del agremiado
+                'cardholderAddress' => $datos_usuario->direccion,//'Av Principal A-5. Campoy',//direccion del agremiado
+                'cardholderPostalCode' => '150113',//'15046',
+                'cardholderState' => substr($datos_usuario->departamento,0,3),//'LIM',
+                'cardholderPhoneNumber' => preg_replace('/\D/', '', $datos_usuario->celular1)//'986322205'//telefono del agremiado
             ]
         ];
 
@@ -57,7 +63,7 @@ class VisaService
         //\Log::info('Respuesta sesión Niubiz: '.$response->body());
     }
 
-    public function generateAuthorization($amount, $purchaseNumber, $transactionToken, $token)
+    public function generateAuthorization($amount, $purchaseNumber, $transactionToken, $token, $datos_usuario)
     {
         $data = [
             'captureType' => 'manual',
@@ -72,10 +78,10 @@ class VisaService
             'dataMap' => [
                 'urlAddress' => request()->fullUrl(),
                 'partnerIdCode' => '',
-                'serviceLocationCityName' => 'LIMA',
-                'serviceLocationCountrySubdivisionCode' => 'LIM',
+                'serviceLocationCityName' => $datos_usuario->departamento,//'LIMA',
+                'serviceLocationCountrySubdivisionCode' => substr($datos_usuario->departamento,0,3),//'LIM',
                 'serviceLocationCountryCode' => 'PE',
-                'serviceLocationPostalCode' => '15074'
+                'serviceLocationPostalCode' => '150113'//'15074'
             ]
         ];
 
