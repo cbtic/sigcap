@@ -246,6 +246,8 @@
                         <input type="hidden" name="_afecta" id="_afecta" value="<?php echo $afectacion; ?>">
                         <input type="hidden" name="numero_peronalizado" id="numero_peronalizado" value="<?php echo $numero_peronalizado; ?>">
 
+                        <input type="hidden" name="id_persona" id="id_persona" value="<?php echo $comprobante->id_persona; ?>">
+                        <input type="hidden" name="id_empresa" id="id_empresa" value="<?php echo $comprobante->id_empresa; ?>">
                         
                         
                         <input type="hidden" name="tipoF" value="NC">
