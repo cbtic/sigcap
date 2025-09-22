@@ -5167,14 +5167,18 @@ class ComprobanteController extends Controller
                 $fac_numero = $factura->numero;
 
                 $factura_upd = Comprobante::find($id_factura);
-                if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+                    if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 
-                $numero_peronalizado = $request->numero_peronalizado;
+                    $numero_peronalizado = $request->numero_peronalizado;
 
-                $trans = $request->trans;
-                if ($numero_peronalizado=='S'){
-                    $factura_upd->estado_sunat = "TERCERO";
-                }
+                    $trans = $request->trans;
+                    if ($numero_peronalizado=='S'){
+                        $factura_upd->estado_sunat = "TERCERO";
+                    }
+
+                    if (isset($request->id_persona)) $factura_upd->id_persona = $request->id_persona;
+
+                    if (isset($request->id_empresa)) $factura_upd->id_empresa = $request->id_empresa;
 
                 $factura_upd->save();
 

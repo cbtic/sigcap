@@ -1113,10 +1113,11 @@ function obtenerTitular(){
 	function obtenerNC(){
 
 		var tipo_documento = "NC";
+		alert(tipo_comprobante);
 		var serie = $("#serieNC").val();
 		var numero = $("#numeroNC").val();
 		var hoy = new Date().toISOString().split("T")[0];
-		//alert(tipo_comprobante);
+		
 		
 	
 		$.ajax({
