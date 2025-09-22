@@ -8,7 +8,13 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
+
+
+<link href="https://plantillashtmlgratis.com/wp-content/themes/helium-child/vista_previa/page280/multishop/css/style.css" rel="stylesheet">
+    
+
 <style>
+    
 	#tblAfiliado tbody tr{
 		font-size:13px
 	}
@@ -94,6 +100,200 @@
 	color: #FFFFFF;
 }
 
+.seccion-principal{
+    padding-top: 15px!important;
+}
+
+.seccion-principal>.titulo{
+    margin-bottom: 5px!important;
+}
+
+/***************************/
+/*
+.pb-1, .py-1 {
+    padding-bottom: 0.25rem !important;
+}
+
+@media (min-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+@media (min-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+    }
+}
+@media (min-width: 576px) {
+    .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+
+
+
+.product-item {
+    transition: .5s;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+}
+.bg-light {
+    background-color: #FFFFFF !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+
+.position-relative {
+    position: relative !important;
+}
+.overflow-hidden {
+    overflow: hidden !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+.text-center {
+    text-align: center !important;
+}
+.pb-4, .py-4 {
+    padding-bottom: 1.5rem !important;
+}
+.pt-4, .py-4 {
+    padding-top: 1.5rem !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+h6, .h6 {
+    font-size: 1rem;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #3D464D;
+}
+a {
+    color: #FFD333;
+    text-decoration: none;
+    background-color: transparent;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.text-center {
+    text-align: center !important;
+}
+
+.mt-2, .my-2 {
+    margin-top: 0.5rem !important;
+}
+.align-items-center {
+    align-items: center !important;
+}
+.justify-content-center {
+    justify-content: center !important;
+}
+.d-flex {
+    display: flex !important
+;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+.text-center {
+    text-align: center !important;
+}
+*/
+
+.product-item-hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.btn-secondary {
+    color:#FFFFFF!important
+}
+
+.tit_1{
+    font-weight: 300;
+    /*line-height: 110%;*/
+    line-height: 220%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 20px;
+    padding-top:8px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+
+}
+
+.tit_2{
+    font-weight: 300;
+    line-height: 110%;
+    letter-spacing: 0;
+    color: white;
+    margin: 0;
+    /*width: 100%;*/
+    font-size: 35px;
+    padding-top:8px;
+    padding-left: 7px;
+    float:left;
+    font-family: "Inter", sans-serif !important;
+}
+
+
+.seccion-sidebar{
+    width: 360px !important
+}
+
 .container {
     margin-right: auto;
     margin-left: auto;
@@ -122,115 +322,10 @@
 
 @media (min-width: 1200px) {
     .container {
-        max-width:1140px!important
+        max-width:1440px!important
     }
 }
 
-.btn-secondary:hover, .modal-footer .btn-secondary:hover {
-    color: white;
-    background: #373F41!important;
-}
-
-.divlogoimpresora {
-    display: none;
-}
-
-/***************************/
-
-/*
- VERSION PARA IMPRESORAS
-*/
-@page  {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-@media  print {
-  
-  .titulo{
-    display:none
-  }
-
-  .footer{
-    display:none
-  }
-
-  .card-body {
-    padding: 0px!important;
-  }
-    
-  html, body {
-    width: 80mm !important; 
-    min-height: 100vh;      
-    margin: 2px !important;
-    padding: 0 !important;
-
-  }
-  
-    *, :after, :before {
-        color: #FFF!important;
-        text-shadow: none!important;
-        /*background: blue!important;*/
-        -webkit-box-shadow: none!important;
-        box-shadow: none!important;
-        font-family:sans-serif;
-    }
-    
-    p,table, th, td {
-        color: black !important;
-        /*font-size: 36px !important;*/
-        font-family:sans-serif;
-    }
-    
-    .resaltado {
-        color: black !important;
-        /*font-size: 36px !important;*/
-        font-weight: bold;
-    }
-    
-    .divlogoimpresora {
-        display: block;
-    }
-
-    .logoimpresora {
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 50px;
-        margin-bottom: 50px;
-        display: block;
-        width: 350px !important;
-        height: 125px !important;
-    }
-    h3{
-        color: black !important;
-        /*font-size: 52px !important;*/
-        text-align: center;
-        font-family:sans-serif;
-    }
-
-    .separador {
-        /*display: block;*/
-        /*margin-top: 20px;*/
-    }
-
-    .navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-0 {
-        display: none
-    }
-    h4,ol{
-        display: none !important
-    }
-
-    .flotante,.flotanteC {
-        display: none !important
-    }
-
-    .no-divider {
-        page-break-inside: avoid;
-        break-inside: avoid;
-    }
-    
-}
 
 </style>
 
@@ -260,386 +355,262 @@
 
 
 
-<div id="pageFormularios" class="container">
+
+<div id="pageTickets" class="container">
 	
-	<section class="seccion-principal seccion-formularios">
+	<section class="seccion-principal seccion-tickets" style="height: 837.984px;">
 		<h1 class="titulo">
-			<div class="wizard">
-				<div class="item active"><i class="icon fas fa-search" aria-hidden="true" title="Buscar"></i></div>
-				<div class="item active"><i class="icon fas fa-edit" aria-hidden="true" title="Completar datos"></i></div>
-				<div class="item"><i class="icon fas fa-shopping-cart" aria-hidden="true" title="Carrito"></i></div>
-				<div class="item"><i class="icon fa-money-bill" aria-hidden="true" title="Medios de Pago"></i></div>
-				<div class="item"><i class="icon fas fa-receipt" aria-hidden="true" title="Resumen de pago"></i></div>
+			
+			Historial de Pagos
+			<small class="descriptivo">Consulta</small>
+			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
+		</h1>
+		<div class="card">
+			<div class="card-body">
+				<div id="divUltimosTicket" class="elegirOpeDer boxInfo">
+					
+
+
+
+
+
+<div id="confirmarEliminar">
+	<div class="alert alert-success mb-3" style="display: none;">El ticket se eliminó correctamente.</div>
+</div>
+
+@if($agremiado->actividad=="SUSPENDIDO")
+<div class="alert alert-danger">
+    No puede realizar pagos porque esta suspendido
+</div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-danger">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+
+<div class="tickets-desktop">
+	<div class="container">
+		<div class="tablaflex tablaflex-tickets">
+			<div id="selEstadoHist">
+				<form id="filtrar" name="filtrar" action="sistema/inicioElegirOperacion.action" method="post" novalidate="">
+					
+					<input type="hidden" name="numPagina" value="1" id="num_pagina">
+				</form>
+
+
+
+
 			</div>
 			
-			<span class="titulo-entidad">
-
-                @switch($factura->tipo)
-                    @case('FT')
-                    Factura
-                    @break
-                    @case('BV')
-                    Boleta
-                    @break
-                    @default
-                    No esta identificado el tipo de documento
-                @endswitch
-
-            </span>
+			<div class="tbody">
 			
-			<!--<small class="descriptivo">Información del pago</small>-->
-			<img class="curva" src="/imagenes/new/curva.svg" aria-hidden="true">
-		</h1>
+			</div>
 
-        <div class="row" style="width: 100%;">
-            
-            <div class="col-lg-12 col-md-12 col-sm-8 pb-0">
-                <div class="card">
-                    <div class="card-body">
-                                           
-                        
-                        <form class="form-horizontal" method="post" action=""
-                        id="frmFacturacion" name="frmFacturacion" autocomplete="off">
+<div id="dialog-confirm" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
-                        
-                        <input type="hidden" name="id_pedido" value="{{$id}}" id="id_pedido">
-                        <input type="hidden" name="TipoF" id="TipoF" value="">
-                        <input type="hidden" name="trans" id="trans" value="FA">
+			<div class="modal-header">
+				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
+					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+				</button>
+				<h4 class="modal-title">¿Está seguro de eliminar el ticket?</h4>
+			</div>
+			<div class="modal-body">
+				Recuerda que una vez <span id="s_accion">eliminado</span> el ticket, el pago que efectúes no generará constancia y no podrás realizar el trámite ante la entidad correspondiente
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-linear" data-dismiss="modal">No</button>
+				<button id="btn-del-item-carrito" type="button" class="btn btn-primary" data-dismiss="modal">Si, eliminar</button>
+			</div>
 
-                        @csrf
-
-                        <div id="divComprobante" class="row justify-content-center" style="min-height:500px">
-                            
-                            <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.send')}}"
-                                id="frmPesaje" autocomplete="off">
-                                <input type="hidden" id="idFormaPago" name="idFormaPago" value="{{$factura->id_forma_pago}}"/>
-                                <input type="hidden" id="idtipocomprobante" name="idtipocomprobante" value="{{$factura->tipo}}"/>
-
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+		</div>
+	</div>
+</div>
+		</div>
+	</div>
+</div>
 
 
-                                
+<div class="tickets-mobile">
+	
+</div>
 
-                                
-                                
 
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                        <div id="" class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <div id="" class="row">
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                @if ($factura->tipo != 'TK')
-                                                                <div class="divlogoimpresora" style="width:100%">
-                                                                    <img class="logoimpresora" src="/img/logo-sin-fondo.png">
-                                                                </div>
-                                                                <h3>
-                                                                    COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA
-                                                                </h3><br>
-                                                                @endif
-                                                                <p>AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA</p>
-                                                                <p>RUC 20172977911</p>
-                                                            </div>
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <strong>
-                                                                    <p>
-                                                                        @switch($factura->tipo)
-                                                                        @case('FT')
-                                                                        <p> FACTURA ELECTRONICA</p>
-                                                                        @break
 
-                                                                        @case('BV')
-                                                                        <p>BOLETA ELECTRONICA</p>
-                                                                        @break
 
-                                                                        @case('TK')
-                                                                        <p>BOLETA ELECTRONICA</p>
-                                                                        @break
 
-                                                                        @case('FT')
-                                                                        <p>FACTURA ELECTRONICA</p>
-                                                                        @break
 
-                                                                        @case('NC')
-                                                                        <p>NOTA DE CREDITO</p>
-                                                                        @break
+	<div class="row no-tickets">
+		<!--<p>No existen tickets de pago generados.</p>-->
 
-                                                                        @case('ND')
-                                                                        <p>NOTA DE DEBITO</p>
-                                                                        @break
+        <div class="container-fluid pt-0 pb-3">
 
-                                                                        @default
-                                                                        <p>No esta identificado el tipo de documento</p>
-                                                                        @endswitch
-                                                                    </p>
-                                                                <h3 class="divlogoimpresora">
-                                                                {{ $factura->serie }}-{{ $factura->numero }}
-                                                                </h3>
 
-                                                                    <p class="d-print-none"><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
-                                                                
-                                                                </strong>
+        <div class="form-group form-group-btn form-navigation">
+            <a href="/pedido/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
+        </div>
+        
 
-                                                            </div>
-                                                            
-                                                            <?php 
-                                                                $modeda = "S/";
-                                                                if($factura->moneda_id==1)$modeda = "$.";
-                                                            
-                                                                if($factura->nro_guia!=""){
-                                                            ?>
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <strong>
-                                                                    <p>
-                                                                        <p> GUIA DE REMISIÓN</p>
-                                                                    </p>
-                                                                    <p>
-                                                                    
-                                                                    <a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">{{ $factura->serie_guia }}-{{ $factura->nro_guia }}</a>
-                                                                    
-                                                                    <a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">&nbsp;&nbsp;Ver Guia
-                                                                    <i style="float:left;margin-left:25px;padding-top:3px;cursor:pointer;color:#007bff" class="fas fa-search"></i>
-                                                                    </a>
-                                                                    
-                                                                    </p>
-                                                                </strong>
+        <form id="form-agregar-carrito" action="{{ url('carrito/item') }}" method="POST">
+        @csrf
+        <input type="hidden" name="valorizacion_id" id="item-id-input">
+        <input type="hidden" name="cantidad" id="cantidad" value="1">
 
-                                                            </div>
-                                                            <?php 
-                                                                }
-                                                            ?>
-                                                                                                            
-                                                            <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <table>
-                                                                <tbody>
-                                                                <tr>
-                                                                <td>RUC/DNI:</td>
-                                                                <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
-                                                                </tr>
-                                                                <div class="separador">&nbsp;</div>
-                                                                <tr>
-                                                                <td>ADQUIRIENTE:</td>
-                                                                <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                <td>DIRECCION:</td>
-                                                                <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                <td>FECHA DE EMISIÓN:</td>
-                                                                <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
-                                                                </tr>
-                                                                @if($datos->numero_cap!="")
-                                                                <tr>
-                                                                <td>CAP :</td>
-                                                                <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
-                                                                </tr>
-                                                                @endif
-                                                                </tbody>
-                                                                </table>    
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--card-body-->
-                                                </div>
-                                                <!--card-->
-                                            </div>
-                                        </div>
-                                    
-                                        <div id="" class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div >
-                                                            <table id="tblProductos" class="table table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th class="text-center" width="8%">Cant.</th>
-                                                                        <th width="37%">Descripción</th>
-                                                                        <th class="text-right" width="15%">P.Unitario</th>
-                                                                        <th class="text-right" width="10%">Dcto.</th>
-                                                                        <!--<th class="text-right" width="10%">V.Unitario</th>   -->                                                                                                                     
-                                                                        <th class="text-right" width="15%">Monto</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($factura_detalles as $factura_detalle)
-                                                                    <tr id="fila{{ $loop->iteration }}">
-                                                                        <td class="text-center">
-                                                                            {{ $factura_detalle->cantidad }} 
-                                                                            
-                                                                            @if($factura_detalle->id_concepto ==="26475")
-                                                                                {{" Revisiones "}}
-                                                                            @endif
-                                                                            
-                                                                    
-                                                                            
-                                                                        
-                                                                        </td>
-                                                                        <td class="text-left">
-                                                                            {{ $factura_detalle->descripcion }}
-                                                                        </td>
+        <input type="hidden" readonly name="Exonerado" id="Exonerado" value="" class="form-control form-control-sm">
+        <input type="hidden" readonly name="mes_deuda" id="mes_deuda" value="" class="form-control form-control-sm">
+        <input type="hidden" readonly name="anio_deuda" id="anio_deuda" value="" class="form-control form-control-sm">
+        
+        <input type="hidden" readonly name="actividad" id="actividad" value="{{$agremiado->actividad}}">
 
-                                                                        <td class="text-right">{{ number_format($factura_detalle->precio_venta,2)  }}
-                                                                        </td>
+        <div class="table-responsive overflow-auto" style="max-height: 350px">
+            <table id="tblValorizacion" class="table table-hover table-sm">
+                <thead>
+                    <tr style="font-size:13px">
+                        <th width="10%">Nro Pedido</th>
+                        <th width="10%">Fecha</th>
+                        <th width="10%">Email</th>
+                        <th width="10%">Tarjeta</th>
+                        <th width="10%">Importe</th>
+                        <th width="10%"class="text-center">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
 
-                                                                        <td class="text-right">{{ $factura_detalle->descuento }}
-                                                                        </td>
+
+                </tfoot>
+            </table>
+        </div>
+
+        </form>
+
+        <div class="form-group form-group-btn form-navigation">
+            <a href="/carrito/detalle" class="btn btn-secondary pull-right">IR AL CARRITO</a>
+        </div>
+        
+    </div>
+
+<script>
+    
+    function verPedido(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        //carrito/item
+        form.submit();
+    }
+
+    function agregarAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.action = '/carrito/agregar'; 
+        form.submit();
+    }
+
+    function agregarProntoPagoAlCarrito(itemId) {
+        const form = document.getElementById('form-agregar-carrito');
+        const input = document.getElementById('item-id-input');
+        input.value = itemId;
+        form.action = '/carrito/agregar_prontopago'; 
+        form.submit();
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
         <!--
-                                                                        <td class="text-right">{{ number_format($factura_detalle->pu,2) }}
-                                                                        </td>
-                                                            -->                                                                                                                     
-                                                                        <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
-                                                                        </td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                    <tr id="fila_sub_total">
-                                                                        <td class="text-right" colspan="4">
-                                                                            @if($factura->impuesto!=0)
-                                                                                {{"  OP.GRAVADAS "}}
-                                                                            @else
-                                                                                {{"  OP.INAFECTAS "}}
-                                                                            @endif                                                        
-                                                                        <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                        <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
-                                                                    </tr>
-                                                                    <tr id="fila_igv">
-                                                                        <td class="text-right" colspan="4">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                        <td class="text-right">{{ number_format($factura->impuesto,2) }}</td>
-                                                                    </tr>
-                                                                    <tr id="fila_total">
-                                                                        <td class="text-right" colspan="4">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
-                                                                        <td class="text-right"><span class="resaltado">{{ number_format($factura->total,2) }}</span></td>
+		<div class="form-group-btn">
+			<button type="button" class="btn btn-secondary" id="add-pay">Agregar un pago</button>
+		</div>
+        -->
 
-
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <!--table-responsive-->
-                                                    </div>
-                                                    <!--card-body-->
-                                                </div>
-                                                <!--card-->
-                                            </div>
-                                            
-                                            <div class="separador">&nbsp;</div>
-
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
-                                            </div>
-                                            @if($factura->tipo_operacion =="1001")
-                                            <div class="separador">&nbsp;</div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <table>
-                                                <tbody>
-                                                <tr>
-                                                <td style="vertical-align: top;">BENEFICIARIO :</td>
-                                                <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
-                                                </tr>
-                                                <div class="separador">&nbsp;</div>
-                                                <tr>
-                                                <td style="vertical-align: top;">CUENTAS:</td>
-                                                <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
-                                                </tr>
-                                                <tr>
-                                                <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
-                                                <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                                </table>
-                                            </div>
-                                            @endif
-
-                                        
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
-                                            
-                                                <div class="card">
-
-                                                    <div class="card-header">
-                                                        <strong>                                            
-                                                            Información del crédito
-                                                        </strong>
-                                                    </div>
-                                                    <div class="card-body">
-
-                                                        <div class="table-responsive overflow-auto" style="max-height: 500px;">                                                   
-                                                            <table id="tblcuotas" class="table table-hover" >
-                                                                
-                                                                <thead>                                                            
-                                                                    <tr>
-                                                                        <th class="text-center" width="8%">item</th>
-                                                                        <th width="37%">Monto</th>
-                                                                        <th width="37%">Fecha Venc.</th>                                                                    
-                                                                    </tr>
-                                                                </thead>
-                                                                
-                                                                
-
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="separador">&nbsp;</div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
-                                            </div>
-
-                                            <div class="separador">&nbsp;</div>
-                                            <hr style="width:90%", size="3", color=black>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
-                                                    utilizando su clave SOL</p>
-                                                <p>Sírvase a verificar su comprobante de pago, en caso de cambio o devolución 
-                                                    solo se procederá siempre y cuando se solicita en el mismo mes de emisión del 
-                                                    comprobante (se cobran gastos administrativos y bancarios).</p>
-                                                <p>PARA MAYOR INFORMACIÓN PUEDE CONTACTARSE AL 6271200 ANEXO 181,182 Y 184 O AL CORREO caja@limacap.org.</p>
-
-
-                                            </div>
+	</div>
 
 
 
-                                            <?php } ?>
-                                        </div>
 
-                                    </div>
-                                </div>
-                                <a class='flotante' href='#' onclick="print()"><img src='/img/btn_print.png' border="0" /></a>
-                                <!--<a class='flotante' href='#'><img src='/img/deshacer.png' border="0" /></a>-->
-                                <br>
-                            </form>
-                        </div>
-                            
-                            
-                        </div>
+				</div>
+			</div>
 
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
+		</div>
 	</section>
 	
-	<section class="seccion-sidebar">
-		
+	<section class="seccion-sidebar" style="visibility: visible;padding-top:15px">
+
+            <div class="tit_1">Situacion : </div>
+            <div class="tit_2">{{$agremiado->situacion}}</div>
+            <div style="clear:both"></div>
+            <div class="tit_1">Actividad : </div>
+            <div class="tit_2">{{$agremiado->actividad}}</div>
+
+            <div style="clear:both;padding-top:20px"></div>
+            
+            <h4 class="titulo" style="position:static"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+				Información
+			</h4>
+
+            <div style="clear:both;padding-top:20px"></div>
+
+		<div class="card">
+			<!--
+            <h4 class="titulo" style="position:static"><i class="icon fas fa-info-circle" aria-hidden="true"></i>
+				Información
+			</h4>
+            -->
+
+			<div class="card-body">
+				<h6 class="subtitulo">¿Cómo pagar mis deudas?</h6>
+				<p>Si tu deuda aún está pendiente de pago, puedes continuar con el proceso haciendo clic sobre el botón.</p>
+				<p>Recuerda, se muestran en este listado todas las deudas generados.</p>
+				<!-- dinamico -->
+				<h6 class="subtitulo">¿Que deudas aparecen?</h6>
+				<p>Debido a que el concepto seleccionado es un servicio solo se podrá pagar por esta opción las deudas como CUOTA GREMIAL, FRACCIONAMIENTO y MULTAS.</p>
+			</div>
+		</div>
 	</section>
 </div>
 
-</main>
+<div class="modal modal-ticket fade" id="detalleHistorico" tabindex="-1" role="dialog" aria-hidden="true">
+	
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="dialog-detalleHistorico">
+		</div>
+	</div>
+</div>
+
+
+
+		</main>
 		<div class="fondo-curva">
 			<img src="https://pagalo.pe/imagenes/new/curva.svg" class="curva"></div>
 		</div>
+	
 
-<div class="btn-sidebar" id="btn-sidebar" data-toggle="modal" data-target="#modalSidebar" style="display: none;"><i class="icon icon-pagalo-info" aria-hidden="true" title="Informacion"></i></div>
+	
+	<div class="btn-sidebar" id="btn-sidebar" data-toggle="modal" data-target="#modalSidebar" style="display: none;"><i class="icon icon-pagalo-info" aria-hidden="true" title="Informacion"></i></div>
 	<div class="modal-sidebar modal fade" id="modalSidebar" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -668,17 +639,17 @@
 						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
 					</a>
 				</div>
-				<strong class="titulo">Banco de la Nación | Ministerio de Economía y Finanzas</strong>
+				<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
-					<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>
-					<p>Oficina Principal: Av. Javier Prado Este 2499, San Borja. Central telefónica: 519-20 00.</p>
-					<p>Atención en oficinas administrativas: lunes a viernes de 8:30 a 17:30 horas. Refrigerio de: 13 a 14 horas.</p>
-					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 9:00 a 17:00 horas (horario corrido).</p>
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 4710739.</p>
+					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
 			</div>
 			
-			<div class="col-lg-4 col-12 footer-derecho">
+			<!--<div class="col-lg-4 col-12 footer-derecho">
 				<div class="footer-menu">
 					<div class="row">
 						<div class="col">
@@ -700,7 +671,7 @@
 						</div>	
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div>
@@ -764,7 +735,6 @@
                 <i class="collapsed-hide icon icon-pagalo-chevron-up"></i>
             </div>
         </a>
-        
         <div aria-labelledby="headingBeta" class="respuesta collapse" data-parent="#accordionFaq" id="collapseBeta">
             <div class="expansion-panel-body">
                 <ul>
@@ -1262,148 +1232,382 @@
 
 <script>
 
-//cargarComprobante();
+$("#chkExonerado").on('change', function() {
+    if ($(this).is(':checked')) {						
+        $(this).attr('value', 'true');
 
-function cargarComprobante(tipo){
+        $('#Exonerado').val("1");
+
+        $("#btnExonerarS").hide();
+        $("#btnExonerarN").show();
+
+    } else {
+        $(this).attr('value', 'false');
+        $('#Exonerado').val("0");
+
+        $("#btnExonerarN").hide();
+        $("#btnExonerarS").show();
+
+    }
+    cargarPedido();
+
+});
+
+$('#cboTipoCuota_b').select2();
+cargarPedido();
+//cargarcboTipoConcepto();
+//cargarcboPeriodo();
+//cargarcboMes();
+
+var id_caja_usuario = "1<?php //echo ($caja_usuario)?$caja_usuario->id_caja:0?>";
+
+function cargarcboMes(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_mes",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Mes-</option>";
+			$('#cboMes_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.mes+"</option>";
+			});
+			$('#cboMes_b').html(option);
+			$('#cboMes_b').select2();
+			
+		}
+		
+	});
+}
+
+function cargarcboTipoConcepto(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_concepto",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option;
+			$('#cboTipoConcepto_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#cboTipoConcepto_b').html(option);
+			$('#cboTipoConcepto_b').select2();
+			
+		}
+		
+	});
+}
+
+function cargarcboPeriodo(){    	
+
+	$.ajax({
+		url: "/carrito/listar_valorizacion_periodo",
+		type: "POST",
+		data : $("#form-agregar-carrito").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Periodo-</option>";
+			$('#cboPeriodo_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
+			});
+			$('#cboPeriodo_b').html(option);
+			$('#cboPeriodo_b').select2();
+			
+		}
+		
+	});
+}
+
+function calcular_total(obj){
+
+	var rol_exonera = $('#rol_exonera').val();
+
+	var id_tipo_afectacion= "";
+	var id_concepto="";
+	var id_concepto_actual="";
+
 	
-    var msgLoader = "";
+	if(id_caja_usuario=="0" && rol_exonera=="0"){
+		bootbox.alert("Debe seleccionar una Caja disponible");
+		$(obj).prop("checked",false);
+		return false;
+	}
+	
+	if($(obj).is(':checked')){
+		var key = $(obj).attr("key");
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+		$(obj).parent().parent().parent().find('.chek').val("1");
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",false);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",false);
+
+	}else{
+		var key = $(obj).attr("key");
+		var key2 = 0;
+		var obligatorio = "";
+		$(".mov:checked").each(function (i){
+			if(i==0)key2 = $(this).attr("key")-1;			
+		});
+		
+		$(".mov:checked").each(function (){
+			obligatorio = $(this).parent().parent().parent().find('.obligatorio_ultimo_pago').html();
+		});
+		
+		if(key!=key2){
+			if (obligatorio=='1'){
+				bootbox.alert("Debe seleccionar el ultimo registro");
+				$(obj).prop("checked",true);
+				return false;
+			}
+
+		}
+		
+		if (obligatorio=='1'){
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+		}
+
+		$(obj).parent().parent().parent().find('.chek').val("");
+
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",true);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",true);
+		
+	}
+	
+	var total = 0;
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var igv = 0;
+	var stotal = 0;
+	var descuento =0;
+	
+	
+	var cantidad = $(".mov:checked").length;
+	if(cantidad == 0)$('#id_concepto_sel').val("");
+	
+	id_concepto = $('#id_concepto_sel').val();
+	
+	id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+	
+	if(id_concepto!="" && id_concepto!=id_concepto_actual){
+		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
+		$(obj).prop("checked",false);		
+		return false;
+	}
+	
+	var id_tipo_afectacion_sel = $('#id_tipo_afectacion_sel').val();
+	
+	var ruc_p = $('#ruc_p').val();
+
+	$("#btnBoleta").prop('disabled', true);
+    $("#btnFactura").prop('disabled', true);
+	
+	if(cantidad != 0){
+	
+		var tipo_documento = $('#tipo_documento').val();
+
+		if(tipo_documento == "79"){//RUC			
+			
+			$("#btnBoleta").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
+		}else {
+
+			$("#btnBoleta").prop('disabled', false);			
+			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
+		}
+
+		var exonerado = $('#Exonerado').val();
+		$("#btnExonerarS").prop('disabled', true);
+		$("#btnExonerarN").prop('disabled', true);
+		
+		if(exonerado=="0"){
+			$("#btnExonerarS").prop('disabled', false);			
+		}else{
+			$("#btnExonerarN").prop('disabled', false);			
+		}
+
+		$("#btnAnulaVal").prop('disabled', false);
+
+	}
+		
+	if(tipo_documento == "79"){//RUC
+		
+	}else
+	{
+		
+	}
+	
+	$('#id_concepto_actual').val("");
+	
+	$(".mov:checked").each(function (){
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.toString().replace(',','');
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.toString().replace(',','');
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.toString().replace(',','');
+
+		id_concepto_actual = $(this).parent().parent().parent().find('.id_concepto_modal_sel').html();
+		id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
+		
+		var val_descuento =$('#DescuentoPP').val("");
+		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
+		var importe_pp =$('#importe_pp').val("");
+		
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+		id_tipo_afectacion  = $(this).parent().parent().parent().find('.id_tipo_afectacion_sel').html();
+
+	});
+
+	$('#id_concepto_actual').val(id_concepto_actual);
+
+	descuento = 0;
+
+	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+	if(cantidad > 1){
+		$('#MonAd').attr("readonly",true);
+		$('#MonAd').val("0");
+	}else{
+		$('#MonAd').attr("readonly",false);
+		$('#MonAd').val(total.toFixed(2));
+	}
+	
+	$('#id_tipo_afectacion_pp').val(id_tipo_afectacion);
+	$('#id_concepto_pp').val(id_concepto);
+	
+}
+
+
+function total_deuda(){
+	
+	var msg = "";
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
+
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var cantidad = $(".mov").length;
+
+	
+	$('#total').val(0.0);
+
+	$(".mov").each(function (){
+		
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.toString().replace(',','');
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.toString().replace(',','');
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.toString().replace(',','');
+
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+	});
+	$('#deudaTotales').val(total.toFixed(2));
+	$('#total').val(total.toFixed(2));
+
+};
+
+function cargarPedido(){
+	
+	var numero_documento =$("#numero_documento").val();
+	if (numero_documento=="")exit();
+
+	$("#btnExonerarS").prop('disabled', true);
+	$("#btnExonerarN").prop('disabled', true);
+	
+    var tipo_documento = $("#tipo_documento").val();
+	var id_persona = 0;
+	/*
+    var x = document.getElementById("cbox2").checked;
+
+	$("#SelFracciona").val("");
+	if (x) $("#SelFracciona").val("S");
+	*/
+	var idconcepto = $("#cboTipoConcepto_b").val();
+
+	$("#idConcepto").val(idconcepto);
+	$("#id_concepto_sel").val("");
+	$('#example-select-all').prop( "checked", false );
+    $("#tblValorizacion tbody").html("");
+
+	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
 	var heightBrowser = $(window).width()/2;
 	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
     $('.loader').show();
 
-    if(tipo == 1)$('#TipoF').val("FT");
-	if(tipo == 2)$('#TipoF').val("BV");
-	if(tipo == 3)$('#TipoF').val("TK");
-	if(tipo == 4)$('#NCFT').val("NCF"); //'Nueva Nota CrÃ©dito Factura'
-	if(tipo == 5)$('#NCBV').val("NCB"); //'Nueva Nota CrÃ©dito Boleta de Venta'
-	if(tipo == 6)$('#NDFT').val("NDF"); //'Nueva Nota DÃ©vito Factura'
-	if(tipo == 7)$('#NDBV').val("NDB"); //'Nueva Nota DÃ©vito Boleta de Venta'
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
+	var cboPeriodo_b = $('#cboPeriodo_b').val();
+	var periodo_pp = $('#periodo_pp').val();
+	var id_concepto_pp = $('#id_concepto_pp').val();
 
-    //$("#opc").val(opc);
-	//$("#btnFracciona").prop('disabled', true);
-	//$("#btnDescuento").prop('disabled', true);
-	
+	$("#btnFracciona").prop('disabled', true);
+	$("#btnDescuento").prop('disabled', true);
+	$("#btnAnulaVal").prop('disabled', true);
+
 	$.ajax({
-		url: "/carrito/cargar_comprobante",
+		url: "/pedido/listar_pedido",
 		type: "POST",
-		data : $("#frmFacturacion").serialize(),
+		data : $("#form-agregar-carrito").serialize(),
 		success: function (result) {  
+			$("#tblValorizacion tbody").html(result);
 
-			$("#divComprobante").html(result);
-			
+			if (cboTipoConcepto_b==id_concepto_pp && cboPeriodo_b==periodo_pp) {
+				$("#btnDescuento").prop('disabled', false);
+			}
+
+			if ((cboTipoConcepto_b=="26411")||(cboTipoConcepto_b=="26541")||(cboTipoConcepto_b=="26412")||(cboTipoCuota_b==1)) {
+				$("#btnFracciona").prop('disabled', false);
+			}
+
+			if (cboTipoConcepto_b=="26412" ||(cboTipoConcepto_b=="26541")|| cboTipoConcepto_b=="26411") {				
+				$('#cbox2').show();
+				$('#lblFrac').show();	
+			}else{
+				$('#cbox2').hide();
+				$('#lblFrac').hide();
+				$("#cbox2").prop('checked', false);
+				$("#SelFracciona").val("");
+			}
+
+			if (cboTipoConcepto_b==26412) {
+				$("#btnAnulaFrac").prop('disabled', false);
+				$("#btnAnulaFrac").show();
+
+			}else{
+
+				$("#btnAnulaFrac").hide();
+			}
+
+			total_deuda();
 			$('.loader').hide();
 		}
 });
 
 }
 
-function guardarFactura(){
-
-    var msg = "";
-    var smodulo_guia = $('#smodulo_guia').val();
-	var tipo_cambio = $('#tipo_cambio').val();
-	var forma_pago = $('#forma_pago').val();
-	var valorizad = $('#valorizad').val();
-	var ind = $('#tblMedioPago tbody tr').length;
-	
-	//if(ind==0)msg+="Debe adicionar el Medio de Pago <br>";
-	
-	var totalMedioPago = $('#totalMedioPago').val();
-	var total_fac_ = $('#total_fac_').val();
-	var id_formapago_ = $('#id_formapago_').val();
-	var total_ = 0;
-	total_ = Number(totalMedioPago);
-	
-	if(total_!=total_fac_ && id_formapago_==1){
-		$total_pagar_abono = $("#total_pagar_abono").val();
-
-		if($total_pagar_abono=="0"){
-			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
-		}
-	}
-
-	var direccion = $('#direccion').val();
-	var email = $('#email').val();
-	var direccion2 = $('#direccion2').val();
-	var email2 = $('#email2').val();
-	var razon_social2 = $('#razon_social2').val();
-
-	if(razon_social2!=''){
-		direccion = direccion2;
-		email= email2;
-	}
-
-	if(direccion=='')msg+="Debe ingresar la direcci&oacute;n del comprobante<br>";
-	if(email=='')msg+="Debe ingresar el Email del comprobante<br>";
-	
-	var ruc_e = $('#numero_documento').val();
-	var ruc_p = $('#numero_documento2').val();
-	var tipo=$('#TipoF').val();
-
-	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
-		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";	
-	}
-
-	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
-		msg+="Se Requiere el NÃºmero de RUC o DNI para generar una Boleta!";	
-	}
-
-    if(smodulo_guia=="32"){
-		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
-		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
-	}
-	
-	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
-
-    if(msg!=""){
-		bootbox.alert(msg);
-        return false;
-    }
-    else{
-        fn_save();
-	}
-
-}
-
-function fn_save() {
-    var msgLoader = "Procesando, espere un momento por favor";
-    var heightBrowser = $(window).width()/2;
-    
-    $('.loader').css("opacity","0.8").css("height",heightBrowser)
-               .html(`<div id='Grd1_wrapper' class='dataTables_wrapper'>
-                      <div id='Grd1_processing' class='dataTables_processing panel-default'>
-                      ${msgLoader}</div></div>`);
-    $('.loader').show();
-    $('#guardar').hide();
-    
-    $.ajax({
-        url: "/carrito/send_comprobante",
-        type: "POST",
-        data: $("#frmFacturacion").serialize(),
-        dataType: 'json',
-        success: function (result) {           
-            if(result.sw) {
-                $('#numerof').val(result.id_factura);
-                $('#divNumeroF').show();
-                enviar_comprobante(result.id_factura);
-                location.href = urlApp+"/comprobante/ver/"+result.id_factura;
-            } else {
-                alert(result.msg);
-                $('#guardar').show();
-            }
-
-			$('.loader').hide();
-        },
-        error: function() {
-            $('.loader').hide();
-            alert("Error en la comunicación con el servidor");
-            $('#guardar').show();
-        }
-    });
-}
 
 </script>
-
 
 @endpush

@@ -12,4 +12,15 @@ class Pedido extends Model
     
     protected $fillable = ["purchase_number","amount","email","response","usuario_id","subtotal","descuento_total","impuesto_total","envio_total","total_general","estado"];
 
+    function getPedidoByUsuario($id_usuario){  
+        
+        $cad = "select p.id,p.purchase_number,p.amount,p.email,p.response,p.subtotal,p.descuento_total,p.total_general,p.estado,p.id_comprobante   
+from pedidos p 
+order by 1 desc";
+		$data = DB::select($cad);
+        return $data;
+
+    }
+
+
 }

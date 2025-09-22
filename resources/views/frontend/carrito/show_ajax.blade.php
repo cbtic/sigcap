@@ -19,6 +19,8 @@
                                     <input type="hidden" name="totalF" value="<?php //if ($trans == 'FA'){echo $total;}?>">
                                     <input type="hidden" name="ubicacion" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
                                     <input type="hidden" name="persona" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
+                                    <input type="hidden" name="persona2" id="persona2" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
+                                    <input type="hidden" name="ubicacion2" id="ubicacion2" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
                                     <input type="hidden" name="id_caja" value="<?php //if ($trans == 'FA'){echo $id_caja;}?>">
                                     <input type="hidden" name="MonAd" value="<?php //if ($trans == 'FA'){echo $MonAd;}?>">
                                     <input type="hidden" name="adelanto" value="<?php //if ($trans == 'FA'){echo $adelanto;}?>">
@@ -42,16 +44,26 @@
                                                                 <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                                     <div class="form-group">
                                                                         <label class="form-control-sm">Serie</label>
-                                                                        <select name="serieF" id="serieF" class="form-control form-control-sm">
-                                                                            <?php if ($trans == 'FA'||$trans == 'FN'){?>
-                                                                                <?php foreach($serie as $row):?>
-                                                                                    <option value="<?php echo $row->denominacion?>"><?php echo $row->denominacion?></option>
-                                                                                <?php  endforeach;?>
-                                                                            <?php } ?>
-                                                                            <?php if ($trans == 'FE'){?>
-                                                                                <option value="<?php echo $facturas->fac_serie?>"><?php echo $facturas->fac_serie?></option>
-                                                                            <?php } ?>
-                                                                        </select>
+
+                                                                        <input type="text" name="serieF" id="serieF" 
+                                                                        value="<?php 
+                                                                        if ($trans == 'FA'||$trans == 'FN'){
+                                                                            foreach($serie as $row){
+                                                                                if($row->predeterminado=="1"){
+                                                                                    echo $row->denominacion;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                            
+                                                                        if ($trans == 'FE'){
+                                                                            echo $facturas->fac_serie;
+                                                                        }
+                                                                        ?>"
+                                                                        readonly class="form-control form-control-sm">
+
+                                                                        <!--<select name="serieF" id="serieF" class="form-control form-control-sm" disabled="disabled">-->
+                                                                            
+                                                                        <!--</select>-->
                                                                     </div>
                                                                 </div>
 
@@ -133,9 +145,11 @@
                                                     
                                                 </div>
 
+                                                @if($sw)
                                                 <a href="javascript:void(0);" onclick="verRepresentante()" id="btnRepresentante" class="agregar-rep">
         ➕ Agregar a un Tercero
     </a>
+                                                @endif
 
                                                 <fieldset id="divRepresentante" style="display:none; margin-top:15px; border:1px solid #ccc; padding:10px; border-radius:6px;">
                                                 <legend style="font-size:14px; font-weight:bold; color:#373F41;">Datos del Tercero</legend>

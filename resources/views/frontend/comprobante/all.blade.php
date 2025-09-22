@@ -283,10 +283,10 @@
 
                                 </div>
                                     -->
-                                <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
+                                <!--<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
                                     <input class="btn btn-success pull-rigth" value="Excel" type="button" id="btnExcel" onclick="reporteFactura()" />
                                 </div>
-                                <!--
+                                
 					@hasanyrole('contabilidad')
 					@else
 					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">

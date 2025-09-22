@@ -455,24 +455,18 @@ class Comprobante extends Model
 		--having cp.id_comprobante = f.id
         where cp.id_comprobante = f.id
         --order by cp.id
-) medio_pago,
-        (select cp.descripcion  
-		from comprobante_pagos cp 
-		inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
-		
-        where cp.id_comprobante = f.id
-        
-        ) descripcion
-  FROM comprobantes f
-        inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
-        inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
-        Inner Join users u On u.id = f.id_usuario_inserta        
-        left join personas per on f.id_persona = per.id
-        left join empresas emp on f.id_empresa=emp.id 
-   where f.id_caja=".$id_caja."  
-        And f.fecha >= '".$fecha_inicio."' 
-        And f.fecha <= '".$fecha_fin."' 
-        Order By f.fecha Desc";
+        ) medio_pago,
+                '' descripcion
+        FROM comprobantes f
+                inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
+                inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
+                Inner Join users u On u.id = f.id_usuario_inserta        
+                left join personas per on f.id_persona = per.id
+                left join empresas emp on f.id_empresa=emp.id 
+        where f.id_caja=".$id_caja."  
+                And f.fecha >= '".$fecha_inicio."' 
+                And f.fecha <= '".$fecha_fin."' 
+                Order By f.fecha Desc";
 
 
         //echo( $cad); exit;
@@ -514,11 +508,7 @@ class Comprobante extends Model
         inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
         where cp.id_comprobante = f.id
         ) medio_pago,
-         (select cp.descripcion  
-        from comprobante_pagos cp 
-        inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
-        where cp.id_comprobante = f.id
-        ) descripcion 
+         '' descripcion 
         FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
         inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'

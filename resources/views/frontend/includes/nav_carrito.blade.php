@@ -24618,6 +24618,14 @@ a {
                         <span class="label">Mi Carrito</span>
 					</a>
 				</li>
+
+                <li class="nav-item nav-item-carrito">
+					<a class="link" href="/pedido" title="" data-toggle="tooltip" data-original-title="Carrito">
+						<span class="cart-num oculto"></span>
+						<i class="icon fas fa-dollar-sign"></i>
+                        <span class="label">Mis Pagos</span>
+					</a>
+				</li>
 				
 
                 

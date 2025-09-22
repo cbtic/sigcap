@@ -384,6 +384,19 @@ div {
 </div>
 @endif
 
+@if(session('success'))
+    <div class="alert alert-danger">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+
 <div class="tickets-desktop">
 	<div class="container">
 		<div class="tablaflex tablaflex-tickets">

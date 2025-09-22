@@ -2129,57 +2129,61 @@ class ComprobanteController extends Controller
                             }
                         }
 
-                        if ($tipoF == 'FT' &&  $id_persona != '') {
-                            $persona = Persona::where('id', $id_persona_act)->first();
-                            if ($persona) {
-                                $persona->direccion = $direccion;
-                                $persona->correo = $correo;
-                                $persona->save();
-                            }
-
-                            $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
-                            if ($persona2) {
-                                $persona2->direccion = $direccion;
-                                $persona2->email1 = $correo;
-                                $persona2->save();
-                            }
-                        }
-
-                        if ($tipoF == 'BV' &&  $id_persona != '') {
-                            //exit($id_persona);
-
-
-                            $persona = Persona::where('id', $id_persona_act)->first();
-                            if ($persona) {
-                                $persona->direccion = $direccion;
-                                $persona->correo = $correo;
-                                $persona->save();
-                            }
-
-                            $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
-                            if ($persona2) {
-                                $persona2->direccion = $direccion;
-                                $persona2->email1 = $correo;
-                                $persona2->save();
-                            }
-                        }
-
-                        if ($tipoF == 'FT' &&  $ubicacion_id2 != '') {
+                       if ($tipoF == 'FT' &&  $ubicacion_id2 != '') {
                             $empresa = Empresa::where('id', $id_ubicacion_act)->first();
                             if ($empresa) {
                                 $empresa->direccion = $direccion;
                                 $empresa->email = $correo;
                                 $empresa->save();
                             }
-                        }
+                        }                        
 
-                        if ($tipoF == 'BV' &&  $id_persona2 != '') {
+                        if ($tipoF == 'FT' &&  $id_persona != '0') {
                             $persona = Persona::where('id', $id_persona_act)->first();
                             if ($persona) {
                                 $persona->direccion = $direccion;
                                 $persona->correo = $correo;
                                 $persona->save();
                             }
+
+                            $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+                            if ($persona2) {
+                                $persona2->direccion = $direccion;
+                                $persona2->email1 = $correo;
+                                $persona2->save();
+                            }
+                            
+                        }
+
+                        if ($tipoF == 'BV' &&  $id_persona != '0') {
+                            //exit($id_persona);
+                            $persona = Persona::where('id', $id_persona_act)->first();
+                            if ($persona) {
+                                $persona->direccion = $direccion;
+                                $persona->correo = $correo;
+                                $persona->save();
+                            }
+
+                            $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+                            if ($persona2) {
+                                $persona2->direccion = $direccion;
+                                $persona2->email1 = $correo;
+                                $persona2->save();
+                            }
+                            
+                        }
+
+ 
+
+                        if ($tipoF == 'BV' &&  $id_persona2 != '') {
+                            
+                            $persona = Persona::where('id', $id_persona_act)->first();
+                            if ($persona) {
+                                $persona->direccion = $direccion;
+                                $persona->correo = $correo;
+                                $persona->save();
+                            }
+                                
 
                             $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
                             if ($persona2) {
