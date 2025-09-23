@@ -58,8 +58,10 @@ class CarritoController extends Controller
 		//print_r($agremiado);exit();
 		$p[]=$id_persona;
 		$p[]="v";
+		$p[]="";
+		$p[]="";
 		$prontopago = $carrito_model->genera_prontopago($p);
-
+		//print_r($prontopago);exit();
 		return view('frontend.carrito.all',compact('carrito_deuda','prontopago','id_persona','agremiado'));
 
     }
@@ -487,6 +489,8 @@ class CarritoController extends Controller
 
 		$p[]=$request->valorizacion_id;
 		$p[]="v";
+		$p[]="";
+		$p[]="";
 		$prontopago = $carrito_model->genera_prontopago($p)[0];
 		
 		//print_r($prontopago);
@@ -958,75 +962,92 @@ class CarritoController extends Controller
 		//echo $serieF.",".$id_tipo_afectacion_pp.",".$tipoF.",".$ubicacion_id.",". 
 		//$id_persona_act.",".round($total, 2).",".$ubicacion_id2.",".$id_persona2.",0,".$id_caja.",".$descuento.",'f',".$id_user.",".$id_moneda.",".$id_nc;
 
-		$id_factura = $facturas_model->registrar_factura_moneda($serieF,$id_tipo_afectacion_pp,$tipoF,$ubicacion_id, 
-		$id_persona_act, round($total, 2),$ubicacion_id2,$id_persona2,0, $id_caja,$descuento,'f',$id_user, $id_moneda, $id_nc);
-		
-		$factura = Comprobante::find($id_factura);
-		$fac_serie = $factura->serie;
-		$fac_numero = $factura->numero;
-		
-        //if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
-        $factura->estado_pago =  "C";//$request->estado_pago;
-        $factura->id_forma_pago =  "1";//$request->id_formapago_;
-        $factura->tipo_operacion = "0101";//$request->id_tipooperacion_;
-        $id_persona = $id_persona_act;
-        $id_empresa = $ubicacion_id;//$request->ubicacion;
-
-        if ($id_persona != "") $factura->id_persona = $id_persona;
-        if ($id_empresa != "") $factura->id_empresa = $id_empresa;
-
-        //$factura_upd->observacion = $request->observacion;
-        $factura->save();
-
 		$pedido_item = PedidoItem::where("pedido_id",$pedido->id)->get();
-		foreach ($pedido_item as $key => $value) {
+
+		if($pedido_item[0]->valorizacion_id == "0"){
+			//FT
+			//BV
+			$id_persona=$usuario->id_persona;
+			$carrito_model = new Valorizacione;
+			$p[]=$id_persona;
+			$p[]="c";
+			$p[]=$tipoF;
+			$p[]="";
+			$prontopago = $carrito_model->genera_prontopago($p);
+			$id_factura = $prontopago[0]->id_comprobante;
+
+		}else{
+
+			$id_factura = $facturas_model->registrar_factura_moneda($serieF,$id_tipo_afectacion_pp,$tipoF,$ubicacion_id, 
+			$id_persona_act, round($total, 2),$ubicacion_id2,$id_persona2,0, $id_caja,$descuento,'f',$id_user, $id_moneda, $id_nc);
 			
-			$total = $value->total;
-			$pu_   = $value->precio_unitario;
-			$id_concepto=26411;
-			$cod_contable="";
-			$descuento = 0;
-			$item = $key + 1;
-
-			$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, 
-			$value->cantidad, $id_concepto, $pu_, $value->nombre, $cod_contable, $item, 
-			$id_factura, $descuento,'d',$id_user,$id_moneda, 0);
-
-			if ($value['id_concepto'] != '26464') {
+			$factura = Comprobante::find($id_factura);
+			$fac_serie = $factura->serie;
+			$fac_numero = $factura->numero;
 			
-				$facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+			//if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+			$factura->estado_pago =  "C";//$request->estado_pago;
+			$factura->id_forma_pago =  "1";//$request->id_formapago_;
+			$factura->tipo_operacion = "0101";//$request->id_tipooperacion_;
+			$id_persona = $id_persona_act;
+			$id_empresa = $ubicacion_id;//$request->ubicacion;
 
-				$facturaDet_upd->pu = $value->precio_unitario;
-				$facturaDet_upd->importe = $value->total;
-				$facturaDet_upd->igv_total = 0;
-				$facturaDet_upd->precio_venta = $value->precio_unitario;
-				$facturaDet_upd->valor_venta_bruto = $value->total;
-				$facturaDet_upd->valor_venta = $value->total;
-				//$facturaDet_upd->unidad = $value['unidad_medida_item'];
-				$facturaDet_upd->save();
+			if ($id_persona != "") $factura->id_persona = $id_persona;
+			if ($id_empresa != "") $factura->id_empresa = $id_empresa;
+
+			//$factura_upd->observacion = $request->observacion;
+			$factura->save();
+
+			foreach ($pedido_item as $key => $value) {
+				
+				$total = $value->total;
+				$pu_   = $value->precio_unitario;
+				$id_concepto=26411;
+				$cod_contable="";
+				$descuento = 0;
+				$item = $key + 1;
+
+				$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, 
+				$value->cantidad, $id_concepto, $pu_, $value->nombre, $cod_contable, $item, 
+				$id_factura, $descuento,'d',$id_user,$id_moneda, 0);
+
+				if ($value['id_concepto'] != '26464') {
+				
+					$facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+
+					$facturaDet_upd->pu = $value->precio_unitario;
+					$facturaDet_upd->importe = $value->total;
+					$facturaDet_upd->igv_total = 0;
+					$facturaDet_upd->precio_venta = $value->precio_unitario;
+					$facturaDet_upd->valor_venta_bruto = $value->total;
+					$facturaDet_upd->valor_venta = $value->total;
+					//$facturaDet_upd->unidad = $value['unidad_medida_item'];
+					$facturaDet_upd->save();
+				}
+				
+				if(isset($value->valorizacion_id) && $value->valorizacion_id>0){
+					$valoriza_upd = Valorizacione::find($value->valorizacion_id);
+					$valoriza_upd->id_comprobante = $id_factura;
+					$valoriza_upd->pagado = "1";
+					$valoriza_upd->valor_unitario = $value->precio_unitario;
+					$valoriza_upd->cantidad = $value->cantidad;
+					$valoriza_upd->save();
+				}
 			}
 			
-			if(isset($value->valorizacion_id) && $value->valorizacion_id>0){
-				$valoriza_upd = Valorizacione::find($value->valorizacion_id);
-				$valoriza_upd->id_comprobante = $id_factura;
-				$valoriza_upd->pagado = "1";
-				$valoriza_upd->valor_unitario = $value->precio_unitario;
-				$valoriza_upd->cantidad = $value->cantidad;
-				$valoriza_upd->save();
-			}
-        }
-		
-		$comprobantePago = new ComprobantePago;
-		$comprobantePago->id_medio = 547;
-		$comprobantePago->fecha = Carbon::now()->format('Y-m-d');
-		$comprobantePago->item = 1;
-		$comprobantePago->nro_operacion = "";//transactionId;
-		$comprobantePago->id_comprobante = $id_factura;
-		$comprobantePago->descripcion = "";
-		$comprobantePago->monto = $factura->total;
-		$comprobantePago->fecha_vencimiento = Carbon::now()->format('Y-m-d');
-		$comprobantePago->id_usuario_inserta = 143;
-		$comprobantePago->save();
+			$comprobantePago = new ComprobantePago;
+			$comprobantePago->id_medio = 547;
+			$comprobantePago->fecha = Carbon::now()->format('Y-m-d');
+			$comprobantePago->item = 1;
+			$comprobantePago->nro_operacion = "";//transactionId;
+			$comprobantePago->id_comprobante = $id_factura;
+			$comprobantePago->descripcion = "";
+			$comprobantePago->monto = $factura->total;
+			$comprobantePago->fecha_vencimiento = Carbon::now()->format('Y-m-d');
+			$comprobantePago->id_usuario_inserta = 143;
+			$comprobantePago->save();
+			
+		}
 
         $facturas_model->registrar_deuda_persona($id_persona);
         
