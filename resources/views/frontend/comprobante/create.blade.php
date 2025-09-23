@@ -685,17 +685,22 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" name="divNC" id="divNC"  style="<?php if (!$nc) echo 'display:none' ?>">
                                                         <label class="form-group">Nota Crédito</label>
-                                                        <select name="id_nc" id="id_nc" class="form-control form-control-sm" onChange="">
-                                                            <option value="">--Selecionar--</option>
-                                                            <?php
-                                                            foreach ($nc as $row) { ?>
-                                                                <option value="<?php echo $row->id ?>" > <?php echo $row->descripcion ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
+                                                        <div class="input-group">
+                                                            <select name="cboNC" id="cboNC" class="form-control form-control-sm" onChange="">
+                                                                <option value="">--Selecionar--</option>
+                                                                <?php
+                                                                foreach ($nc as $row) { ?>
+                                                                    <option value="<?php echo $row->id ?>" > <?php echo $row->descripcion ?></option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-sm" type="button" id="btnCon" onClick="ValidaNC()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Aplicar </button>
+                                                            </span>                                                        
+                                                        </div>    
                                                     </div>                                                    
 
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"  style="display:none">
@@ -716,9 +721,7 @@
                                                         </div>                                                                                                                    
                                                     </div>
 
-                                                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:20px">
-                                                        <input class="btn btn-success pull-rigth" value="Buscar NC" type="button" id="btnBuscar" onClick="obtenerNC()"/>
-                                                    </div>
+
                                             
 
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"> 
@@ -1645,13 +1648,61 @@
 
 </div>
 <script>
-        function ValidaNC() {
-            var tipo_documento = "NC";
-		    var serie = $("#serieNC").val();
-		    var numero = $("#numeroNC").val();
-		    var hoy = new Date().toISOString().split("T")[0];
-              
+    function ValidaNC() {
+            //var tipo_documento = "NC";
+		    //var serie = $("#serieNC").val();
+		    //var numero = $("#numeroNC").val();
+		var hoy = new Date().toISOString().split("T")[0];
+        var id_comprobante_ncdc = $('#cboNC').val();
+        $('#id_comprobante_ncdc').val(id_comprobante_ncdc);
+    
+            //alert($("#cboNC option:selected").text());
+        var texto = $("#cboNC option:selected").text();
+
+        var data = texto.split(" ");
+		var serieNC = data[2];
+        var numeroNC = data[4];
+		var fechaNC= data[6];
+        var totalNC= data[8];
+
+        var total_fac = $("#total_fac_").val();
+
+        
+        $('#serieNC').val(serieNC);
+        $('#numeroNC').val(numeroNC);
+
+        //ValorUnitario_ = Number(ValorUnitario_ );
+
+        if(Number(total_fac) < Number(totalNC)){
+
+            //alert("SI");
+            totalNC=Number(total_fac);
+
+        }
+/*
+        alert(serie);
+        alert(numero);
+        alert(fecha);
+        alert(total);
+*/
+           
+
             if ($('#id_comprobante_ncdc').val()!="0"){
+
+                $('#afecta_ingreso').val("C");
+                $("#idMedio0").val("91").trigger("change");
+                $("#monto0").val(totalNC);
+                $("#total_pagar").val(totalNC);
+                $("#nroOperacion0").val(id_comprobante_ncdc);
+                $("#descripcion0").val( "Ref. Nota Crédito " + serieNC + "-" + numeroNC );
+                $("#fecha0").val(hoy);
+
+                $("#monto0").prop('disabled', true);
+                $("#idMedio0").prop('disabled', true);
+                $("#btnElimina0").hide();
+                
+
+/*
                 if	($('#nc_fecha').val().split(" ")[0]===hoy) {
 							
 							$('#afecta_ingreso').val("C");
@@ -1667,13 +1718,14 @@
                             $("#idMedio0").val("91").trigger("change");
                             $("#monto0").val($('#nc_monto').val() );
                             $("#total_pagar").val($('#nc_monto').val() );
-                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " - " + numero );
+                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " x " + numero );
                             
                             
 
 							//$("#idMedio0").val("91").trigger("change");
 						
 						}
+                        */
         }
     }
 
