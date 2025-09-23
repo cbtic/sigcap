@@ -692,22 +692,23 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF" >
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Número NC</label>
-                                                            <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="numeroNC"  id="numeroNC" value=""                                                            
+                                                            <?php
+                                                            /* if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
                                                                                                                                 //echo $nc->numero;
                                                                                                                                 }
                                                                                                                             }  
                                                                                                                                 if ($trans == 'FE') {
                                                                                                                                 echo $nc->numero;;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                                                                                            } */?>
+                                                            placeholder="" class="form-control form-control-sm text-center">
                                                                 
-                                                        </div>
-                                                            
-                                                        
+                                                        </div>                                                                                                                    
                                                     </div>
 
                                                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:20px">
-                                                        <input class="btn btn-success pull-rigth" value="Buscar NC" type="button" id="btnBuscar" onClick="obtenerNC();"/>
+                                                        <input class="btn btn-success pull-rigth" value="Buscar NC" type="button" id="btnBuscar" onClick="obtenerNC()"/>
                                                     </div>
                                             
 
@@ -715,7 +716,7 @@
                                                         <div class="form-group">
                                                             <label class="form-control-sm"> 
                                                                 <strong> 
-                                                                    <?php  
+                                                                    <?php  /*
                                                                     use Carbon\Carbon;
                                                                     if ($trans == 'FA') {
                                                                         if ($nc) {
@@ -725,7 +726,7 @@
                                                                     }  
                                                                     if ($trans == 'FE') {
                                                                         echo $nc->numero;
-                                                                    } 
+                                                                    } */
                                                                     ?>                                                        
                                                                 </strong>
                                                             </label>                                                                                                                    
@@ -735,7 +736,8 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                         <div class="form-group">
                                                             
-                                                            <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FA') {
+                                                            <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value=""
+                                                                    <?php  /*if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
                                                                                                                                 echo $nc->id_nc;
                                                                                                                                 }
@@ -747,24 +749,30 @@
                                                                                                                             }  
                                                                                                                                 if ($trans == 'FE') {
                                                                                                                                 echo $nc->id;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                            <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value="<?php if ($trans == 'FA') {
+                                                                                                                            } */ ?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value=""
+                                                                    <?php /* if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
                                                                                                                                 echo $nc->fecha;
                                                                                                                                 }
                                                                                                                             }  
                                                                                                                                 if ($trans == 'FE') {
                                                                                                                                 echo $nc->id;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                            <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value="<?php if ($trans == 'FA') {
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value=""
+                                                                        <?php /*if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
                                                                                                                                 echo $nc->fecha;
                                                                                                                                 }
                                                                                                                             }  
                                                                                                                                 if ($trans == 'FE') {
                                                                                                                                 echo $nc->id;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                            <input type="hidden" name="nc_nro_operacion" readonly id="nc_nro_operacion" value="<?php if ($trans == 'FA') {
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_nro_operacion" readonly id="nc_nro_operacion" value=""
+                                                                        <?php /*if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
                                                                                                                                 echo $nc->nro_operacion;
                                                                                                                                 }
@@ -773,16 +781,20 @@
                                                                                                                                     if ($nc) {
                                                                                                                                 echo $nc->id;
                                                                                                                                     }
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                            <input type="hidden" name="nc_monto" readonly id="nc_monto" value="<?php if ($trans == 'FA') {
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_monto" readonly id="nc_monto" value=""
+                                                                        <?php /* if ($trans == 'FA') {
                                                                 if ($nc) {
                                                                                                                                 echo $nc->monto;
                                                                 }
                                                                                                                             }  
                                                                                                                                 if ($trans == 'FE') {
                                                                                                                                 echo $nc->id;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                            <input type="hidden" name="nc_id_medio" readonly id="nc_id_medio" value="<?php if ($trans == 'FA') {
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_id_medio" readonly id="nc_id_medio" value=""
+                                                                        <?php /*if ($trans == 'FA') {
                                                                                                                                 if ($nc) {   
                                                                                                                                     if ($nc) { 
                                                                                                                                 echo $nc->id_medio;
@@ -791,7 +803,8 @@
                                                                                                                             }  
                                                                                                                                 if ($trans == 'FE') {
                                                                                                                                 echo $nc->id;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
@@ -814,7 +827,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo de Operación</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="">
+                                                            <select name="tipo_documento" id="serieF_" class="form-control form-control-sm" onchange="">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
@@ -851,7 +864,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo Guia</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <select name="tipo_documento" id="serieF_" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
@@ -884,7 +897,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo Documento</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <select name="tipo_documento" id="serieF_" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">

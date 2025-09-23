@@ -349,8 +349,8 @@ class ComprobanteController extends Controller
             $comprobante_model = new Comprobante;
             //$valorizaciones_model = new Valorizacione;
             
-            $nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
-            
+            //$nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
+            $nc ="";
             //print_r($nc); exit();
             //print_r($empresa); exit();
 
@@ -5250,7 +5250,10 @@ class ComprobanteController extends Controller
 
     public function obtener_nc($cod_tributario){
 
+        
         $comprobante_model = new Comprobante;
+
+        
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
         $nc = $comprobante_model->getncById($cod_tributario);
