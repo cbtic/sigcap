@@ -349,8 +349,9 @@ class ComprobanteController extends Controller
             $comprobante_model = new Comprobante;
             //$valorizaciones_model = new Valorizacione;
             
-            //$nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
-            $nc ="";
+           //$nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
+            $nc = $comprobante_model->getNCByTipo($id_cliente, $request->tipo_documento);
+            //$nc ="";
             //print_r($nc); exit();
             //print_r($empresa); exit();
 

@@ -564,7 +564,6 @@
                                                     </div>
 
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-
                                                         <label class="form-group">Forma de pago</label>
                                                         <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
                                                             <option value="">--Selecionar--</option>
@@ -666,10 +665,10 @@
                                                     -->                                        
                                                 <div id="" class="row">
                                             
-                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" >
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Serie NC</label>                                                    
-                                                            <input type="text" name="serieNC"  id="serieNC" value="" placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="text" name="serieNC"  id="serieNC" value="" placeholder="" class="form-control form-control-sm text-center" >
                                                                 <?php 
                                                                 /*
                                                                     if ($trans == 'FA') {
@@ -683,13 +682,23 @@
                                                                     } 
                                                                     */
                                                                     ?>
-                                                                    
-                                                                    
-
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF" >
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                                                        <label class="form-group">Nota Crédito</label>
+                                                        <select name="id_nc" id="id_nc" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($nc as $row) { ?>
+                                                                <option value="<?php echo $row->id ?>" > <?php echo $row->descripcion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>                                                    
+
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"  style="display:none">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Número NC</label>
                                                             <input type="text" name="numeroNC"  id="numeroNC" value=""                                                            
