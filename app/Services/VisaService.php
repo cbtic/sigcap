@@ -49,7 +49,7 @@ class VisaService
                 'cardholderCountry' => 'PE',
                 'cardholderAddress' => $datos_usuario->direccion,//'Av Principal A-5. Campoy',//direccion del agremiado
                 'cardholderPostalCode' => '150113',//'15046',
-                'cardholderState' => substr($datos_usuario->departamento,0,3),//'LIM',
+                'cardholderState' => substr($datos_usuario->departamento,0,3),//'LIM', ISO 3166
                 'cardholderPhoneNumber' => preg_replace('/\D/', '', $datos_usuario->celular1)//'986322205'//telefono del agremiado
             ]
         ];
@@ -79,8 +79,8 @@ class VisaService
                 'urlAddress' => request()->fullUrl(),
                 'partnerIdCode' => '',
                 'serviceLocationCityName' => $datos_usuario->departamento,//'LIMA',
-                'serviceLocationCountrySubdivisionCode' => substr($datos_usuario->departamento,0,3),//'LIM',
-                'serviceLocationCountryCode' => 'PE',
+                'serviceLocationCountrySubdivisionCode' => substr($datos_usuario->departamento,0,3),//'LIM',LMA --- ISO 3166-2
+                'serviceLocationCountryCode' => 'PER', //ISO 3166-1 alpha-3
                 'serviceLocationPostalCode' => '150113'//'15074'
             ]
         ];
