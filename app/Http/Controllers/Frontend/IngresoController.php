@@ -1423,4 +1423,27 @@ class IngresoController extends Controller
 
     }
 
+    public function automatico_caja_ingreso($accion = null){
+        
+        $cajaIngreso_model = new CajaIngreso;
+
+        $p[]=strval($accion);
+        $p[]=143;
+
+        if ($accion === 'i') {
+            $p[]=0;
+        } elseif ($accion === 'u') {
+            $p[]=$cajaIngreso_model->getCajaCarritoHoy();
+        }
+        
+        $p[]=12;
+        $p[]="0";
+        $p[]="0";
+        $p[]="0";
+        $p[]="1";
+		
+		$data = $cajaIngreso_model->crud_automatico_caja_ingreso($p);
+
+    }
+
 }

@@ -917,7 +917,9 @@ class CarritoController extends Controller
 	{
 
 		$caja_ingreso_model = new CajaIngreso;
-		$pedido = Pedido::find($request->id_pedido);
+		$pedido = Pedido::find($request->id_pedido); 
+		$data = json_decode($pedido->response);
+		$transactionId = $data->order->transactionId;
 		
 		$facturas_model = new Comprobante;
 		$usuario_id=$pedido->usuario_id;
@@ -972,7 +974,7 @@ class CarritoController extends Controller
 			$p[]=$id_persona;
 			$p[]="c";
 			$p[]=$tipoF;
-			$p[]="";
+			$p[]=$transactionId;
 			$prontopago = $carrito_model->genera_prontopago($p);
 			$id_factura = $prontopago[0]->id_comprobante;
 
@@ -1039,7 +1041,7 @@ class CarritoController extends Controller
 			$comprobantePago->id_medio = 547;
 			$comprobantePago->fecha = Carbon::now()->format('Y-m-d');
 			$comprobantePago->item = 1;
-			$comprobantePago->nro_operacion = "";//transactionId;
+			$comprobantePago->nro_operacion = $transactionId;//transactionId;
 			$comprobantePago->id_comprobante = $id_factura;
 			$comprobantePago->descripcion = "";
 			$comprobantePago->monto = $factura->total;
