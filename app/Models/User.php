@@ -49,11 +49,11 @@ class User extends Model
 
     function getDatosCarritoByIdUsuario($id){
 		$cad = "select u.email,p.id id_persona,a.fecha_colegiado,date_part('year',age(now(), a.fecha_colegiado::timestamp))anos,(now()::date - a.fecha_colegiado::date)dias,
-        a.celular1,a.direccion,a.id_ubigeo_domicilio,ub.desc_ubigeo departamento,a.numero_cap  
+        a.celular1,a.direccion,a.id_ubigeo_domicilio,ub.desc_ubigeo departamento,a.numero_cap,ub.iso_3166,ub.iso_3166_2  
 from users u 
 inner join personas p on u.id_persona=p.id
 inner join agremiados a on p.id=a.id_persona
-left join ubigeos ub on left(a.id_ubigeo_domicilio,2)=ub.id_departamento and ub.id_departamento!='00' and ub.id_provincia='00' and ub.id_distrito='00' and ub.id_departamento='15' and ub.estado='1'
+left join ubigeos ub on left(a.id_ubigeo_domicilio,2)=ub.id_departamento and ub.id_departamento!='00' and ub.id_provincia='00' and ub.id_distrito='00' and ub.estado='1'
 where u.id=".$id."
 and p.estado='1'
 and a.estado='1'";
