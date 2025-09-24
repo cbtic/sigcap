@@ -349,8 +349,10 @@ class ComprobanteController extends Controller
             $comprobante_model = new Comprobante;
             //$valorizaciones_model = new Valorizacione;
             
-            $nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
-            
+           //$nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
+            $nc = $comprobante_model->getNCByTipo($id_cliente, $request->tipo_documento);
+
+            //$nc ="";
             //print_r($nc); exit();
             //print_r($empresa); exit();
 
@@ -2315,6 +2317,18 @@ class ComprobanteController extends Controller
                         if ($id_empresa != "") $factura_upd->id_empresa = $id_empresa;
 
                         $factura_upd->observacion = $request->observacion;
+
+                        if($request->id_comprobante_ncdc != ""){
+                            //echo $request->id_comprobante_ncdc;
+                            
+                            //$factura_upd->id_comprobante_ncdc = $request->id_comprobante_ncdc;
+                            //$factura_upd->id_comprobante_ncdc =483986;
+
+                            $factura_upd->serie_ncnd = $request->serieNC;
+                            $factura_upd->id_numero_ncnd = $request->numeroNC;
+                            $factura_upd->tipo_ncnd = "NC";
+                            
+                        }
 
 
                         $factura_upd->save();
@@ -5167,14 +5181,18 @@ class ComprobanteController extends Controller
                 $fac_numero = $factura->numero;
 
                 $factura_upd = Comprobante::find($id_factura);
-                if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+                    if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 
-                $numero_peronalizado = $request->numero_peronalizado;
+                    $numero_peronalizado = $request->numero_peronalizado;
 
-                $trans = $request->trans;
-                if ($numero_peronalizado=='S'){
-                    $factura_upd->estado_sunat = "TERCERO";
-                }
+                    $trans = $request->trans;
+                    if ($numero_peronalizado=='S'){
+                        $factura_upd->estado_sunat = "TERCERO";
+                    }
+
+                    if (isset($request->id_persona)) $factura_upd->id_persona = $request->id_persona;
+
+                    if (isset($request->id_empresa)) $factura_upd->id_empresa = $request->id_empresa;
 
                 $factura_upd->save();
 
@@ -5246,7 +5264,10 @@ class ComprobanteController extends Controller
 
     public function obtener_nc($cod_tributario){
 
+        
         $comprobante_model = new Comprobante;
+
+
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
         $nc = $comprobante_model->getncById($cod_tributario);

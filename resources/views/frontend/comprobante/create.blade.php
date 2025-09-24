@@ -564,7 +564,6 @@
                                                     </div>
 
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-
                                                         <label class="form-group">Forma de pago</label>
                                                         <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
                                                             <option value="">--Selecionar--</option>
@@ -660,156 +659,187 @@
                                                             <input type="text" name="email2"  id="email2" value="" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
-
-
-
                                                 </div>
-
-                                                <div id="fsFiltro" class="card-body">
+                                                    <!--
+                                                    <div id="fsFiltro" class="card-body">
+                                                    -->                                        
+                                                <div id="" class="row">
                                             
-                                            <div id="" class="row"   >
-                                            
-                                            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"> 
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm"> <strong> <?php  use Carbon\Carbon; 
-                                                                                                
-                                                                                              if ($trans == 'FA') {
-                                                                                                                             if ($nc) {
-                                                                                                                                $fecha=Carbon::parse($nc->fecha);
-                                                                                                                                echo 'El concepto esta asociado a una Nota de crédito con fecha ' . $fecha->format('d/m/Y');
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->numero;;
-                                                                                                                        } ?></strong></label>
-                                                        
-                                                            
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Serie NC</label>                                                    
+                                                            <input type="text" name="serieNC"  id="serieNC" value="" placeholder="" class="form-control form-control-sm text-center" >
+                                                                <?php 
+                                                                /*
+                                                                    if ($trans == 'FA') {
+                                                                        if ($nc) {
+                                                                        //echo $nc->serie;
+                                                                        }                                                                
+                                                                    }  
+                                                                        if ($trans == 'FE') {
+                                                                        echo $nc->serie;
+                                                                        print_r( '$nc->seriec fe');
+                                                                    } 
+                                                                    */
+                                                                    ?>
+                                                        </div>
                                                     </div>
-                                                     
-                                                    
-                                                </div>
 
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Serie</label>
-                                                        
-                                                        <input type="text" name="serienc"  id="serieNC" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {
-                                                                                                                            echo $nc->serie;
-                                                                                                                            }
-                                                                                                                            
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->serie;
-                                                                                                                            print_r( '$nc->seriec fe');
-                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                         
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF" style="display:none">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Número</label>
-                                                        <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {
-                                                                                                                            echo $nc->numero;
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->numero;;
-                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                            
-                                                    </div>
-                                                     
-                                                    
-                                                </div>
-                                                
-                                                
-                                            
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" name="divNC" id="divNC"  style="<?php if (!$nc) echo 'display:none' ?>">
+                                                        <label class="form-group">Nota Crédito</label>
+                                                        <div class="input-group">
+                                                            <select name="cboNC" id="cboNC" class="form-control form-control-sm" onChange="">
+                                                                <option value="">--Selecionar--</option>
+                                                                <?php
+                                                                foreach ($nc as $row) { ?>
+                                                                    <option value="<?php echo $row->id ?>" > <?php echo $row->descripcion ?></option>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-sm" type="button" id="btnCon" onClick="ValidaNC()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Aplicar </button>
+                                                            </span>                                                        
+                                                        </div>    
+                                                    </div>                                                    
 
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
-                                                    <div class="form-group">
-                                                        
-                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {
-                                                                                                                             echo $nc->id_nc;
-                                                                                                                            }
-                                                                                                                            else
-                                                                                                                            {
-                                                                                                                                echo 0;
-
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {
-                                                                                                                            echo $nc->fecha;
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {
-                                                                                                                            echo $nc->fecha;
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        <input type="hidden" name="nc_nro_operacion" readonly id="nc_nro_operacion" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {
-                                                                                                                            echo $nc->nro_operacion;
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"  style="display:none">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Número NC</label>
+                                                            <input type="text" name="numeroNC"  id="numeroNC" value=""                                                            
+                                                            <?php
+                                                            /* if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
-                                                                                                                            echo $nc->id;
+                                                                                                                                //echo $nc->numero;
                                                                                                                                 }
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        <input type="hidden" name="nc_monto" readonly id="nc_monto" value="<?php if ($trans == 'FA') {
-                                                            if ($nc) {
-                                                                                                                            echo $nc->monto;
-                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        <input type="hidden" name="nc_id_medio" readonly id="nc_id_medio" value="<?php if ($trans == 'FA') {
-                                                                                                                            if ($nc) {   
-                                                                                                                                if ($nc) { 
-                                                                                                                            echo $nc->id_medio;
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $nc->numero;;
+                                                                                                                            } */?>
+                                                            placeholder="" class="form-control form-control-sm text-center">
+                                                                
+                                                        </div>                                                                                                                    
+                                                    </div>
+
+
+                                            
+
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"> 
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm"> 
+                                                                <strong> 
+                                                                    <?php  /*
+                                                                    use Carbon\Carbon;
+                                                                    if ($trans == 'FA') {
+                                                                        if ($nc) {
+                                                                            $fecha=Carbon::parse($nc->fecha);
+                                                                            echo 'El concepto esta asociado a una Nota de crédito con fecha ' . $fecha->format('d/m/Y');
+                                                                        }
+                                                                    }  
+                                                                    if ($trans == 'FE') {
+                                                                        echo $nc->numero;
+                                                                    } */
+                                                                    ?>                                                        
+                                                                </strong>
+                                                            </label>                                                                                                                    
+                                                        </div>     
+                                                    </div>                                            
+
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                        <div class="form-group">
+                                                            
+                                                            <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value=""
+                                                                    <?php  /*if ($trans == 'FA') {
+                                                                                                                                if ($nc) {
+                                                                                                                                echo $nc->id_nc;
                                                                                                                                 }
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $nc->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                                                                                                else
+                                                                                                                                {
+                                                                                                                                    echo 0;
+
+                                                                                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $nc->id;
+                                                                                                                            } */ ?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value=""
+                                                                    <?php /* if ($trans == 'FA') {
+                                                                                                                                if ($nc) {
+                                                                                                                                echo $nc->fecha;
+                                                                                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $nc->id;
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_fecha" readonly id="nc_fecha" value=""
+                                                                        <?php /*if ($trans == 'FA') {
+                                                                                                                                if ($nc) {
+                                                                                                                                echo $nc->fecha;
+                                                                                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $nc->id;
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_nro_operacion" readonly id="nc_nro_operacion" value=""
+                                                                        <?php /*if ($trans == 'FA') {
+                                                                                                                                if ($nc) {
+                                                                                                                                echo $nc->nro_operacion;
+                                                                                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                    if ($nc) {
+                                                                                                                                echo $nc->id;
+                                                                                                                                    }
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_monto" readonly id="nc_monto" value=""
+                                                                        <?php /* if ($trans == 'FA') {
+                                                                if ($nc) {
+                                                                                                                                echo $nc->monto;
+                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $nc->id;
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                            <input type="hidden" name="nc_id_medio" readonly id="nc_id_medio" value=""
+                                                                        <?php /*if ($trans == 'FA') {
+                                                                                                                                if ($nc) {   
+                                                                                                                                    if ($nc) { 
+                                                                                                                                echo $nc->id_medio;
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $nc->id;
+                                                                                                                            } */?> 
+                                                                        placeholder="" class="form-control form-control-sm text-center">
+                                                        </div>
                                                     </div>
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                        <div class="form-group">
+                                                            
+                                                            <input type="hidden" name="afecta_ingreso" readonly id="afecta_ingreso" value="<?php if ($trans == 'FN') {
+                                                                                                                                if ($nc) {
+                                                                                                                                echo $comprobante->id;
+                                                                                                                                }
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $comprobante->id;
+                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        </div>
+                                                    </div>                                                
                                                 </div>
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
-                                                    <div class="form-group">
-                                                        
-                                                        <input type="hidden" name="afecta_ingreso" readonly id="afecta_ingreso" value="<?php if ($trans == 'FN') {
-                                                                                                                            if ($nc) {
-                                                                                                                            echo $comprobante->id;
-                                                                                                                            }
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $comprobante->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>                                                                                                
+                                                                                                                                          
 
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo de Operación</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="">
+                                                            <select name="tipo_documento" id="serieF_" class="form-control form-control-sm" onchange="">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
@@ -846,7 +876,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo Guia</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <select name="tipo_documento" id="serieF_" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
@@ -879,7 +909,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo Documento</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <select name="tipo_documento" id="serieF_" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                                 <option value="ft">
                                                                     <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
@@ -892,10 +922,7 @@
                                             <!--card-body-->
                                         </div>
                                         <!--card-->
-
-
                                     </div>
-
                                 </div>
                             </div>
                             <br>
@@ -1621,13 +1648,61 @@
 
 </div>
 <script>
-        function ValidaNC() {
-            var tipo_documento = "NC";
-		    var serie = $("#serieNC").val();
-		    var numero = $("#numeroNC").val();
-		    var hoy = new Date().toISOString().split("T")[0];
-              
+    function ValidaNC() {
+            //var tipo_documento = "NC";
+		    //var serie = $("#serieNC").val();
+		    //var numero = $("#numeroNC").val();
+		var hoy = new Date().toISOString().split("T")[0];
+        var id_comprobante_ncdc = $('#cboNC').val();
+        $('#id_comprobante_ncdc').val(id_comprobante_ncdc);
+    
+            //alert($("#cboNC option:selected").text());
+        var texto = $("#cboNC option:selected").text();
+
+        var data = texto.split(" ");
+		var serieNC = data[2];
+        var numeroNC = data[4];
+		var fechaNC= data[6];
+        var totalNC= data[8];
+
+        var total_fac = $("#total_fac_").val();
+
+        
+        $('#serieNC').val(serieNC);
+        $('#numeroNC').val(numeroNC);
+
+        //ValorUnitario_ = Number(ValorUnitario_ );
+
+        if(Number(total_fac) < Number(totalNC)){
+
+            //alert("SI");
+            totalNC=Number(total_fac);
+
+        }
+/*
+        alert(serie);
+        alert(numero);
+        alert(fecha);
+        alert(total);
+*/
+           
+
             if ($('#id_comprobante_ncdc').val()!="0"){
+
+                $('#afecta_ingreso').val("C");
+                $("#idMedio0").val("91").trigger("change");
+                $("#monto0").val(totalNC);
+                $("#total_pagar").val(totalNC);
+                $("#nroOperacion0").val(id_comprobante_ncdc);
+                $("#descripcion0").val( "Ref. Nota Crédito " + serieNC + "-" + numeroNC );
+                $("#fecha0").val(hoy);
+
+                $("#monto0").prop('disabled', true);
+                $("#idMedio0").prop('disabled', true);
+                $("#btnElimina0").hide();
+                
+
+/*
                 if	($('#nc_fecha').val().split(" ")[0]===hoy) {
 							
 							$('#afecta_ingreso').val("C");
@@ -1643,18 +1718,19 @@
                             $("#idMedio0").val("91").trigger("change");
                             $("#monto0").val($('#nc_monto').val() );
                             $("#total_pagar").val($('#nc_monto').val() );
-                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " - " + numero );
+                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " x " + numero );
                             
                             
 
 							//$("#idMedio0").val("91").trigger("change");
 						
 						}
+                        */
         }
     }
 
         // Ejecutar la función cuando la página esté completamente cargada
-        window.onload = ValidaNC;
+        //window.onload = ValidaNC;
     </script>
 
 
