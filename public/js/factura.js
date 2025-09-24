@@ -278,12 +278,63 @@ function guardarFactura(){
 
 		$total_pagar_abono = $("#total_pagar_abono").val();
 
-		if($total_pagar_abono=="0"){
-			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+		//alert($total_pagar_abono);
+
+		//msg+="depurando..<br>";
+
+		if($total_pagar_abono=="0" ){
+			msg+="El total a pagar es 0..<br>";
 		}
 		
 	}
 
+	if(total_<total_fac_){
+		var dif = Number(total_fac_) - Number(total_);
+		
+		Swal.fire({
+		title: 'Mensaje',
+		text: "¿El total de medio de pago es MENOR al total del comprobante por "+ dif.toFixed(2) + " , esta seguro de continuar?",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Continuar!'
+		}).then((result) => {
+
+		if (result.value) {
+			msg+="";
+		} else {
+			msg+="El total de medio de pago es MENOR al total del comprobante..<br>";
+		}
+
+		});
+	}
+
+	if(total_>total_fac_){
+		var dif =  Number(total_)- Number(total_fac_);
+		
+		//msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+
+		Swal.fire({
+		title: 'Mensaje',
+		text: "¿El total de medio de pago es MAYOR al total del comprobante por "+ dif.toFixed(2) + " ,esta seguro de continuar?",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Continuar!'
+		}).then((result) => {
+
+		if (result.value) {
+			msg+="";
+		} else {
+			msg+="El total de medio de pago es MAYOR al total del comprobante..<br>";
+		}
+
+		});
+		
+  	}
+	
 
 	var direccion = $('#direccion').val();
 	var email = $('#email').val();
