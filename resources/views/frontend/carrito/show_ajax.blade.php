@@ -233,9 +233,9 @@
                                                                                     <td class="text-center">{{ $factura_detalle->cantidad }} </td>
                                                                                     <td class="text-left">{{ $factura_detalle->nombre }}</td>
                                                                                     <td class="text-right">{{ number_format($factura_detalle->precio_unitario,2)  }}</td>
-                                                                                    <td class="text-right">{{ number_format($factura_detalle->total,2) }}</td> 
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->valor_venta,2) }}</td> 
                                                                                     <td class="text-left">{{ number_format($pedido->descuento_total,2)  }}</td>
-                                                                                    <td class="text-right">{{ number_format($pedido->impuesto_total,2)  }}</td>
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->impuesto,2)  }}</td>
                                                                                     <td class="text-right" >{{ number_format($factura_detalle->total,2) }}</td>
 
                                                                                     <?php
@@ -307,7 +307,7 @@
                                                                         <th></th>
                                                                         <th class="text-right"><span
                                                                                 id="gravadas"></span> 
-                                                                                {{ number_format($pedido->total_general,2)  }}
+                                                                                {{ number_format($pedido->subtotal,2)  }}
                                                                         </th>
                                                                     </tr>
                                                                     <tr style="display:none">

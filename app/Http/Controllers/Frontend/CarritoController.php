@@ -317,6 +317,8 @@ class CarritoController extends Controller
 		$urlSession = config("visa.$env.url_session");
 		$urlJs = config("visa.$env.url_js");
 
+		$subtotal=0;
+		$impuesto_total=0;
 		$total_general=0;
 		$usuario = Auth::user();
 
@@ -328,6 +330,8 @@ class CarritoController extends Controller
 		$carrito_model = new Carrito;
 		if($carrito){
 			$carrito_items = $carrito_model->getCarritoDetalle($carrito->id);
+			$subtotal = isset($carrito_items[0]->subtotal)?$carrito_items[0]->subtotal:0;
+			$impuesto_total = isset($carrito_items[0]->impuesto_total)?$carrito_items[0]->impuesto_total:0;
 			$total_general = isset($carrito_items[0]->total_general)?$carrito_items[0]->total_general:0;
 		}else{
 			$carrito_items = NULL;
@@ -347,6 +351,8 @@ class CarritoController extends Controller
 
 		return response()->view('frontend.carrito.all_detalle', compact(
 			'carrito_items',
+			'subtotal',
+			'impuesto_total',
 			'total_general',
 			'purchaseNumber',
 			'merchantId',
@@ -394,8 +400,47 @@ class CarritoController extends Controller
         // 2. Obtener producto y precio
 		$carrito_model = new Carrito;
 		$valorizacion = $carrito_model->getCarritoDeudaById($request->valorizacion_id)[0];
-        $precio   = $valorizacion->valor_unitario;
+        $precio = $valorizacion->valor_unitario;
+		$id_tipo_afectacion = $valorizacion->id_tipo_afectacion;
 		
+		/*************/
+
+		$tasa_igv_=0.18;
+		$monto = $valorizacion->monto;
+		$PrecioVenta_= $valorizacion->valor_unitario;//
+		$Descuento_  = $valorizacion->descuento_porcentaje;
+		$Cantidad_ = $valorizacion->cantidad;
+		
+		if ($id_tipo_afectacion == '30') {
+			$igv_   = 0;
+			$ValorUnitario_ = str_replace(",", "", number_format($PrecioVenta_,  2));
+			$ValorVB_ = str_replace(",", "", number_format($ValorUnitario_ * $Cantidad_, 2));
+			$ValorVenta_ = str_replace(",", "", number_format($ValorVB_ - $Descuento_, 2));
+			$Igv_ = 0;		
+			$Total_ = str_replace(",", "", number_format($ValorVenta_ + $Igv_, 2));
+			$stotal = $Total_;
+		} else {
+			$ValorUnitario_ = $PrecioVenta_ /(1+$tasa_igv_);
+			$ValorVB_ = $ValorUnitario_ * $Cantidad_;
+			$ValorVenta_ = $ValorVB_ - $Descuento_;
+			$Igv_ = $ValorVenta_ * $tasa_igv_;		
+			$Total_ = $ValorVenta_ + $Igv_;	
+			
+			$ValorUnitario_ = str_replace(",", "", number_format($ValorUnitario_, 2));
+			$ValorVB_ = str_replace(",", "", number_format($ValorVB_, 2));
+			$ValorVenta_ = str_replace(",", "", number_format($ValorVenta_, 2));
+			$Igv_ = str_replace(",", "", number_format($Igv_, 2));		
+			$Total_ = str_replace(",", "", number_format($Total_, 2));
+			$stotal = $Total_;
+			$igv_   = $Igv_;
+		}
+
+		//$precio
+        //$request->cantidad
+        //$precio * $request->cantidad
+
+		/****************/
+
         // 3. Verificar si ya existe item en el carrito (misma variante)
         $item = CarritoItem::where('carrito_id', $carrito->id)
             	->where('valorizacion_id', $valorizacion->id)
@@ -421,7 +466,7 @@ class CarritoController extends Controller
 					return redirect('/carrito')->with('success', 'No se puede ingresar un Concepto diferente, filtre el mismo concepto');
 				}
 			}
-
+			/*
             $item = CarritoItem::create([
                 'carrito_id'          => $carrito->id,
                 'valorizacion_id'     => $valorizacion->id,
@@ -430,6 +475,18 @@ class CarritoController extends Controller
                 'precio_unitario'     => $precio,
                 'cantidad'            => $request->cantidad,
                 'total'         	  => $precio * $request->cantidad,
+            ]);
+			*/
+			$item = CarritoItem::create([
+                'carrito_id'          => $carrito->id,
+                'valorizacion_id'     => $valorizacion->id,
+                'fecha_vencimiento'	  => $valorizacion->fecha,
+                'nombre'              => $valorizacion->descripcion,
+                'precio_unitario'     => $precio,
+                'cantidad'            => $request->cantidad,
+                'impuesto'         	  => $igv_,
+				'valor_venta'         => $ValorVenta_,
+				'total'         	  => $stotal,
             ]);
 			
         }
@@ -559,13 +616,15 @@ class CarritoController extends Controller
      */
     private function recalcularTotales(Carrito $carrito)
     {
-        $subtotal = $carrito->items()->sum('total');
+        $total_general = $carrito->items()->sum('total');
+		$impuesto_total = $carrito->items()->sum('impuesto');
+		$valor_venta = $carrito->items()->sum('valor_venta');
 
-        $carrito->subtotal       = $subtotal;
+        $carrito->subtotal       = $valor_venta;
         $carrito->descuento_total= 0; // luego se aplica cupón
-        $carrito->impuesto_total = 0; // si manejas IGV
+        $carrito->impuesto_total = $impuesto_total;//0; // si manejas IGV
         $carrito->envio_total    = 0; // si hay costo de envío
-        $carrito->total_general  = $subtotal;
+        $carrito->total_general  = $total_general;
         $carrito->save();
     }
 
@@ -640,6 +699,8 @@ class CarritoController extends Controller
 				'fecha_vencimiento'=> $item->fecha_vencimiento,
 				'precio_unitario'  => $item->precio_unitario,
 				'cantidad'         => $item->cantidad,
+				'impuesto'         => $item->impuesto,
+				'valor_venta'      => $item->valor_venta,
 				'total'            => $item->total,
 			]);
 			$valorizacion_id = $item->valorizacion_id;

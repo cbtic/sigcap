@@ -16,7 +16,7 @@ class Carrito extends Model
     function getCarritoDetalle($id_carrito)
     {
 
-        $cad = "select ci.id,ci.nombre,ci.fecha_vencimiento,ci.precio_unitario,ci.cantidad,ci.total,c.total_general
+        $cad = "select ci.id,ci.nombre,ci.fecha_vencimiento,ci.precio_unitario,ci.cantidad,ci.total,c.subtotal,c.impuesto_total,c.total_general,ci.impuesto,ci.valor_venta  
 from carritos c 
 inner join carrito_items ci on c.id=ci.carrito_id 
 where c.id=".$id_carrito;
