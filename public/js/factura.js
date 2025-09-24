@@ -455,6 +455,7 @@ function fn_save() {
 
 
 
+
 /*
 function fn_savexxxxxxxxxxxxxxx(){
     var id_factura = 0;
@@ -928,7 +929,7 @@ function obtenerTitular(){
 
 		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="fecha[]" required="" id="fecha'+ind+'" class="form-control form-control-sm datepicker fecha input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
 		
-		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
+		newRow +='<td><button type="button" id="btnElimina'+ind+'" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
 
 		newRow +='</tr>';
 		$('#tblMedioPago tbody').append(newRow);
@@ -1113,10 +1114,11 @@ function obtenerTitular(){
 	function obtenerNC(){
 
 		var tipo_documento = "NC";
+		alert(tipo_documento);
 		var serie = $("#serieNC").val();
 		var numero = $("#numeroNC").val();
 		var hoy = new Date().toISOString().split("T")[0];
-		//alert(tipo_comprobante);
+		
 		
 	
 		$.ajax({

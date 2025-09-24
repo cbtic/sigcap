@@ -882,5 +882,27 @@ limit 1";
         if(isset($data))return $data[0]->id;
     }
 
+    public function crud_automatico_caja_ingreso($p){
+		return $this->readFunctionPostgresTransaction('sp_crud_caja_ingreso',$p);
+    }
+
+    public function readFunctionPostgresTransaction($function, $parameters = null){
+	
+      $_parameters = '';
+      if (count($parameters) > 0) {
+	  		
+			foreach($parameters as $par){
+				if(is_string($par))$_parameters .= "'" . $par . "',";
+				else $_parameters .= "" . $par . ",";
+		  	}
+			if(strlen($_parameters)>1)$_parameters= substr($_parameters,0,-1);
+			
+      }
+
+	  $cad = "select " . $function . "(" . $_parameters . ");";
+	  $data = DB::select($cad);
+	  return $data[0]->$function;
+   }
+
 
 }
