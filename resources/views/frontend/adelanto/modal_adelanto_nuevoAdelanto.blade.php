@@ -379,6 +379,8 @@ function modal_personaNuevo(){
     var id_periodo = $('#id_periodo').val();
     var delegado = $('#delegado').val();
     var id_delegado_ = $('#id_delegado_').val();
+    var numero_documento = $('#numero_documento').val();
+    var fecha_documento = $('#fecha_documento').val();
     
 	
     $.ajax({
@@ -398,7 +400,9 @@ function modal_personaNuevo(){
         delegado:delegado,
         numero_cuota:numero_cuota,
         id_tiene_recibo:id_tiene_recibo,
-        id_delegado_:id_delegado_
+        id_delegado_:id_delegado_,
+        fecha_documento:fecha_documento,
+        numero_documento:numero_documento
       },
       success: function(result) {
 
@@ -500,6 +504,21 @@ function modal_personaNuevo(){
                   <div class="form-group">
                     <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
                     <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago!=null && $fecha_pago<$fecha_actual){?>disabled <?php }?>>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="padding-left:10px">
+                    
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">N&uacute;mero de documento</label>
+                    <input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php echo $adelanto->numero_documento ?>" type="text" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago!=null && $fecha_pago<$fecha_actual){?>disabled <?php }?>>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Fecha de Documento</label>
+                    <input id="fecha_documento" name="fecha_documento" class="form-control form-control-sm" value="<?php echo $adelanto->fecha_documento ?>" type="date" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago!=null && $fecha_pago<$fecha_actual){?>disabled <?php }?>>
                   </div>
                 </div>
               </div>
