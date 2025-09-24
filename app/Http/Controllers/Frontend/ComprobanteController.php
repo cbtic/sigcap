@@ -2319,10 +2319,15 @@ class ComprobanteController extends Controller
                         $factura_upd->observacion = $request->observacion;
 
                         if($request->id_comprobante_ncdc != ""){
-                            $factura_upd->id_comprobante_ncdc = $request->id_comprobante_ncdc;
+                            //echo $request->id_comprobante_ncdc;
+                            
+                            //$factura_upd->id_comprobante_ncdc = $request->id_comprobante_ncdc;
+                            //$factura_upd->id_comprobante_ncdc =483986;
+
                             $factura_upd->serie_ncnd = $request->serieNC;
                             $factura_upd->id_numero_ncnd = $request->numeroNC;
                             $factura_upd->tipo_ncnd = "NC";
+                            
                         }
 
 
