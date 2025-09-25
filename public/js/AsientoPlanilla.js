@@ -8,6 +8,10 @@ $(document).ready(function () {
 	$('#btnVou').click(function () {
 		fn_importar_Vou();
 	});
+
+	$('#btnExportar').click(function () {
+		exportar_excel();
+	});
 	
 	$('#btnNuevo').click(function () {
 		modalAsignacion(0);
@@ -439,4 +443,17 @@ function cargarAsientoPlanilla() {
 }
 
 
+function exportar_excel(){
+		
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+	var periodo = $('#id_periodo').val();
+	var tipo = $('#Tipo_b').val();
+	
+	//if (campo == "")campo = 0;
+	//if (orden == "")orden = 0;
+
+	location.href = '/asiento_planilla/exportar_asientos/' + anio + '/' + mes + '/' + periodo + '/' + tipo ;
+	
+}
 
