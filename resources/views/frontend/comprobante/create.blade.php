@@ -26,6 +26,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.css">
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     var urlApp = "<?php echo URL::to('/') ?>";
@@ -748,7 +749,7 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                         <div class="form-group">
                                                             
-                                                            <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value=""
+                                                            <input type="hidden" name="id_comprobante_ncnd" readonly id="id_comprobante_ncnd" value=""
                                                                     <?php  /*if ($trans == 'FA') {
                                                                                                                                 if ($nc) {
                                                                                                                                 echo $nc->id_nc;
@@ -1653,8 +1654,8 @@
 		    //var serie = $("#serieNC").val();
 		    //var numero = $("#numeroNC").val();
 		var hoy = new Date().toISOString().split("T")[0];
-        var id_comprobante_ncdc = $('#cboNC').val();
-        $('#id_comprobante_ncdc').val(id_comprobante_ncdc);
+        var id_comprobante_ncnd = $('#cboNC').val();
+        $('#id_comprobante_ncnd').val(id_comprobante_ncnd);
     
             //alert($("#cboNC option:selected").text());
         var texto = $("#cboNC option:selected").text();
@@ -1687,13 +1688,13 @@
 */
            
 
-            if ($('#id_comprobante_ncdc').val()!="0"){
+            if ($('#id_comprobante_ncnd').val()!="0"){
 
                 $('#afecta_ingreso').val("C");
                 $("#idMedio0").val("91").trigger("change");
                 $("#monto0").val(totalNC);
                 $("#total_pagar").val(totalNC);
-                $("#nroOperacion0").val(id_comprobante_ncdc);
+                $("#nroOperacion0").val(id_comprobante_ncnd);
                 $("#descripcion0").val( "Ref. Nota Crédito " + serieNC + "-" + numeroNC );
                 $("#fecha0").val(hoy);
 
