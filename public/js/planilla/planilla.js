@@ -879,4 +879,4 @@ function DescargarArchivosRH(){
 	
 	location.href = '/planilla/exportar_listar_recibo_honorario/'+periodo+'/'+anio+'/'+mes+'/'+numero_cap+'/'+agremiado+'/'+municipalidad+'/'+fecha_inicio+'/'+fecha_fin+'/'+provision+'/'+cancelacion+'/'+ruc;
 }
-
+                     
