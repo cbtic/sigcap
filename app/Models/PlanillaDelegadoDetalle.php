@@ -35,7 +35,7 @@ class PlanillaDelegadoDetalle extends Model
         
         $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_ruc ruc, 
         pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado,pdd.id_grupo, pdd.fecha_operacion, pdd.tipo_comprobante,
-        pd.periodo, pd.mes, pd.id_periodo_comision, pdd.id_grupo
+        pd.periodo, pd.mes, pd.id_periodo_comision, pdd.id_grupo,pdd.fecha_provision, pdd.fecha_provision_cancela
         from planilla_delegado_detalles pdd 
         inner join planilla_delegados pd on pdd.id_planilla = pd.id
         inner join agremiados a on pdd.id_agremiado = a.id
