@@ -32,14 +32,19 @@ foreach ($pedido as $key => $row):
 		?></td>
 		<td class="text-left"><?php echo $row->email ?></td>
 		<td class="text-left"><?php if(isset($data->dataMap))echo $data->dataMap->CARD." (".$data->dataMap->BRAND.")"; ?></td>
+		<td class="text-left"><?php echo $row->yape; ?></td>
 		<td class="text-left"><?php if(isset($data->order))echo $data->order->amount. " ".$data->order->currency; ?></td>
+		<td class="text-left"><?php echo $row->status; ?></td>
 		<td>
 			@if(isset($row->id_comprobante))
-			<a class="btn btn-square link link-icon" target="_blank" href="carrito/ver_comprobante/{{$row->id_comprobante}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-file-alt" style="line-height:unset !important;"></i></a>
+				<a class="btn btn-square link link-icon" target="_blank" href="carrito/ver_comprobante/{{$row->id_comprobante}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-file-alt" style="line-height:unset !important;"></i></a>
 			@else
-			<a class="btn btn-square link link-icon" href="pedido/show/{{$row->id}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></a>
+				@if($row->status=='Authorized')
+					<a class="btn btn-square link link-icon" href="pedido/show/{{$row->id}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></a>
+				@else
+					<button disabled='disabled' class="btn btn-square link link-icon" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></button>
+				@endif
 			@endif
-
 		</td>
 
 	</tr>

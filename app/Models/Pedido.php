@@ -14,8 +14,10 @@ class Pedido extends Model
 
     function getPedidoByUsuario($id_usuario){  
         
-        $cad = "select p.id,p.purchase_number,p.amount,p.email,p.response,p.subtotal,p.descuento_total,p.total_general,p.estado,p.id_comprobante   
+        $cad = "select p.id,p.purchase_number,p.amount,p.email,p.response,p.subtotal,p.descuento_total,p.total_general,p.estado,p.id_comprobante,
+        p.response::json->'dataMap'->>'YAPE_ID' yape,p.response::json->'dataMap'->>'STATUS' status   
 from pedidos p 
+where p.usuario_id=".$id_usuario." 
 order by 1 desc";
 		$data = DB::select($cad);
         return $data;
