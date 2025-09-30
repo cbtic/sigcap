@@ -1049,7 +1049,7 @@ class CarritoController extends Controller
 			$fac_serie = $factura->serie;
 			$fac_numero = $factura->numero;
 			
-			$factura->id_usuario_actualiza =  $id_user;
+			$factura->id_usuario_actualiza =  $$usuario_id;
 
 			//if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 			$factura->estado_pago =  "C";//$request->estado_pago;
