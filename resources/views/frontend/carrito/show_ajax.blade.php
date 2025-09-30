@@ -18,7 +18,7 @@
                                     <input type="hidden" name="vestab" value="1">
                                     <input type="hidden" name="totalF" value="<?php //if ($trans == 'FA'){echo $total;}?>">
                                     <input type="hidden" name="ubicacion" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
-                                    <input type="hidden" name="persona" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
+                                    <input type="hidden" name="persona" value="<?php if ($trans == 'FA'){echo $persona;}?>">
                                     <input type="hidden" name="persona2" id="persona2" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
                                     <input type="hidden" name="ubicacion2" id="ubicacion2" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
                                     <input type="hidden" name="id_caja" value="<?php //if ($trans == 'FA'){echo $id_caja;}?>">
