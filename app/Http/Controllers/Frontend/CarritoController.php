@@ -210,7 +210,7 @@ class CarritoController extends Controller
 
         //print_r($empresa);
 		//echo $serie_default;exit();
-		return view('frontend.carrito.show_ajax',compact('trans','serie_default','serie','empresa','pedido_item','pedido','titulo','empresa','btn_titulo','sw'));
+		return view('frontend.carrito.show_ajax',compact('trans','serie_default','serie','empresa','pedido_item','pedido','titulo','empresa','btn_titulo','sw','persona'));
 
 	}
 
@@ -987,12 +987,13 @@ class CarritoController extends Controller
 		$usuario = User::find($usuario_id);
 
 		$serieF=$request->serieF;
-		$id_tipo_afectacion_pp=30;
+		$id_tipo_afectacion_pp=($pedido->impuesto_total>0)?10:30;
 		$tipoF=$request->TipoF;
 		$ubicacion_id=$usuario->id_persona;
 		$id_persona_act=$usuario->id_persona;
 		$total = $pedido->total_general;
 
+		/*
 		$ubicacion_id2="0";
 		$id_persona2="0";
 
@@ -1015,10 +1016,136 @@ class CarritoController extends Controller
 
 			if ($ubicacion_id == '0') $ubicacion_id = $ubicacion_id2;
 		}		
+		*/
+
+		/*******LOGICA NUEVA******************/
+
+		$ubicacion_id = $request->ubicacion;
+		$ubicacion_id2 = $request->ubicacion2;
+		$id_persona = $request->persona;
+		$id_persona2 = $request->persona2;
+
+		$id_persona_act = 0;
+		$id_ubicacion_act = 0;
+
+
+		if ($id_persona2 != '') {
+			$id_persona_act = $id_persona2;
+			$id_persona = '0';
+		} else {
+			$id_persona_act = $id_persona;
+		}
+
+
+		if ($ubicacion_id2 != '') {
+			$id_ubicacion_act = $ubicacion_id2;
+			$ubicacion_id = '0';
+		} else {
+			$id_ubicacion_act = $ubicacion_id;
+		}
+
+
+		$direccion = $request->direccion;
+		$correo = $request->email;
+
+		if ($request->direccion2 != '') {
+			$direccion = $request->direccion2;
+			$correo = $request->email2;
+		}
+		
+
+		if ($id_persona_act != 0 || $id_ubicacion_act != 0) {
+			// exit($id_persona_act);
+			if ($tipoF == 'FT' &&  $ubicacion_id != '') {
+				$empresa = Empresa::where('id', $id_ubicacion_act)->first();
+				if ($empresa) {
+
+					$empresa->direccion = $direccion;
+					$empresa->email = $correo;
+					$empresa->save();
+				}
+			}
+
+			if ($tipoF == 'FT' &&  $ubicacion_id2 != '') {
+				$empresa = Empresa::where('id', $id_ubicacion_act)->first();
+				if ($empresa) {
+					$empresa->direccion = $direccion;
+					$empresa->email = $correo;
+					$empresa->save();
+				}
+			}                        
+
+			if ($tipoF == 'FT' &&  $id_persona != '0') {
+				$persona = Persona::where('id', $id_persona_act)->first();
+				if ($persona) {
+					$persona->direccion = $direccion;
+					$persona->correo = $correo;
+					$persona->save();
+				}
+
+				$persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+				if ($persona2) {
+					$persona2->direccion = $direccion;
+					$persona2->email1 = $correo;
+					$persona2->save();
+				}
+				
+			}
+
+			if ($tipoF == 'BV' &&  $id_persona != '0') {
+				//exit($id_persona);
+				$persona = Persona::where('id', $id_persona_act)->first();
+				if ($persona) {
+					$persona->direccion = $direccion;
+					$persona->correo = $correo;
+					$persona->save();
+				}
+
+				$persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+				if ($persona2) {
+					$persona2->direccion = $direccion;
+					$persona2->email1 = $correo;
+					$persona2->save();
+				}
+				
+			}
+
+
+
+			if ($tipoF == 'BV' &&  $id_persona2 != '') {
+				
+				$persona = Persona::where('id', $id_persona_act)->first();
+				if ($persona) {
+					$persona->direccion = $direccion;
+					$persona->correo = $correo;
+					$persona->save();
+				}
+					
+
+				$persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+				if ($persona2) {
+					$persona2->direccion = $direccion;
+					$persona2->email1 = $correo;
+					$persona2->save();
+				}
+			}
+
+		}
+
+		if ($ubicacion_id == "") {
+			$ubicacion_id = $id_persona;
+			$ubicacion_id = $id_persona_act;
+		}
+
+		if ($ubicacion_id == '0') $ubicacion_id = $ubicacion_id2;
+
+		/******************************/
+
 
 		$id_caja=12;//$caja_ingreso_model->getCajaCarritoHoy();//143;
 		$descuento=0;
-		$id_user=$usuario_id;
+		//$id_user=$usuario_id;
+		$id_user=143;
 		$id_moneda=1;
 		$id_nc=0;
 
@@ -1041,6 +1168,8 @@ class CarritoController extends Controller
 
 		}else{
 
+			//echo $serieF.",".$id_tipo_afectacion_pp.",".$tipoF.",".$ubicacion_id.",".$id_persona_act.", ".round($total, 2).",".$ubicacion_id2.",".$id_persona2.",0,".$id_caja.",".$descuento.",'f',".$id_user.", ".$id_moneda.", ".$id_nc;
+
 			$id_factura = $facturas_model->registrar_factura_moneda($serieF,$id_tipo_afectacion_pp,$tipoF,$ubicacion_id, 
 			$id_persona_act, round($total, 2),$ubicacion_id2,$id_persona2,0, $id_caja,$descuento,'f',$id_user, $id_moneda, $id_nc);
 			
@@ -1048,12 +1177,17 @@ class CarritoController extends Controller
 			$fac_serie = $factura->serie;
 			$fac_numero = $factura->numero;
 			
+			$factura->id_usuario_actualiza =  $usuario_id;
+
 			//if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 			$factura->estado_pago =  "C";//$request->estado_pago;
 			$factura->id_forma_pago =  "1";//$request->id_formapago_;
 			$factura->tipo_operacion = "0101";//$request->id_tipooperacion_;
 			$id_persona = $id_persona_act;
 			$id_empresa = $ubicacion_id;//$request->ubicacion;
+
+			$id_persona = $request->persona;
+            $id_empresa = $request->ubicacion;
 
 			if ($id_persona != "") $factura->id_persona = $id_persona;
 			if ($id_empresa != "") $factura->id_empresa = $id_empresa;
@@ -1065,7 +1199,10 @@ class CarritoController extends Controller
 				
 				$total = $value->total;
 				$pu_   = $value->precio_unitario;
-				$id_concepto=26411;
+				//$id_concepto=26411; 
+				$valorizacionTmp = Valorizacione::find($pedido_item[0]->valorizacion_id);
+				$id_concepto=isset($valorizacionTmp->id_concepto)?$valorizacionTmp->id_concepto:26411; 
+
 				$cod_contable="";
 				$descuento = 0;
 				$item = $key + 1;
@@ -1080,10 +1217,10 @@ class CarritoController extends Controller
 
 					$facturaDet_upd->pu = $value->precio_unitario;
 					$facturaDet_upd->importe = $value->total;
-					$facturaDet_upd->igv_total = 0;
+					$facturaDet_upd->igv_total = $value->impuesto;
 					$facturaDet_upd->precio_venta = $value->precio_unitario;
 					$facturaDet_upd->valor_venta_bruto = $value->total;
-					$facturaDet_upd->valor_venta = $value->total;
+					$facturaDet_upd->valor_venta = $value->valor_venta;
 					//$facturaDet_upd->unidad = $value['unidad_medida_item'];
 					$facturaDet_upd->save();
 				}
@@ -1163,7 +1300,10 @@ class CarritoController extends Controller
 			
 			$total = $value->total;
 			$pu_   = $value->precio_unitario;
-			$id_concepto=26411;
+			//$id_concepto=26411;
+			$valorizacionTmp = Valorizacione::find($pedido_item[0]->valorizacion_id);
+			$id_concepto=isset($valorizacionTmp->id_concepto)?$valorizacionTmp->id_concepto:26411; 
+
 			$cod_contable="";
 			$descuento = 0;
 			$item = $key + 1;

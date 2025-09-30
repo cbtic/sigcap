@@ -1182,7 +1182,7 @@ function obtenerTitular(){
 					alert("Nota de credito no encontrado!");
 				}
 				else {
-					$('#id_comprobante_ncdc').val(result.nc.id);
+					$('#id_comprobante_ncnd').val(result.nc.id);
 
 		
 					
