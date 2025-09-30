@@ -261,7 +261,8 @@
                                     <?php
                             }
                             } else {
-                                $c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
+                                if(isset($data->data->TRANSACTION_DATE)){
+                                    $c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
                                 ?>
 
                                     <div class="alert alert-success" role="alert">
@@ -287,6 +288,14 @@
                                 </div>
 
                             <?php
+
+                                }else{
+                                    ?>
+                                        <div class="alert alert-success" role="alert">
+                                            Error con la tarjeta
+                                        </div>
+                                    <?php
+                                }
                                 }
                             ?>
 
