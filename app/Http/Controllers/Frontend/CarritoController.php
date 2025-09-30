@@ -987,7 +987,7 @@ class CarritoController extends Controller
 		$usuario = User::find($usuario_id);
 
 		$serieF=$request->serieF;
-		$id_tipo_afectacion_pp=30;
+		$id_tipo_afectacion_pp=($pedido->impuesto_total>0)?10:30;
 		$tipoF=$request->TipoF;
 		$ubicacion_id=$usuario->id_persona;
 		$id_persona_act=$usuario->id_persona;
@@ -1080,10 +1080,10 @@ class CarritoController extends Controller
 
 					$facturaDet_upd->pu = $value->precio_unitario;
 					$facturaDet_upd->importe = $value->total;
-					$facturaDet_upd->igv_total = 0;
+					$facturaDet_upd->igv_total = $value->impuesto;
 					$facturaDet_upd->precio_venta = $value->precio_unitario;
 					$facturaDet_upd->valor_venta_bruto = $value->total;
-					$facturaDet_upd->valor_venta = $value->total;
+					$facturaDet_upd->valor_venta = $value->valor_venta;
 					//$facturaDet_upd->unidad = $value['unidad_medida_item'];
 					$facturaDet_upd->save();
 				}
