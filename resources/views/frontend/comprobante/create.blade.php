@@ -1653,9 +1653,18 @@
             //var tipo_documento = "NC";
 		    //var serie = $("#serieNC").val();
 		    //var numero = $("#numeroNC").val();
+
+
 		var hoy = new Date().toISOString().split("T")[0];
         var id_comprobante_ncnd = $('#cboNC').val();
         $('#id_comprobante_ncnd').val(id_comprobante_ncnd);
+
+        if (id_comprobante_ncnd=='') {
+            alert("Para Aplicar una Nota De Crédito sebe seleccionar..");
+            exit();
+
+        }
+            
     
             //alert($("#cboNC option:selected").text());
         var texto = $("#cboNC option:selected").text();
