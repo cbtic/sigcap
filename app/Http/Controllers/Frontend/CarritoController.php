@@ -1018,7 +1018,8 @@ class CarritoController extends Controller
 
 		$id_caja=12;//$caja_ingreso_model->getCajaCarritoHoy();//143;
 		$descuento=0;
-		$id_user=$usuario_id;
+		//$id_user=$usuario_id;
+		$id_user=143;
 		$id_moneda=1;
 		$id_nc=0;
 
@@ -1048,6 +1049,8 @@ class CarritoController extends Controller
 			$fac_serie = $factura->serie;
 			$fac_numero = $factura->numero;
 			
+			$factura->id_usuario_actualiza =  $id_user;
+
 			//if (isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 			$factura->estado_pago =  "C";//$request->estado_pago;
 			$factura->id_forma_pago =  "1";//$request->id_formapago_;
