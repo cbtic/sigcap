@@ -416,6 +416,8 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
 		$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;			
 		$planillaDelegadoDetalle->cancelado = $request->cancelado;
+		$planillaDelegadoDetalle->fecha_provision = $request->fecha_provision;
+		
 
 		//echo($planillaDelegadoDetalle->secuencua_vou);
 		/*
@@ -438,6 +440,7 @@ class PlanillaDelegadoController extends Controller
 			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($id);
 			$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
 			$planillaDelegadoDetalle->fecha_operacion= $request->fecha_operacion;
+			$planillaDelegadoDetalle->fecha_provision_cancela = $request->fecha_cancelacion;
 			$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
 
 

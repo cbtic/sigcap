@@ -14,6 +14,16 @@ use App\Models\PartidaPresupuestale;
 use App\Models\PeriodoComisione;
 use App\Models\PeriodoComisionDetalle;
 
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithColumnFormat;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+
 use PDO;
 
 
@@ -234,7 +244,7 @@ class AsientoPlanillaController extends Controller
 			}
 			
 		
-		$ch = curl_init('http://190.119.30.106:9090/planillas2.php');
+		$ch = curl_init('http://190.119.30.106:9090/planillas.php');
 		
 		$postData = [
 					'mes' => sprintf("%02d", $_mes),
@@ -477,5 +487,122 @@ class AsientoPlanillaController extends Controller
 		
 	}
 
+	
+	public function exportar_asientos($anio,$mes,$periodo,$tipo) {
+		
+		//echo($tipo); exit();
+
+		$asiento_planilla_model = new AsientoPlanilla;
+		$data = $asiento_planilla_model->ListarAsientoPlanilla($anio, $mes, $periodo,$tipo);
+	
+		$variable = [];
+		$n = 1;
+
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("vou","Denominación Cuenta","RUC","Razon Social","Cuenta","Debe","Haber","Glosa","Centro Costo","Presupuesto","Codigo financiero","Fecha de documento","Tipo","Numero de comprobante","ID Grupo"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($r->vou, $r->cuenta_den, $r->numero_ruc,$r->desc_cliente_sunat,$r->cuenta, $r->debe, $r->haber, $r->glosa, $r->centro_costo, $r->presupuesto,$r->codigo_financiero,$r->fecha_documento,$r->tipo,$r->numero_comprobante,$r->id_grupo));
+		}
+		
+		
+		$export = new FormattedAsientosExport([$variable]);
+		return Excel::download($export, 'asientos_'. $anio .'_'. $mes .'_' . $tipo .  '_' . now()->format('YmdHis')  . '.xlsx');
+		
+    }
 
 }
+class InvoicesExport implements FromArray
+{
+	protected $invoices;
+
+	public function __construct(array $invoices)
+	{
+		$this->invoices = $invoices;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
+}
+
+class FormattedAsientosExport implements FromArray, WithStyles
+{
+    protected $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function array(): array
+    {
+        return $this->data;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        // Ajustar automáticamente el ancho de las columnas
+        foreach(range('A','O') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        // Definir estilos para el encabezado
+        $sheet->getStyle('A1:O1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF']
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '366092'] // Azul corporativo
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000']
+                ]
+            ]
+        ]);
+
+        // Colorear la primera columna (A) en todas las filas
+        $lastRow = count($this->data) + 1;
+        $sheet->getStyle('A2:A' . $lastRow)->applyFromArray([
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'E6F3FF'] // Azul claro
+            ]
+        ]);
+
+        // Estilos para el resto de las celdas
+        $sheet->getStyle('A2:O' . $lastRow)->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['rgb' => 'D0D0D0']
+                ]
+            ]
+        ]);
+
+        // Alineación centrada para columnas numéricas
+        $sheet->getStyle('F2:G' . $lastRow)->getAlignment()->setHorizontal('right');
+        $sheet->getStyle('A2:A' . $lastRow)->getAlignment()->setHorizontal('center');
+    }
+
+    public function columnFormats(): array
+    {
+        // Formato para columnas numéricas (Debe y Haber)
+        return [
+            'F' => '#,##0.00',
+            'G' => '#,##0.00'
+        ];
+    }
+}
+
+
+
+

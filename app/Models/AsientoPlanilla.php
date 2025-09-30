@@ -66,7 +66,7 @@ class AsientoPlanilla extends Model
                     And a.id_periodo_comision = '".$periodo."'
                     And a.id_tipo = '".$tipo."'
 
-                order by  desc_cliente_sunat,numero_comprobante,orden
+                order by vou, desc_cliente_sunat,numero_comprobante,orden
                     
                     ";
 

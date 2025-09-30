@@ -443,7 +443,7 @@
                                                  <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                      <div class="form-group">
 
-                                                         <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
+                                                         <input type="hidden" name="id_comprobante_ncnd" readonly id="id_comprobante_ncnd" value="<?php if ($trans == 'FN') {
                                                                                                                                                         echo $comprobante->id;
                                                                                                                                                     }
                                                                                                                                                     if ($trans == 'FE') {
