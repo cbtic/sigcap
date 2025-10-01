@@ -311,11 +311,11 @@ class ComprobanteController extends Controller
                    // $ubicacion=-1;
                 }
 
-
-
-                     
-
                     $empresa = $empresa_model->getPersonaId_BV($persona);
+
+                if($persona=='-1'){
+                    $persona='';
+                }                    
 
                    //echo $empresa;exit();
 

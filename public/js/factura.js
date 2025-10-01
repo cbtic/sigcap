@@ -342,6 +342,17 @@ function guardarFactura(){
 	var email2 = $('#email2').val();
 	var razon_social2 = $('#razon_social2').val();
 
+	var id_persona = $('#persona').val();
+	var id_persona2 = $('#persona2').val();
+
+	
+	if(id_persona2!=''){
+		id_persona= id_persona2;
+	}
+
+	//alert(id_persona)
+	//exists();
+
 	if(razon_social2!=''){
 		direccion = direccion2;
 		email= email2;
@@ -369,8 +380,9 @@ function guardarFactura(){
 		
 	}
 
-	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
-		msg+="Se Requiere el Número de RUC o DNI para generar una Boleta!";	
+	//if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
+	if(tipo == "BV" && id_persona=="" ){
+		msg+="Se Requiere el Número  DNI para generar una Boleta!";	
 		
 	}
 
