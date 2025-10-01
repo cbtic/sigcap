@@ -472,7 +472,7 @@
                         <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {
                                                                             echo $ubicacion;
                                                                         } ?>">
-                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {
+                        <input type="hidden" name="persona" id="persona" value="<?php if ($trans == 'FA') {
                                                                         echo $persona;
                                                                     } ?>">
                         <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {
