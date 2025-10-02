@@ -259,14 +259,14 @@ class Comprobante extends Model
             $cad = "select c.id, c.serie, c.numero, c.fecha, c.total,  ' '||trim(c.serie)||' - '|| c.numero||' F: '||TO_CHAR(c.fecha, 'DD/MM/YYYY') ||' T: '||TO_CHAR(c.total::NUMERIC, 'FM999999999.00') descripcion
                     from comprobantes c 
                     where c.id_empresa  = ".$id_cliente."
-                    and c.tipo = 'NC' and c.anulado = 'N'
+                    and c.tipo = 'NC' and c.anulado = 'N' and c.devolucion_nc = 'N'
                     and c.id not in(select c2.id_comprobante_ncnd  from comprobantes c2 where c2.id_empresa  = ".$id_cliente." and c2.anulado = 'N' and c2.tipo <> 'NC' and c2.id_comprobante_ncnd is not null)";
         }
         else {
             $cad = "select c.id, c.serie, c.numero, c.fecha, c.total,  ' '||trim(c.serie)||' - '|| c.numero||' F: '||TO_CHAR(c.fecha, 'DD/MM/YYYY') ||' T: '||TO_CHAR(c.total::NUMERIC, 'FM999999999.00') descripcion
                     from comprobantes c 
                     where c.id_persona = ".$id_cliente."
-                    and c.tipo = 'NC' and c.anulado = 'N'
+                    and c.tipo = 'NC' and c.anulado = 'N' and c.devolucion_nc = 'N'
                     and c.id not in(select c2.id_comprobante_ncnd  from comprobantes c2 where c2.id_persona = ".$id_cliente." and c2.anulado = 'N' and c2.tipo <> 'NC' and c2.id_comprobante_ncnd is not null)";        
                 }
         
