@@ -1125,10 +1125,15 @@ function fn_save() {
         dataType: 'json',
         success: function (result) {           
             if(result.sw) {
-                $('#numerof').val(result.id_factura);
-                $('#divNumeroF').show();
-                enviar_comprobante(result.id_factura);
-                location.href = "/carrito/ver_comprobante/"+result.id_factura;
+                if(result.msg==""){
+                    $('#numerof').val(result.id_factura);
+                    $('#divNumeroF').show();
+                    enviar_comprobante(result.id_factura);
+                    location.href = "/carrito/ver_comprobante/"+result.id_factura;
+                }else{
+                    bootbox.alert(result.msg);
+                }
+                
             } else {
                 alert(result.msg);
                 $('#guardar').show();
