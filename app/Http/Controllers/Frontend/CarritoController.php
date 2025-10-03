@@ -229,7 +229,8 @@ class CarritoController extends Controller
 		//$numero_documento_b = "";
 
 		$SelFracciona = $request->SelFracciona;
-        $Exonerado = $request->Exonerado;
+        //$Exonerado = $request->Exonerado;
+		$Exonerado = "0";
 		$actividad = $request->actividad;
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
