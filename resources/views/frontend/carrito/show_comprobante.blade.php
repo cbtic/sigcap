@@ -281,6 +281,9 @@
                     @case('BV')
                     Boleta
                     @break
+                    @case('NC')
+                    Nota de Crédito
+                    @break
                     @default
                     No esta identificado el tipo de documento
                 @endswitch

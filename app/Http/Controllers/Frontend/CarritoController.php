@@ -950,7 +950,7 @@ class CarritoController extends Controller
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', '1200');
 		
-		$comprobante = Comprobante::find(481031);
+		$comprobante = Comprobante::find($id);
 		$facd_serie = $comprobante->serie;
         $facd_numero = $comprobante->numero;
         $facd_tipo = $comprobante->tipo;
