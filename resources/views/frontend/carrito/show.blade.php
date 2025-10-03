@@ -985,10 +985,12 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/agremiado/lista.js') }}"></script>
+<!--<script src="{{ asset('js/agremiado/lista.js') }}"></script>-->
 
 <script>
 
+// truco: versión dinámica para obligar a recargar siempre
+   console.log("Versión {{ time() }}");
 //cargarComprobante();
 
 function verRepresentante(){
