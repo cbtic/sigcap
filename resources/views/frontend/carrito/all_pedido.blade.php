@@ -371,9 +371,6 @@ div {
 					
 
 
-
-
-
 <div id="confirmarEliminar">
 	<div class="alert alert-success mb-3" style="display: none;">El ticket se eliminó correctamente.</div>
 </div>
