@@ -977,6 +977,7 @@ class CarritoController extends Controller
 	public function send_comprobante(Request $request)
 	{
 
+		$msg="";
 		$caja_ingreso_model = new CajaIngreso;
 		$pedido = Pedido::find($request->id_pedido); 
 		$data = json_decode($pedido->response);
@@ -1165,7 +1166,12 @@ class CarritoController extends Controller
 			$p[]=$transactionId;
 			$prontopago = $carrito_model->genera_prontopago($p);
 			//print_r($prontopago);
-			$id_factura = $prontopago[0]->id_comprobante;
+			if(isset($prontopago[0]->id_comprobante) && $prontopago[0]->id_comprobante>0){
+				$id_factura = $prontopago[0]->id_comprobante;
+			}else{
+				$id_factura = NULL;
+				$msg=$prontopago[0]->msg;
+			}
 
 		}else{
 
@@ -1259,6 +1265,7 @@ class CarritoController extends Controller
 
 		return response()->json([
             'sw' => true,
+			'msg' => $msg,
             'id_factura' => $id_factura,
         ]);
 
