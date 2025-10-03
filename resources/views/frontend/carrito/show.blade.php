@@ -1127,7 +1127,7 @@ function fn_save() {
             if(result.sw) {
                 if(result.msg==""){ 
                     $('#numerof').val(result.id_factura);
-                    $('#divNumeroF').show();
+                    $('#divNumeroF').show(); 
                     enviar_comprobante(result.id_factura);
                     location.href = "/carrito/ver_comprobante/"+result.id_factura;
                 }else{
