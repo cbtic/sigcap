@@ -36,15 +36,20 @@ foreach ($pedido as $key => $row):
 		<td class="text-left"><?php if(isset($data->order))echo $data->order->amount. " ".$data->order->currency; ?></td>
 		<td class="text-left"><?php echo $row->status; ?></td>
 		<td>
+
 			@if(isset($row->id_comprobante))
 				
 				<div style="display: flex; gap: 8px; align-items: center;">
 				<a class="btn btn-square link link-icon" target="_blank" href="carrito/ver_comprobante/{{$row->id_comprobante}}" style="padding: 8px; line-height: normal;">
 					<i class="fas fa-file-alt"></i>
 				</a>
-				<a class="btn" target="_blank" href="carrito/ver_comprobante/{{$row->id_nc}}" style="padding: 6px 12px; white-space: nowrap;">
-					Nota Credi.
-				</a>
+				
+				@if(isset($row->id_nc))
+
+					<a class="btn" target="_blank" href="carrito/ver_comprobante/{{$row->id_nc}}" style="padding: 6px 12px; white-space: nowrap;">
+						Nota Credi.
+					</a>
+				@endif
 			</div>
 			
 				
