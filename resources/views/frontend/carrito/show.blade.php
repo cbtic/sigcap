@@ -1125,7 +1125,7 @@ function fn_save() {
         dataType: 'json',
         success: function (result) {           
             if(result.sw) {
-                if(result.msg==""){
+                if(result.msg==""){ 
                     $('#numerof').val(result.id_factura);
                     $('#divNumeroF').show();
                     enviar_comprobante(result.id_factura);
