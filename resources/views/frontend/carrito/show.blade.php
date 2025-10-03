@@ -1102,12 +1102,12 @@ function guardarFactura(){
         return false;
     }
     else{
-        fn_save();
+        fn_save_nuevo();
 	}
 
 }
 
-function fn_save() {
+function fn_save_nuevo() {
     var msgLoader = "Procesando, espere un momento por favor";
     var heightBrowser = $(window).width()/2;
     
