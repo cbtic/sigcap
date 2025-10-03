@@ -1119,7 +1119,7 @@ function fn_save() {
     $('#guardar').hide();
     
     $.ajax({
-        url: "/carrito/send_comprobante",
+        url: "/carrito/send_comprobante", 
         type: "POST",
         data: $("#frmFacturacion").serialize(),
         dataType: 'json',
