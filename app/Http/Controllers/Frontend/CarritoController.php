@@ -48,7 +48,7 @@ class CarritoController extends Controller
 		$tipo_couta = "";
 		$concepto = "";
 		$filas = "";
-		$Exonerado = "";
+		$Exonerado = "0";
 		$numero_documento_b = "";
 
 		$carrito_model = new Carrito;
@@ -1164,6 +1164,7 @@ class CarritoController extends Controller
 			$p[]=$tipoF;
 			$p[]=$transactionId;
 			$prontopago = $carrito_model->genera_prontopago($p);
+			//print_r($prontopago);
 			$id_factura = $prontopago[0]->id_comprobante;
 
 		}else{
