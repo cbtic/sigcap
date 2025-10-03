@@ -246,6 +246,8 @@
                         <input type="hidden" name="_afecta" id="_afecta" value="<?php echo $afectacion; ?>">
                         <input type="hidden" name="numero_peronalizado" id="numero_peronalizado" value="<?php echo $numero_peronalizado; ?>">
 
+                        <input type="hidden" name="id_persona" id="id_persona" value="<?php echo $comprobante->id_persona; ?>">
+                        <input type="hidden" name="id_empresa" id="id_empresa" value="<?php echo $comprobante->id_empresa; ?>">
                         
                         
                         <input type="hidden" name="tipoF" value="NC">
@@ -472,7 +474,7 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                     <div class="form-group">
                                                         
-                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
+                                                        <input type="hidden" name="id_comprobante_ncnd" readonly id="id_comprobante_ncnd" value="<?php if ($trans == 'FN') {
                                                                                                                             echo $comprobante->id;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {

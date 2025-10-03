@@ -938,7 +938,7 @@ class ReporteController extends Controller
 						}
 					}
 
-					array_push($variable, array($r->fecha, $r->tipo_documento, $r->serie, $r->numero, $r->fecha_ncd, $r->tipo_documento_ncd, $r->serie_ncd, $r->numero_ncd, $r->cod_tributario, $r->destinatario, number_format($r->imp_afecto, 2, '.', ','), number_format($r->imp_inafecto, 2, '.', ','), number_format($r->igv, 2, '.', ','), number_format($r->total, 2, '.', ',')));
+					array_push($variable, array($r->fecha, $r->tipo_documento, $r->serie, $r->numero, $r->fecha_ncd, $r->tipo_documento_ncd, $r->serie_ncd, $r->numero_ncd, $r->cod_tributario, $r->destinatario, number_format($r->imp_afecto, 2, '.', ','), number_format($r->imp_inafecto, 2, '.', ','), number_format($r->igv, 2, '.', ','), number_format($r->total, 2, '.', ','),"'".$r->transaction_id ,$r->authorization_code,$r->transaction_date));
 
 					$suma_afecto += $r->imp_afecto;
 					$suma_inafecto += $r->imp_inafecto;
@@ -1429,18 +1429,18 @@ class InvoicesExport4 implements FromArray, WithHeadings, WithStyles
 
 	public function headings(): array
     {
-        return ["Emision","TD","Serie","Numero","Fecha","Tipo","Serie","Numero","Codigo Tributario","Destinatario","Importe afecto","Importe Afecto","IGV","Total"];
+        return ["Emision","TD","Serie","Numero","Fecha","Tipo","Serie","Numero","Codigo Tributario","Destinatario","Importe afecto","Importe Inafecto","IGV","Total","Id Transaccion","Codigo Autorizacion","Fecha transaccion" ];
     }
 
 	public function styles(Worksheet $sheet)
     {
 
-		$sheet->mergeCells('A1:N1');
+		$sheet->mergeCells('A1:Q1');
         
 		//$fecha_actual = date('d-m-Y');
 
         $sheet->setCellValue('A1', "CONSOLIDADO {$this->titulo}");
-        $sheet->getStyle('A1:N1')->applyFromArray([
+        $sheet->getStyle('A1:Q1')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'color' => ['rgb' => '000000'],
@@ -1457,7 +1457,7 @@ class InvoicesExport4 implements FromArray, WithHeadings, WithStyles
 		$sheet->getStyle('A1')->getAlignment()->setWrapText(true);
 		$sheet->getRowDimension(1)->setRowHeight(30);
 
-        $sheet->getStyle('A2:N2')->applyFromArray([
+        $sheet->getStyle('A2:Q2')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'color' => ['rgb' => '000000'],

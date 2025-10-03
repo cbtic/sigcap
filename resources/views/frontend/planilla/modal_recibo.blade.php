@@ -134,6 +134,16 @@ $(document).ready(function() {
 	   autoclose: true,
 	});
 
+	$('#fecha_provision').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
+
+	$('#fecha_cancelacion').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
+
 	$('#chk_activar_numero_operacion').change(function(){
         if($(this).is(':checked')){
             $('#numero_operacion').prop('readonly', false);
@@ -206,6 +216,9 @@ var numero_comprobante = $('#numero_comprobante').val();
 var fecha_comprobante = $('#fecha_comprobante').val();
 var fecha_vencimiento = $('#fecha_vencimiento').val();
 var numero_operacion = $('#numero_operacion').val();
+var fecha_provision = $('#fecha_provision').val();
+var fecha_cancelacion = $('#fecha_cancelacion').val();
+
 var cancelado = $('#chk_activar_numero_operacion').prop('checked') ? 1 : 0;
 $('#cancelado').val(cancelado);
 
@@ -283,13 +296,16 @@ function send_recibo_honorario(){
 	var id_periodo_comision = $('#id_periodo_comision').val();
 	var id_grupo = $('#id_grupo').val();
 
+	var fecha_provision = $('#fecha_provision').val();
+	var fecha_cancelacion = $('#fecha_cancelacion').val();
+
 	//alert(periodo); exit();
 	
 
     $.ajax({
 			url:"/planillaDelegado/send_recibo_honorario",
             type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,cancelado:cancelado,numero_operacion:numero_operacion,fecha_operacion:fecha_operacion,selTipo:selTipo,periodo:periodo,mes:mes,id_periodo_comision:id_periodo_comision,id_grupo:id_grupo},
+            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,cancelado:cancelado,numero_operacion:numero_operacion,fecha_operacion:fecha_operacion,selTipo:selTipo,periodo:periodo,mes:mes,id_periodo_comision:id_periodo_comision,id_grupo:id_grupo,fecha_provision:fecha_provision,fecha_cancelacion:fecha_cancelacion	},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -369,22 +385,30 @@ function send_recibo_honorario(){
 					
 				</div>
 
-				<div class="row">											
-					<div class="col-lg-4">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="form-group">
+							<label class="control-label form-control-sm">Fecha Provision</label>
+							
+							<input type="text" id="fecha_provision" name="fecha_provision"  value="<?php if(isset($datosRecibo[0]->fecha_provision))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_provision))?>" class="form-control form-control-sm"  >
+						</div>
+					</div>
+
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="control-label form-control-sm">N&uacute;mero Comprobante</label>
 							<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php echo $datosRecibo[0]->numero_comprobante?>" class="form-control form-control-sm">
 						</div>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Comprobante</label>
 							<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php if(isset($datosRecibo[0]->fecha_comprobante))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_comprobante))?>" type="text"  >							
 						</div>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Vencimiento</label>
 							<input type="text" id="fecha_vencimiento" name="fecha_vencimiento"  value="<?php if(isset($datosRecibo[0]->fecha_vencimiento))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_vencimiento))?>" class="form-control form-control-sm"  >
@@ -394,8 +418,7 @@ function send_recibo_honorario(){
 				</div>
 				
 				<div class="row">
-					
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="form-group">
 							<input type="hidden" name="abonado" id="abonado" value="<?php echo $datosRecibo[0]->cancelado?>">
 							<input id="chk_activar_numero_operacion"   type="checkbox"  <?php if($datosRecibo[0]->cancelado=="1") echo "checked='checked'"?> style="margin-left:0px;width:18px;height:18px;margin-top:6px">							
@@ -403,14 +426,22 @@ function send_recibo_honorario(){
 						</div>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-3">
+						<div class="form-group">
+							<label class="control-label form-control-sm">Fecha Cancela.</label>
+							<input id="fecha_cancelacion" name="fecha_cancelacion" class="form-control form-control-sm"  value="<?php if(isset($datosRecibo[0]->fecha_provision_cancela))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_provision_cancela))?>" type="text"  >							
+						</div>
+					</div>
+					
+
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="control-label form-control-sm">N&uacute;mero Operaci&oacute;n</label>
 							<input type="text" name="numero_operacion" id="numero_operacion" value="<?php echo $datosRecibo[0]->numero_operacion?>" class="form-control form-control-sm" readonly="readonly">
 						</div>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Operación</label>
 							<input type="text" id="fecha_operacion" name="fecha_operacion"  value="<?php if(isset($datosRecibo[0]->fecha_operacion))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_operacion))?>"  class="form-control form-control-sm" readonly="readonly">

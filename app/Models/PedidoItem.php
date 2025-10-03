@@ -10,5 +10,5 @@ class PedidoItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["pedido_id","valorizacion_id","nombre","fecha_vencimiento","precio_unitario","cantidad","total"];
+    protected $fillable = ["pedido_id","valorizacion_id","nombre","fecha_vencimiento","precio_unitario","cantidad","total","impuesto","valor_venta"];
 }

@@ -481,7 +481,9 @@ div {
                         <th width="10%">Fecha</th>
                         <th width="10%">Email</th>
                         <th width="10%">Tarjeta</th>
+                        <th width="10%">Yape</th>
                         <th width="10%">Importe</th>
+                        <th width="10%">Estado</th>
                         <th width="10%"class="text-center">Opciones</th>
                     </tr>
                 </thead>

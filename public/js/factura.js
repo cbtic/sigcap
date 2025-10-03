@@ -278,18 +278,80 @@ function guardarFactura(){
 
 		$total_pagar_abono = $("#total_pagar_abono").val();
 
-		if($total_pagar_abono=="0"){
-			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+		//alert($total_pagar_abono);
+
+		//msg+="depurando..<br>";
+
+		if($total_pagar_abono=="0" ){
+			msg+="El total a pagar es 0..<br>";
 		}
 		
 	}
 
+	if(total_<total_fac_){
+		var dif = Number(total_fac_) - Number(total_);
+		
+		Swal.fire({
+		title: 'Mensaje',
+		text: "¿El total de medio de pago es MENOR al total del comprobante por "+ dif.toFixed(2) + " , esta seguro de continuar?",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Continuar!'
+		}).then((result) => {
+
+		if (result.value) {
+			msg+="";
+		} else {
+			msg+="El total de medio de pago es MENOR al total del comprobante..<br>";
+		}
+
+		});
+	}
+
+	if(total_>total_fac_){
+		var dif =  Number(total_)- Number(total_fac_);
+		
+		//msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+
+		Swal.fire({
+		title: 'Mensaje',
+		text: "¿El total de medio de pago es MAYOR al total del comprobante por "+ dif.toFixed(2) + " ,esta seguro de continuar?",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Continuar!'
+		}).then((result) => {
+
+		if (result.value) {
+			msg+="";
+		} else {
+			msg+="El total de medio de pago es MAYOR al total del comprobante..<br>";
+		}
+
+		});
+		
+  	}
+	
 
 	var direccion = $('#direccion').val();
 	var email = $('#email').val();
 	var direccion2 = $('#direccion2').val();
 	var email2 = $('#email2').val();
 	var razon_social2 = $('#razon_social2').val();
+
+	var id_persona = $('#persona').val();
+	var id_persona2 = $('#persona2').val();
+
+	
+	if(id_persona2!=''){
+		id_persona= id_persona2;
+	}
+
+	//alert(id_persona)
+	//exists();
 
 	if(razon_social2!=''){
 		direccion = direccion2;
@@ -318,8 +380,9 @@ function guardarFactura(){
 		
 	}
 
-	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
-		msg+="Se Requiere el Número de RUC o DNI para generar una Boleta!";	
+	//if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
+	if(tipo == "BV" && id_persona=="" ){
+		msg+="Se Requiere el Número  DNI para generar una Boleta!";	
 		
 	}
 
@@ -330,8 +393,8 @@ function guardarFactura(){
 	}
 	
 	//if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
-	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
 
+	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
 
     if(msg!=""){
 		
@@ -449,6 +512,7 @@ function fn_save() {
         }
     });
 }
+
 
 
 
@@ -928,7 +992,7 @@ function obtenerTitular(){
 
 		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="fecha[]" required="" id="fecha'+ind+'" class="form-control form-control-sm datepicker fecha input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
 		
-		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
+		newRow +='<td><button type="button" id="btnElimina'+ind+'" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
 
 		newRow +='</tr>';
 		$('#tblMedioPago tbody').append(newRow);
@@ -1113,10 +1177,11 @@ function obtenerTitular(){
 	function obtenerNC(){
 
 		var tipo_documento = "NC";
+		alert(tipo_documento);
 		var serie = $("#serieNC").val();
 		var numero = $("#numeroNC").val();
 		var hoy = new Date().toISOString().split("T")[0];
-		//alert(tipo_comprobante);
+		
 		
 	
 		$.ajax({
@@ -1129,7 +1194,7 @@ function obtenerTitular(){
 					alert("Nota de credito no encontrado!");
 				}
 				else {
-					$('#id_comprobante_ncdc').val(result.nc.id);
+					$('#id_comprobante_ncnd').val(result.nc.id);
 
 		
 					

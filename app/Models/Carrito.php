@@ -16,7 +16,7 @@ class Carrito extends Model
     function getCarritoDetalle($id_carrito)
     {
 
-        $cad = "select ci.id,ci.nombre,ci.fecha_vencimiento,ci.precio_unitario,ci.cantidad,ci.total,c.total_general
+        $cad = "select ci.id,ci.nombre,ci.fecha_vencimiento,ci.precio_unitario,ci.cantidad,ci.total,c.subtotal,c.impuesto_total,c.total_general,ci.impuesto,ci.valor_venta  
 from carritos c 
 inner join carrito_items ci on c.id=ci.carrito_id 
 where c.id=".$id_carrito;
@@ -86,7 +86,8 @@ where c.id=".$id_carrito;
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 left join carrito_items ci on v.id=ci.valorizacion_id 
-                left join pedido_items pi on v.id=pi.valorizacion_id
+                /*left join pedido_items pi on v.id=pi.valorizacion_id
+                left join pedidos p on pi.pedido_id=p.id AND p.response::json->'dataMap'->>'STATUS' = 'Authorized' */
                 ".$tlb_liquidacion."
                 where v.id_persona = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
@@ -100,7 +101,8 @@ where c.id=".$id_carrito;
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
                 and ci.id is null
-                and pi.id is null
+                /*and pi.id is null*/
+                and (select count(*) from pedidos p inner join pedido_items pi on p.id=pi.pedido_id where p.response::json->'dataMap'->>'STATUS' = 'Authorized' and pi.valorizacion_id=v.id)=0
             order by v.fecha asc
              ".$filas."
 			";

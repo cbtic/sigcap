@@ -250,15 +250,14 @@ const iziConfig = {
 			
         <div class="thead">
 				<div class="row">
-					<div class="col col-num">
-						#
-						
-					</div>
+					<div class="col col-num">#</div>
+                    <div class="col col-documento">Cantidad</div>
 					<div class="col col-tasa">Concepto</div>
                     <div class="col col-entidad">Vencimiento</div>
 					<div class="col col-costo">Precio</div>
-                    <div class="col col-costo">Cantidad</div>
-					<div class="col col-documento">Total</div>
+                    <div class="col col-costo">V.Venta</div>
+                    <div class="col col-costo">IGV</div>
+					<div class="col col-costo">Total</div>
 					<div class="col col-opciones">Eliminar</div>
 				</div>
 			</div>
@@ -283,11 +282,13 @@ const iziConfig = {
 					
 					<div class="row">
 						<div class="col col-num">{{$key+1}}</div>
+                        <div class="col col-documento">{{$row->cantidad}}</div>
 						<div class="col col-tasa">{{$row->nombre}}</div>
                         <div class="col col-entidad"><span class="tag tag-list" style="width:100%" title="" data-toggle="tooltip" data-original-title="RENIEC">{{$row->fecha_vencimiento}}</span></div>
 						<div class="col col-costo">{{$row->precio_unitario}}</div>
-						<div class="col col-documento">{{$row->cantidad}}</div>
-                        <div class="col col-documento">{{$row->total}}</div>
+                        <div class="col col-costo">{{$row->valor_venta}}</div>
+                        <div class="col col-costo">{{$row->impuesto}}</div>
+                        <div class="col col-costo">{{$row->total}}</div>
 						<div class="col col-opciones">
 							<div class="responsive">
 								<button type="button" class="opciones-carrito close">
@@ -306,7 +307,7 @@ const iziConfig = {
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" <?php echo $disabled?> class="btn link link-icon" style="border:0px;background-color:#FFFFFF"><i class="icon fa fa-trash" aria-hidden="true"></i></a></button>
+                                    <button type="submit" <?php echo $disabled?> class="btn link link-icon" style="border:0px;background-color:#FFFFFF;padding:0 0px;min-width:3.5rem"><i class="icon fa fa-trash" aria-hidden="true"></i></a></button>
                                 </form>
                             
 							</div>
@@ -346,6 +347,12 @@ const iziConfig = {
 	</div>
     -->
 	
+    <h6 class="total-carrito">
+		OP.Gravadas: S/ <?php echo $subtotal?>
+	</h6>
+    <h6 class="total-carrito">
+		IGV: S/ <?php echo $impuesto_total?>
+	</h6>
 	<h6 class="total-carrito">
 		Total a pagar: S/ <?php echo $total_general?>
 	</h6>

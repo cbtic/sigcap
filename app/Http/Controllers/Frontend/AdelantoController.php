@@ -85,6 +85,8 @@ class AdelantoController extends Controller
 		if($id>0){
 			$adelanto = Adelanto::find($id);
 			$id_agremiado = $adelanto->id_agremiado;
+			$numero_documento = $adelanto->numero_documento;
+			$fecha_documento = $adelanto->fecha_documento;
 			$agremiado = Agremiado::find($id_agremiado);
 			$id_persona = $agremiado->id_persona;
 			$persona = Persona::find($id_persona);
@@ -92,6 +94,8 @@ class AdelantoController extends Controller
 			$adelanto_fecha = $adelanto_detalle_model->getAdelantoFechaPagoId($id);
 			$fecha_pago=$adelanto_fecha[0]->fecha_pago;
 			$periodo_ = PeriodoComisione::find($adelanto->id_periodo_comision);
+
+			
 			//var_dump($adelanto_fecha[0]->fecha_pago);exit();
 
 			
@@ -101,6 +105,8 @@ class AdelantoController extends Controller
 			$agremiado = new Agremiado;
 			$fecha_pago=null;
 			$periodo_ = NULL;
+			$numero_documento = null;
+			$fecha_documento = null;
 		}
 		//echo($id); 
 		//print_r($persona); exit();
@@ -109,7 +115,7 @@ class AdelantoController extends Controller
 		$tiene_recibo = $tablaMaestra_model->getMaestroByTipo(121);
 		$periodo = $periodoComisione_model->getPeriodoAllByFecha();
 		
-		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo','fecha_pago','periodo_','periodo'));
+		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo','fecha_pago','periodo_','periodo','numero_documento','fecha_documento'));
 	
 	}
 
@@ -182,6 +188,8 @@ class AdelantoController extends Controller
 			$adelanto->id_agremiado = $request->delegado;
 			$adelanto->fecha = Carbon::now()->format('Y-m-d');
 			$adelanto->id_usuario_inserta = $id_user;
+			
+
 		}else{
 			$adelanto = Adelanto::find($request->id);
 			$adelanto->id_agremiado = $request->id_delegado_;
@@ -195,6 +203,8 @@ class AdelantoController extends Controller
         $adelanto->nro_total_cuotas = $request->numero_cuota;
         $adelanto->total_adelanto = $request->monto;
 		$adelanto->id_tiene_recibo = $request->id_tiene_recibo;
+		$adelanto->numero_documento=$request->numero_documento;
+		$adelanto->fecha_documento=$request->fecha_documento;
 		//$profesion->estado = 1;
 		$adelanto->save();
 

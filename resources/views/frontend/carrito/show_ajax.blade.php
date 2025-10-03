@@ -18,7 +18,7 @@
                                     <input type="hidden" name="vestab" value="1">
                                     <input type="hidden" name="totalF" value="<?php //if ($trans == 'FA'){echo $total;}?>">
                                     <input type="hidden" name="ubicacion" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
-                                    <input type="hidden" name="persona" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
+                                    <input type="hidden" name="persona" value="<?php if ($trans == 'FA'){echo $persona;}?>">
                                     <input type="hidden" name="persona2" id="persona2" value="<?php //if ($trans == 'FA'){echo $persona;}?>">
                                     <input type="hidden" name="ubicacion2" id="ubicacion2" value="<?php //if ($trans == 'FA'){echo $ubicacion;}?>">
                                     <input type="hidden" name="id_caja" value="<?php //if ($trans == 'FA'){echo $id_caja;}?>">
@@ -233,9 +233,9 @@
                                                                                     <td class="text-center">{{ $factura_detalle->cantidad }} </td>
                                                                                     <td class="text-left">{{ $factura_detalle->nombre }}</td>
                                                                                     <td class="text-right">{{ number_format($factura_detalle->precio_unitario,2)  }}</td>
-                                                                                    <td class="text-right">{{ number_format($factura_detalle->total,2) }}</td> 
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->valor_venta,2) }}</td> 
                                                                                     <td class="text-left">{{ number_format($pedido->descuento_total,2)  }}</td>
-                                                                                    <td class="text-right">{{ number_format($pedido->impuesto_total,2)  }}</td>
+                                                                                    <td class="text-right">{{ number_format($factura_detalle->impuesto,2)  }}</td>
                                                                                     <td class="text-right" >{{ number_format($factura_detalle->total,2) }}</td>
 
                                                                                     <?php
@@ -307,7 +307,7 @@
                                                                         <th></th>
                                                                         <th class="text-right"><span
                                                                                 id="gravadas"></span> 
-                                                                                {{ number_format($pedido->total_general,2)  }}
+                                                                                {{ number_format($pedido->subtotal,2)  }}
                                                                         </th>
                                                                     </tr>
                                                                     <tr style="display:none">
