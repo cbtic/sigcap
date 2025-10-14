@@ -663,7 +663,15 @@
                                                 </div>
                                                     <!--
                                                     <div id="fsFiltro" class="card-body">
+                                                    
                                                     -->                                        
+                                                <div id="" class="row">
+                                            
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
+                                                        <label class="form-control-sm"></label> 
+                                                    </div>
+                                                </div>  
+                                                
                                                 <div id="" class="row">
                                             
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
@@ -686,44 +694,32 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" name="divNC" id="divNC"  style="<?php if (!$nc) echo 'display:none' ?>">
-                                                        <label class="form-group">Nota Crédito</label>
-                                                        <div class="input-group">
-                                                            <select name="cboNC" id="cboNC" class="form-control form-control-sm" onChange="">
-                                                                <option value="">--Selecionar--</option>
-                                                                <?php
-                                                                foreach ($nc as $row) { ?>
-                                                                    <option value="<?php echo $row->id ?>" > <?php echo $row->descripcion ?></option>
-                                                                <?php
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-primary btn-sm" type="button" id="btnCon" onClick="ValidaNC()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Aplicar </button>
-                                                            </span>                                                        
-                                                        </div>    
-                                                    </div>                                                    
-
-                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"  style="display:none">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Número NC</label>
-                                                            <input type="text" name="numeroNC"  id="numeroNC" value=""                                                            
-                                                            <?php
-                                                            /* if ($trans == 'FA') {
-                                                                                                                                if ($nc) {
-                                                                                                                                //echo $nc->numero;
-                                                                                                                                }
-                                                                                                                            }  
-                                                                                                                                if ($trans == 'FE') {
-                                                                                                                                echo $nc->numero;;
-                                                                                                                            } */?>
-                                                            placeholder="" class="form-control form-control-sm text-center">
+                                                    <div id="" class="row">
+                                                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group">
+                                                                <label class="form-control-sm">Serie NC</label>
+                                                            
                                                                 
-                                                        </div>                                                                                                                    
+                                                                <input type="text" name="serieNC_" id="serieNC_" value="" placeholder="Serie" class="form-control form-control-sm text-center">
+                                                                
+                                                            </div>                                                        
+                                                        </div>
+
+                                                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group">
+                                                                <label class="form-control-sm">Número NC</label>
+                                                                 <input type="text" name="numeroNC_" id="numeroNC_" value="" placeholder="Número" class="form-control form-control-sm text-center">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-sm" type="button" id="btnCon" onClick="ValidaNC()" tabindex="0">
+                                                                    <i class="fas fa-search me-1"></i> Aplicar
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    
                                                     </div>
-
-
-                                            
 
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"> 
                                                         <div class="form-group">
@@ -1656,88 +1652,102 @@
 
 
 		var hoy = new Date().toISOString().split("T")[0];
-        var id_comprobante_ncnd = $('#cboNC').val();
-        $('#id_comprobante_ncnd').val(id_comprobante_ncnd);
+        var serie_ncnd = $('#serieNC_').val();
+        var numero_ncnd = $('#numeroNC_').val();
+        var resultado_consulta ;
+        var id_comprobante_ncnd ;
 
-        if (id_comprobante_ncnd=='') {
+       // $('#id_comprobante_ncnd').val(id_comprobante_ncnd);
+
+        if (serie_ncnd=='' || numero_ncnd=='') {
             alert("Para Aplicar una Nota De Crédito sebe seleccionar..");
             exit();
 
         }
-            
-    
-            //alert($("#cboNC option:selected").text());
-        var texto = $("#cboNC option:selected").text();
-
-        var data = texto.split(" ");
-		var serieNC = data[2];
-        var numeroNC = data[4];
-		var fechaNC= data[6];
-        var totalNC= data[8];
-
-        var total_fac = $("#total_fac_").val();
-
         
-        $('#serieNC').val(serieNC);
-        $('#numeroNC').val(numeroNC);
+        $.ajax({
+			url: '/comprobante/busca_ncnd/' + serie_ncnd + '/' + numero_ncnd,
+			dataType: "json",
+			success: function (result) {
 
-        //ValorUnitario_ = Number(ValorUnitario_ );
+				if (result && result.nc) {
+                     
+                    resultado_consulta=result.nc.descripcion;
+                    id_comprobante_ncnd=result.nc.id;
 
-        if(Number(total_fac) < Number(totalNC)){
+					 var texto = resultado_consulta;
+                     
 
-            //alert("SI");
-            totalNC=Number(total_fac);
+                    var data = texto.split(" ");
+                    alert(data); 
+                    var serieNC = data[1];
+                    
+                    var numeroNC = data[3];
+                    var fechaNC= data[4];
+                    var totalNC= data[7];
 
+                    var total_fac = $("#total_fac_").val();
+
+                    
+                    $('#serieNC').val(serieNC);
+                    $('#numeroNC').val(numeroNC);
+
+                    //ValorUnitario_ = Number(ValorUnitario_ );
+
+                    if(Number(total_fac) < Number(totalNC)){
+
+                        //alert("SI");
+                        totalNC=Number(total_fac);
+
+                    }
+            /*
+                    alert(serie);
+                    alert(numero);
+                    alert(fecha);
+                    alert(total);
+            */
+                   
+                    
+
+                    if (id_comprobante_ncnd>0){
+                        $('#id_comprobante_ncnd').val(id_comprobante_ncnd);
+
+                        $('#afecta_ingreso').val("C");
+                        $("#idMedio0").val("91").trigger("change");
+                        $("#monto0").val(totalNC);
+                        $("#total_pagar").val(totalNC);
+                        $("#nroOperacion0").val(id_comprobante_ncnd);
+                        $("#descripcion0").val( "Ref. Nota Crédito " + serieNC + "-" + numeroNC );
+                        $("#fecha0").val(hoy);
+
+                     
+                        $("#idMedio0").prop('disabled', true);
+                        $("#btnElimina0").hide();
+                    }
+                 
+                }
+
+                else {
+        
+                    
+                        Swal.fire("Numero de documento no fue registrado!");
+                     
+ 
+                }
+                },
+                  
+                error: function (msg, textStatus, errorThrown) {
+
+                    Swal.fire("Numero de documento no fue registrado!");
+
+                }
+			
+            
+		});
+    
+      
         }
-/*
-        alert(serie);
-        alert(numero);
-        alert(fecha);
-        alert(total);
-*/
-           
-
-            if ($('#id_comprobante_ncnd').val()!="0"){
-
-                $('#afecta_ingreso').val("C");
-                $("#idMedio0").val("91").trigger("change");
-                $("#monto0").val(totalNC);
-                $("#total_pagar").val(totalNC);
-                $("#nroOperacion0").val(id_comprobante_ncnd);
-                $("#descripcion0").val( "Ref. Nota Crédito " + serieNC + "-" + numeroNC );
-                $("#fecha0").val(hoy);
-
-                $("#monto0").prop('disabled', true);
-                $("#idMedio0").prop('disabled', true);
-                $("#btnElimina0").hide();
-                
-
-/*
-                if	($('#nc_fecha').val().split(" ")[0]===hoy) {
-							
-							$('#afecta_ingreso').val("C");
-							$("#idMedio0").val($('#nc_id_medio').val()).trigger("change");
-							$("#nroOperacion0").val($('#nc_nro_operacion').val());
-							$("#monto0").val($('#nc_monto').val() );
-                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " - " + numero  );
-							
-						}	
-						else {
-							
-							$('#afecta_ingreso').val("C");
-                            $("#idMedio0").val("91").trigger("change");
-                            $("#monto0").val($('#nc_monto').val() );
-                            $("#total_pagar").val($('#nc_monto').val() );
-                            $("#descripcion0").val( "Ref. Nota Crédito " + serie + " x " + numero );
-                            
-                            
-
-							//$("#idMedio0").val("91").trigger("change");
-						
-						}
-                        */
-        }
-    }
+    
 
         // Ejecutar la función cuando la página esté completamente cargada
         //window.onload = ValidaNC;

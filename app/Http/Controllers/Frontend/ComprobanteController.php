@@ -5282,6 +5282,24 @@ class ComprobanteController extends Controller
 
     }
 
+    public function busca_ncnd($serie,$numero){
+
+        
+        $comprobante_model = new Comprobante;
+
+
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $nc = $comprobante_model->busca_ncnd($serie,$numero);
+        $array["sw"] = $sw;
+        $array["nc"] = $nc;
+        echo json_encode($array);
+        
+
+    }
+
+    
+
 
     public function eliminar_credito_pago($id){
 
