@@ -472,7 +472,7 @@ const iziConfig = {
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
 					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
-					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 4710739.</p>
+					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
 					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
 					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
