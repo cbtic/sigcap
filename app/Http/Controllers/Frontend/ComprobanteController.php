@@ -303,28 +303,22 @@ class ComprobanteController extends Controller
 			
 			//if($ubicacion=="")$ubicacion=3070;
             if ($TipoF == 'BV' || $TipoF == 'TK'){
-
-
                 if($persona==''){
-                    $persona=-1; 
+                    //$persona=-1; 
                    // $empresa=-1;
                    // $ubicacion=-1;
-                }
-
+                   $empresa = $empresa_model->getPersonaId_BV(-1);
+                }else{
                     $empresa = $empresa_model->getPersonaId_BV($persona);
-
-                if($persona=='-1'){
-                    $persona='';
-                }                    
+                }
 
                    //echo $empresa;exit();
 
-                    if(!$empresa){
-                        //echo $ubicacion;exit();
-                        $empresa = $empresa_model->getEmpresaId($ubicacion);
-                    }
-                
-
+                if(!$empresa){
+                    //echo $ubicacion;exit();
+                    $empresa = $empresa_model->getEmpresaId($ubicacion);
+                }
+            
             }
             else{
                 //echo $ubicacion;exit();
@@ -5239,6 +5233,55 @@ class ComprobanteController extends Controller
 
                 if ($flagWs == 2 && $id_factura > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
                     $this->firmar($id_factura);
+                }
+
+
+                /*
+            $id_comprobante_ncnd = $request->id_comprobante_ncnd;
+            $id_comprobante = $request->id_comprobante;
+
+                echo($id_comprobante);
+                echo($id_comprobante_ncnd);
+                exit();
+*/
+                $factura_ = Comprobante::where('id', $id_comprobante_ncnd)->get()[0];
+                //$fac_serie = $factura->serie;
+                //$fac_numero = $factura->numero;
+                $tipoF_ = $factura_->tipo;
+
+              //  echo($tipoF_);
+               // exit();
+
+                if ($tipoF_ == "BV") {
+
+                    $id_persona = $factura_->id_persona;
+
+                    $valorizaciones_model = new Valorizacione;
+                    $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+
+                    if($totalDeuda != null){
+
+                        $total_ = $totalDeuda->total;
+
+                        //echo($total_);
+                        //exit();
+
+                        if ($total_ <= 2) {
+                            $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                            
+                            if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                                $agremiado->id_situacion = "73"; //habilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }
+                        } 
+                        if ($total_ > 2) {
+                            $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];                        
+                            $agremiado->id_situacion = "74"; //inhabilitado
+                            $agremiado->id_usuario_actualiza = $id_user;
+                            $agremiado->save();
+                        }
+                    }
                 }
 
                 //echo $id_factura;
