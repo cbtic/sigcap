@@ -24,6 +24,22 @@ use Carbon\Carbon;
 use Auth;
 class CertificadoController extends Controller
 {
+	public function __construct(){
+        /*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+        */
+
+        $this->middleware('auth');
+		$this->middleware('can:Certificado Tipo 4')->only(['consultar_certificado']);
+		$this->middleware('can:Certificado Tipo 3')->only(['consultar_certificado_tipo3']);
+		
+	}
+
     function consultar_certificado(){
 
 		$tablaMaestra_model = new TablaMaestra;

@@ -10,6 +10,22 @@ use Auth;
 
 class PlanContableController extends Controller
 {
+
+	public function __construct(){
+		/*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Plan contable')->only(['consulta_plan_contable']);
+	}
+
+
     public function importar_plan_contable(){ 
 	
 		$ch = curl_init('http://webservice.limacap.org:8080/webservices.php?op=plancontable');		
@@ -46,16 +62,6 @@ class PlanContableController extends Controller
 			
 		}
 	
-	}
-
-	public function __construct(){
-
-		$this->middleware(function ($request, $next) {
-			if(!Auth::check()) {
-                return redirect('login');
-            }
-			return $next($request);
-    	});
 	}
 
 	function consulta_plan_contable(){

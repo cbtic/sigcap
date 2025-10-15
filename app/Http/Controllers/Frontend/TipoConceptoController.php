@@ -10,21 +10,26 @@ use Auth;
 
 class TipoConceptoController extends Controller
 {
-    function consulta_tipoConcepto(){
-        
-        return view('frontend.tipoConcepto.all');
-
-    }
-
 	public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Tipo de Conceptos')->only(['consulta_tipoConcepto']);
+
 	}
+
+    function consulta_tipoConcepto(){
+        
+        return view('frontend.tipoConcepto.all');
+
+    }
 
     public function listar_tipoConcepto_ajax(Request $request){
 	

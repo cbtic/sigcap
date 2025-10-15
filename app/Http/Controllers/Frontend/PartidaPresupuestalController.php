@@ -9,6 +9,22 @@ use Auth;
 
 class PartidaPresupuestalController extends Controller
 {
+
+	public function __construct(){
+		/*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Partida Presupuestal')->only(['consulta_partida_presupuestal']);
+	}
+
+
     public function importar_partida_presupuestal(){ 
 		
 		$ch = curl_init('http://webservice.limacap.org:8080/webservices.php?op=presupuestos');		
@@ -89,16 +105,6 @@ class PartidaPresupuestalController extends Controller
 			
 		}
 		
-	}
-
-	public function __construct(){
-
-		$this->middleware(function ($request, $next) {
-			if(!Auth::check()) {
-                return redirect('login');
-            }
-			return $next($request);
-    	});
 	}
 
 	function consulta_partida_presupuestal(){

@@ -12,13 +12,17 @@ use Auth;
 class AgremiadoRolesController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Agremiado Rol')->only(['consulta_agremiado_rol']);
 	}
 
     function consulta_agremiado_rol(){

@@ -18,13 +18,17 @@ use Auth;
 class AdelantoController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+		$this->middleware('auth');
+		$this->middleware('can:Adelantos y Descuentos Delegados')->only(['consulta_adelanto']);
+
 	}
 
     function consulta_adelanto(){

@@ -28,13 +28,19 @@ use DateTime;
 class ReporteController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Reporte Ventas')->only(['index']);
+		$this->middleware('can:Reporte Cajas')->only(['index']);
+		$this->middleware('can:Reporte Deudas Gestion')->only(['index']);
 	}
 
     public function index($tipo_reporte){

@@ -11,6 +11,21 @@ use Auth;
 
 class ProntoPagoController extends Controller
 {
+
+	public function __construct(){
+		/*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Pronto Pago')->only(['consulta_prontoPago']);
+	}
+
     public function consulta_prontoPago(){
         
 		$concepto_model = new Concepto;
@@ -19,16 +34,6 @@ class ProntoPagoController extends Controller
         return view('frontend.prontoPago.all',compact('concepto','prontoPago'));
 
     }
-	
-	public function __construct(){
-
-		$this->middleware(function ($request, $next) {
-			if(!Auth::check()) {
-                return redirect('login');
-            }
-			return $next($request);
-    	});
-	}
 
     public function listar_prontoPago_ajax(Request $request){
 	

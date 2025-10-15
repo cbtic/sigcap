@@ -17,12 +17,17 @@ class FondoComunController extends Controller
 {
     public function __construct(){
 
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Fondo Comun Planilla')->only(['consulta_fondo_comun']);
 	}
 
     function consulta_fondo_comun(){

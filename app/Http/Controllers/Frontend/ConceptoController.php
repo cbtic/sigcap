@@ -15,6 +15,21 @@ use Auth;
 
 class ConceptoController extends Controller
 {
+
+	public function __construct(){
+		/*	
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Conceptos')->only(['consulta_concepto']);
+	}
+
     function consulta_concepto(){
 
 		$tablaMaestra_model = new TablaMaestra;
@@ -23,16 +38,6 @@ class ConceptoController extends Controller
         return view('frontend.concepto.all',compact('id_tipo_afectacion','concepto'));
 
     }
-	
-	public function __construct(){
-
-		$this->middleware(function ($request, $next) {
-			if(!Auth::check()) {
-                return redirect('login');
-            }
-			return $next($request);
-    	});
-	}
 
     public function listar_concepto_ajax(Request $request){
 	
