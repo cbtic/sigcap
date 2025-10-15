@@ -102,7 +102,7 @@
 
 @extends('frontend.layouts.app_carrito')
 
-@section('title', ' | ' . __('labels.frontend.contact.box_title'))
+@section('title', 'Carrito')
 
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">

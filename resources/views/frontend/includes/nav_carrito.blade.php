@@ -10787,7 +10787,8 @@ textarea.form-control-sm:not([rows="1"]) {
     /* display:-webkit-inline-box; */
     display: -ms-inline-flexbox;
     display: inline-flex;
-    height: 2.25rem;
+    /*height: 2.25rem;*/
+
     /* position:relative; */
     /* white-space:nowrap; */
 }
@@ -24580,15 +24581,22 @@ a {
 
 	
 	<nav class="navbar navbar-expand-lg user" id="navbar-bn">
+
+        <a href="{{ route('frontend.index') }}" class="navbar-brand">
+            <img src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" alt="" width="180" height="70" style="padding:0px;margin:0px">
+        </a>
+
 		<div class="container">
 
-			
+			<!--
 			<div class="navbar-brand">
 				<a class="link" href="/home" title="Págalo.pe">
-					<!--<img class="logo" src="https://pagalo.pe/imagenes/new/logo-pagalo.svg" width="500" height="100" alt="Págalo.pe - Banco de la Nación">-->
 					<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" width="500" height="100" alt="Págalo.pe - Banco de la Nación">
 				</a>
 			</div>
+            -->
+            
+            
 
 			
 			
