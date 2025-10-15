@@ -12,15 +12,49 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Molestie ac feugiat sed lectus. Egestas diam in arcu cursus. Vitae nunc sed velit dignissim sodales ut eu sem. Nibh praesent tristique magna sit amet purus gravida quis. Tincidunt lobortis feugiat vivamus at augue. Mi quis hendrerit dolor magna eget est lorem. Dapibus ultrices in iaculis nunc sed augue lacus viverra vitae. Ullamcorper malesuada proin libero nunc consequat interdum varius. Tellus elementum sagittis vitae et leo duis ut diam quam. Nisl pretium fusce id velit. Sed enim ut sem viverra aliquet.</p>
-
-                        <p>Laoreet suspendisse interdum consectetur libero id. Duis ut diam quam nulla porttitor massa id neque. Nullam eget felis eget nunc lobortis mattis aliquam faucibus. Tristique sollicitudin nibh sit amet commodo. A erat nam at lectus urna duis convallis convallis. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Bibendum ut tristique et egestas. Risus sed vulputate odio ut enim blandit volutpat maecenas. Lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Tristique sollicitudin nibh sit amet commodo. Ac felis donec et odio pellentesque diam volutpat commodo sed. Quam quisque id diam vel. Massa tempor nec feugiat nisl pretium fusce id. Consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat.</p>
-
-                        <p>Gravida rutrum quisque non tellus orci. Eget mauris pharetra et ultrices neque. Habitasse platea dictumst quisque sagittis purus sit amet volutpat. Nunc consequat interdum varius sit amet mattis vulputate enim. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique senectus. Tempor nec feugiat nisl pretium. Fames ac turpis egestas integer eget aliquet nibh. Mus mauris vitae ultricies leo integer. Vitae proin sagittis nisl rhoncus mattis rhoncus. Commodo odio aenean sed adipiscing diam donec. Purus semper eget duis at tellus at urna condimentum mattis.</p>
-
-                        <p>Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Massa massa ultricies mi quis hendrerit. Nunc id cursus metus aliquam eleifend mi in nulla posuere. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Accumsan tortor posuere ac ut consequat semper viverra nam. Massa tincidunt dui ut ornare. Elit sed vulputate mi sit amet mauris commodo. Faucibus nisl tincidunt eget nullam non nisi. Tortor condimentum lacinia quis vel eros donec ac odio. Posuere ac ut consequat semper. Vestibulum mattis ullamcorper velit sed ullamcorper. Blandit libero volutpat sed cras. Ultricies integer quis auctor elit sed vulputate mi. In hendrerit gravida rutrum quisque non tellus orci ac. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Etiam non quam lacus suspendisse faucibus interdum. Ornare lectus sit amet est. Bibendum est ultricies integer quis auctor elit sed vulputate. Eget duis at tellus at urna.</p>
-
-                        <p>Sit amet massa vitae tortor condimentum lacinia quis. Id venenatis a condimentum vitae sapien pellentesque habitant. Ac tortor dignissim convallis aenean. Consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat. Consectetur adipiscing elit ut aliquam purus sit amet luctus venenatis. Id porta nibh venenatis cras sed felis. Fermentum odio eu feugiat pretium. Id velit ut tortor pretium viverra. Quis auctor elit sed vulputate mi sit amet mauris. Vel elit scelerisque mauris pellentesque pulvinar pellentesque. Facilisis volutpat est velit egestas dui id ornare. Pretium viverra suspendisse potenti nullam ac. Nulla malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Amet purus gravida quis blandit turpis.</p>
+                        <article class="contenido">
+                    <h6 class="subtitulo">1. Aceptación de los Términos</h6>
+                    <p>El uso del carrito de compras en línea del Colegio Profesional COLEGIO DE ARQUITECTOS DEL PERU REGIONAL LIMA implica la aceptación plena y sin reservas de los presentes Términos y Condiciones. El usuario reconoce haber leído, comprendido y aceptado la presente política antes de realizar cualquier pago.</p>
+                    <h6 class="subtitulo">2. Definiciones</h6>
+                    <p>Usuario: Profesional colegiado o tercero autorizado que utiliza la plataforma.</p>
+                    <p>Plataforma: Sitio web y sistema de carrito de compras en línea del Colegio Profesional.</p>
+                    <p>Servicios: Pago de cuotas ordinarias, extraordinarias, derechos de trámites, certificaciones y demás servicios que el Colegio Profesional disponga.</p>
+                    <h6 class="subtitulo">3. Registro y Autenticación</h6>
+                    <p>El acceso al carrito de compras requiere autenticación mediante credenciales únicas e intransferibles del usuario.</p>
+                    <p>El usuario es responsable de la confidencialidad de sus credenciales y del uso indebido que terceros pudieran hacer de ellas.</p>
+                    <h6 class="subtitulo">4. Métodos de Pago</h6>
+                    <p>Se aceptan únicamente los medios de pago habilitados en la plataforma (tarjetas de crédito/débito, transferencias en línea, billeteras digitales u otros autorizados).</p>
+                    <p>Las transacciones son procesadas a través de pasarelas de pago certificadas con estándares de seguridad (PCI DSS, TLS/SSL).</p>
+                    <p>El Colegio Profesional no almacena ni gestiona datos sensibles de las tarjetas de crédito/débito.</p>
+                    <h6 class="subtitulo">5. Seguridad de la Información</h6>
+                    <p>La plataforma utiliza cifrado SSL/TLS para proteger la confidencialidad de las comunicaciones.</p>
+                    <p>Los datos personales y financieros son tratados conforme a la Ley N.° 29733 de Protección de Datos Personales.</p>
+                    <p>Se realizan auditorías periódicas de seguridad para mitigar riesgos de fraude, robo de identidad o accesos no autorizados.</p>
+                    <h6 class="subtitulo">6. Responsabilidad del Usuario</h6>
+                    <p>El usuario se compromete a:</p>
+                    <ul>
+                        <li>Utilizar la plataforma únicamente para fines lícitos y autorizados.</li>
+                        <li>No realizar fraudes, intentos de acceso indebido ni actividades que comprometan la seguridad del sistema.</li>
+                        <li>Verificar la exactitud de la información ingresada antes de efectuar un pago.</li>
+                </ul>
+                    <h6 class="subtitulo">7. Confirmación de Pagos y Comprobantes</h6>
+                    <p>Una vez confirmado el pago, el usuario recibirá un comprobante electrónico (boleta o factura, según corresponda) en el correo electrónico registrado.</p>
+                    <p>El Colegio Profesional no se responsabiliza por errores en los datos ingresados por el usuario que afecten la emisión de comprobantes.</p>
+                    <h6 class="subtitulo">8. Política de Reembolsos</h6>
+                    <p>Los pagos efectuados no son reembolsables, salvo error imputable al Colegio Profesional o cobro indebido.</p>
+                    <p>Todo reclamo deberá presentarse por escrito a través de los canales oficiales en un plazo máximo de 7 días hábiles después de la operación.</p>
+                    <h6 class="subtitulo">9. Protección de Datos Personales</h6>
+                    <p>Los datos recopilados serán utilizados exclusivamente para la gestión administrativa, financiera y colegiada.</p>
+                    <p>El usuario puede ejercer sus derechos de acceso, rectificación, cancelación y oposición (ARCO) mediante solicitud escrita dirigida al Colegio Profesional.</p>
+                    <h6 class="subtitulo">10. Limitación de Responsabilidad</h6>
+                    <p>El Colegio Profesional no será responsable por fallas técnicas, interrupciones del servicio o problemas ajenos a su control (fallas de Internet, pasarelas de pago externas, etc.).</p>
+                    <p>El Colegio Profesional tampoco garantiza la disponibilidad continua del sistema, aunque hará sus mejores esfuerzos por mantenerlo activo y seguro.</p>
+                    <h6 class="subtitulo">11. Modificaciones de los Términos</h6>
+                    <p>El Colegio Profesional podrá modificar los presentes Términos y Condiciones en cualquier momento, comunicando los cambios a través de la plataforma. El uso continuado del servicio implica la aceptación de las modificaciones.</p>
+                    <h6 class="subtitulo">12. Jurisdicción y Ley Aplicable</h6>
+                    <p>Los presentes Términos y Condiciones se rigen por las leyes de la República del Perú. Cualquier controversia será resuelta en los tribunales competentes del distrito judicial de Lima Cercado.</p>
+                    <h6 class="subtitulo" style="text-align:right">Colegio de Arquitectos del Perú - Regional Lima</h6>
+                </article>
                     </x-slot>
                 </x-frontend.card>
             </div><!--col-md-10-->

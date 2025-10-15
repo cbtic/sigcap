@@ -130,7 +130,7 @@ class RegisterController
      */
     protected function create(array $data)
     {
-		$persona = Persona::where("id_tipo_documento",$data["id_tipo_documento"])->where("numero_documento",$data["numero_documento"])->first();
+		$persona = Persona::where("id_tipo_documento",$data["id_tipo_documento"])->where("numero_documento",$data["numero_documento"])->where("estado",1)->first();
 		//print_r($persona);
 		
 		if(isset($persona->id)){

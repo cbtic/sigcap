@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Sistema Colegio de Arquitectos del Perú'),
+    'name' => env('APP_NAME', 'Laravel Boilerplate'),
 
     /*
     |--------------------------------------------------------------------------

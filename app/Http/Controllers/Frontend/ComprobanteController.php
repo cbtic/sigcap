@@ -5232,6 +5232,33 @@ class ComprobanteController extends Controller
                     $this->firmar($id_factura);
                 }
 
+
+                if ($tipo_documento_b == "85") {
+
+                    //$id_persona = $request->persona;
+                    $valorizaciones_model = new Valorizacione;
+                    $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                    $total_ = $totalDeuda->total;
+
+                    //echo($total_);
+                    //exit();
+
+                    if ($total_ <= 2) {
+                        $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+
+                        if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                            $agremiado->id_situacion = "73"; //habilitado
+                            $agremiado->id_usuario_actualiza = $id_user;
+                            $agremiado->save();
+                        }
+                    } else {
+                        $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                        $agremiado->id_situacion = "74"; //inhabilitado
+                        $agremiado->id_usuario_actualiza = $id_user;
+                        $agremiado->save();
+                    }
+                }
+
                 //echo $id_factura;
 
 
@@ -5275,6 +5302,24 @@ class ComprobanteController extends Controller
         
 
     }
+
+    public function busca_ncnd($serie,$numero){
+
+        
+        $comprobante_model = new Comprobante;
+
+
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $nc = $comprobante_model->busca_ncnd($serie,$numero);
+        $array["sw"] = $sw;
+        $array["nc"] = $nc;
+        echo json_encode($array);
+        
+
+    }
+
+    
 
 
     public function eliminar_credito_pago($id){

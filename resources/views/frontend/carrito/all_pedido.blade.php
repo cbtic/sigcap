@@ -371,9 +371,6 @@ div {
 					
 
 
-
-
-
 <div id="confirmarEliminar">
 	<div class="alert alert-success mb-3" style="display: none;">El ticket se eliminó correctamente.</div>
 </div>
@@ -479,10 +476,13 @@ div {
                     <tr style="font-size:13px">
                         <th width="10%">Nro Pedido</th>
                         <th width="10%">Fecha</th>
-                        <th width="10%">Email</th>
+                        
                         <th width="10%">Tarjeta</th>
+                        <th width="10%">Yape</th>
                         <th width="10%">Importe</th>
+                        <th width="10%">Estado</th>
                         <th width="10%"class="text-center">Opciones</th>
+                        
                     </tr>
                 </thead>
                 <tbody>

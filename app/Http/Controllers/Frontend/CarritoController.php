@@ -48,7 +48,7 @@ class CarritoController extends Controller
 		$tipo_couta = "";
 		$concepto = "";
 		$filas = "";
-		$Exonerado = "";
+		$Exonerado = "0";
 		$numero_documento_b = "";
 
 		$carrito_model = new Carrito;
@@ -229,7 +229,8 @@ class CarritoController extends Controller
 		//$numero_documento_b = "";
 
 		$SelFracciona = $request->SelFracciona;
-        $Exonerado = $request->Exonerado;
+        //$Exonerado = $request->Exonerado;
+		$Exonerado = "0";
 		$actividad = $request->actividad;
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
@@ -950,7 +951,7 @@ class CarritoController extends Controller
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', '1200');
 		
-		$comprobante = Comprobante::find(481031);
+		$comprobante = Comprobante::find($id);
 		$facd_serie = $comprobante->serie;
         $facd_numero = $comprobante->numero;
         $facd_tipo = $comprobante->tipo;
@@ -977,6 +978,7 @@ class CarritoController extends Controller
 	public function send_comprobante(Request $request)
 	{
 
+		$msg="";
 		$caja_ingreso_model = new CajaIngreso;
 		$pedido = Pedido::find($request->id_pedido); 
 		$data = json_decode($pedido->response);
@@ -1164,7 +1166,13 @@ class CarritoController extends Controller
 			$p[]=$tipoF;
 			$p[]=$transactionId;
 			$prontopago = $carrito_model->genera_prontopago($p);
-			$id_factura = $prontopago[0]->id_comprobante;
+			//print_r($prontopago);
+			if(isset($prontopago[0]->id_comprobante) && $prontopago[0]->id_comprobante>0){
+				$id_factura = $prontopago[0]->id_comprobante;
+			}else{
+				$id_factura = NULL;
+				$msg=$prontopago[0]->msg;
+			}
 
 		}else{
 
@@ -1258,6 +1266,7 @@ class CarritoController extends Controller
 
 		return response()->json([
             'sw' => true,
+			'msg' => $msg,
             'id_factura' => $id_factura,
         ]);
 

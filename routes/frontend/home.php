@@ -310,6 +310,7 @@ Route::post('comprobante/send_nd', [ComprobanteController::class, 'send_nd'])->n
 //Route::get('comprobante/nc_edit/{id}/{id_caja}', [ComprobanteController::class, 'nc_edit'])->name('comprobante.nc_edit');
 Route::post('comprobante/nc_edita', [ComprobanteController::class, 'nc_edita'])->name('comprobante.nc_edita');
 Route::post('comprobante/nd_edita', [ComprobanteController::class, 'nd_edita'])->name('comprobante.nd_edita');
+Route::get('comprobante/busca_ncnd/{serie}/{numero}', [ComprobanteController::class, 'busca_ncnd'])->name('comprobante.busca_ncnd');
 
 Route::get('comprobante/firmar/{id}', [ComprobanteController::class, 'firmar'])->name('comprobante.firmar');
 Route::get('comprobante/firmar_nc/{id}', [ComprobanteController::class, 'firmar_nc'])->name('comprobante.firmar_nc');

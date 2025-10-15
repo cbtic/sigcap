@@ -178,7 +178,9 @@ a {
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent" >
-            <ul class="navbar-nav col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            
+			<ul class="navbar-nav col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
                 @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
                     <li class="nav-item dropdown">
                         <x-utils.link
@@ -193,6 +195,7 @@ a {
                     </li>
                 @endif
 
+				
                 @guest
                     <li class="nav-item">
                         <x-utils.link
@@ -225,6 +228,8 @@ a {
                     @endif
                 @else
 					
+					@if ($logged_in_user->isVerified())
+
 					@if(Gate::check('Nuevo Agremiado') || Gate::check('Consulta de Agremiado') || Gate::check('Multas') || Gate::check('Afiliciacion a Seguro') || Gate::check('Reporte Deudas'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
@@ -495,6 +500,7 @@ a {
 					</li>
 					@endif
 					
+					@endif
 					
                     <li class="nav-item dropdown">
                         <x-utils.link
@@ -549,7 +555,13 @@ a {
                 @endguest
             </ul>
 
+			
+			
+			@guest
 
+			@else
+
+			@if ($logged_in_user->isVerified())
 			<ul class="nav menu-ope">
                 <li class="nav-item">
                     <a class="link" href="/carrito">
@@ -566,8 +578,9 @@ a {
 					</a>
 				</li>
 			</ul>
+			@endif
 
-
+			@endguest
 
         </div><!--navbar-collapse-->
     </div><!--container-->

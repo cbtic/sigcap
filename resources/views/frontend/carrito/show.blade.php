@@ -261,7 +261,8 @@
                                     <?php
                             }
                             } else {
-                                $c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
+                                if(isset($data->data->TRANSACTION_DATE)){
+                                    $c = preg_split('//', $data->data->TRANSACTION_DATE, -1, PREG_SPLIT_NO_EMPTY);
                                 ?>
 
                                     <div class="alert alert-success" role="alert">
@@ -287,6 +288,14 @@
                                 </div>
 
                             <?php
+
+                                }else{
+                                    ?>
+                                        <div class="alert alert-success" role="alert">
+                                            Error con la tarjeta
+                                        </div>
+                                    <?php
+                                }
                                 }
                             ?>
 
@@ -976,10 +985,12 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/agremiado/lista.js') }}"></script>
+<!--<script src="{{ asset('js/agremiado/lista.js') }}"></script>-->
 
 <script>
 
+// truco: versión dinámica para obligar a recargar siempre
+   console.log("Versión {{ time() }}");
 //cargarComprobante();
 
 function verRepresentante(){
@@ -1093,12 +1104,12 @@ function guardarFactura(){
         return false;
     }
     else{
-        fn_save();
+        fn_save_nuevo();
 	}
 
 }
 
-function fn_save() {
+function fn_save_nuevo() {
     var msgLoader = "Procesando, espere un momento por favor";
     var heightBrowser = $(window).width()/2;
     
@@ -1109,17 +1120,22 @@ function fn_save() {
     $('.loader').show();
     $('#guardar').hide();
     
-    $.ajax({
-        url: "/carrito/send_comprobante",
+    $.ajax({ 
+        url: "/carrito/send_comprobante", 
         type: "POST",
         data: $("#frmFacturacion").serialize(),
         dataType: 'json',
         success: function (result) {           
             if(result.sw) {
-                $('#numerof').val(result.id_factura);
-                $('#divNumeroF').show();
-                enviar_comprobante(result.id_factura);
-                location.href = "/carrito/ver_comprobante/"+result.id_factura;
+                if(result.msg==""){ 
+                    $('#numerof').val(result.id_factura);
+                    $('#divNumeroF').show(); 
+                    enviar_comprobante(result.id_factura);
+                    location.href = "/carrito/ver_comprobante/"+result.id_factura;
+                }else{
+                    bootbox.alert(result.msg);
+                }
+                
             } else {
                 alert(result.msg);
                 $('#guardar').show();

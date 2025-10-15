@@ -397,7 +397,7 @@ const iziConfig = {
                 <br><br>
                 <?php if($total_general>0){?>
                 <input type="checkbox" name="ckbTerms" id="ckbTerms" onclick="visaNetEc3()"> 
-                <label for="ckbTerms">Acepto los <a href="#" target="_blank">Términos y condiciones</a></label>
+                <label for="ckbTerms">Acepto los <a href="#" data-toggle="modal" data-target="#modalTerminos">Términos y condiciones</a></label>
 
                 <!--<form id="frmVisaNet" action="http://localhost/PagoWebPhp/finalizar.php?amount=<?php //echo $total_general;?>&purchaseNumber=<?php //echo $purchaseNumber?>">-->
                 <form id="frmVisaNet" action="{{ url('carrito/finalizar') }}" method="POST">    
@@ -808,78 +808,55 @@ const iziConfig = {
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="opcion-cerrar close" data-dismiss="modal" aria-label="Cerrar" title="" data-toggle="tooltip" data-original-title="Cerrar">
-					<i class="icon icon-pagalo-close" aria-hidden="true"></i>
+					<i class="fas fa-times" aria-hidden="true"></i>
 					</button><button class="sr-only">Cerrar</button>
 				
-				<h3 class="titulo">Términos y Condiciones</h3>
+				<h4 class="titulo">Términos y Condiciones de Uso del Carrito de Compras en Línea<br>COLEGIO DE ARQUITECTOS DEL PERU REGIONAL LIMA</h4>
 			</div>
 			<div class="modal-body">
-				
-
-<article class="contenido">
-    <p>El acceso y uso de este sitio web del Banco de la Nación se rige por los Términos y Condiciones descritos en este documento, así como por la legislación peruana vigente que aplique; para tal efecto en adelante al ciudadano que hace uso de este site se le denominará "usuario".</p>
-    <p>Usted declara conocer que la aceptación de estos términos y condiciones es de carácter libre y voluntaria.</p>
-    <p>Es requisito indispensable para comprar en esta Ventanilla Virtual del Banco de la Nación la aceptación de los Términos y Condiciones que se describen a continuación. Todo usuario que realice una compra en este sitio web, declara y reconoce, por el solo hecho de haber efectuado la compra, que conoce y acepta todos y cada uno de estos Términos y Condiciones.</p>
-    <p>El Banco de la Nación se reserva el derecho de actualizar y/o modificar los Términos y Condiciones que detallamos a continuación en cualquier momento, sin previo aviso. Por esta razón recomendamos revisar los Términos y Condiciones cada vez que utilice este sitio web.</p>
-    <p>A continuación se exponen dichas condiciones:</p>
-    <h6 class="subtitulo">1. OBJETO</h6>
-    <p>El Banco de la Nación pone a disposición de la ciudadanía este sitio web (ventanilla virtual) que permite efectuar el pago online de tasas/servicios de entidades públicas con tarjetas de crédito o débito de cualquier entidad financiera.</p>
-    <h6 class="subtitulo">2. DERECHOS DEL USUARIO DE ESTE SITIO</h6>
-    <p>La sola visita a este sitio web no impone al usuario obligación alguna, a menos que haya aceptado de manera expresa las condiciones ofrecidas por el Banco de la Nación, en la forma indicada en estos términos y condiciones.</p>
-    <p>El usuario goza de todos los derechos establecidos según la legislación vigente en el Perú sobre protección al consumidor.</p>
-    <p>El Banco de la Nación efectuará permanentemente todos los esfuerzos por asegurar la disponibilidad de este sitio web las 24 horas, los siete días de la semana, sin interrupciones. Sin embargo, y debido a la naturaleza misma del internet (a través del cual opera este servicio) no es posible garantizar al 100% tales extremos.</p>
-    <p>El Banco de la Nación efectuará permanentemente todos los esfuerzos por asegurar la disponibilidad de este sitio web las 24 horas, los siete días de la semana, sin interrupciones. Sin embargo, y debido a la naturaleza misma del internet (a través del cual opera este servicio) no es posible garantizar al 100% tales extremos.</p>
-    <p>Por otro lado, el acceso por parte del usuario a esta ventanilla virtual podría ocasionalmente verse suspendido debido a la realización de trabajos mantenimiento o actualización del sitio web con nuevas funcionalidades que tengan por objetivo brindarle un mejor servicio. Al respecto, procuraremos reducir en lo posible la frecuencia y duración de tales suspensiones.</p>
-    <h6 class="subtitulo">3. REGISTRO DEL USUARIO (AFILIACION AL SERVICIO)</h6>
-    <p>Requisito indispensable para acceder y posteriormente efectivizar compras en este sitio web es que estés previamente registrado como usuario del servicio.</p>
-    <p>Los datos necesarios para este registro son: tu nombre completo, tipo y número de documento de identidad, una dirección de correo electrónico (que el Banco empleará en adelante para enviar comunicaciones al usuario relacionadas al proceso de afiliación, así como a las compras que efectúe en este site) y una clave de acceso a este sitio web que deberás definir y luego confirmar.</p>
-    <p>Para que el registro como usuario de esta plataforma de pagos online se efectivice debes finalmente aceptar los términos y condiciones descritos en este documento.</p>
-    <h6 class="subtitulo">4. CONDICIONES DE COMPRA</h6>
-    <ol>
-        <li>Este sitio web es de uso exclusivo para el pago de tasas y servicios de entidades del estado.</li>
-        <li>Solo podrá efectuar compras en esta ventanilla virtual el ciudadano previamente registrado como usuario del servicio.</li>
-        <li>El usuario podrá agregar al carrito de compras tasas/servicios de diferentes entidades como parte de un mismo ticket de compra.</li>
-        <li>Cada ticket de compra puede contener como máximo 9 ítems (tasas o servicios de entidades del estado).</li>
-        <li>Por su seguridad el Banco de la Nación podría limitar el número máximo de compras que el usuario puede efectuar en el día.</li>
-        <li>El pago con tarjeta de crédito/débito está sujeto a la aprobación del emisor de la tarjeta.</li>
-        <li>Las constancias de pago correspondientes a cada tasa o servicio objeto de la compra serán enviados en formato PDF al Email del usuario (el que registró durante su afiliación al servicio).</li>
-        <li>Todo pago realizado después de las 9:00 p. m. o en días feriados se hará efectivo al día siguiente. </li>
-    </ol>
-    <h6 class="subtitulo">5. MEDIOS DE PAGO QUE SE PODRÁ UTILIZAR</h6>
-    <p>Las compras realizadas en esta ventanilla virtual (págalo.pe) podrán efectivizarse empleando los siguientes medios de pago:</p>
-    <ol style="list-style: lower-latin;">
-        <li><strong>Tarjetas de crédito y débito Visa.</strong></li>
-        <p>Dependiendo del nivel de riesgo, producto de la calificación dada a la operación por parte del procesador de pago, se solicitará al titular de la tarjeta de crédito/débito confirmar la operación autenticándose en Verified by Visa, por lo que previamente deberá estar afiliado a este sistema de autentificación en línea.</p>
-        <p>De no encontrarse afiliado, deberá consultar con su Banco sobre el procedimiento de afiliación a Verified by Visa.</p>
-        <li><strong>Tarjetas de crédito y débito Mastercard</strong></li>
-        <p>Dependiendo del nivel de riesgo, producto de la calificación dada a la operación por parte del procesador de pago, se solicitará al titular de la tarjeta de crédito/débito confirmar la operación autenticándose en Mastercard SecureCode, por lo que previamente deberá estar afiliado a este sistema de autentificación en línea. De no encontrarse afiliado, deberá consultar con su Banco sobre el procedimiento de afiliación a Mastercard SecureCode.</p>
-        <li><strong>Tarjetas de crédito y débito American Express</strong></li>
-        <p>Dependiendo del nivel de riesgo, producto de la calificación dada a la operación por parte del procesador de pago, se solicitará al titular de la tarjeta de crédito/débito confirmar la operación autenticándose en American Express Safekey, por lo que previamente deberá estar afiliado a este sistema de autentificación en línea. De no encontrarse afiliado, deberá consultar con su Banco sobre el procedimiento de afiliación a American Express Safekey.</p>
-        <p>Para los pagos con tarjeta de crédito/débito:</p>
-        <ul style="list-style: disc;">
-            <li>El uso, condiciones de pago y otras condiciones aplicables a las tarjetas de crédito, son de exclusiva responsabilidad del emisor de su tarjeta.</li>
-            <li>De no realizarse la transacción de manera correcta y ser interrumpida esta antes de que el usuario pueda recibir el voucher electrónico de compra  (por time out), o exceder el tiempo establecido, la retención se libera y la compra queda anulada automáticamente y sin cargo alguno.</li>
-            <li>El Banco de la Nación procesa los pagos vía procesadores de pago locales, aplicando el cobro a su tarjeta de débito/crédito en moneda local. Sin embargo, si usted utiliza una tarjeta de crédito/débito emitida en el extranjero, el emisor de esta podría cargar el importe del pago en dólares norteamericanos, utilizando una tasa de cambio que fije el banco internacional de forma unilateral y en correspondencia a las condiciones de uso que tenga acordada para su tarjeta con dicha entidad.</li>
-        </ul>
-        <li><strong>En Efectivo</strong></li>
-        <p>El usuario podrá efectuar el pago en efectivo en cualquier Agente Multired del Banco de la Nación, para cuyo efecto deberá proporcionar el número de ticket de compra generado en Págalo.pe.</p>
-        <p>El límite máximo para pagos en efectivo por ticket es S/1,000.00.</p>
-    </ol>
-    <h6 class="subtitulo">6. ANULACIONES Y CORRECCIONES</h6>
-    <p>Procesado el pago (con tarjeta de crédito/débito) este es notificado en línea a la entidad proveedora de la tasa/servicio; por lo que a partir de ese momento este no puede ser anulado, ni sus datos actualizados. Toda gestión posterior debe ser efectuada ante la entidad beneficiaria del pago.</p>
-    <h6 class="subtitulo">7. DELIMITACIÓN DE RESPONSABILIDADES DEL BANCO</h6>
-    <p>El Banco de la Nación, no se responsabiliza por los errores del usuario en el registro de los datos requeridos para la compra de las tasas/servicios en esta ventanilla virtual. Es responsabilidad del usuario verificar toda la información registrada antes de proceder con el pago.</p>
-    <p>El Banco de la Nación no se responsabiliza frente a los daños o molestias causadas al usuario por la denegación de pago con sus tarjetas de crédito/débito, siendo esto responsabilidad del emisor de las tarjetas.</p>
-    <h6 class="subtitulo">8. CONSULTAS Y RECLAMOS</h6>
-    <p>Toda duda o consulta relacionada a la operatividad o uso de este sitio web deberá ser presentada a través del Contact Center del Banco de la Nación, comunicándose a los teléfonos fijos (01)4424470; (01)4405305; línea gratuita desde teléfonos fijos: 0-800-10700.</p>
-    <p>Los reclamos y/o solicitudes de devolución de los importes pagados, producto de errores en los datos consignados durante el proceso de compra, deberán ser canalizados por el usuario ante la entidad del estado proveedora de la tasa/servicio cuyo pago se materializó a través de esta ventanilla virtual.</p>
-    <p>Los reclamos relacionados a la denegación o al no reconocimiento de los pagos online con tarjetas de crédito/débito deben ser presentados por los titulares de las mismas ante las entidades financieras emisoras de estas tarjetas de crédito/débito.</p>
-    <h6 class="subtitulo">9. TRATAMIENTO DE DATOS PERSONALES</h6>
-    <p>Los datos personales proporcionados por el usuario al Banco serán almacenados en el banco de datos de clientes del Banco de la Nación, con domicilio en av. Javier Prado Este 2499 San Borja.</p>
-    <p>El Banco de la Nación se obliga a proteger este bancos de datos con todas las medidas de seguridad (técnicas y organizativas) necesarias para evitar la modificación, pérdida, o el acceso no autorizado a los datos del usuario.</p>
-    <p>Respecto a los datos personales proporcionados por el USUARIO durante su afiliación a págalo.pe: los relacionados a la identidad de la persona (documento de identidad y nombre) son utilizados únicamente para registrarlo en nuestra base de datos como usuario de esta plataforma de pagos en línea. Por otro lado, respecto a los datos de contacto, la dirección de correo electrónico es utilizada para enviar al USUARIO las constancias de pago de las tasas (cada vez que este efectúe una compra a través de págalo.pe) y el número de teléfono móvil será utilizado eventualmente por el personal del Banco para ponerse en contacto con el USUARIO en caso de tener que proporcionarle información solicitada por este como parte de una consulta o reclamo.</p>
-    <p>Usted puede en cualquier momento revocar la autorización al Banco de la Nación para el tratamiento de sus datos personales. Así mismo, usted puede ejercer sus derechos de acceso, rectificación, cancelación y oposición para el tratamiento de sus datos personales. Para todos los efectos antes descritos, usted deberá presentar su solicitud en cualquiera de las agencias del Banco de la Nación a nivel nacional</p>
-</article>
+                <article class="contenido">
+                    <h6 class="subtitulo">1. Aceptación de los Términos</h6>
+                    <p>El uso del carrito de compras en línea del Colegio Profesional COLEGIO DE ARQUITECTOS DEL PERU REGIONAL LIMA implica la aceptación plena y sin reservas de los presentes Términos y Condiciones. El usuario reconoce haber leído, comprendido y aceptado la presente política antes de realizar cualquier pago.</p>
+                    <h6 class="subtitulo">2. Definiciones</h6>
+                    <p>Usuario: Profesional colegiado o tercero autorizado que utiliza la plataforma.</p>
+                    <p>Plataforma: Sitio web y sistema de carrito de compras en línea del Colegio Profesional.</p>
+                    <p>Servicios: Pago de cuotas ordinarias, extraordinarias, derechos de trámites, certificaciones y demás servicios que el Colegio Profesional disponga.</p>
+                    <h6 class="subtitulo">3. Registro y Autenticación</h6>
+                    <p>El acceso al carrito de compras requiere autenticación mediante credenciales únicas e intransferibles del usuario.</p>
+                    <p>El usuario es responsable de la confidencialidad de sus credenciales y del uso indebido que terceros pudieran hacer de ellas.</p>
+                    <h6 class="subtitulo">4. Métodos de Pago</h6>
+                    <p>Se aceptan únicamente los medios de pago habilitados en la plataforma (tarjetas de crédito/débito, transferencias en línea, billeteras digitales u otros autorizados).</p>
+                    <p>Las transacciones son procesadas a través de pasarelas de pago certificadas con estándares de seguridad (PCI DSS, TLS/SSL).</p>
+                    <p>El Colegio Profesional no almacena ni gestiona datos sensibles de las tarjetas de crédito/débito.</p>
+                    <h6 class="subtitulo">5. Seguridad de la Información</h6>
+                    <p>La plataforma utiliza cifrado SSL/TLS para proteger la confidencialidad de las comunicaciones.</p>
+                    <p>Los datos personales y financieros son tratados conforme a la Ley N.° 29733 de Protección de Datos Personales.</p>
+                    <p>Se realizan auditorías periódicas de seguridad para mitigar riesgos de fraude, robo de identidad o accesos no autorizados.</p>
+                    <h6 class="subtitulo">6. Responsabilidad del Usuario</h6>
+                    <p>El usuario se compromete a:</p>
+                    <ul>
+                        <li>Utilizar la plataforma únicamente para fines lícitos y autorizados.</li>
+                        <li>No realizar fraudes, intentos de acceso indebido ni actividades que comprometan la seguridad del sistema.</li>
+                        <li>Verificar la exactitud de la información ingresada antes de efectuar un pago.</li>
+                </ul>
+                    <h6 class="subtitulo">7. Confirmación de Pagos y Comprobantes</h6>
+                    <p>Una vez confirmado el pago, el usuario recibirá un comprobante electrónico (boleta o factura, según corresponda) en el correo electrónico registrado.</p>
+                    <p>El Colegio Profesional no se responsabiliza por errores en los datos ingresados por el usuario que afecten la emisión de comprobantes.</p>
+                    <h6 class="subtitulo">8. Política de Reembolsos</h6>
+                    <p>Los pagos efectuados no son reembolsables, salvo error imputable al Colegio Profesional o cobro indebido.</p>
+                    <p>Todo reclamo deberá presentarse por escrito a través de los canales oficiales en un plazo máximo de 7 días hábiles después de la operación.</p>
+                    <h6 class="subtitulo">9. Protección de Datos Personales</h6>
+                    <p>Los datos recopilados serán utilizados exclusivamente para la gestión administrativa, financiera y colegiada.</p>
+                    <p>El usuario puede ejercer sus derechos de acceso, rectificación, cancelación y oposición (ARCO) mediante solicitud escrita dirigida al Colegio Profesional.</p>
+                    <h6 class="subtitulo">10. Limitación de Responsabilidad</h6>
+                    <p>El Colegio Profesional no será responsable por fallas técnicas, interrupciones del servicio o problemas ajenos a su control (fallas de Internet, pasarelas de pago externas, etc.).</p>
+                    <p>El Colegio Profesional tampoco garantiza la disponibilidad continua del sistema, aunque hará sus mejores esfuerzos por mantenerlo activo y seguro.</p>
+                    <h6 class="subtitulo">11. Modificaciones de los Términos</h6>
+                    <p>El Colegio Profesional podrá modificar los presentes Términos y Condiciones en cualquier momento, comunicando los cambios a través de la plataforma. El uso continuado del servicio implica la aceptación de las modificaciones.</p>
+                    <h6 class="subtitulo">12. Jurisdicción y Ley Aplicable</h6>
+                    <p>Los presentes Términos y Condiciones se rigen por las leyes de la República del Perú. Cualquier controversia será resuelta en los tribunales competentes del distrito judicial de Lima Cercado.</p>
+                    <h6 class="subtitulo" style="text-align:right">Colegio de Arquitectos del Perú - Regional Lima</h6>
+                </article>
 			</div>
 			
 		</div>

@@ -30,16 +30,36 @@ foreach ($pedido as $key => $row):
 			//echo date("d/m/Y", strtotime($row->fecha_proceso)) 
 			if(isset($data->dataMap))echo $c[4].$c[5]."/".$c[2].$c[3]."/".$c[0].$c[1]." ".$c[6].$c[7].":".$c[8].$c[9].":".$c[10].$c[11]; 
 		?></td>
-		<td class="text-left"><?php echo $row->email ?></td>
+		<!---<td class="text-left"><?php echo $row->email ?></td> --->
 		<td class="text-left"><?php if(isset($data->dataMap))echo $data->dataMap->CARD." (".$data->dataMap->BRAND.")"; ?></td>
+		<td class="text-left"><?php echo $row->yape; ?></td>
 		<td class="text-left"><?php if(isset($data->order))echo $data->order->amount. " ".$data->order->currency; ?></td>
+		<td class="text-left"><?php echo $row->status; ?></td>
 		<td>
-			@if(isset($row->id_comprobante))
-			<a class="btn btn-square link link-icon" target="_blank" href="carrito/ver_comprobante/{{$row->id_comprobante}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-file-alt" style="line-height:unset !important;"></i></a>
-			@else
-			<a class="btn btn-square link link-icon" href="pedido/show/{{$row->id}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></a>
-			@endif
 
+			@if(isset($row->id_comprobante))
+				
+				<div style="display: flex; gap: 8px; align-items: center;">
+				<a class="btn btn-square link link-icon" target="_blank" href="carrito/ver_comprobante/{{$row->id_comprobante}}" style="padding: 8px; line-height: normal;">
+					<i class="fas fa-file-alt"></i>
+				</a>
+				
+				@if(isset($row->id_nc))
+
+					<a class="btn" target="_blank" href="carrito/ver_comprobante/{{$row->id_nc}}" style="padding: 6px 12px; white-space: nowrap;">
+						Nota Credi.
+					</a>
+				@endif
+			</div>
+			
+				
+			@else
+				@if($row->status=='Authorized')
+					<a class="btn btn-square link link-icon" href="pedido/show/{{$row->id}}" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></a>
+				@else
+					<button disabled='disabled' class="btn btn-square link link-icon" style="padding-left:35px!important;line-height:37px"><i class="fas fa-edit" style="line-height:unset !important;"></i></button>
+				@endif
+			@endif
 		</td>
 
 	</tr>

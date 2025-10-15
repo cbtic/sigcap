@@ -272,7 +272,7 @@
                                         <input type="text" name="total_b" id="total_b" value="" oninput="validarDecimal(this)" placeholder="" class="form-control form-control-sm">
                                     </div>
                                 </div>
- 
+
 
                                 <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
                                     <input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
