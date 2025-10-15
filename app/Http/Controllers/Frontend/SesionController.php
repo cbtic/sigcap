@@ -432,6 +432,9 @@ class SesionController extends Controller
 							$comisionSesionDelegado->estado = 1;
 							$comisionSesionDelegado->id_usuario_inserta = $id_user;
 							$comisionSesionDelegado->save();
+							
+							
+
 						}
 					}
 
@@ -487,6 +490,8 @@ class SesionController extends Controller
 									$comisionSesionDelegado->estado = 1;
 									$comisionSesionDelegado->id_usuario_inserta = $id_user;
 									$comisionSesionDelegado->save();
+
+									
 								}
 							}
 
@@ -530,6 +535,21 @@ class SesionController extends Controller
 					$comisionSesionDelegado->id_aprobar_pago = $id_aprobar_pago_;
 					if($id_aprobar_pago_==2)$comisionSesionDelegado->fecha_aprobar_pago = Carbon::now()->format('Y-m-d');
 					$comisionSesionDelegado->save();
+
+					if ($comisionSesionDelegado->coordinador==0){
+										$comisionSesionDelegado_model = new ComisionSesionDelegado();
+										$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndmes($comisionSesionDelegado->id_delegado,$comisionSesion->fecha_ejecucion,"","",$comisionSesion->id_comision,date('n', strtotime($comisionSesion->fecha_ejecucion)),date('Y', strtotime($comisionSesion->fecha_ejecucion))); 
+				
+									foreach($comisionSesionDelegados2 as $row2){
+									
+										$comisionSesionDelegadoObj2 = ComisionSesionDelegado::find($row2->id);
+										$comisionSesionDelegadoObj2->coordinador = 0;
+										$comisionSesionDelegadoObj2->save();
+
+						
+									}
+				
+									}
 					
 				}
 			}
@@ -847,16 +867,21 @@ class SesionController extends Controller
 			$comisionSesionDelegadoObj->coordinador = 1;
 			$comisionSesionDelegadoObj->save();
 			
-			$comisionSesionDelegados2 = ComisionSesionDelegado::where("id_comision_sesion",$comisionSesionDelegadoObj->id_comision_sesion)->where("id_delegado","!=",$comisionSesionDelegadoObj->id_delegado)->get();
+			$id_muni=$row->id_municipalidad;
 			
+		}
+		
+		
+		$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha_nocoordina($comisionDelegadoActual->id_agremiado,$comisionSesion->fecha_programado,"","",$id_muni); 
+		 
 			foreach($comisionSesionDelegados2 as $row2){
 			
 				$comisionSesionDelegadoObj2 = ComisionSesionDelegado::find($row2->id);
 				$comisionSesionDelegadoObj2->coordinador = 0;
 				$comisionSesionDelegadoObj2->save();
+
+				
 			}
-			
-		}
 		
     }
 	
