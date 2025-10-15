@@ -2219,7 +2219,7 @@ class ComprobanteController extends Controller
 
                     ///redondeo///
                     $total_pagar = $request->total_pagar;
-                    //print_r("total_pagar="); 
+                    
                     //print_r($total_pagar); 
                     if ($total_pagar != "0" && $total_pagar != "") {
                         $total_pagar = $request->total_pagar;
@@ -2359,8 +2359,11 @@ class ComprobanteController extends Controller
 
 
                         $fecha_hoy = date('Y-m-d');
+ 
+                        
+                        if ($total_pagar != "0" && $total_pagar != "" && !isset($total_pagar)) {
+                                                     
 
-                        if ($total_pagar != "0" && $total_pagar != "") {
                             $total_pagar = $request->total_pagar;
                             $total_g = $request->totalF;
                             $total_redondeo = $total_pagar - $total_g;
@@ -2393,7 +2396,7 @@ class ComprobanteController extends Controller
                             $tarifa[999] = $items1;
                         }
 
-                        if ($total_abono != "0" && $total_abono != "") {
+                        if ($total_abono != "0" && $total_abono != "" && !isset($total_abono)    ) {
                             $total_pagar_abono = $request->total_pagar_abono;
                             $total_g = $request->totalF;
                             $total_abono = $total_pagar_abono - $total_g;
@@ -5233,29 +5236,51 @@ class ComprobanteController extends Controller
                 }
 
 
-                if ($tipo_documento_b == "85") {
+                /*
+            $id_comprobante_ncnd = $request->id_comprobante_ncnd;
+            $id_comprobante = $request->id_comprobante;
 
-                    //$id_persona = $request->persona;
+                echo($id_comprobante);
+                echo($id_comprobante_ncnd);
+                exit();
+*/
+                $factura_ = Comprobante::where('id', $id_comprobante_ncnd)->get()[0];
+                //$fac_serie = $factura->serie;
+                //$fac_numero = $factura->numero;
+                $tipoF_ = $factura_->tipo;
+
+              //  echo($tipoF_);
+               // exit();
+
+                if ($tipoF_ == "BV") {
+
+                    $id_persona = $factura_->id_persona;
+
                     $valorizaciones_model = new Valorizacione;
                     $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
-                    $total_ = $totalDeuda->total;
 
-                    //echo($total_);
-                    //exit();
+                    if($totalDeuda != null){
 
-                    if ($total_ <= 2) {
-                        $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                        $total_ = $totalDeuda->total;
 
-                        if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
-                            $agremiado->id_situacion = "73"; //habilitado
+                        //echo($total_);
+                        //exit();
+
+                        if ($total_ <= 2) {
+                            $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                            
+                            if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                                $agremiado->id_situacion = "73"; //habilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }
+                        } 
+                        if ($total_ > 2) {
+                            $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];                        
+                            $agremiado->id_situacion = "74"; //inhabilitado
                             $agremiado->id_usuario_actualiza = $id_user;
                             $agremiado->save();
                         }
-                    } else {
-                        $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                        $agremiado->id_situacion = "74"; //inhabilitado
-                        $agremiado->id_usuario_actualiza = $id_user;
-                        $agremiado->save();
                     }
                 }
 

@@ -843,16 +843,21 @@ class SesionController extends Controller
 			$comisionSesionDelegadoObj->coordinador = 1;
 			$comisionSesionDelegadoObj->save();
 			
-			$comisionSesionDelegados2 = ComisionSesionDelegado::where("id_comision_sesion",$comisionSesionDelegadoObj->id_comision_sesion)->where("id_delegado","!=",$comisionSesionDelegadoObj->id_delegado)->get();
+			$id_muni=$row->id_municipalidad;
 			
+		}
+		
+		
+		$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha_nocoordina($comisionDelegadoActual->id_agremiado,$comisionSesion->fecha_programado,"","",$id_muni); 
+		 
 			foreach($comisionSesionDelegados2 as $row2){
 			
 				$comisionSesionDelegadoObj2 = ComisionSesionDelegado::find($row2->id);
 				$comisionSesionDelegadoObj2->coordinador = 0;
 				$comisionSesionDelegadoObj2->save();
+
+				
 			}
-			
-		}
 		
     }
 	

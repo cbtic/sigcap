@@ -249,8 +249,33 @@ function calculoDetraccion_(){
 		//$('#medio_pago').value("");
 	}
 }
+async function mostrarConfirmacionModal(dif) {
+    // await DETIENE la ejecución aquí hasta que el usuario responda
+    const result = await Swal.fire({
+        title: 'Mensaje',
+        text: "¿El total de medio de pago es MENOR al total del comprobante por "+ dif.toFixed(2) + " , esta seguro de continuar?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continuar!',
+        allowOutsideClick: false,  // No permite cerrar haciendo click fuera
+        allowEscapeKey: false,     // No permite cerrar con ESC
+        allowEnterKey: false,      // No permite usar Enter
+        backdrop: 'rgba(0,0,0,0.8)' // Fondo oscuro modal
+    });
 
-function guardarFactura(){
+    let msg = "";
+    if (result.isConfirmed) {
+        msg += "";
+    } else {
+        msg += "El total de medio de pago es MENOR al total del comprobante..<br>";
+    }
+    
+    return msg;
+}
+
+async function guardarFactura(){
 
     var msg = "";
     var smodulo_guia = $('#smodulo_guia').val();
@@ -290,7 +315,7 @@ function guardarFactura(){
 
 	if(total_<total_fac_){
 		var dif = Number(total_fac_) - Number(total_);
-		
+		/*
 		Swal.fire({
 		title: 'Mensaje',
 		text: "¿El total de medio de pago es MENOR al total del comprobante por "+ dif.toFixed(2) + " , esta seguro de continuar?",
@@ -298,16 +323,41 @@ function guardarFactura(){
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Continuar!'
+		confirmButtonText: 'Continuar!',
+		allowOutsideClick: false,    // Impide cerrar haciendo click fuera
+        allowEscapeKey: false,       // Impide cerrar con ESC
+        allowEnterKey: true,         // Permite usar Enter para confirmar
+        backdrop: true               // Fondo modal
 		}).then((result) => {
 
-		if (result.value) {
+		if (result.isconfirmed) {
 			msg+="";
 		} else {
 			msg+="El total de medio de pago es MENOR al total del comprobante..<br>";
 		}
 
-		});
+		});  */
+
+		 const result = await Swal.fire({
+        title: 'Mensaje',
+        text: "¿El total de medio de pago es MENOR al total del comprobante por "+ dif.toFixed(2) + " , esta seguro de continuar?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continuar!',
+        allowOutsideClick: false,  // No permite cerrar haciendo click fuera
+        allowEscapeKey: false,     // No permite cerrar con ESC
+        allowEnterKey: false,      // No permite usar Enter
+        backdrop: 'rgba(0,0,0,0.8)' // Fondo oscuro modal
+    });
+
+    
+    if (result.isConfirmed) {
+        msg += "";
+    } else {
+        msg += "El total de medio de pago es MENOR al total del comprobante..<br>";
+    }
 	}
 
 	if(total_>total_fac_){
@@ -315,23 +365,27 @@ function guardarFactura(){
 		
 		//msg+="El total de medio de pago no coincide al total del comprobante..<br>";
 
-		Swal.fire({
+		const result = await Swal.fire({
 		title: 'Mensaje',
 		text: "¿El total de medio de pago es MAYOR al total del comprobante por "+ dif.toFixed(2) + " ,esta seguro de continuar?",
 		type: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Continuar!'
-		}).then((result) => {
-
-		if (result.value) {
+		confirmButtonText: 'Continuar!',
+		allowOutsideClick: false,  // No permite cerrar haciendo click fuera
+        allowEscapeKey: false,     // No permite cerrar con ESC
+        allowEnterKey: false,      // No permite usar Enter
+        backdrop: 'rgba(0,0,0,0.8)' // Fondo oscuro modal
+		});
+			
+		 if (result.isConfirmed) {
 			msg+="";
 		} else {
 			msg+="El total de medio de pago es MAYOR al total del comprobante..<br>";
 		}
 
-		});
+	
 		
   	}
 	
@@ -392,6 +446,9 @@ function guardarFactura(){
 		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
 	}
 	
+	if (dif>1 || dif<-1){	
+		msg+="La diferencia de no es válida...<br>";	
+	}
 	//if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
 
 	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
