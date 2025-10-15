@@ -615,7 +615,8 @@
 
                                     </div>
                                 </div>
-                                <a class='flotante' href='#' onclick="print()"><img src='/img/btn_print.png' border="0" /></a>
+                                <!--<a class='flotante' href='#' onclick="print()"><img src='/img/btn_print.png' border="0" /></a>-->
+                                <a class='flotante' href="/{{ $factura->ruta_comprobante }}" target="_blank"><img src='/img/btn_print.png' border="0" /></a>
                                 <!--<a class='flotante' href='#'><img src='/img/deshacer.png' border="0" /></a>-->
                                 <br>
                             </form>
@@ -671,39 +672,17 @@
 						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
 					</a>
 				</div>
-				<strong class="titulo">Banco de la Nación | Ministerio de Economía y Finanzas</strong>
+				<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
-					<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>
-					<p>Oficina Principal: Av. Javier Prado Este 2499, San Borja. Central telefónica: 519-20 00.</p>
-					<p>Atención en oficinas administrativas: lunes a viernes de 8:30 a 17:30 horas. Refrigerio de: 13 a 14 horas.</p>
-					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 9:00 a 17:00 horas (horario corrido).</p>
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
+					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
 			</div>
 			
-			<div class="col-lg-4 col-12 footer-derecho">
-				<div class="footer-menu">
-					<div class="row">
-						<div class="col">
-							<h4 class="subtitulo">Págalo.pe</h4>
-						</div>
-					</div>
-					<div class="row">
-						<div class="opciones">
-							<ul class="col-lg-6 col-12">
-								<li><span class="open-modal-faq-1 link link-sm">¿Qué es?</span></li>
-								<li><span class="open-modal-faq-2 link link-sm vista-previa link-video" data-toggle="modal" data-src="https://www.youtube.com/embed/6faiVzbvfgY" data-target="#modalVideo">¿Cómo pagar?</span></li>
-								<li><span class="open-modal-faq-3 link link-sm">¿Qué puedo pagar?</span></li>
-							</ul>
-							<ul class="col-lg-6 col-12">
-								<li><span class="link link-sm link-agencias" data-toggle="modal" data-src="https://appmovil.bn.com.pe/Ubicanos/" data-target="#modalAgencias">Ubicar agencias</span></li>
-								<li><span class="link link-sm link-faq" data-toggle="modal" data-target="#modalFaq">Preguntas frecuentes</span></li>
-								<li><span class="link link-sm link-terminos" data-toggle="modal" data-target="#modalTerminos">Términos y condiciones</span></li>
-							</ul>
-						</div>	
-					</div>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 </div>
