@@ -34,13 +34,21 @@ use stdClass;
 class AgremiadoController extends Controller
 {
 	public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+		$this->middleware('auth');
+    	$this->middleware('can:agremiado')->only(['index']);
+		$this->middleware('can:Consulta de Agremiado')->only(['consulta_agremiado']);
+		$this->middleware('can:Multas')->only(['consulta_multa']);
+		$this->middleware('can:Afiliciacion a Seguro')->only(['consulta_afiliacion_seguro']);
+		$this->middleware('can:Reporte Deudas')->only(['consulta_reporte_deuda']);
+	
 	}
 	
 	public function index(){

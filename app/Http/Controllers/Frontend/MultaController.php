@@ -20,6 +20,22 @@ use App\Models\Concepto;
 
 class MultaController extends Controller
 {
+
+	public function __construct(){
+		/*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Multas')->only(['consulta_multa']);
+		$this->middleware('can:Multas Mantenimiento')->only(['consulta_multa_mantenimiento']);
+	}
+
     function consulta_multa(){
         
         return view('frontend.multa.all');
@@ -35,16 +51,6 @@ class MultaController extends Controller
         return view('frontend.multa.all_mantenimiento',compact('moneda','multa'));
 
     }
-
-    public function __construct(){
-
-		$this->middleware(function ($request, $next) {
-			if(!Auth::check()) {
-                return redirect('login');
-            }
-			return $next($request);
-    	});
-	}
 
     public function listar_datosAgremiado_ajax(Request $request){
 	

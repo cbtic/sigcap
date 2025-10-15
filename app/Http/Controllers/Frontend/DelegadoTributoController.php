@@ -16,13 +16,17 @@ use Auth;
 class DelegadoTributoController extends Controller
 {
     public function __construct(){
-
+        /*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+        */
+
+        $this->middleware('auth');
+		$this->middleware('can:Delegado Tributo')->only(['consulta_delegadoTributo']);
 	}
 
     function consulta_delegadoTributo(){

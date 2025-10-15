@@ -31,15 +31,19 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class SesionController extends Controller
 {
-
+	
 	public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+		$this->middleware('auth');
+		$this->middleware('can:Programacion de Sesiones')->only(['lista_programacion_sesion']);
+		$this->middleware('can:Computo de Sesiones')->only(['consulta_computoSesion']);
 	}
 
     public function lista_programacion_sesion(){

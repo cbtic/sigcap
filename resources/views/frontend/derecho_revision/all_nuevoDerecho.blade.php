@@ -169,7 +169,7 @@ function modalVerFormato(){
 								<!--<option value="">--Selecionar--</option>
 									<?/*php
 										foreach ($tipo_solicitante as $row) {*/?>
-									<option value="<?php /*echo $row->id*/?>" <?php/* if($row->id==$derecho_revision->id_solicitante)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>
+									<option value="<?php //echo $row->id?>" <?php //if($row->id==$derecho_revision->id_solicitante)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
 									<?php
 									/*}*/
 									?>-->

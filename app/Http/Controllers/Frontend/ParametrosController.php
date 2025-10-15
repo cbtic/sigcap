@@ -10,13 +10,17 @@ use Auth;
 class ParametrosController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Parametros')->only(['consulta_parametro']);
 	}
 
     function consulta_parametro(){

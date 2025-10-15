@@ -33,6 +33,22 @@ use Illuminate\Support\Facades\Log;
 
 class ComprobanteController extends Controller
 {
+
+    public function __construct(){
+        /*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+        */
+
+        $this->middleware('auth');
+		$this->middleware('can:Consulta de Facturas')->only(['index']);
+		
+	}
+
 	public function index(){
         //$facturas_model = new Factura;
         //$facturas = $facturas_model->getFactura();

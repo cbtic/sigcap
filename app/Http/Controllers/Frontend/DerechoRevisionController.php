@@ -35,13 +35,21 @@ class DerechoRevisionController extends Controller
 {
 
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Licencias')->only(['create_solicitud']);
+		$this->middleware('can:Derecho de Revision')->only(['consulta_derecho_revision']);
+		$this->middleware('can:Consulta Derecho de Revision')->only(['consulta_solicitud_derecho_revision']);
+		$this->middleware('can:Registro Derecho de Revision')->only(['consulta_derecho_revision_nuevo']);
+
 	}
 
     function consulta_derecho_revision(){

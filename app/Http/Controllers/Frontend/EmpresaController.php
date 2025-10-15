@@ -15,13 +15,17 @@ class EmpresaController extends Controller
     }
 	
 	public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Empresas')->only(['consulta_empresa']);
 	}
 
     public function listar_empresa_ajax(Request $request){

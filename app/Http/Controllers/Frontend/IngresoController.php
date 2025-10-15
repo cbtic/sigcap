@@ -31,13 +31,21 @@ class IngresoController extends Controller
 {
 
     public function __construct(){
-
+        /*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+        */
+
+        $this->middleware('auth');
+		$this->middleware('can:Estado de Cuenta')->only(['create']);
+        $this->middleware('can:Liquidacion de Caja')->only(['liquidacion_caja']);
+        $this->middleware('can:Resumen de Caja')->only(['caja_total']);
+        $this->middleware('can:Resumen Efectivo')->only(['create_efectivo']);
+        
 	}
        
     public function create(){      

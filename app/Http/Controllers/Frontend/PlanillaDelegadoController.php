@@ -26,6 +26,22 @@ use Carbon\CarbonPeriod;
 class PlanillaDelegadoController extends Controller
 {
 	
+	public function __construct(){
+		/*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+		$this->middleware('auth');
+		$this->middleware('can:Consulta Reintegro')->only(['consulta_reintegro']);
+		$this->middleware('can:Planilla Delegados')->only(['consulta_planilla_delegado']);
+		$this->middleware('can:Registro Recibos por Honorarios')->only(['consulta_planilla_recibos_honorario']);
+
+	}
+
 	public function consulta_planilla_delegado(){
 		
 		$periodoComisione_model = new PeriodoComisione;

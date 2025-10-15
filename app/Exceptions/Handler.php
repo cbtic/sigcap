@@ -64,9 +64,28 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof AuthorizationException) {
+            /*
             return redirect()
                 ->back()
                 ->withFlashDanger($exception->getMessage() ?? __('You do not have access to do that.'));
+            */
+            // Muestra página 403 en lugar de redirigir infinitamente
+            /*
+            return response()->view('errors.403', [
+                'message' => $exception->getMessage() ?: 'No tienes permiso para acceder a esta página.',
+            ], 403);
+            */
+            
+            return response()->view('errors.403', [
+                'exception' => $exception,
+            ], 403);
+            
+            // Retorna directamente la vista de error estándar de Laravel
+            /*
+            return response()->view('errors.403', [
+                'exception' => $exception,
+            ], 403);
+            */
         }
 
         if ($exception instanceof ModelNotFoundException) {

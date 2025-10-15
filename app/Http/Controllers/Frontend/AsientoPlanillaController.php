@@ -35,13 +35,17 @@ use Symfony\Component\Mime\Crypto\SMimeEncrypter;
 class AsientoPlanillaController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Asiento Planilla Delegados')->only(['index']);
 	}
 	
     public function index(){

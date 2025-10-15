@@ -12,6 +12,21 @@ use Monolog\Handler\StreamHandler;
 
 class CentroCostoController extends Controller
 {	
+
+	public function __construct(){
+		/*
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Centro de costos')->only(['consulta_centro_costo']);
+	}
+
     public function importar_centro_costo(){ 
 	
 		$ch = curl_init('http://webservice.limacap.org:8080/webservices.php?op=centrocostos');		

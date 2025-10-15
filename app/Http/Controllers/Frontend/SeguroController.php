@@ -16,20 +16,25 @@ use Auth;
 
 class SeguroController extends Controller
 {
-    function consulta_seguro(){
 
-        return view('frontend.seguro.all');
-    }
-
-    public function __construct(){
-
+	public function __construct(){
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Seguros')->only(['consulta_seguro']);
 	}
+
+    function consulta_seguro(){
+
+        return view('frontend.seguro.all');
+    }
 
     //
     public function listar_seguro(Request $request){
