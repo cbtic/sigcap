@@ -22,13 +22,19 @@ use Auth;
 class CoordinadorZonalController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Coordinador Zonal')->only(['consulta_coordinadorZonal']);
+		$this->middleware('can:Zonales')->only(['consulta_coordinador_detalle']);
+
 	}
 
     public function consulta_coordinadorZonal(){

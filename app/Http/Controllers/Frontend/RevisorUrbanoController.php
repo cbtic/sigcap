@@ -20,13 +20,17 @@ use Auth;
 class RevisorUrbanoController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Registro Revisor Urbano')->only(['consulta_revisorUrbano']);
 	}
 
     function consulta_revisorUrbano(){

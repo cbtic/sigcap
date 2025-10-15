@@ -23,13 +23,19 @@ use Auth;
 class ComisionController extends Controller
 {
     public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+
+		$this->middleware('auth');
+		$this->middleware('can:Comisiones')->only(['consulta_comision']);
+		$this->middleware('can:Consulta de Comisiones')->only(['lista_comision']);
+
 	}
 
     function consulta_comision(){

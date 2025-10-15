@@ -27,13 +27,20 @@ use ZipArchive;
 class ConcursoController extends Controller
 {
 	public function __construct(){
-
+		/*
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
                 return redirect('login');
             }
 			return $next($request);
     	});
+		*/
+		$this->middleware('auth');
+		$this->middleware('can:Resultado de Concurso')->only(['create_resultado']);
+		$this->middleware('can:Consulta de Resultado de Concurso')->only(['consulta_resultado']);
+		$this->middleware('can:Concurso Postula')->only(['create']);
+		$this->middleware('can:Concurso')->only(['index']);
+
 	}
 
     function index(){

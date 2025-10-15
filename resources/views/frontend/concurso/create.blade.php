@@ -526,7 +526,7 @@ function obtenerSubTipoConcurso(callback){
 											
 												<div class="row" style="padding:15px 0px 10px 0px">
 													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-														<strong</strong>
+														<strong></strong>
 													</div>
 													
 												</div>
