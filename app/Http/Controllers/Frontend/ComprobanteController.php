@@ -303,28 +303,22 @@ class ComprobanteController extends Controller
 			
 			//if($ubicacion=="")$ubicacion=3070;
             if ($TipoF == 'BV' || $TipoF == 'TK'){
-
-
                 if($persona==''){
-                    $persona=-1; 
+                    //$persona=-1; 
                    // $empresa=-1;
                    // $ubicacion=-1;
-                }
-
+                   $empresa = $empresa_model->getPersonaId_BV(-1);
+                }else{
                     $empresa = $empresa_model->getPersonaId_BV($persona);
-
-                if($persona=='-1'){
-                    $persona='';
-                }                    
+                }
 
                    //echo $empresa;exit();
 
-                    if(!$empresa){
-                        //echo $ubicacion;exit();
-                        $empresa = $empresa_model->getEmpresaId($ubicacion);
-                    }
-                
-
+                if(!$empresa){
+                    //echo $ubicacion;exit();
+                    $empresa = $empresa_model->getEmpresaId($ubicacion);
+                }
+            
             }
             else{
                 //echo $ubicacion;exit();
