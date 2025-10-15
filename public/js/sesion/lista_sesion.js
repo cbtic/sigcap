@@ -1424,9 +1424,9 @@ function habilitarAprobar(obj){
 }
 
 function limpiar_coordinador(){
-	
-	$('input[name=coordinador]').prop("checked",false);
-	
+	if(confirm('¿Deséa desmarcar el coordinador?. Esto afectará a la sesiones del mes de computo.')) {
+		$('input[name=coordinador]').prop("checked",false);
+	}
 }
 
 function eliminarSesion(id){

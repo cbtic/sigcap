@@ -139,6 +139,22 @@ where id_comision=".$id_comision;
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getComisionDelegadosByIdDelegadoAndmes($id_agremiado,$fecha_programado,$fecha_inicio_sesion,$fecha_fin_sesion, $id_comision, $mes,$anio,){
+        
+        //print_r($id_comision); exit();
+
+        $cad = " select csd.* 
+                from comision_sesion_delegados csd inner join comision_sesiones cs on csd.id_comision_sesion=cs.id inner join comisiones c on c.id=cs.id_comision inner join comision_delegados cd on csd.id_delegado=cd.id inner join municipalidad_integradas mi on mi.id =c.id_municipalidad_integrada 
+                where csd.id_delegado=".$id_agremiado." and csd.estado='1' and  EXTRACT(MONTH FROM cs.fecha_ejecucion) = ".$mes." 
+  																	AND EXTRACT(YEAR FROM fecha_ejecucion) =".$anio."  and cs.estado='1' and cs.id_comision =".$id_comision." ";
+
+        //print_r($cad); exit();
+		
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 	function getComisionDelegadosByIdPeriodoAgremiado($id_periodo,$id_agremiado){
 
