@@ -326,6 +326,10 @@ div {
     }
 }
 
+.footer {
+    background-color: #1C77B9 !important;
+}
+
 
 </style>
 
