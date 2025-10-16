@@ -4,7 +4,6 @@
 @section('title', __('Dashboard'))
 
 @if(
-    !$logged_in_user->persona->numero_ruc ||
     !$logged_in_user->persona->telefono_fijo ||
     !$logged_in_user->persona->numero_celular ||
     !$logged_in_user->persona->correo ||
@@ -15,9 +14,6 @@
         $(function(){
 
             let msg = "Falta Actualizar: <br>";
-
-            @if (!$logged_in_user->persona->numero_ruc)msg+="Numero RUC <br>";
-            @endif
 
             @if (!$logged_in_user->persona->telefono_fijo)msg+="Telefono Fijo <br>";
             @endif

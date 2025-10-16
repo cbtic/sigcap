@@ -13,7 +13,7 @@ class PerfilController extends Controller
         $user = auth()->user();
 
         $request->validate([
-            'numero_ruc'           => 'required|string|max:20',
+            'numero_ruc'           => 'nullable|max:20',
             'telefono_fijo' => 'nullable|string|max:20',
             'numero_celular'       => 'required|string|max:20',
             'correo'        => 'required|email|max:255',
