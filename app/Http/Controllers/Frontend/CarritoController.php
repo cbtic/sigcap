@@ -939,7 +939,7 @@ class CarritoController extends Controller
             'tipo' => $facd_tipo
         ])->get();
 		
-		return view('frontend.carrito.show_comprobante',compact('id','factura','factura_detalles','id_guia','datos','ref_tipo','ref_comprobante'));
+		return view('frontend.carrito.show_comprobante',compact('id','factura','factura_detalles','id_guia','datos','ref_tipo','ref_comprobante')); 
 
 	}
 

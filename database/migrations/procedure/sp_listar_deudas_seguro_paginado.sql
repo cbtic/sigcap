@@ -28,7 +28,7 @@ begin
 	else (SELECT extract(year from Age(ap3.fecha_nacimiento )) from seguro_afiliado_parentescos sap
 	inner join agremiado_parentecos ap3 on sap.id_familia = ap3.id
 	inner join seguros_planes sp on sap.id_plan = sp.id and sap.id_familia = v.id_familia  limit 1) end edad,
-	sp.monto,
+	v.monto,
 	case when v.pagado = ''0'' then ''PENDIENTE'' else ''PAGADO'' end pago,
 	(select c2.serie from comprobantes c2 where c2.id=v.id_comprobante) serie,
 	(select c2.numero from comprobantes c2 where c2.id=v.id_comprobante) numero,

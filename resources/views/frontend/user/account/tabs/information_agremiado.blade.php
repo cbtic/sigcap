@@ -3,7 +3,7 @@
         <label for="numero_ruc" class="col-md-3 col-form-label text-md-right">@lang('N° RUC Personal')</label>
 
         <div class="col-md-9">
-            <input type="text" name="numero_ruc" class="form-control" placeholder="{{ __('N° RUC') }}" value="{{ old('numero_ruc') ?? $logged_in_user->persona->numero_ruc }}" required autofocus autocomplete="numero_ruc" pattern="10[0-9]{9}" title="El RUC debe comenzar con 10 y tener 11 dígitos" />
+            <input type="text" name="numero_ruc" class="form-control" placeholder="{{ __('N° RUC') }}" value="{{ old('numero_ruc') ?? $logged_in_user->persona->numero_ruc }}" autofocus autocomplete="numero_ruc" pattern="10[0-9]{9}" title="El RUC debe comenzar con 10 y tener 11 dígitos" />
         </div>
     </div><!--form-group-->
 
@@ -11,7 +11,7 @@
         <label for="telefono_fijo" class="col-md-3 col-form-label text-md-right">@lang('Telefono Fijo')</label>
 
         <div class="col-md-9">
-            <input type="text" name="telefono_fijo" class="form-control" placeholder="{{ __('Telefono Fijo') }}" value="{{ old('telefono_fijo') ?? $logged_in_user->persona->telefono_fijo }}" required autofocus autocomplete="telefono_fijo" />
+            <input type="text" name="telefono_fijo" class="form-control" placeholder="{{ __('Telefono Fijo') }}" value="{{ old('telefono_fijo') ?? $logged_in_user->persona->telefono_fijo }}" autofocus autocomplete="telefono_fijo" />
         </div>
     </div><!--form-group-->
 
