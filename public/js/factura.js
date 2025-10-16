@@ -312,8 +312,9 @@ async function guardarFactura(){
 		}
 		
 	}
+	//alert(total_fac_);exists();		
 
-	if(total_<total_fac_){
+	if(total_>total_fac_){
 		var dif = Number(total_fac_) - Number(total_);
 		/*
 		Swal.fire({
@@ -360,7 +361,7 @@ async function guardarFactura(){
     }
 	}
 
-	if(total_>total_fac_){
+	if(total_<total_fac_){
 		var dif =  Number(total_)- Number(total_fac_);
 		
 		//msg+="El total de medio de pago no coincide al total del comprobante..<br>";
@@ -1056,7 +1057,7 @@ function obtenerTitular(){
 
 		$("#idMedio"+ind).select2({max_selected_options: 4});
 		
-	
+		
 		$("#idMedio"+ind).on("change", function (e) {
 			var flagx = 0;
 			cmb = $(this);

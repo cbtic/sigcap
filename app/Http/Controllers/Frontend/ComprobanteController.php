@@ -5270,7 +5270,7 @@ class ComprobanteController extends Controller
                // exit();
 
                 if ($tipoF_ == "BV") {
-/*
+
                     $id_persona = $factura_->id_persona;
 
                     $valorizaciones_model = new Valorizacione;
@@ -5299,7 +5299,7 @@ class ComprobanteController extends Controller
                             $agremiado->save();
                         }
                     }
-                    */
+                    
                 }
 
                 //echo $id_factura;

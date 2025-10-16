@@ -1724,8 +1724,8 @@
                         $("#nroOperacion0").val(id_comprobante_ncnd);
                         $("#descripcion0").val( "Ref. Nota Crédito " + serieNC + "-" + numeroNC );
                         $("#fecha0").val(hoy);
-
-                     
+                         $("#total_fac_").val(totalNC);
+                        total_fac_
                         //$("#idMedio0").prop('disabled', true);
                         $("#btnElimina0").hide();
                     }
