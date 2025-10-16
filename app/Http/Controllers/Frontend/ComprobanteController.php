@@ -2686,7 +2686,8 @@ class ComprobanteController extends Controller
                         }
 
 
-
+                        
+                        //REGISTRO DE MEDIOS DE PAGO  
                         if (isset($request->idMedio)):
                             foreach ($request->idMedio as $key => $value):
                                 if ($request->idMedio[$key] != "") {

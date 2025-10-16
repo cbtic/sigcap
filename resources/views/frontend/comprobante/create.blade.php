@@ -1679,7 +1679,7 @@
                      
 
                     var data = texto.split(" ");
-                    alert(data); 
+                  //  alert(data); 
                     var serieNC = data[1];
                     
                     var numeroNC = data[3];
@@ -1713,7 +1713,12 @@
                         $('#id_comprobante_ncnd').val(id_comprobante_ncnd);
 
                         $('#afecta_ingreso').val("C");
-                        $("#idMedio0").val("91").trigger("change");
+
+                        $("#idMedio0").val("91").trigger("change");//$("#idMedio0").val('S');
+		                $("#idMedio0").prop('readonly', true);
+		                $("#idMedio0 option:not(:selected)").prop('disabled', true);
+		
+                        //$("#idMedio0").val("91").trigger("change");
                         $("#monto0").val(totalNC);
                         $("#total_pagar").val(totalNC);
                         $("#nroOperacion0").val(id_comprobante_ncnd);
@@ -1721,7 +1726,7 @@
                         $("#fecha0").val(hoy);
 
                      
-                        $("#idMedio0").prop('disabled', true);
+                        //$("#idMedio0").prop('disabled', true);
                         $("#btnElimina0").hide();
                     }
                  

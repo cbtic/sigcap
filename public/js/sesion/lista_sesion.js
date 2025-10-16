@@ -1424,7 +1424,7 @@ function habilitarAprobar(obj){
 }
 
 function limpiar_coordinador(){
-	if(confirm('¿Deséa desmarcar el coordinador?. Esto afectará a la sesiones del mes de computo.')) {
+	if(confirm('¿Desea desmarcar el coordinador distrital? Esto afectará a las sesiones del mes en cómputo.')) {
 		$('input[name=coordinador]').prop("checked",false);
 	}
 }
