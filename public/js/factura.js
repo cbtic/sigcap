@@ -313,6 +313,7 @@ async function guardarFactura(){
 		
 	}
 	//alert(total_fac_);exists();		
+	if (id_formapago_==1)  {
 
 	if(total_>total_fac_){
 		var dif = Number(total_fac_) - Number(total_);
@@ -389,6 +390,7 @@ async function guardarFactura(){
 	
 		
   	}
+}
 	
 
 	var direccion = $('#direccion').val();
