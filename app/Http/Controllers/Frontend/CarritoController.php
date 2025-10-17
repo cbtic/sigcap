@@ -62,7 +62,24 @@ class CarritoController extends Controller
 		$p[]="";
 		$prontopago = $carrito_model->genera_prontopago($p);
 		//print_r($prontopago);exit();
-		return view('frontend.carrito.all',compact(/*'carrito_deuda',*/'prontopago','id_persona','agremiado','idTipoConcepto'));
+
+		$carrito = Carrito::firstOrCreate(
+            ['usuario_id' => $usuario->id],
+            [
+                'subtotal'       => 0,
+                'descuento_total'=> 0,
+                'impuesto_total' => 0,
+                'envio_total'    => 0,
+                'total_general'  => 0,
+            ]
+        );
+
+		$msg = "";
+		if($carrito->items()->count()==0)$msg = "Ningun producto agregado al carrito";
+		if($carrito->items()->count()==1)$msg = "1 producto agregado al carrito";
+		if($carrito->items()->count()>1)$msg = $carrito->items()->count()." productos agregados al carrito";
+
+		return view('frontend.carrito.all',compact(/*'carrito_deuda',*/'prontopago','id_persona','agremiado','idTipoConcepto','msg'));
 
     }
 	
