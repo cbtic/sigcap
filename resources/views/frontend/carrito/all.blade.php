@@ -389,7 +389,7 @@ div {
 @endif
 
 @if(session('success'))
-    <div class="alert alert-danger">
+    <div class="alert alert-success" style="font-weight:bold;font-size:17px">
         {{ session('success') }}
     </div>
 @endif
@@ -563,34 +563,6 @@ div {
                 </tfoot>
             </table>
         </div>
-
-
-
-
-        <!--
-        <div class="row px-xl-0">        
-            <?php foreach($carrito_deuda as $row){?> 
-            <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
-                <div class="product-item bg-light mb-3">
-                    <div class="product-img position-relative overflow-hidden">                        
-                        
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
-                        </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">{{$row->descripcion}}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>S/. {{$row->valor_unitario}}</h5>
-                            </div>
-                            <small class="text-body">Vence: {{ date('d-m-Y',strtotime($row->fecha)) }} </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php }?>
-        </div>
-        -->
 
         </form>
 
@@ -1352,8 +1324,12 @@ $("#chkExonerado").on('change', function() {
 });
 
 $('#cboTipoCuota_b').select2();
-cargarValorizacion();
-cargarcboTipoConcepto();
+
+var idTipoConcepto = "<?php echo $idTipoConcepto?>";
+cargarcboTipoConcepto(idTipoConcepto);
+
+//cargarValorizacion();
+
 //cargarcboPeriodo();
 //cargarcboMes();
 
@@ -1379,22 +1355,29 @@ function cargarcboMes(){
 	});
 }
 
-function cargarcboTipoConcepto(){    	
+
+//alert(idTipoConcepto);
+function cargarcboTipoConcepto(idTipoConcepto){    	
 
 	$.ajax({
 		url: "/carrito/listar_valorizacion_concepto",
 		type: "POST",
 		data : $("#form-agregar-carrito").serialize(),
 		success: function(result){
-			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option = "<option value=''>Seleccionar Concepto</option>";
 			var option;
+            var sel = "";
 			$('#cboTipoConcepto_b').html("");
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+                sel = "";
+                if(idTipoConcepto==oo.id)sel="selected='selected'";
+				option += "<option value='"+oo.id+"' "+sel+" >"+oo.denominacion+"</option>";
 			});
 			$('#cboTipoConcepto_b').html(option);
 			$('#cboTipoConcepto_b').select2();
 			
+            cargarValorizacion();
+            
 		}
 		
 	});

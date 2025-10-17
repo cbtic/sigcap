@@ -92,9 +92,9 @@ Route::get('terms', [TermsController::class, 'index'])
     });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
-    Route::post('carrito/listar_deuda', [CarritoController::class, 'listar_deuda'])->name('carrito.listar_deuda');
     Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
+    Route::get('carrito/{idTipoConcepto?}', [CarritoController::class, 'index'])->name('carrito');
+    Route::post('carrito/listar_deuda', [CarritoController::class, 'listar_deuda'])->name('carrito.listar_deuda');
     //Route::get('checkout', [PagoController::class, 'checkout'])->name('checkout');
     //Route::post('checkout/pagar', [PagoController::class, 'pagar'])->name('checkout.pagar');
     Route::post('carrito/finalizar', [CarritoController::class, 'finalizar'])->name('carrito.finalizar');
