@@ -392,7 +392,18 @@ div {
     <div class="alert alert-success" style="font-weight:bold;font-size:17px">
         {{ session('success') }}
     </div>
+@else 
+
+    @if($msg)
+    
+    <div class="alert alert-success" style="font-weight:bold;font-size:17px">
+        {{ $msg }}
+    </div>
+
+    @endif
+
 @endif
+
 
 @if(session('error'))
     <div class="alert alert-danger">
