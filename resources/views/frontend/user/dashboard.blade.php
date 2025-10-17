@@ -32,6 +32,18 @@
 
 @endif
 
+@if(
+    $logged_in_user->persona->numero_celular &&
+    $logged_in_user->persona->correo &&
+    $logged_in_user->persona->direccion
+)
+    @push('after-scripts')
+    <script>
+        window.location.href = "{{ route('frontend.carrito') }}";
+    </script>
+    @endpush
+@endif
+
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
