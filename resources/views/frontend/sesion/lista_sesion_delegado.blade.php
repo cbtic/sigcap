@@ -30,10 +30,10 @@ if($puesto=="ASESOR / ESPECIALISTA" || $puesto=="SUPLENTE")$disabled = "disabled
 <input type="radio" <?php echo $disabled?> name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> onChange="guardar_coordinador(<?php echo $row->id?>,<?php echo $id_delegado?>)" />
 </td>
 <td class='text-center'>
-<input type="checkbox" class="<?php if($row->situacion!="INHABILITADO" && $row->situacion!="FALLECIDO")echo "id_aprobar_pago"?>" name="id_aprobar_pago[<?php echo $id_delegado?>]" value="<?php echo $id_delegado?>" onchange="habilitarAprobar(this)"
+<input type="checkbox" class="<?php if($row->situacion!="INHABILITADO" )echo "id_aprobar_pago"?>" name="id_aprobar_pago[<?php echo $id_delegado?>]" value="<?php echo $id_delegado?>" onchange="habilitarAprobar(this)"
 <?php 
 if($row->id_aprobar_pago==2)echo "checked='checked'";
-if($row->situacion=="INHABILITADO" || $row->situacion=="FALLECIDO")echo "disabled='disabled'";
+if($row->situacion=="INHABILITADO" )echo "disabled='disabled'";
 ?> 
 />
 </td>
