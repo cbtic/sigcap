@@ -16,7 +16,7 @@
     </div><!--form-group-->
 
     <div class="form-group row">
-        <label for="numero_celular" class="col-md-3 col-form-label text-md-right">@lang('Celular')</label>
+        <label for="numero_celular" class="col-md-3 col-form-label text-md-right">@lang('Celular')<span style="color:red;">*</span></label>
 
         <div class="col-md-9">
             <input type="text" name="numero_celular" class="form-control" placeholder="{{ __('Celular') }}" value="{{ old('numero_celular') ?? $logged_in_user->persona->numero_celular }}" required autofocus autocomplete="numero_celular" />
@@ -24,7 +24,7 @@
     </div><!--form-group-->
 
     <div class="form-group row">
-        <label for="correo" class="col-md-3 col-form-label text-md-right">@lang('Correo Electr&oacute;nico para Facturaci&oacute;n')</label>
+        <label for="correo" class="col-md-3 col-form-label text-md-right">@lang('Correo Electr&oacute;nico para Facturaci&oacute;n')<span style="color:red;">*</span></label>
 
         <div class="col-md-9">
             <input type="text" name="correo" class="form-control" placeholder="{{ __('Correo') }}" value="{{ old('correo') ?? $logged_in_user->persona->correo }}" required autofocus autocomplete="correo" />
@@ -32,13 +32,13 @@
     </div><!--form-group-->
 
     <div class="form-group row">
-        <label for="direccion" class="col-md-3 col-form-label text-md-right">@lang('Direccion')</label>
+        <label for="direccion" class="col-md-3 col-form-label text-md-right">@lang('Direccion')<span style="color:red;">*</span></label>
 
         <div class="col-md-9">
             <input type="text" name="direccion" class="form-control" placeholder="{{ __('Direccion') }}" value="{{ old('direccion') ?? $logged_in_user->persona->direccion }}" required autofocus autocomplete="direccion" />
         </div>
     </div><!--form-group-->
-   
+   <span style="color:red;">* Datos Obligatorios</span>
     <div class="form-group row mb-0">
         <div class="col-md-12 text-right">
             <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Update')</button>
