@@ -25,6 +25,21 @@ where c.id=".$id_carrito;
         return $data;
     }
 
+    function getCarritoDetalleEliminar($id_carrito)
+    {
+
+        $cad = "select ci.id,ci.nombre,ci.fecha_vencimiento,ci.precio_unitario,ci.cantidad,ci.total,c.subtotal,c.impuesto_total,c.total_general,ci.impuesto,ci.valor_venta  
+from carritos c 
+inner join carrito_items ci on c.id=ci.carrito_id 
+inner join valorizaciones v on ci.valorizacion_id=v.id
+where c.id=".$id_carrito."
+and (v.estado = '0' or v.pagado = '1')";
+
+
+        $data = DB::select($cad);
+        return $data;
+    }
+
     function getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$cuota,$concepto, $filas,$exonerado,$numero_documento_b){  
         
         if($filas!="")$filas="limit ".$filas;

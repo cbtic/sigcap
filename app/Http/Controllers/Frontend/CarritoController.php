@@ -33,7 +33,7 @@ use Carbon\Carbon;
 class CarritoController extends Controller
 {
     
-    public function index(){
+    public function index($idTipoConcepto = null){
         
 		$usuario = Auth::user();
 		$id_persona = $usuario->id_persona;
@@ -53,7 +53,7 @@ class CarritoController extends Controller
 
 		$carrito_model = new Carrito;
 		//$agremiado_model = new Agremiado;
-		$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
+		//$carrito_deuda = $carrito_model->getCarritoDeuda($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
 		$agremiado = $carrito_model->getAgremiado($tipo_documento,$id_persona);
 		//print_r($agremiado);exit();
 		$p[]=$id_persona;
@@ -62,7 +62,7 @@ class CarritoController extends Controller
 		$p[]="";
 		$prontopago = $carrito_model->genera_prontopago($p);
 		//print_r($prontopago);exit();
-		return view('frontend.carrito.all',compact('carrito_deuda','prontopago','id_persona','agremiado'));
+		return view('frontend.carrito.all',compact(/*'carrito_deuda',*/'prontopago','id_persona','agremiado','idTipoConcepto'));
 
     }
 	
@@ -330,6 +330,13 @@ class CarritoController extends Controller
 		//print_r($carrito);exit();
 		$carrito_model = new Carrito;
 		if($carrito){
+
+			$carrito_eliminar = $carrito_model->getCarritoDetalleEliminar($carrito->id);
+			foreach($carrito_eliminar as $rowCar){
+				$carritoObj = CarritoItem::find($rowCar->id);
+				$carritoObj->delete();
+			}
+			
 			$carrito_items = $carrito_model->getCarritoDetalle($carrito->id);
 			$subtotal = isset($carrito_items[0]->subtotal)?$carrito_items[0]->subtotal:0;
 			$impuesto_total = isset($carrito_items[0]->impuesto_total)?$carrito_items[0]->impuesto_total:0;
@@ -379,6 +386,7 @@ class CarritoController extends Controller
 	public function agregar(Request $request)
     {
 		
+		//echo $request->cboTipoConcepto_b;exit();
         $request->validate([
             'valorizacion_id' => 'required|exists:valorizaciones,id',
             'cantidad'    => 'required|integer|min:1',
@@ -462,7 +470,7 @@ class CarritoController extends Controller
 			if($itemFirst){
 
 				$valorizacionTmp = Valorizacione::find($itemFirst->valorizacion_id);
-				
+				//echo $valorizacionTmp->id_concepto."|".$valorizacion->id_concepto;exit();
 				if($valorizacionTmp && $valorizacionTmp->id_concepto != $valorizacion->id_concepto){
 					return redirect('/carrito')->with('success', 'No se puede ingresar un Concepto diferente, filtre el mismo concepto');
 				}
@@ -503,7 +511,14 @@ class CarritoController extends Controller
 		*/
 		
 		// Redirigir al detalle del carrito con un mensaje
-		return redirect('/carrito/detalle')->with('success', 'Producto agregado al carrito');
+		//return redirect('/carrito/detalle')->with('success', 'Producto agregado al carrito');
+		
+		$msg = "";
+		if($carrito->items()->count()==0)$msg = "Ningun producto agregado al carrito";
+		if($carrito->items()->count()==1)$msg = "1 producto agregado al carrito";
+		if($carrito->items()->count()>1)$msg = $carrito->items()->count()." productos agregados al carrito";
+
+		return redirect('/carrito/'.$request->cboTipoConcepto_b)->with('success', $msg);
     }
 
 	public function eliminar($id) 
