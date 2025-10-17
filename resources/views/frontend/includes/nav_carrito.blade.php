@@ -20271,7 +20271,7 @@ background: #C7A64F!important;
 }
 
 .footer-izquierdo .logo {
-    width: 365px;
+    width: 250px;
     height: auto;
     max-width: inherit;
     /*-webkit-filter: invert(1);

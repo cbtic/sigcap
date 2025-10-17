@@ -326,6 +326,10 @@ div {
     }
 }
 
+.footer {
+    background-color: #1C77B9 !important;
+}
+
 
 </style>
 
@@ -385,10 +389,21 @@ div {
 @endif
 
 @if(session('success'))
-    <div class="alert alert-danger">
+    <div class="alert alert-success" style="font-weight:bold;font-size:17px">
         {{ session('success') }}
     </div>
+@else 
+
+    @if($msg)
+    
+    <div class="alert alert-success" style="font-weight:bold;font-size:17px">
+        {{ $msg }}
+    </div>
+
+    @endif
+
 @endif
+
 
 @if(session('error'))
     <div class="alert alert-danger">
@@ -560,34 +575,6 @@ div {
             </table>
         </div>
 
-
-
-
-        <!--
-        <div class="row px-xl-0">        
-            <?php foreach($carrito_deuda as $row){?> 
-            <div class="col-lg-6 col-md-4 col-sm-6 pb-0">
-                <div class="product-item bg-light mb-3">
-                    <div class="product-img position-relative overflow-hidden">                        
-                        
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="agregarAlCarrito({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-shopping-cart" style="line-height:unset !important;"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="verItem({{ $row->id }})" style="padding-left:35px!important;line-height:37px"><i class="fa fa-search" style="line-height:unset !important;"></i></a>
-                        </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">{{$row->descripcion}}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>S/. {{$row->valor_unitario}}</h5>
-                            </div>
-                            <small class="text-body">Vence: {{ date('d-m-Y',strtotime($row->fecha)) }} </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php }?>
-        </div>
-        -->
-
         </form>
 
         <div class="form-group form-group-btn form-navigation">
@@ -727,20 +714,31 @@ div {
 	<div class="container">
 		<div class="row">
 			
-			<div class="col-lg-8 col-12 footer-izquierdo">
+			<div class="col-lg-6 col-12 footer-izquierdo">
 				<div class="brand">
 					<a href="/home" title="CAP">
-						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
+						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" width="180" height="70" alt="CAP">
 					</a>
 				</div>
-				<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
+				<!--<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
-					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>
 					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
 					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
 					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
+				</div>-->
+			</div>
+            
+			<div class="col-lg-6 col-12">
+                <strong class="titulo" style="color:white">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
+                <div class="contacto" id="footerInfo">
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p style="color:white">Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
+					<p style="color:white">Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p style="color:white">Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
+
 			</div>
 			
 			<!--<div class="col-lg-4 col-12 footer-derecho">
@@ -1348,8 +1346,12 @@ $("#chkExonerado").on('change', function() {
 });
 
 $('#cboTipoCuota_b').select2();
-cargarValorizacion();
-cargarcboTipoConcepto();
+
+var idTipoConcepto = "<?php echo $idTipoConcepto?>";
+cargarcboTipoConcepto(idTipoConcepto);
+
+//cargarValorizacion();
+
 //cargarcboPeriodo();
 //cargarcboMes();
 
@@ -1375,22 +1377,29 @@ function cargarcboMes(){
 	});
 }
 
-function cargarcboTipoConcepto(){    	
+
+//alert(idTipoConcepto);
+function cargarcboTipoConcepto(idTipoConcepto){    	
 
 	$.ajax({
 		url: "/carrito/listar_valorizacion_concepto",
 		type: "POST",
 		data : $("#form-agregar-carrito").serialize(),
 		success: function(result){
-			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option = "<option value=''>Seleccionar Concepto</option>";
 			var option;
+            var sel = "";
 			$('#cboTipoConcepto_b').html("");
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+                sel = "";
+                if(idTipoConcepto==oo.id)sel="selected='selected'";
+				option += "<option value='"+oo.id+"' "+sel+" >"+oo.denominacion+"</option>";
 			});
 			$('#cboTipoConcepto_b').html(option);
 			$('#cboTipoConcepto_b').select2();
 			
+            cargarValorizacion();
+            
 		}
 		
 	});

@@ -4,7 +4,6 @@
 @section('title', __('Dashboard'))
 
 @if(
-    !$logged_in_user->persona->telefono_fijo ||
     !$logged_in_user->persona->numero_celular ||
     !$logged_in_user->persona->correo ||
     !$logged_in_user->persona->direccion
@@ -14,9 +13,6 @@
         $(function(){
 
             let msg = "Falta Actualizar: <br>";
-
-            @if (!$logged_in_user->persona->telefono_fijo)msg+="Telefono Fijo <br>";
-            @endif
 
             @if (!$logged_in_user->persona->numero_celular)msg+="Numero Celular <br>";
             @endif
@@ -34,6 +30,18 @@
     </script>
     @endpush
 
+@endif
+
+@if(
+    $logged_in_user->persona->numero_celular &&
+    $logged_in_user->persona->correo &&
+    $logged_in_user->persona->direccion
+)
+    @push('after-scripts')
+    <script>
+        window.location.href = "{{ route('frontend.carrito') }}";
+    </script>
+    @endpush
 @endif
 
 @section('content')
