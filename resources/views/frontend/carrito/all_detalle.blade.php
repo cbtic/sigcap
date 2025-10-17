@@ -465,20 +465,31 @@ const iziConfig = {
 	<div class="container">
 		<div class="row">
 			
-			<div class="col-lg-8 col-12 footer-izquierdo">
+			<div class="col-lg-6 col-12 footer-izquierdo">
 				<div class="brand">
 					<a href="/home" title="CAP">
-						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
+						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" style="width:500 height:100" alt="CAP">
 					</a>
 				</div>
-				<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
+				<!--<strong class="titulo">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
-					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>
 					<p>Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
 					<p>Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
 					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
+				</div>-->
+			</div>
+
+            <div class="col-lg-6 col-12">
+                <strong class="titulo" style="color:white">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
+                <div class="contacto" id="footerInfo">
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p style="color:white">Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
+					<p style="color:white">Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p style="color:white">Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
+
 			</div>
 			
 			<!--<div class="col-lg-4 col-12 footer-derecho">
