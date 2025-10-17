@@ -5261,45 +5261,63 @@ class ComprobanteController extends Controller
                 echo($id_comprobante_ncnd);
                 exit();
 */
+
                 $factura_ = Comprobante::where('id', $id_comprobante_ncnd)->get()[0];
-                //$fac_serie = $factura->serie;
-                //$fac_numero = $factura->numero;
-                $tipoF_ = $factura_->tipo;
 
-              //  echo($tipoF_);
-               // exit();
+                if ($factura_ != null) {
 
-                if ($tipoF_ == "BV") {
+                    //$fac_serie = $factura->serie;
+                    //$fac_numero = $factura->numero;
+                    //$tipoF_ = $factura_->tipo;
 
+                    //  echo($tipoF_);
+                    // exit();
                     $id_persona = $factura_->id_persona;
 
-                    $valorizaciones_model = new Valorizacione;
-                    $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                    if ($id_persona != null) {
 
-                    if($totalDeuda != null){
-
-                        $total_ = $totalDeuda->total;
-
-                        //echo($total_);
+                        //echo($id_persona);
                         //exit();
+    
+                        $agremiado_ = Agremiado::where('id_persona', $id_persona)->first();
 
-                        if ($total_ <= 2) {
-                            $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                            
-                            if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
-                                $agremiado->id_situacion = "73"; //habilitado
-                                $agremiado->id_usuario_actualiza = $id_user;
-                                $agremiado->save();
+
+                            //echo($id_persona);
+                            //exit();
+
+                        if($agremiado_ != null){
+
+                            //echo($id_persona);
+                            //exit();
+
+                            $valorizaciones_model = new Valorizacione;
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+
+                            if($totalDeuda != null){
+
+                                $total_ = $totalDeuda->total;
+
+                                //echo($total_);
+                                //exit();
+
+                                if ($total_ <= 2) {
+                                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                                    
+                                    if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                                        $agremiado->id_situacion = "73"; //habilitado
+                                        $agremiado->id_usuario_actualiza = $id_user;
+                                        $agremiado->save();
+                                    }
+                                } 
+                                if ($total_ > 2) {
+                                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];                        
+                                    $agremiado->id_situacion = "74"; //inhabilitado
+                                    $agremiado->id_usuario_actualiza = $id_user;
+                                    $agremiado->save();
+                                }
                             }
-                        } 
-                        if ($total_ > 2) {
-                            $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];                        
-                            $agremiado->id_situacion = "74"; //inhabilitado
-                            $agremiado->id_usuario_actualiza = $id_user;
-                            $agremiado->save();
-                        }
+                        }                    
                     }
-                    
                 }
 
                 //echo $id_factura;
