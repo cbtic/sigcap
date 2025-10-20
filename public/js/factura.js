@@ -312,7 +312,9 @@ async function guardarFactura(){
 		}
 		
 	}
-	//alert(total_fac_);exists();		
+	
+	alert(total_fac_);exit();		
+
 	if (id_formapago_==1)  {
 
 	if(total_>total_fac_){
@@ -450,7 +452,7 @@ async function guardarFactura(){
 	}
 	
 	if (dif>1 || dif<-1){	
-		msg+="La diferencia de no es válida...<br>";	
+		msg+="La diferencia no es válida...<br>";	
 	}
 	//if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
 

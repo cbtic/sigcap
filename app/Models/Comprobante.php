@@ -338,7 +338,7 @@ class Comprobante extends Model
                     and c.id not in(select c2.id_comprobante_ncnd  from comprobantes c2 where  c2.serie = '".$serie."' and c2.numero = '".$numero."' and c2.anulado = 'N' and c2.tipo <> 'NC' and c2.id_comprobante_ncnd is not null)";
         
             
-            //echo($cad); exit();
+          //  echo($cad); exit();
 		$data = DB::select($cad);
                            
         if(isset($data[0]))return $data[0];
