@@ -148,6 +148,10 @@
     text-decoration: underline;
 }
 
+.footer {
+    background-color: #1C77B9 !important;
+}
+
 
 </style>
 
@@ -354,23 +358,34 @@
 	<div class="container">
 		<div class="row">
 			
-			<div class="col-lg-8 col-12 footer-izquierdo">
+			<div class="col-lg-6 col-12 footer-izquierdo">
 				<div class="brand">
 					<a href="/home" title="CAP">
-						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo.png" width="500" height="100" alt="CAP">
+						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" style="width:500 height:100" alt="CAP">
 					</a>
 				</div>
-				<strong class="titulo">Banco de la Nación | Ministerio de Economía y Finanzas</strong>
+				<!--<strong class="titulo">Banco de la Nación | Ministerio de Economía y Finanzas</strong>
 				<span class="enlace-mobile link link-sm collapsed" data-toggle="collapse" href="#footerInfo" role="button" aria-expanded="false" aria-controls="footerInfo">Contáctenos<i class="icon icon-pagalo-chevron-up" aria-hidden="true"></i></span>
 				<div class="contacto collapse" id="footerInfo">
 					<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>
 					<p>Oficina Principal: Av. Javier Prado Este 2499, San Borja. Central telefónica: 519-20 00.</p>
 					<p>Atención en oficinas administrativas: lunes a viernes de 8:30 a 17:30 horas. Refrigerio de: 13 a 14 horas.</p>
 					<p>Atención en Oficina de Trámite Documentario: lunes a viernes de 9:00 a 17:00 horas (horario corrido).</p>
+				</div>-->
+			</div>
+
+            <div class="col-lg-6 col-12">
+                <strong class="titulo" style="color:white">Colegio de Arquitectos del Per&uacute; | Regional Lima</strong>
+                <div class="contacto" id="footerInfo">
+					<!--<p>Mesa de ayuda: (01) 442-4470 - (01) 440-5305 - Línea gratuita: 0-800-10700</p>-->
+					<p style="color:white">Oficina Principal: Av. San Felipe 999, Jesús María 15072. Central telefónica: (01) 627 - 1200.</p>
+					<p style="color:white">Atención en oficinas administrativas: lunes a viernes de 8:00 a 17:00 horas.</p>
+					<p style="color:white">Atención en Oficina de Trámite Documentario: lunes a viernes de 8:00 a 17:00 horas.</p>
 				</div>
+
 			</div>
 			
-			<div class="col-lg-4 col-12 footer-derecho">
+			<!--<div class="col-lg-4 col-12 footer-derecho">
 				<div class="footer-menu">
 					<div class="row">
 						<div class="col">
@@ -392,7 +407,7 @@
 						</div>	
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div>
