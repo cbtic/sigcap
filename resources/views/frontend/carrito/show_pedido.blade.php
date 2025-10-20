@@ -358,7 +358,7 @@
 	<div class="container">
 		<div class="row">
 			
-			<div class="col-lg-8 col-12 footer-izquierdo">
+			<div class="col-lg-6 col-12 footer-izquierdo">
 				<div class="brand">
 					<a href="/home" title="CAP">
 						<img class="logo" src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" style="width:500 height:100" alt="CAP">
