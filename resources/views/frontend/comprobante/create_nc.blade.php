@@ -557,7 +557,11 @@
 
                                                                 <input type="hidden" id="afect_igv<?php echo $key?>" name="facturad[<?php echo $key ?>][afect_igv]" value="<?php echo $fac['afect_igv'] ?>" />                                            
                                                                 <input type="hidden" id="igv<?php echo $key?>" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />                                                            
-                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['importe'] ?>" />
+                                                                <!--
+                                                                <input type="hidden" id="total<//?php echo $key?>" name="facturad[<//?php echo $key ?>][total]" value="<//?php echo $fac['importe'] ?>" />
+                                                            -->
+                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $importe ?>" />
+                                                                
                                                                 <input type="hidden" id="pu<?php echo $key?>" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac['pu'] ?>" />
                                                                 <input type="hidden" id="pv<?php echo $key?>" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac['precio_venta'] ?>" />
                                                                 <input type="hidden" id="valor_venta_bruto<?php echo $key?>" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac['valor_venta_bruto'] ?>" />

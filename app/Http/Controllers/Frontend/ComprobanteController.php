@@ -3860,6 +3860,7 @@ class ComprobanteController extends Controller
             $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
             //$facturad= json_encode($facturad1);
             //$afectacion=$facturad[0]->afect_igv;
+            /*
             $facturadRedondeo = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
@@ -3875,6 +3876,9 @@ class ComprobanteController extends Controller
             //echo($montoRedondeo); exit();
 
             $importe=$facturad1->importe + $montoRedondeo;
+            */
+
+            $importe=$facturad1->importe;
         }
         else {
             $comprobante_model=new Comprobante;
