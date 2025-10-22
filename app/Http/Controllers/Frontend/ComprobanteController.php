@@ -2377,7 +2377,7 @@ class ComprobanteController extends Controller
                         $fecha_hoy = date('Y-m-d');
  
                         
-                        if ($total_pagar != "0" && $total_pagar != "" && !isset($total_pagar)) {
+                        if ($total_pagar != "0" && $total_pagar != "" ) {
                                                      
 
                             $total_pagar = $request->total_pagar;
@@ -2412,7 +2412,7 @@ class ComprobanteController extends Controller
                             $tarifa[999] = $items1;
                         }
 
-                        if ($total_abono != "0" && $total_abono != "" && !isset($total_abono)    ) {
+                        if ($total_abono != "0" && $total_abono != "" ) {
                             $total_pagar_abono = $request->total_pagar_abono;
                             $total_g = $request->totalF;
                             $total_abono = $total_pagar_abono - $total_g;
@@ -3860,7 +3860,21 @@ class ComprobanteController extends Controller
             $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
             //$facturad= json_encode($facturad1);
             //$afectacion=$facturad[0]->afect_igv;
-            $importe=$facturad1->importe;
+            $facturadRedondeo = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->where('descripcion', '=', 'REDONDEO')->first();
+
+            $montoRedondeo = 0;
+            if($facturadRedondeo){
+                $montoRedondeo = $facturadRedondeo->importe * -1;
+
+                 $comprobante=$comprobante_model->getComprobanteByIdRedondeo($id_origen, $montoRedondeo);
+            }
+            //echo($montoRedondeo); exit();
+
+            $importe=$facturad1->importe + $montoRedondeo;
         }
         else {
             $comprobante_model=new Comprobante;
