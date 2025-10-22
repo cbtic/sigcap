@@ -622,7 +622,6 @@ class DerechoRevisionController extends Controller
             $m->to($correo_electronico, $paterno)->subject($asunto);
 			
         });
-		
 	}
 
 	public function correo_credipago_aprobado_hu($id){
