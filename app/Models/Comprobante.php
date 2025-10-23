@@ -412,7 +412,8 @@ class Comprobante extends Model
                 sum(precio_venta) precio_venta, sum(valor_venta_bruto) valor_venta_bruto, sum(valor_venta) valor_venta, now() fecha, 
                 (select t.descripcion  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1)descripcion,
                 (select t.id  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id,
-                (select t.id_concepto  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id_concepto
+                (select t.id_concepto  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id_concepto,
+                (select t.afect_igv  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) afect_igv                
             FROM comprobante_detalles cd
             where id_comprobante='".$numero_comprobante."'
             group by serie, numero, tipo,id_comprobante";

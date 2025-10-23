@@ -1226,7 +1226,7 @@ function fn_save_nc(){
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 
-				exit();
+				//exit();
 
 				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 

@@ -540,7 +540,7 @@
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac->descripcion//$fac['denominacion'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac->descripcion//$fac['descripcion'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][tipoF]" value="NC" />                                                                
-                                                                <input type="hidden"  id="monto<?php echo $key?>" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac->monto//$fac['monto'] ?>" />
+                                                                <input type="hidden"  id="monto<?php echo $key?>" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac->importe//$fac['monto'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo 'SOLES'//$fac['moneda'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo '1'//$fac['id_moneda'] ?>" />
                                                                 <input type="hidden" id="descuento<?php echo $key?>" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo '0'//$fac['descuento'] ?>" />
