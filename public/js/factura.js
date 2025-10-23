@@ -291,6 +291,7 @@ async function guardarFactura(){
 	if(ind==0)msg+="Debe adicionar el Medio de Pago <br>";
 	
 	var totalMedioPago = $('#totalMedioPago').val();
+	//alert(totalMedioPago);
 	var total_fac_ = $('#total_fac_').val();
 
 	var id_formapago_ = $('#id_formapago_').val();
@@ -312,7 +313,10 @@ async function guardarFactura(){
 		}
 		
 	}
-	//alert(total_fac_);exists();		
+	
+	//alert(total_fac_);//exit();
+	//alert(total_);//exit();		
+
 	if (id_formapago_==1)  {
 
 	if(total_>total_fac_){
@@ -342,7 +346,7 @@ async function guardarFactura(){
 
 		 const result = await Swal.fire({
         title: 'Mensaje',
-        text: "¿El total de medio de pago es MENOR al total del comprobante por "+ dif.toFixed(2) + " , esta seguro de continuar?",
+        text: "¿El total de medio de pago es MENOR al total del comprobante por: "+ dif.toFixed(2) + " , esta seguro de continuar?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -450,7 +454,7 @@ async function guardarFactura(){
 	}
 	
 	if (dif>1 || dif<-1){	
-		msg+="La diferencia de no es válida...<br>";	
+		msg+="La diferencia no es válida...<br>";	
 	}
 	//if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
 
@@ -555,7 +559,7 @@ function fn_save() {
         success: function (result) {           
             if(result.sw) {
                 $('#numerof').val(result.id_factura);
-                $('#divNumeroF').show();
+                $('#divNumeroF').show();				
                 enviar_comprobante(result.id_factura);
                 location.href = urlApp+"/comprobante/ver/"+result.id_factura;
             } else {

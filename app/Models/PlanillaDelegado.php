@@ -70,10 +70,15 @@ class PlanillaDelegado extends Model
     }
 	
 	public function generar_planilla_delegado($id_periodo,$anio,$mes) {
-		
+		/*
         $cad = "Select sp_planilla_delegado(?,?,?)";
         $data = DB::select($cad, array($id_periodo,$anio,$mes));
         return $data[0]->sp_planilla_delegado;
+		*/
+
+		$cad = "Select sp_planilla_delegado_f2(?,?,?)";
+        $data = DB::select($cad, array($id_periodo,$anio,$mes));
+        return $data[0]->sp_planilla_delegado_f2;
     }
 	
 	function getSaldoDelegadoFondoComun($id_periodo,$anio,$mes){
