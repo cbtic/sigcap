@@ -1217,7 +1217,6 @@ function fn_save_nc(){
 					$('#divNumeroF').show();
 					$('#guardar').show();
 
-
 					return false;
 				}
 				

@@ -3956,6 +3956,7 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->where('descripcion', '<>', 'REDONDEO')->get();
 
+            
             $afectacion=$facturad[0]->afect_igv;
 
             $facturadR=$comprobante_model->getComprobanteDetalleById($id_origen);
