@@ -236,14 +236,14 @@ class RevisorUrbanoController extends Controller
 		}
 		
 		
-		$export = new InvoicesExport([$variable]);
+		$export = new InvoicesExport6([$variable]);
 		return Excel::download($export, 'reporte_revisor_urbano.xlsx');
 		
     }
 
 }
 
-class InvoicesExport implements FromArray
+class InvoicesExport6 implements FromArray
 {
 	protected $invoices;
 

@@ -1025,7 +1025,7 @@ class ConcursoController extends Controller
 		}
 		
 		
-		$export = new InvoicesExport([$variable]);
+		$export = new InvoicesExport2([$variable]);
 		return Excel::download($export, 'resultado_concurso.xlsx');
 		
     }
@@ -1080,7 +1080,7 @@ class ConcursoController extends Controller
 	
 }
 
-class InvoicesExport implements FromArray
+class InvoicesExport2 implements FromArray
 	{
     	protected $invoices;
 

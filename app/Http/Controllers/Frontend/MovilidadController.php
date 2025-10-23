@@ -161,7 +161,7 @@ class MovilidadController extends Controller
 			array_push($variable, $array_cuerpo);
 		}
 		
-		$export = new InvoicesExport([$variable]);
+		$export = new InvoicesExport3([$variable]);
 		return Excel::download($export, 'lista_movilidad.xlsx');
 	
 	}
@@ -288,7 +288,7 @@ class MovilidadController extends Controller
 
 }
 
-class InvoicesExport implements FromArray
+class InvoicesExport3 implements FromArray
 {
 	protected $invoices;
 

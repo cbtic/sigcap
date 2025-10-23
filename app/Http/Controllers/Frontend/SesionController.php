@@ -1280,7 +1280,7 @@ class SesionController extends Controller
 		$array_cuerpo[] = $total_sesion;
 		array_push($variable, $array_cuerpo);
 
-		$export = new InvoicesExport([$variable]); 
+		$export = new InvoicesExport5([$variable]); 
 		return Excel::download($export, 'lista_computo_sesion.xlsx');
 	}
 	
@@ -1326,7 +1326,7 @@ class SesionController extends Controller
 			array_push($variable, array($n++,$r->comision, $r->numero_cap, $r->agremiado));
 		}
 		
-		$export = new InvoicesExport([$variable]);
+		$export = new InvoicesExport5([$variable]);
 		return Excel::download($export, 'lista_delegado_coordinadores.xlsx');
 
 	}
@@ -1524,7 +1524,7 @@ class SesionController extends Controller
 
 }
 
-class InvoicesExport implements FromArray
+class InvoicesExport5 implements FromArray
 {
 	protected $invoices;
 

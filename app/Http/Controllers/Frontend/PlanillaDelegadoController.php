@@ -561,7 +561,7 @@ class PlanillaDelegadoController extends Controller
 		array_push($variable, array("","Menos Pago Fijo a Coordinadores","", number_format($coordinador,2,".",""), "","","", "", "", "","","","", "","SALDO FINAL DE SESIONES","",$total_sesiones,""));
 		array_push($variable, array("","Monto Neto = Fondo Comun","", number_format($fondo_comun_neto,2,".",""), "","","", "", "", "","","","", "","Importe por Sesion","",number_format($importe_por_sesion,2,".",""),""));
 		
-		$export = new InvoicesExport([$variable]);
+		$export = new InvoicesExport7([$variable]);
 		return Excel::download($export, 'planilla_delegado.xlsx');
 		
     }
@@ -700,13 +700,13 @@ class PlanillaDelegadoController extends Controller
 		}
 		
 		
-		$export = new InvoicesExport([$variable]);
+		$export = new InvoicesExport7([$variable]);
 		return Excel::download($export, 'reporte_recibo_honorarios_delegados.xlsx');
 		
     }
 }
 
-class InvoicesExport implements FromArray
+class InvoicesExport7 implements FromArray
 	{
     	protected $invoices;
 

@@ -576,7 +576,7 @@ class ReporteController extends Controller
 			$variable[] = ['EXCLUSIONES'];
 			$variable[] = ['COUTA EXONERADA','EXCLUIDO'];
 			
-			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
+			$export = new InvoicesExport10([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}else if($funcion=='ra'){
@@ -629,7 +629,7 @@ class ReporteController extends Controller
 
 			$variable[] = ['', '', 'TOTAL', $total_monto];
 			
-			$export = new InvoicesExport7([$variable], $titulo, $fecha_cierre);
+			$export = new InvoicesExport17([$variable], $titulo, $fecha_cierre);
 			return Excel::download($export, 'lista_deuda_anual.xlsx');
 			
 		}else if($funcion=='rvm'){
@@ -659,7 +659,7 @@ class ReporteController extends Controller
 
 			array_push($variable,array('','','Total',$total_monto));
 			
-			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
+			$export = new InvoicesExport10([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}
@@ -882,7 +882,7 @@ class ReporteController extends Controller
 			
 				array_push($variable, array("","TOTAL",$total_monto_nc_no_afecta));
 
-				$export = new InvoicesExport3([$variable], $titulo);
+				$export = new InvoicesExport13([$variable], $titulo);
 				return Excel::download($export, 'consolidado_caja.xlsx');
 
 			}
@@ -1033,7 +1033,7 @@ class ReporteController extends Controller
 
 				array_push($variable, array("", "", "", "", "", "", "","Total General", (float)$suma_total));
 				
-				$export = new InvoicesExport5([$variable], $titulo, $f_inicio);
+				$export = new InvoicesExport15([$variable], $titulo, $f_inicio);
 				return Excel::download($export, 'reporte_ventas_concepto.xlsx');
 			}
 			
@@ -1136,7 +1136,7 @@ class ReporteController extends Controller
 
 				array_push($variable, array("", "", "", "", "", "Total General", $suma_imponible_afecto, $suma_imponible_inafecto, $suma_igv_total,(float)$suma_total, "", ""));
 				
-				$export = new InvoicesExport6([$variable], $titulo, $f_inicio);
+				$export = new InvoicesExport16([$variable], $titulo, $f_inicio);
 				return Excel::download($export, 'reporte_ventas.xlsx');
 
 			}
@@ -1196,7 +1196,7 @@ class ReporteController extends Controller
     }
 }
 
-class InvoicesExport implements FromArray, WithHeadings, WithStyles
+class InvoicesExport10 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $fechaFin;
@@ -1271,7 +1271,7 @@ class InvoicesExport implements FromArray, WithHeadings, WithStyles
 
 }
 
-class InvoicesExport2 implements FromArray, WithHeadings, WithStyles
+class InvoicesExport11 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $fechaFin;
@@ -1344,7 +1344,7 @@ class InvoicesExport2 implements FromArray, WithHeadings, WithStyles
 
 }
 
-class InvoicesExport3 implements FromArray, WithHeadings, WithStyles
+class InvoicesExport13 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $titulo;
@@ -1490,7 +1490,7 @@ class InvoicesExport4 implements FromArray, WithHeadings, WithStyles
 
 }
 
-class InvoicesExport5 implements FromArray, WithHeadings, WithStyles
+class InvoicesExport15 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $titulo;
@@ -1565,7 +1565,7 @@ class InvoicesExport5 implements FromArray, WithHeadings, WithStyles
 
 }
 
-class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
+class InvoicesExport16 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $titulo;
@@ -1640,7 +1640,7 @@ class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
 
 }
 
-class InvoicesExport7 implements FromArray, WithHeadings, WithStyles
+class InvoicesExport17 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $titulo;

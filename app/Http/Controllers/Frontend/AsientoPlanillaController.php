@@ -518,7 +518,7 @@ class AsientoPlanillaController extends Controller
     }
 
 }
-class InvoicesExport implements FromArray
+class InvoicesExport8 implements FromArray
 {
 	protected $invoices;
 

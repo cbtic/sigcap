@@ -2377,7 +2377,7 @@ class ComprobanteController extends Controller
                         $fecha_hoy = date('Y-m-d');
  
                         
-                        if ($total_pagar != "0" && $total_pagar != "" && !isset($total_pagar)) {
+                        if ($total_pagar != "0" && $total_pagar != "" ) {
                                                      
 
                             $total_pagar = $request->total_pagar;
@@ -2412,7 +2412,7 @@ class ComprobanteController extends Controller
                             $tarifa[999] = $items1;
                         }
 
-                        if ($total_abono != "0" && $total_abono != "" && !isset($total_abono)    ) {
+                        if ($total_abono != "0" && $total_abono != ""    ) {
                             $total_pagar_abono = $request->total_pagar_abono;
                             $total_g = $request->totalF;
                             $total_abono = $total_pagar_abono - $total_g;
