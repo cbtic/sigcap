@@ -378,17 +378,52 @@ class Comprobante extends Model
         if(isset($data[0]))return $data[0];
     }
 
-    function getComprobanteDetalleById($numero_comprobante){
+    function getComprobanteByIdRedondeo($numero_comprobante, $monto_redondeo){
 
+        $cad = "SELECT id, serie, numero, tipo, fecha, destinatario, direccion, cod_tributario, gia, 
+                    total + ".$monto_redondeo." - round(CAST(((total+".$monto_redondeo.")/1.18)*0.18 AS NUMERIC), 2) subtotal, 
+                    round(CAST(((total+".$monto_redondeo.")/1.18)*0.18 AS NUMERIC), 2) as impuesto,
+                    total+".$monto_redondeo." total, 
+                    letras, id_moneda, 
+                    moneda, impuesto_factor, tipo_cambio, estado_pago, fecha_pago, fecha_recepcion, fecha_vencimiento, fecha_programado, id_forma_pago, 
+                    observacion, anulado, afecta, cerrado, id_tipo_documento, eliminado, serie_ncnd, id_numero_ncnd, tipo_ncnd, orden_compra, solictante, 
+                    impreso, codtipo_ncnd, motivo_ncnd, total_grav, total_inaf, total_exo, total_descuentos, serie_guia, nro_guia, tipo_guia, serie_refer, 
+                    nro_refer, tipo_refer, base_perce, monto_perce, totalconperce, ope_gratuitas, desc_globales, tipo_emision, correo_des, porc_detrac, 
+                    monto_detrac, cuenta_detrac, total_anticipo, motivo_baja, tipo_operacion, estado_sunat, ruta_comprobante, codigo_bbss_detrac, estado_email, 
+                    fecha_anulacion, ticket_sunat, notas, cond_pago, estado, id_usuario_inserta, id_usuario_actualiza, created_at, updated_at, id_caja, 
+                    id_condicion_pago, nro_cuotas, detraccion, id_detra_cod_bos, id_detra_medio, id_comprobante_ncnd, tipo_detrac, afecta_detrac, medio_pago_detrac,
+                    destinatario_2, direccion_2, cod_tributario_2, correo_des_2, correlativo_exp, total_credito, afecta_caja, id_persona, id_empresa, devolucion_nc, migra_conta
+				from comprobantes  
+				where id='".$numero_comprobante."'";
+    
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+
+    function getComprobanteDetalleById($numero_comprobante){
+/*
         $cad = "SELECT id, serie, numero, tipo, item, descripcion, pu, pu_con_igv, igv_total, afect_igv, unidad, cod_contable, descuento, valor_gratu, estado, id_comprobante, cantidad, id_concepto,
                     (select sum(x.importe) from comprobante_detalles x where x.id_comprobante =  cd.id_comprobante) importe
                 FROM comprobante_detalles cd
                 where cd.descripcion <> 'REDONDEO' 
                     and cd.id_comprobante='".$numero_comprobante."'";
+*/
+        $cad = "SELECT serie, numero, tipo, sum(pu) pu, sum(pu_con_igv) pu_con_igv, sum(igv_total)igv_total,sum(importe) importe,
+                sum(precio_venta) precio_venta, sum(valor_venta_bruto) valor_venta_bruto, sum(valor_venta) valor_venta, now() fecha, 
+                (select t.descripcion  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1)descripcion,
+                (select t.id  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id,
+                (select t.id_concepto  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id_concepto,
+                (select t.afect_igv  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) afect_igv                
+            FROM comprobante_detalles cd
+            where id_comprobante='".$numero_comprobante."'
+            group by serie, numero, tipo,id_comprobante";
 
         //echo ($cad);
+		//$data = DB::select($cad);
+        //if(isset($data[0]))return $data[0];
+
 		$data = DB::select($cad);
-        if(isset($data[0]))return $data[0];
+        return $data;        
     }
 
     function getPersonaDni($numero_documento){

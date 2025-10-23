@@ -1236,6 +1236,7 @@ function fn_save_nc(){
 					enviar_comprobante(result.id_factura);
 				}
 
+
 				//enviar_comprobante(result.id_factura);
 
             }

@@ -2375,15 +2375,62 @@ class ComprobanteController extends Controller
 
 
                         $fecha_hoy = date('Y-m-d');
+                        $total_redondeo= 0;
  
                         
-                        if ($total_pagar != "0" && $total_pagar != "" && !isset($total_pagar)) {
+                        if ($total_pagar != "0" && $total_pagar != "" ) {
                                                      
-
                             $total_pagar = $request->total_pagar;
                             $total_g = $request->totalF;
                             $total_redondeo = $total_pagar - $total_g;
+
+                            $igv_redondeo = ($total_redondeo/1.18)*0.18;
+                            $pu_redondeo = $total_redondeo-$igv_redondeo ;                            
                             //$fecha_hoy = date('Y-m-d');
+
+                            if ($id_tipo_afectacion_pp == '30') {
+	
+                                $igv_   = 0;
+                                $Cantidad_ = 1;
+                                $Descuento_ = 0;                               
+                                $PrecioVenta_= str_replace(",", "", number_format($total_redondeo * -1,  2));
+
+                                $ValorUnitario_ = str_replace(",", "", number_format($PrecioVenta_,  2));
+                                $ValorVB_ = str_replace(",", "", number_format($ValorUnitario_ * $Cantidad_, 2));
+                                $ValorVenta_ = str_replace(",", "", number_format($ValorVB_ - $Descuento_, 2));
+                                $Igv_ = 0;		
+                                $Total_ = str_replace(",", "", number_format($ValorVenta_ + $Igv_, 2));
+
+                                //$stotal = $Total_;
+                                $igv_redondeo= $Igv_;
+                                $pu_redondeo = $ValorUnitario_ ; 
+
+                            } else {
+                                $tasa_igv_=0.18;
+                                $Cantidad_ = 1;
+                                $Descuento_ = 0;
+                                $PrecioVenta_= str_replace(",", "", number_format($total_redondeo * -1,  2));
+
+                                $ValorUnitario_ = $PrecioVenta_ /(1+$tasa_igv_);
+                                $ValorVB_ = $ValorUnitario_ * $Cantidad_;
+                                $ValorVenta_ = $ValorVB_ - $Descuento_;
+                                $Igv_ = $ValorVenta_ * $tasa_igv_;		
+                                $Total_ = $ValorVenta_ + $Igv_;	
+                                
+                                $ValorUnitario_ = str_replace(",", "", number_format($ValorUnitario_, 2));
+                                $ValorVB_ = str_replace(",", "", number_format($ValorVB_, 2));
+                                $ValorVenta_ = str_replace(",", "", number_format($ValorVenta_, 2));
+                                $Igv_ = str_replace(",", "", number_format($Igv_, 2));		
+                                $Total_ = str_replace(",", "", number_format($Total_, 2));
+                                
+                                //$stotal = $Total_;
+                                //$igv_   = $Igv_;
+
+                                $igv_redondeo= $Igv_;
+                                $pu_redondeo = $ValorUnitario_ ; 
+
+                            }
+
 
                             $items1 = array(
                                 "id" => 0,
@@ -2391,7 +2438,7 @@ class ComprobanteController extends Controller
                                 "denominacion" => "REDONDEO",
                                 "codigo_producto" => "",
                                 "descripcion" => "REDONDEO",
-                                "monto" => round($total_redondeo, 2),
+                                "monto" => $PrecioVenta_*-1,
                                 "moneda" => "SOLES",
                                 "abreviatura" => "SOLES",
                                 "unidad_medida_item" => "NIU",
@@ -2400,23 +2447,67 @@ class ComprobanteController extends Controller
                                 "descuento" => 0,
                                 "cod_contable" => "",
                                 "id_concepto" => 26464,
-                                "pu" => round($total_redondeo, 2),
-                                "igv" => 0,
-                                "pv" =>  0,
-                                "vv" =>  0,
+                                "pu" =>  $ValorUnitario_*-1,
+                                "igv" => $Igv_*-1,
+                                "pv" =>  $PrecioVenta_*-1,
+                                "vv" =>  $ValorVenta_*-1,
                                 "cantidad" => 1,
-                                "total" => round($total_redondeo, 2),
+                                "total" => $PrecioVenta_*-1,
                                 "item" => 999,
+                                "valor_venta_bruto" => $ValorVB_*-1,
+                                "valor_venta" => $ValorVenta_*-1,                                
 
                             );
                             $tarifa[999] = $items1;
                         }
 
-                        if ($total_abono != "0" && $total_abono != "" && !isset($total_abono)    ) {
+                        if ($total_abono != "0" && $total_abono != "" ) {
                             $total_pagar_abono = $request->total_pagar_abono;
                             $total_g = $request->totalF;
                             $total_abono = $total_pagar_abono - $total_g;
                             //$fecha_hoy = date('Y-m-d');
+                            if ($id_tipo_afectacion_pp == '30') {
+	
+                                $igv_   = 0;
+                                $Cantidad_ = 1;
+                                $Descuento_ = 0;
+                                $PrecioVenta_= str_replace(",", "", number_format($total_abono * -1,  2));
+
+                                $ValorUnitario_ = str_replace(",", "", number_format($PrecioVenta_,  2));
+                                $ValorVB_ = str_replace(",", "", number_format($ValorUnitario_ * $Cantidad_, 2));
+                                $ValorVenta_ = str_replace(",", "", number_format($ValorVB_ - $Descuento_, 2));
+                                $Igv_ = 0;		
+                                $Total_ = str_replace(",", "", number_format($ValorVenta_ + $Igv_, 2));
+
+                                //$stotal = $Total_;
+                                $igv_redondeo= $Igv_;
+                                $pu_redondeo = $ValorUnitario_ ; 
+
+                            } else {
+                                $tasa_igv_=0.18;
+                                $Cantidad_ = 1;
+                                $Descuento_ = 0;
+                                $PrecioVenta_= str_replace(",", "", number_format($total_abono * -1,  2));
+
+                                $ValorUnitario_ = $PrecioVenta_ /(1+$tasa_igv_);
+                                $ValorVB_ = $ValorUnitario_ * $Cantidad_;
+                                $ValorVenta_ = $ValorVB_ - $Descuento_;
+                                $Igv_ = $ValorVenta_ * $tasa_igv_;		
+                                $Total_ = $ValorVenta_ + $Igv_;	
+                                
+                                $ValorUnitario_ = str_replace(",", "", number_format($ValorUnitario_, 2));
+                                $ValorVB_ = str_replace(",", "", number_format($ValorVB_, 2));
+                                $ValorVenta_ = str_replace(",", "", number_format($ValorVenta_, 2));
+                                $Igv_ = str_replace(",", "", number_format($Igv_, 2));		
+                                $Total_ = str_replace(",", "", number_format($Total_, 2));
+                                
+                                //$stotal = $Total_;
+                                //$igv_   = $Igv_;
+
+                                $igv_redondeo= $Igv_;
+                                $pu_redondeo = $ValorUnitario_ ; 
+
+                            }
 
                             $items1 = array(
                                 "id" => 0,
@@ -2424,7 +2515,7 @@ class ComprobanteController extends Controller
                                 "denominacion" => "REDONDEO",
                                 "codigo_producto" => "",
                                 "descripcion" => "REDONDEO",
-                                "monto" => round($total_abono, 2),
+                                "monto" => $PrecioVenta_*-1,
                                 "moneda" => "SOLES",
                                 "id_moneda" => 1,
                                 "abreviatura" => "SOLES",
@@ -2433,17 +2524,22 @@ class ComprobanteController extends Controller
                                 "descuento" => 0,
                                 "cod_contable" => "",
                                 "id_concepto" => 26464,
-                                "pu" => round($total_abono, 2),
-                                "igv" => 0,
-                                "pv" =>  0,
-                                "vv" =>  0,
+                                "pu" =>  $ValorUnitario_*-1,
+                                "igv" => $Igv_*-1,
+                                "pv" =>  $PrecioVenta_*-1,
+                                "vv" =>  $ValorVenta_*-1,
                                 "cantidad" => 1,
-                                "total" => round($total_abono, 2),
+                                "total" => $PrecioVenta_*-1,
                                 "item" => 999,
-
+                                "valor_venta_bruto" => $ValorVB_*-1,
+                                "valor_venta" => $ValorVenta_*-1,
                             );
                             $tarifa[999] = $items1;
                         }
+
+                        //echo($id_tipo_afectacion_pp );
+
+                       // print_r($items1); exit();
 
                      
 
@@ -2454,14 +2550,21 @@ class ComprobanteController extends Controller
                             } else {
                                 $total = $value['monto'];
                                 $pu_   = $value['pu'];
+
+                                 if($total_redondeo==  0)   $pu_   = $value['monto'];
                             }
                             $descuento = $value['descuento'];
                             if ($value['descuento'] == '') $descuento = 0;
                             $id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $pu_, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda, 0);
 
-                            if ($value['id_concepto'] != '26464') {
-                                $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
 
+                           // if ($value['id_concepto'] != '26464') {
+                             $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+/*
+                             if ($value['id_concepto'] == '26464'){
+                                print_r($value);
+                             }                                
+*/
                                 $facturaDet_upd->pu = $value['pu'];
                                 $facturaDet_upd->importe = $value['total'];
                                 $facturaDet_upd->igv_total = $value['igv'];
@@ -2472,9 +2575,7 @@ class ComprobanteController extends Controller
                                 $facturaDet_upd->unidad = $value['unidad_medida_item'];
                                 //$facturaDet_upd->moneda=$value['abreviatura'];
                                 $facturaDet_upd->save();
-                            }
-
-
+                            //}
 
                             //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 
@@ -3857,10 +3958,32 @@ class ComprobanteController extends Controller
 
             $afectacion=$facturad[0]->afect_igv;
 
-            $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
+            $facturadR=$comprobante_model->getComprobanteDetalleById($id_origen);
             //$facturad= json_encode($facturad1);
             //$afectacion=$facturad[0]->afect_igv;
-            $importe=$facturad1->importe;
+            /*
+            $facturadRedondeo = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->where('descripcion', '=', 'REDONDEO')->first();
+
+            $montoRedondeo = 0;
+            if($facturadRedondeo){
+                $montoRedondeo = $facturadRedondeo->importe * -1;
+
+                 $comprobante=$comprobante_model->getComprobanteByIdRedondeo($id_origen, $montoRedondeo);
+            }
+            //echo($montoRedondeo); exit();
+
+            $importe=$facturad1->importe + $montoRedondeo;
+            */
+
+            //$importe=$facturadR->importe;
+
+        
+            $facturad = $facturadR;
+            $importe= $facturad[0]->importe;
         }
         else {
             $comprobante_model=new Comprobante;
@@ -4023,7 +4146,9 @@ class ComprobanteController extends Controller
             $afectacion=$facturad[0]->afect_igv;
 
             $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
-            $importe=$facturad1->importe;
+            $importe=$facturad1[0]->importe;
+
+            $facturad = $facturad1;
             
             
             //$afectacion=$facturad->afect_igv;
