@@ -401,16 +401,28 @@ class Comprobante extends Model
     }
 
     function getComprobanteDetalleById($numero_comprobante){
-
+/*
         $cad = "SELECT id, serie, numero, tipo, item, descripcion, pu, pu_con_igv, igv_total, afect_igv, unidad, cod_contable, descuento, valor_gratu, estado, id_comprobante, cantidad, id_concepto,
                     (select sum(x.importe) from comprobante_detalles x where x.id_comprobante =  cd.id_comprobante) importe
                 FROM comprobante_detalles cd
                 where cd.descripcion <> 'REDONDEO' 
                     and cd.id_comprobante='".$numero_comprobante."'";
+*/
+        $cad = "SELECT serie, numero, tipo, sum(pu) pu, sum(pu_con_igv) pu_con_igv, sum(igv_total)igv_total,sum(importe) importe,
+                sum(precio_venta) precio_venta, sum(valor_venta_bruto) valor_venta_bruto, sum(valor_venta) valor_venta, now() fecha, 
+                (select t.descripcion  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1)descripcion,
+                (select t.id  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id,
+                (select t.id_concepto  FROM comprobante_detalles t where t.descripcion <> 'REDONDEO' and t.id_comprobante=cd.id_comprobante limit 1) id_concepto
+            FROM comprobante_detalles cd
+            where id_comprobante='".$numero_comprobante."'
+            group by serie, numero, tipo,id_comprobante";
 
         //echo ($cad);
+		//$data = DB::select($cad);
+        //if(isset($data[0]))return $data[0];
+
 		$data = DB::select($cad);
-        if(isset($data[0]))return $data[0];
+        return $data;        
     }
 
     function getPersonaDni($numero_documento){

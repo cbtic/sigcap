@@ -3958,7 +3958,7 @@ class ComprobanteController extends Controller
 
             $afectacion=$facturad[0]->afect_igv;
 
-            $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
+            $facturadR=$comprobante_model->getComprobanteDetalleById($id_origen);
             //$facturad= json_encode($facturad1);
             //$afectacion=$facturad[0]->afect_igv;
             /*
@@ -3979,7 +3979,11 @@ class ComprobanteController extends Controller
             $importe=$facturad1->importe + $montoRedondeo;
             */
 
-            $importe=$facturad1->importe;
+            //$importe=$facturadR->importe;
+
+        
+            $facturad = $facturadR;
+            $importe= $facturad[0]->importe;
         }
         else {
             $comprobante_model=new Comprobante;
@@ -4142,7 +4146,9 @@ class ComprobanteController extends Controller
             $afectacion=$facturad[0]->afect_igv;
 
             $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
-            $importe=$facturad1->importe;
+            $importe=$facturad1[0]->importe;
+
+            $facturad = $facturad1;
             
             
             //$afectacion=$facturad->afect_igv;
