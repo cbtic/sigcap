@@ -2235,6 +2235,10 @@ class ComprobanteController extends Controller
 
                     ///redondeo///
                     $total_pagar = $request->total_pagar;
+
+
+
+
                     
                     //print_r($total_pagar); 
                     if ($total_pagar != "0" && $total_pagar != "") {
@@ -2243,7 +2247,9 @@ class ComprobanteController extends Controller
                         $total_redondeo = $total_pagar - $total_g;
 
                         $total = $total + $total_redondeo;
+
                     }
+
 
                     ///Abono Directo///
 
@@ -2261,6 +2267,8 @@ class ComprobanteController extends Controller
 
                         $total = $total + $total_abono;
                     }
+
+
                     if($request->id_comprobante_ncnd != ""){
                         $id_nc =  $request->id_comprobante_ncnd;
                     }else
@@ -2284,6 +2292,16 @@ class ComprobanteController extends Controller
                     */
 
                     if ($ubicacion_id == '0') $ubicacion_id = $ubicacion_id2;
+
+                    //print_r($total); 
+                    /*
+                    print_r("-");
+                    print_r($total_g); 
+                    */
+                    //print_r("-");
+                    //print_r($total_redondeo);                     
+                    
+                    //exit();
 
 
                     $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total, 2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
@@ -3956,7 +3974,7 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->where('descripcion', '<>', 'REDONDEO')->get();
 
-            
+
             $afectacion=$facturad[0]->afect_igv;
 
             $facturadR=$comprobante_model->getComprobanteDetalleById($id_origen);
