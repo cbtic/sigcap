@@ -1729,7 +1729,7 @@
                         //$("#idMedio0").prop('disabled', true);
                         $("#btnElimina0").hide();
 
-                        $("#total_pagar_abono").val(totalNC);
+                        //$("#total_pagar_abono").val(totalNC);
                     }
                  
                 }
