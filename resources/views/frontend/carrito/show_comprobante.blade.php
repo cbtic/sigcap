@@ -1409,7 +1409,7 @@ function ValidarComprobante(rutaComprobante) {
     if (rutaComprobante && rutaComprobante.trim() !== '') {
         window.open("/" + rutaComprobante, "_blank");
     } else {
-        location.href = frontend.pedido;
+        location.href = carrito.all_pedido;
     }
 }
 
