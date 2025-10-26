@@ -1384,7 +1384,12 @@ function fn_save() {
                 $('#numerof').val(result.id_factura);
                 $('#divNumeroF').show();
                 enviar_comprobante(result.id_factura);
-                location.href = urlApp+"/comprobante/ver/"+result.id_factura;
+                if(result.tiene_ruta==1){
+                    location.href = urlApp+"/comprobante/ver/"+result.id_factura;
+                }else{
+                    location.href = frontend.pedido;
+                }
+                
             } else {
                 alert(result.msg);
                 $('#guardar').show();
