@@ -1409,7 +1409,7 @@ function ValidarComprobante(rutaComprobante) {
     if (rutaComprobante && rutaComprobante.trim() !== '') {
         window.open("/" + rutaComprobante, "_blank");
     } else {
-        window.location.href = "{{ route('pedido') }}";
+        window.location.href = "{{ url('/pedido') }}";
     }
 }
 
