@@ -621,13 +621,11 @@
                                 </div>
                                 <!--<a class='flotante' href='#' onclick="print()"><img src='/img/btn_print.png' border="0" /></a>
                                 <a class='flotante' href="/{{ $factura->ruta_comprobante }}" target="_blank"><img src='/img/btn_print.png' border="0" /></a>-->
-                                @if (!empty($factura->ruta_comprobante))
-                                    <a class="flotante" href="/{{ $factura->ruta_comprobante }}" target="_blank"><img src="/img/btn_print.png" border="0" /></a>
-                                @else
-                                    <script>
-                                        window.location.href = "{{ route('frontend.pedido') }}";
-                                    </script>
-                                @endif
+                                <a class="flotante" 
+                                href="javascript:void(0);" 
+                                onclick="ValidarComprobante('{{ $factura->ruta_comprobante }}')">
+                                <img src="/img/btn_print.png" border="0" alt="Imprimir comprobante" />
+                                </a>
                                 <!--<a class='flotante' href='#'><img src='/img/deshacer.png' border="0" /></a>-->
                                 <br>
                             </form>
@@ -1405,6 +1403,14 @@ function fn_save() {
             $('#guardar').show();
         }
     });
+}
+
+function ValidarComprobante(rutaComprobante) {
+    if (rutaComprobante && rutaComprobante.trim() !== '') {
+        window.open("/" + rutaComprobante, "_blank");
+    } else {
+        location.href = frontend.pedido;
+    }
 }
 
 </script>
