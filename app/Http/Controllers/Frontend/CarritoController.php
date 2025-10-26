@@ -1296,10 +1296,6 @@ class CarritoController extends Controller
 		$pedido->id_comprobante = $id_factura;
 		$pedido->save();
 
-		$comprobante_dato = Comprobante::find($id_factura);
-		$ruta_comprobante_ = $comprobante_dato->ruta_comprobante_;
-
-		$tiene_ruta = $ruta_comprobante_ ? 1 : 0;
 		/***********ACTUALIZA HABILITADO O INHABILITADO**************/
 
 		$id_user = $usuario_id;
@@ -1327,7 +1323,6 @@ class CarritoController extends Controller
             'sw' => true,
 			'msg' => $msg,
             'id_factura' => $id_factura,
-			'tiene_ruta' => $tiene_ruta,
         ]);
 
 	}

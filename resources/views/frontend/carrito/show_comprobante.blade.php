@@ -619,8 +619,15 @@
 
                                     </div>
                                 </div>
-                                <!--<a class='flotante' href='#' onclick="print()"><img src='/img/btn_print.png' border="0" /></a>-->
-                                <a class='flotante' href="/{{ $factura->ruta_comprobante }}" target="_blank"><img src='/img/btn_print.png' border="0" /></a>
+                                <!--<a class='flotante' href='#' onclick="print()"><img src='/img/btn_print.png' border="0" /></a>
+                                <a class='flotante' href="/{{ $factura->ruta_comprobante }}" target="_blank"><img src='/img/btn_print.png' border="0" /></a>-->
+                                @if (!empty($factura->ruta_comprobante))
+                                    <a class="flotante" href="/{{ $factura->ruta_comprobante }}" target="_blank"><img src="/img/btn_print.png" border="0" /></a>
+                                @else
+                                    <script>
+                                        window.location.href = "{{ route('frontend.pedido') }}";
+                                    </script>
+                                @endif
                                 <!--<a class='flotante' href='#'><img src='/img/deshacer.png' border="0" /></a>-->
                                 <br>
                             </form>
@@ -1384,12 +1391,7 @@ function fn_save() {
                 $('#numerof').val(result.id_factura);
                 $('#divNumeroF').show();
                 enviar_comprobante(result.id_factura);
-                if(result.tiene_ruta==1){
-                    location.href = urlApp+"/comprobante/ver/"+result.id_factura;
-                }else{
-                    location.href = frontend.pedido;
-                }
-                
+                location.href = urlApp+"/comprobante/ver/"+result.id_factura;
             } else {
                 alert(result.msg);
                 $('#guardar').show();
