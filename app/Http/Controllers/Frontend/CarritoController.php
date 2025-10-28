@@ -1299,9 +1299,8 @@ class CarritoController extends Controller
 		/***********ACTUALIZA HABILITADO O INHABILITADO**************/
 
 		$id_user = $usuario_id;
-		
 		$valorizaciones_model = new Valorizacione;
-		$totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+		$totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26411'); //DEUDA CUOTA GREMIAL                            
 		$total_ = $totalDeuda->total;
 
 		if ($total_ <= 2) {
@@ -1313,6 +1312,26 @@ class CarritoController extends Controller
 				$agremiado->save();
 			}
 		} else {
+			$agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+			$agremiado->id_situacion = "74"; //inhabilitado
+			$agremiado->id_usuario_actualiza = $id_user;
+			$agremiado->save();
+		}
+
+		$totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26461'); //DEUDA MULTA                            
+		$total_ = $totalDeuda->total;
+
+		if ($total_ >= 1 ) {
+			$agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+			$agremiado->id_situacion = "74"; //inhabilitado
+			$agremiado->id_usuario_actualiza = $id_user;
+			$agremiado->save();
+		}
+
+		$totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26412'); //DEUDA FRACCIONAMIENTO                            
+		$total_ = $totalDeuda->total;
+
+		if ($total_ >= 1) {
 			$agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
 			$agremiado->id_situacion = "74"; //inhabilitado
 			$agremiado->id_usuario_actualiza = $id_user;
