@@ -215,7 +215,7 @@ const iziConfig = {
 			<small class="descriptivo">
 				<!--<span class="carrito-cantidad">1</span>-->
 				<span class="carrito-descripcion">
-                    {{ msg }}
+                    {{ $msg }}
 					<!--artículo seleccionado-->
 				</span>
 			</small>
