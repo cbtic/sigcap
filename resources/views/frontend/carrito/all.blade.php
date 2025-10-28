@@ -668,7 +668,7 @@ div {
 				<p>Recuerda, se muestran en este listado todas las deudas generados.</p>
 				<!-- dinamico -->
 				<h6 class="subtitulo">¿Que deudas aparecen?</h6>
-				<p>Debido a que el concepto seleccionado es un servicio solo se podrá pagar por esta opción las deudas como CUOTA GREMIAL, FRACCIONAMIENTO, SEGUROS y MULTAS.</p>
+				<p>Debido a que el concepto seleccionado es un servicio solo se podrá pagar por esta opción las deudas como CUOTA GREMIAL, FRACCIONAMIENTO, PRONTOPAGO, SEGUROS y MULTAS.</p>
 			</div>
 		</div>
 	</section>
