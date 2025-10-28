@@ -2704,11 +2704,14 @@ class ComprobanteController extends Controller
                         */
 
                         //if ($id_concepto == 26527 || $id_concepto == 26412 ) {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
+
+                        /*
                         if ($codigo_concepto == '00001' || $codigo_concepto == '00062') {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
                             $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                             $agremiado->id_situacion = "73";
                             $agremiado->save();
                         }
+                        */
 
 
                         $id_persona = $request->persona;
@@ -2723,11 +2726,9 @@ class ComprobanteController extends Controller
 
                             //$id_persona = $request->persona;
                             $valorizaciones_model = new Valorizacione;
-                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                            //$totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26411'); //DEUDA CUOTA GREMIAL                            
                             $total_ = $totalDeuda->total;
-
-                            //echo($total_);
-                            //exit();
 
                             if ($total_ <= 2) {
                                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
@@ -2743,6 +2744,28 @@ class ComprobanteController extends Controller
                                 $agremiado->id_usuario_actualiza = $id_user;
                                 $agremiado->save();
                             }
+
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26461'); //DEUDA MULTA                            
+                            $total_ = $totalDeuda->total;
+
+                            if ($total_ >= 1 ) {
+                                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                                $agremiado->id_situacion = "74"; //inhabilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }
+
+
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26412'); //DEUDA FRACCIONAMIENTO                            
+                            $total_ = $totalDeuda->total;
+
+                            if ($total_ >= 1) {
+                                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                                $agremiado->id_situacion = "74"; //inhabilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }                            
+
                         }
 
 
@@ -5430,9 +5453,52 @@ class ComprobanteController extends Controller
                             //exit();
 
                         if($agremiado_ != null){
+                    
+                            //$id_persona = $request->persona;
+                            $valorizaciones_model = new Valorizacione;
+                            //$totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26411'); //DEUDA CUOTA GREMIAL                            
+                            $total_ = $totalDeuda->total;
 
-                            //echo($id_persona);
-                            //exit();
+                            if ($total_ <= 2) {
+                                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+
+                                if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                                    $agremiado->id_situacion = "73"; //habilitado
+                                    $agremiado->id_usuario_actualiza = $id_user;
+                                    $agremiado->save();
+                                }
+                            } else {
+                                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                                $agremiado->id_situacion = "74"; //inhabilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }
+
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26461'); //DEUDA MULTA                            
+                            $total_ = $totalDeuda->total;
+
+                            if ($total_ >= 1 ) {
+                                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                                $agremiado->id_situacion = "74"; //inhabilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }
+
+
+                            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremidoConcepto($id_persona, '26412'); //DEUDA FRACCIONAMIENTO                            
+                            $total_ = $totalDeuda->total;
+
+                            if ($total_ >= 1) {
+                                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                                $agremiado->id_situacion = "74"; //inhabilitado
+                                $agremiado->id_usuario_actualiza = $id_user;
+                                $agremiado->save();
+                            }                            
+
+                                                    
+
+/*
 
                             $valorizaciones_model = new Valorizacione;
                             $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
@@ -5460,6 +5526,7 @@ class ComprobanteController extends Controller
                                     $agremiado->save();
                                 }
                             }
+                            */
                         }                    
                     }
                 }
