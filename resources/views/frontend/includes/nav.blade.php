@@ -561,24 +561,34 @@ a {
 
 			@else
 
-			@if ($logged_in_user->isVerified())
-			<ul class="nav menu-ope">
-                <li class="nav-item">
-                    <a class="link" href="/carrito">
-                        <i class="icon fas fa-receipt"></i>
-                        <span class="label">Mi Estado de Cuenta</span>
-                    </a>
-                </li>
-            
-				<li class="nav-item nav-item-carrito">
-					<a class="link" href="/carrito/detalle" title="" data-toggle="tooltip" data-original-title="Carrito">
-						<span class="cart-num oculto"></span>
-						<i class="icon fas fa-shopping-cart"></i>
-                        <span class="label">Mi Carrito</span>
-					</a>
-				</li>
-			</ul>
-			@endif
+				@if ($logged_in_user->isVerified())
+
+					@if(Gate::check('Mi Estado de Cuenta') || Gate::check('Mi Carrito') || Gate::check('Mis Pagos'))
+					
+					<ul class="nav menu-ope">
+
+						@can('Mi Estado de Cuenta')
+						<li class="nav-item">
+							<a class="link" href="/carrito">
+								<i class="icon fas fa-receipt"></i>
+								<span class="label">Mi Estado de Cuenta</span>
+							</a>
+						</li>
+						@endcan
+						@can('Mi Carrito')
+						<li class="nav-item nav-item-carrito">
+							<a class="link" href="/carrito/detalle" title="" data-toggle="tooltip" data-original-title="Carrito">
+								<span class="cart-num oculto"></span>
+								<i class="icon fas fa-shopping-cart"></i>
+								<span class="label">Mi Carrito</span>
+							</a>
+						</li>
+						@endcan
+					</ul>
+
+					@endif
+				
+				@endif
 
 			@endguest
 

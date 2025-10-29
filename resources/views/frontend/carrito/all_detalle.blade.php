@@ -213,12 +213,10 @@ const iziConfig = {
 			
 			Carrito de compras
 			<small class="descriptivo">
-				<span class="carrito-cantidad">1</span>
+				<!--<span class="carrito-cantidad">1</span>-->
 				<span class="carrito-descripcion">
-				
-					artículo seleccionado
-				
-				
+                    {{ $msg }}
+					<!--artículo seleccionado-->
 				</span>
 			</small>
 			<img class="curva" src="https://pagalo.pe/imagenes/new/curva.svg" aria-hidden="true">
