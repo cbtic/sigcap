@@ -152,6 +152,56 @@
     background-color: #1C77B9 !important;
 }
 
+/*************************/
+
+.loader {
+	width: 100%;
+	height: 100%;
+	/*height: 1500px;*/
+	overflow: hidden; 
+	top: 0px;
+	left: 0px;
+	z-index: 10000;
+	text-align: center;
+	position:absolute; 
+	background-color: #000;
+	opacity:0.6;
+	filter:alpha(opacity=40);
+	display:none;
+}
+
+.dataTables_processing {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px!important;
+	font-size: 1.7em;
+	border: 0px;
+	margin-left: -17%!important;
+	text-align: center;
+	background: #3c8dbc;
+	color: #FFFFFF;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
 
 </style>
 
@@ -176,10 +226,7 @@
     </ol>
     -->
 
-
-
-
-
+<div class="loader"></div>
 
 <div id="pageFormularios" class="container">
 	
@@ -1095,7 +1142,7 @@ function fn_save() {
                       <div id='Grd1_processing' class='dataTables_processing panel-default'>
                       ${msgLoader}</div></div>`);
     $('.loader').show();
-    $('#guardar').hide();
+    $('#btnGenTicket').hide();
     
     $.ajax({
         url: "/carrito/send_comprobante",
@@ -1110,7 +1157,7 @@ function fn_save() {
                 location.href = "/carrito/ver_comprobante/"+result.id_factura;
             } else {
                 alert(result.msg);
-                $('#guardar').show();
+                $('#btnGenTicket').show();
             }
 
 			$('.loader').hide();
@@ -1118,7 +1165,7 @@ function fn_save() {
         error: function() {
             $('.loader').hide();
             alert("Error en la comunicación con el servidor");
-            $('#guardar').show();
+            $('#btnGenTicket').show();
         }
     });
 }
