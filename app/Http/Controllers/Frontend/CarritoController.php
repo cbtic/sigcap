@@ -374,10 +374,10 @@ class CarritoController extends Controller
 		
 		//return view('frontend.carrito.all_detalle',compact('carrito_items','total_general','purchaseNumber','merchantId','sesion','urlJs'));
 
-		$msg = "";
-		if($carrito->items()->count()==0)$msg = "Ningun producto agregado al carrito";
-		if($carrito->items()->count()==1)$msg = "1 producto agregado al carrito";
-		if($carrito->items()->count()>1)$msg = $carrito->items()->count()." productos agregados al carrito";
+		$msg = "Ningun producto agregado al carrito";
+		if($carrito && $carrito->items()->count()==0)$msg = "Ningun producto agregado al carrito";
+		if($carrito && $carrito->items()->count()==1)$msg = "1 producto agregado al carrito";
+		if($carrito && $carrito->items()->count()>1)$msg = $carrito->items()->count()." productos agregados al carrito";
 		
 		return response()->view('frontend.carrito.all_detalle', compact(
 			'carrito_items',
