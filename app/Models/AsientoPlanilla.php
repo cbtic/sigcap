@@ -23,6 +23,30 @@ class AsientoPlanilla extends Model
         return $data;
     }
 
+    function getConfiguracionById($id){
+
+        $cad = "select *
+                from bloquea_ventas bv 
+                Where bv.id= ".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function ActualizaConfiguracionById($id,$migracion,$migra_06,$migra_09,$id_usuario_inserta){
+
+        $cad = "update  bloquea_ventas set 
+                    migracion='".$migracion."',
+                    migra_06='".$migra_06."',
+                    migra_09='".$migra_09."',
+                    id_usuario_inserta=".$id_usuario_inserta."   
+                Where id= ".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+    
+
     function getVouporID($periodo, $origen, $voucher,$ruc){
 
         $cad = "select id 

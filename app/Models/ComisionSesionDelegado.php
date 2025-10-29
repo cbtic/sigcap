@@ -149,7 +149,7 @@ where id_comision=".$id_comision;
                 where csd.id_delegado=".$id_agremiado." and csd.estado='1' and  EXTRACT(MONTH FROM cs.fecha_ejecucion) = ".$mes." 
   																	AND EXTRACT(YEAR FROM fecha_ejecucion) =".$anio."  and cs.estado='1' and cs.id_comision =".$id_comision." ";
 
-        //print_r($cad); exit();
+        //$anio,print_r($cad); exit();
 		
 		//echo $cad;
 		$data = DB::select($cad);

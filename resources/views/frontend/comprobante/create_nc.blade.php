@@ -583,12 +583,13 @@
                                                                                             <input type="hidden" readonly name="cantidad[]"  id="cantidad<?php echo $key?>" value="<?php echo '1'//$fac['cantidad']; ?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                                             </td>
                                                                     <td class="text-left">
+                                                                        <input type="hidden" id="descripciones_" name="descripciones_" value="<?php echo  nl2br($descripciones) ?>" />
                                                                         <?php
                                                                         if ($trans == 'FA') {
-                                                                            echo $fac->descripcion;//$fac['descripcion'];
+                                                                            echo nl2br($descripciones);//$fac['descripcion'];
                                                                         }
                                                                         if ($trans == 'FE' || $trans == 'FN') {
-                                                                            echo $fac->descripcion;//$fac['descripcion'];
+                                                                            echo nl2br($descripciones);//$fac['descripcion'];
                                                                         } ?>
                                                                     </td>
                                                                     

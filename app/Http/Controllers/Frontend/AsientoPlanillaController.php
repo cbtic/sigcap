@@ -144,6 +144,35 @@ class AsientoPlanillaController extends Controller
 		return view('frontend.asiento.modal_asiento',compact('id','asiento','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago'));
 	}
 
+	public function modal_configura(){
+		$id_user = Auth::user()->id;
+		
+		
+		
+		$tablaMaestra_model = new AsientoPlanilla;
+        
+		$configura = $tablaMaestra_model->getConfiguracionById(1);
+
+		//print_r($configura);exit();
+		return view('frontend.asiento.modal_configura',compact('configura'));
+	}
+
+	public function send_configura($id,$migracion,$migra_06,$migra_09){
+	
+		$id_user = Auth::user()->id;
+		$id=1;
+		
+		
+		$tablaMaestra_model = new AsientoPlanilla;
+        
+		$configura = $tablaMaestra_model->ActualizaConfiguracionById($id,$migracion,$migra_06,$migra_09,$id_user);
+
+		//print_r($configura);exit();
+		
+	}
+
+	
+
 	public function send_asiento(Request $request){
 
 		$id_user = Auth::user()->id;

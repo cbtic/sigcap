@@ -249,6 +249,14 @@
                                     <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
 
                                 </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                    <input class="btn btn-primary" value="Configura" type="button" id="btnModalConfigura" />
+                                    
+                                    <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
+                                    <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+
+                                </div>
                             </div>
                         
                             <div class="card-body">

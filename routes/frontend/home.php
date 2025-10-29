@@ -627,7 +627,8 @@ Route::get('plan_contable/importar_plan_contable', [PlanContableController::clas
 
 Route::get('asiento_planilla/importar_vou_siscont/{id_periodo}/{anio}/{mes}', [AsientoPlanillaController::class, 'importar_vou_siscont'])->name('asiento_planilla.importar_vou_siscont');
 Route::get('asiento_planilla/exportar_asientos/{anio}/{mes}/{periodo}/{tipo}', [AsientoPlanillaController::class, 'exportar_asientos'])->name('asiento_planilla.exportar_asientos');
-
+Route::get('asiento_planilla/modal_configura', [AsientoPlanillaController::class, 'modal_configura'])->name('asiento_planilla.modal_configura');
+Route::get('asiento_planilla/actualiza_configura/{id}/{venta}/{migra_06}/{migra_09}', [AsientoPlanillaController::class, 'send_configura'])->name('asiento_planilla.send_configura');
 //Route::post('asiento_planilla/enviar_planilla_siscont/{fecha_inicio}/{fecha_fin}', [AsientoPlanillaController::class, 'enviar_planilla_siscont'])->name('asiento_planilla.enviar_planilla_siscont');
 //Route::post('asiento_planilla/enviar_planilla_siscont/{fecha_inicio}/{fecha_fin}', [AsientoPlanillaController::class, 'enviar_planilla_siscont']);
 Route::get('centro_costo/test', [CentroCostoController::class, 'test'])->name('centro_costo.test');

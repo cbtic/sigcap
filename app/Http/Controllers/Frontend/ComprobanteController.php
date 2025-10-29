@@ -3997,6 +3997,10 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->where('descripcion', '<>', 'REDONDEO')->get();
 
+            $descripciones = $facturad->pluck('descripcion')->implode("\n");
+          
+            
+           // print_r($descripciones); exit();                  
 
             $afectacion=$facturad[0]->afect_igv;
 
@@ -4119,7 +4123,7 @@ class ComprobanteController extends Controller
 
         //print_r($facturad); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe','tipo_cambio','numero_peronalizado'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe','tipo_cambio','numero_peronalizado','descripciones'));
         
     }
 
@@ -5297,6 +5301,7 @@ class ComprobanteController extends Controller
 
         /**********RUC***********/
         $tarifa = $request->facturad;
+        $descripciones = $request->descripciones_;
        // print_r($request->direccion); exit();
 
         $total = $request->totalP;
@@ -5393,7 +5398,7 @@ class ComprobanteController extends Controller
                     $descuento = $value['descuento'];
                     if ($value['descuento'] == '') $descuento = 0;
                     // print_r($value); exit();
-                    $id_factura_detalle = $facturas_model->registrar_comprobante_ncnd($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda, $razon_social, $direccion, $id_comprobante_ncnd, $correo, $afecta, $tiponota,   $motivo, $afecta_ingreso, $devolucion_nc, $value['id_concepto'], $value['item'], $value['cantidad']);
+                    $id_factura_detalle = $facturas_model->registrar_comprobante_ncnd($serieF, $fac_numero, $tipoF, $value['item'], $total, $descripciones, "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda, $razon_social, $direccion, $id_comprobante_ncnd, $correo, $afecta, $tiponota,   $motivo, $afecta_ingreso, $devolucion_nc, $value['id_concepto'], $value['item'], $value['cantidad']);
                     //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 
 

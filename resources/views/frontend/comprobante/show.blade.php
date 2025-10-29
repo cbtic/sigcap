@@ -475,7 +475,10 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 
                                                                 </td>
                                                                 <td class="text-left">
-                                                                    {{ $factura_detalle->descripcion }}
+                                                                     {!! nl2br(e(str_replace(['<br />', '<br>', '<br/>'], ' ', $factura_detalle->descripcion))) !!}
+
+                                                                     
+                                                                    
                                                                 </td>
 
                                                                 <td class="text-right">{{ number_format($factura_detalle->precio_venta,2)  }}

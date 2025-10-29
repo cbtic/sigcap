@@ -9,6 +9,10 @@ $(document).ready(function () {
 		fn_importar_Vou();
 	});
 
+	$('#btnModalConfigura').click(function () {
+		fn_modal_configura();
+	});
+
 	$('#btnExportar').click(function () {
 		exportar_excel();
 	});
@@ -335,6 +339,45 @@ function modalAsignacion(id){
 
 }
 
+
+
+function fn_modal_configura(){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/asiento_planilla/modal_configura/",
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+
+
+}
+
+function ActualizaConfMigra(){
+	
+	var id = 1;
+	   
+	var migra = $('#ventas_').val();
+	var migra_06 = $('#prov_pla_').val();
+	var migra_09 = $('#canc_pla_').val();
+			
+	$.ajax({
+            url: '/asiento_planilla/actualiza_configura/'+id+'/'+migra+'/'+migra_06+'/'+migra_09,
+            type: "GET",
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);
+				//datatablenew();
+            }
+    });
+	
+	
+}
 
 function fn_importar_Vou(){
 	
