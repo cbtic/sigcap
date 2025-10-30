@@ -210,7 +210,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.5); /* un poco de opacidad para dar sensación de bloqueo */
+    background-color: rgba(255,255,255,0.15); /* un poco de opacidad para dar sensación de bloqueo */
     z-index: 9998; /* debajo de los botones */
 }
 
@@ -1129,7 +1129,7 @@ function guardarFactura(){
 	}
 
 	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
-		msg+="Se Requiere el NÃºmero de RUC o DNI para generar una Boleta!";	
+		msg+="Se Requiere el NÃºmero de RUC o DNI para generar una Boleta!";
 	}
 
     if(smodulo_guia=="32"){
