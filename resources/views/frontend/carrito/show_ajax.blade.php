@@ -102,7 +102,7 @@
                                                             }
                                                             if ($trans == 'FE') {
                                                                 echo $comprobante->cod_tributario;
-                                                            } ?>" placeholder="" class="form-control form-control-sm" pattern="10[0-9]{9}" title="El RUC debe comenzar con 10 y tener 11 dígitos">
+                                                            } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                         
                                                     </div>

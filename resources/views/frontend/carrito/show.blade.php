@@ -1143,7 +1143,11 @@ function guardarFactura(){
 	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
 		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";
         $('#numero_documento').attr("readonly", false);
-	}
+	}else if (tipo == "FT" && ruc_e != "") {
+        if(!/^10[0-9]{9}$/.test(ruc_e)) {
+            msg += "El RUC debe comenzar con 10 y tener 11 dígitos.<br>";
+        }
+    }
 
 	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
 		msg+="Se Requiere el NÃºmero de RUC o DNI para generar una Boleta!";
