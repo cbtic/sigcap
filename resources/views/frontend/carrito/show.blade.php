@@ -206,7 +206,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.70); /* un poco de opacidad para dar sensación de bloqueo */
+    background-color: rgba(255, 255, 255, 0.90); /* un poco de opacidad para dar sensación de bloqueo */
     z-index: 9998; /* debajo de los botones */
 }
 
