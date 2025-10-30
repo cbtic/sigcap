@@ -199,6 +199,22 @@
   display: block;
 }
 
+/* Para Bloquear capa*/
+#bloqueoTotal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.70); /* un poco de opacidad para dar sensación de bloqueo */
+    z-index: 9998; /* debajo de los botones */
+}
+
+#btnFactura, #btnBoleta {
+    position: relative;
+    z-index: 9999;
+}
+
 </style>
 
 @extends('frontend.layouts.app_carrito')
@@ -1000,15 +1016,7 @@
 
 </body>
 
-
-
-
-
-
-
-
-
-
+<div id="bloqueoTotal"></div>
 
 </div>
 
@@ -1263,6 +1271,21 @@ function obtenerRepresentante(){
     
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const bloqueo = document.getElementById('bloqueoTotal');
+
+    // Función para desbloquear cuando haga clic en Factura o Boleta
+    document.getElementById('btnFactura').addEventListener('click', function() {
+        desbloquearPantalla();
+    });
+    document.getElementById('btnBoleta').addEventListener('click', function() {
+        desbloquearPantalla();
+    });
+
+    function desbloquearPantalla() {
+        bloqueo.style.display = 'none';
+    }
+});
 
 </script>
 
