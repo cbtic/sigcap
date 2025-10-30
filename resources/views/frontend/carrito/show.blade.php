@@ -391,8 +391,9 @@
                                     if ($data->dataMap->STATUS == "Authorized") { 
                                 ?>
                                     <h4 class="mb-3">📑 Datos del comprobante</h4>
-                                    <p class="mb-0" style="font-size:17px">Aquí aparecerá la información relacionada con tu comprobante, por favor selecciona el tipo de comprobante que deseas generar.</p>
+                                    <!--<p class="mb-0" style="font-size:17px">Aquí aparecerá la información relacionada con tu comprobante, por favor selecciona el tipo de comprobante que deseas generar.</p>-->
 
+                                    <p class="mb-0" style="font-size:22px"><b>Para culminar con su proceso de pago, por favor selecciona el tipo de comprobante que deseas generar.</b></p>
                                     <div class="w-100 clearfix" style="padding-top:20px">
                                         <input class="btn btn-secondary float-left" 
                                             value="Factura" type="button" id="btnFactura" onclick="cargarComprobante(1)">
@@ -1141,7 +1142,7 @@ function guardarFactura(){
 	var tipo=$('#TipoF').val();
 
 	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
-		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";
+		msg+="Se Requiere el Numero de RUC para generar una Factura!";
         $('#numero_documento').attr("readonly", false);
 	}else if (tipo == "FT" && ruc_e != "") {
         if(!/^10[0-9]{9}$/.test(ruc_e)) {

@@ -1125,11 +1125,11 @@ function guardarFactura(){
 	var tipo=$('#TipoF').val();
 
 	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
-		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";	
+		msg+="Se Requiere el Numero de RUC para generar una Factura!";	
 	}
 
 	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
-		msg+="Se Requiere el NÃºmero de RUC o DNI para generar una Boleta!";
+		msg+="Se Requiere el Numero de RUC o DNI para generar una Boleta!";
 	}
 
     if(smodulo_guia=="32"){
