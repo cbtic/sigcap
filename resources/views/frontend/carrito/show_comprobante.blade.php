@@ -1344,7 +1344,8 @@ function guardarFactura(){
 	var tipo=$('#TipoF').val();
 
 	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
-		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";	
+		msg+="Se Requiere el NÃºmero de RUC para generar una Factura!";
+        //$('#numero_documento').attr(readonly, false);
 	}
 
 	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){

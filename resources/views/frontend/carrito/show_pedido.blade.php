@@ -204,35 +204,19 @@
 }
 
 /* Para Bloquear capa*/
-#bloqueoPantalla {
+#bloqueoTotal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.6); /* fondo oscuro */
-    z-index: 9999; /* encima de todo */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: rgba(255,255,255,0.5); /* un poco de opacidad para dar sensación de bloqueo */
+    z-index: 9998; /* debajo de los botones */
 }
 
-#contenedorBloqueo {
-    background: #fff;
-    border-radius: 12px;
-    padding: 30px 40px;
-    text-align: center;
-    max-width: 400px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-
-#contenedorBloqueo h4 {
-    margin-bottom: 20px;
-}
-
-#contenedorBloqueo button {
-    margin: 10px;
-    min-width: 120px;
+#btnFactura, #btnBoleta {
+    position: relative;
+    z-index: 9999;
 }
 
 </style>
@@ -257,14 +241,6 @@
         </li>
     </ol>
     -->
-<div id="bloqueoPantalla">
-  <div id="contenedorBloqueo">
-    <h4>Selecciona el tipo de comprobante</h4>
-    <p>Por favor elige una opción para continuar:</p>
-    <button class="btn btn-secondary" onclick="seleccionarComprobante('Factura')">Factura</button>
-    <button class="btn btn-secondary" onclick="seleccionarComprobante('Boleta')">Boleta</button>
-  </div>
-</div>
 
 <div class="loader"></div>
 
@@ -1018,7 +994,7 @@
 
 </body>
 
-
+<div id="bloqueoTotal"></div>
 
 
 
@@ -1273,20 +1249,21 @@ function obtenerRepresentante(){
     
 }
 
-function seleccionarComprobante(tipo) {
-    // Guardar el tipo de comprobante en el input oculto, si quieres usarlo después
-    document.getElementById('TipoF').value = tipo;
+document.addEventListener("DOMContentLoaded", function() {
+    const bloqueo = document.getElementById('bloqueoTotal');
 
-    // Llamar a tu función actual, si corresponde
-    if (tipo === 'Factura') {
-        cargarComprobante(1);
-    } else if (tipo === 'Boleta') {
-        cargarComprobante(2);
+    // Función para desbloquear cuando haga clic en Factura o Boleta
+    document.getElementById('btnFactura').addEventListener('click', function() {
+        desbloquearPantalla();
+    });
+    document.getElementById('btnBoleta').addEventListener('click', function() {
+        desbloquearPantalla();
+    });
+
+    function desbloquearPantalla() {
+        bloqueo.style.display = 'none';
     }
-
-    // Desbloquear la pantalla
-    document.getElementById('bloqueoPantalla').style.display = 'none';
-}
+});
 
 </script>
 
