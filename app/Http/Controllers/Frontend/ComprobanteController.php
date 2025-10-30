@@ -2071,6 +2071,7 @@ class ComprobanteController extends Controller
 
                 $direccion = $request->direccion;
                 $correo = $request->email;
+                $ruc = $request->numero_documento;
 
                 if ($request->direccion2 != '') {
                     $direccion = $request->direccion2;
@@ -2153,6 +2154,7 @@ class ComprobanteController extends Controller
                         if ($tipoF == 'FT' &&  $id_persona != '0') {
                             $persona = Persona::where('id', $id_persona_act)->first();
                             if ($persona) {
+                                $persona->numero_ruc = $request->numero_documento;
                                 $persona->direccion = $direccion;
                                 $persona->correo = $correo;
                                 $persona->save();

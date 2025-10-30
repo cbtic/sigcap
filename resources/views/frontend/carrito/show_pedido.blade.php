@@ -203,6 +203,38 @@
   display: block;
 }
 
+/* Para Bloquear capa*/
+#bloqueoPantalla {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6); /* fondo oscuro */
+    z-index: 9999; /* encima de todo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contenedorBloqueo {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px 40px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+#contenedorBloqueo h4 {
+    margin-bottom: 20px;
+}
+
+#contenedorBloqueo button {
+    margin: 10px;
+    min-width: 120px;
+}
+
 </style>
 
 @extends('frontend.layouts.app_carrito')
@@ -225,6 +257,14 @@
         </li>
     </ol>
     -->
+<div id="bloqueoPantalla">
+  <div id="contenedorBloqueo">
+    <h4>Selecciona el tipo de comprobante</h4>
+    <p>Por favor elige una opción para continuar:</p>
+    <button class="btn btn-secondary" onclick="seleccionarComprobante('Factura')">Factura</button>
+    <button class="btn btn-secondary" onclick="seleccionarComprobante('Boleta')">Boleta</button>
+  </div>
+</div>
 
 <div class="loader"></div>
 
@@ -1233,6 +1273,20 @@ function obtenerRepresentante(){
     
 }
 
+function seleccionarComprobante(tipo) {
+    // Guardar el tipo de comprobante en el input oculto, si quieres usarlo después
+    document.getElementById('TipoF').value = tipo;
+
+    // Llamar a tu función actual, si corresponde
+    if (tipo === 'Factura') {
+        cargarComprobante(1);
+    } else if (tipo === 'Boleta') {
+        cargarComprobante(2);
+    }
+
+    // Desbloquear la pantalla
+    document.getElementById('bloqueoPantalla').style.display = 'none';
+}
 
 </script>
 

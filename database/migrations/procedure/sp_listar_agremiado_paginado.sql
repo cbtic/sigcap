@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(p_region character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_id_situacion character varying, p_id_categoria character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+-- DROP FUNCTION public.sp_listar_agremiado_paginado(varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, refcursor);
+
+CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(p_region character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_id_situacion character varying, p_id_categoria character varying, p_act_gremial character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -19,18 +21,19 @@ Begin
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
 	v_campos=' a.id,to_char(a.fecha_colegiado,''dd-mm-yyyy'')fecha_colegiado,tm.denominacion tipo_documento,
-p.numero_documento,a.numero_cap,r.denominacion region,
-p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
-to_char(p.fecha_nacimiento,''dd-mm-yyyy'')fecha_nacimiento,tms.denominacion situacion,tmc.denominacion categoria ';
+	p.numero_documento,a.numero_cap,r.denominacion region,
+	p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
+	to_char(p.fecha_nacimiento,''dd-mm-yyyy'')fecha_nacimiento,tms.denominacion situacion,tmc.denominacion categoria, tmc2.denominacion act_gremial ';
 
 	v_tabla='from agremiados a 
-inner join personas p on a.id_persona=p.id
-inner join tabla_maestras tm on p.id_tipo_documento::int=tm.codigo::int and tm.tipo=''16''
-inner join regiones r on a.id_regional=r.id 
-inner join tabla_maestras tms on a.id_situacion::int=tms.codigo::int and tms.tipo=''14'' 
-left join tabla_maestras tmc on a.id_categoria::int=tmc.codigo::int and tmc.tipo=''18'' ';
+	inner join personas p on a.id_persona=p.id
+	inner join tabla_maestras tm on p.id_tipo_documento::int=tm.codigo::int and tm.tipo=''16''
+	inner join regiones r on a.id_regional=r.id 
+	inner join tabla_maestras tms on a.id_situacion::int=tms.codigo::int and tms.tipo=''14'' 
+	left join tabla_maestras tmc on a.id_categoria::int=tmc.codigo::int and tmc.tipo=''18''
+	left join tabla_maestras tmc2 on a.id_actividad_gremial::int=tmc2.codigo::int and tmc2.tipo=''46'' ';
 	
-	v_where = ' Where 1=1  ';
+	v_where = ' Where 1=1 and a.estado = ''1'' ';
 
 	If p_region<>'' Then
 	 v_where:=v_where||'And a.id_regional = '''||p_region||''' ';
@@ -63,6 +66,10 @@ left join tabla_maestras tmc on a.id_categoria::int=tmc.codigo::int and tmc.tipo
 	 v_where:=v_where||'And a.id_categoria = '''||p_id_categoria||''' ';
 	End If;
 	
+	If p_act_gremial<>'' Then
+	 v_where:=v_where||'And a.id_actividad_gremial = '''||p_act_gremial||''' ';
+	End If;
+
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 

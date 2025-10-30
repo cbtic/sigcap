@@ -431,14 +431,14 @@ async function guardarFactura(){
 	
 	var ruc_e = $('#numero_documento').val();
 	var ruc_p = $('#numero_documento2').val();
-	                
+	
 	var tipo=$('#TipoF').val();
 
 	//alert(ruc_p); exit();
 
 	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
-		msg+="Se Requiere el Número de RUC para generar una Factura!";	
-		
+		msg+="Se Requiere el Número de RUC para generar una Factura!";
+		$('#numero_documento').attr(readonly, false);
 	}
 
 	//if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
@@ -450,7 +450,7 @@ async function guardarFactura(){
 
     if(smodulo_guia=="32"){
 		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
-		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
+		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";
 	}
 	
 	if (dif>1 || dif<-1){	
