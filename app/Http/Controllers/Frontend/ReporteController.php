@@ -38,9 +38,22 @@ class ReporteController extends Controller
 		*/
 
 		$this->middleware('auth');
+
+		$user = Auth::user();
+		if (!$user) {
+        	return redirect()->route('frontend.auth.login');
+    	}
+		//print_r($user);exit();
+		/*
 		$this->middleware('can:Reporte Ventas')->only(['index']);
 		$this->middleware('can:Reporte Cajas')->only(['index']);
 		$this->middleware('can:Reporte Deudas Gestion')->only(['index']);
+		*/
+		if (!($user->can('Reporte Ventas') ||
+			$user->can('Reporte Cajas') ||
+			$user->can('Reporte Deudas Gestion'))) {
+			abort(403, 'No tienes permisos para acceder a este reporte.');
+		}
 	}
 
     public function index($tipo_reporte){
