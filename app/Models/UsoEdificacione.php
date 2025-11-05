@@ -49,9 +49,9 @@ class UsoEdificacione extends Model
         FROM uso_edificaciones ue
         INNER JOIN tabla_maestras tm2 ON ue.id_tipo_uso = tm2.codigo::int AND tm2.tipo = '124'
         WHERE ue.id_solicitud = s.id and ue.estado='1'), ue.area_techada,
-        (select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=1 and estado='1' order by 1 desc limit 1)ruta_archivo1,
-        (select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=2 and estado='1' order by 1 desc limit 1)ruta_archivo2,
-        (select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=3 and estado='1' order by 1 desc limit 1)ruta_archivo3 
+        (select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=1 and estado='1' order by sd.id desc limit 1)ruta_archivo1,
+        (select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=2 and estado='1' order by sd.id desc limit 1)ruta_archivo2,
+        (select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=3 and estado='1' order by sd.id desc limit 1)ruta_archivo3 
         from uso_edificaciones ue 
         inner join solicitudes s on ue.id_solicitud = s.id 
         inner join tabla_maestras tm on s.id_tipo_tramite = tm.codigo::int and  tm.tipo ='123'
