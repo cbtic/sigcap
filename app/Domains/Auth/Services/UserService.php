@@ -124,6 +124,7 @@ class UserService extends BaseService
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
                 'active' => isset($data['active']) && $data['active'] === '1',
+                'id_tipo_usuario' => 99,
 				/*'id_persona' => 1,*/
             ]);
 
@@ -334,6 +335,7 @@ class UserService extends BaseService
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
 			'id_persona' => (isset($data['id_persona']) && $data['id_persona']>0)?$data['id_persona']:null,
+            'id_tipo_usuario' => $data['id_tipo_usuario'] ?? null,
         ]);
 		
 		//User::find(1)->assignRole(config('boilerplate.access.role.admin'));
