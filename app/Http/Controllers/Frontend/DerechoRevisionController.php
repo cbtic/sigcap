@@ -1096,21 +1096,27 @@ class DerechoRevisionController extends Controller
 			$uso_edificion_ = UsoEdificacione::where("id_solicitud",$uso_edificion->id_solicitud)->where("estado","1")->get();
 			$selectedIds = $uso_edificion_->pluck('id_tipo_uso')->toArray();
 			$selectedIdsTramite = $solicitud->pluck('id_tipo_tramite')->toArray();
-			$solicitudDocumento = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("estado","1")->get();
-			$selectedDocumentos = $solicitudDocumento->pluck('ruta_archivo')->toArray();
+			$solicitudDocumento_registro = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("id_tipo_documento","1")->where("estado","1")->orderBy('id', 'desc')->first();
+			$solicitudDocumento_plano = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("id_tipo_documento","2")->where("estado","1")->orderBy('id', 'desc')->first();
+			$solicitudDocumento_fuhu = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("id_tipo_documento","3")->where("estado","1")->orderBy('id', 'desc')->first();
+			$selectedDocumentos_registro = [$solicitudDocumento_registro->ruta_archivo];
+			$selectedDocumentos_plano = [$solicitudDocumento_plano->ruta_archivo];
+			$selectedDocumentos_fuhu = [$solicitudDocumento_fuhu->ruta_archivo];
 			$solicitud_ = DerechoRevision::where("id",$uso_edificion->id_solicitud)->where("estado","1")->first();
 		}else{
 			$derechoRevision = new DerechoRevision;
 			$uso_edificion = new UsoEdificacione;
 			$selectedIds = [];
 			$selectedIdsTramite = [];
-			$selectedDocumentos = [];
+			$selectedDocumentos_registro = [];
+			$selectedDocumentos_plano = [];
+			$selectedDocumentos_fuhu = [];
 			$solicitud=new DerechoRevision;
 			$solicitud_=new DerechoRevision;
 		}
 		//var_dump($solicitud_);exit();
 		
-        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos','solicitud','solicitud_'));
+        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos_registro','selectedDocumentos_plano','selectedDocumentos_fuhu','solicitud','solicitud_'));
 		
     }
 

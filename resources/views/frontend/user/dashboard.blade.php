@@ -4,9 +4,12 @@
 @section('title', __('Dashboard'))
 
 @if(
-    !$logged_in_user->persona->numero_celular ||
-    !$logged_in_user->persona->correo ||
-    !$logged_in_user->persona->direccion
+    $logged_in_user->id_tipo_usuario != 99 &&
+    (
+        !$logged_in_user->persona->numero_celular ||
+        !$logged_in_user->persona->correo ||
+        !$logged_in_user->persona->direccion
+    )
 )
     @push('after-scripts')
     <script>
@@ -33,9 +36,12 @@
 @endif
 
 @if(
-    $logged_in_user->persona->numero_celular &&
-    $logged_in_user->persona->correo &&
-    $logged_in_user->persona->direccion
+    $logged_in_user->id_tipo_usuario != 99 &&
+    (
+        $logged_in_user->persona->numero_celular &&
+        $logged_in_user->persona->correo &&
+        $logged_in_user->persona->direccion
+    )
 )
     @push('after-scripts')
     <script>

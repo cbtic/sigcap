@@ -649,9 +649,9 @@ function fn_save_infoProyeto(){
 						$img = "/img/logo-sin-fondo2.png";
 						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 						?>
-                        @if(count($selectedDocumentos) > 0)
-                            <img src="/img/derecho_revision/{{ $selectedDocumentos[0] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
-                            <input type="hidden" id="img_foto1" name="img_foto1" value="{{ $selectedDocumentos[0] }}" style="padding-left:10px" />
+                        @if(count($selectedDocumentos_registro) > 0)
+                            <img src="/img/derecho_revision/{{ $selectedDocumentos_registro[0] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                            <input type="hidden" id="img_foto1" name="img_foto1" value="{{ $selectedDocumentos_registro[0] }}" style="padding-left:10px" />
                         @else
 						<img src="<?php echo $img ?>" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
                         <input type="hidden" id="img_foto1" name="img_foto1" value="" style="padding-left:10px" />
@@ -676,9 +676,9 @@ function fn_save_infoProyeto(){
 						$img = "/img/logo-sin-fondo2.png";
 						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 						?>
-                         @if(count($selectedDocumentos) > 0)
-                            <img src="/img/derecho_revision/{{ $selectedDocumentos[1] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
-                            <input type="hidden" id="img_foto2" name="img_foto2" value="{{ $selectedDocumentos[1] }}" style="padding-left:10px" />
+                         @if(count($selectedDocumentos_plano) > 0)
+                            <img src="/img/derecho_revision/{{ $selectedDocumentos_plano[0] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                            <input type="hidden" id="img_foto2" name="img_foto2" value="{{ $selectedDocumentos_plano[0] }}" style="padding-left:10px" />
                         @else
 						<img src="<?php echo $img ?>" id="img_ruta2" width="140px" height="50px" alt="" style="margin-left:10px" />
                         <input type="hidden" id="img_foto2" name="img_foto2" value="" />
@@ -703,9 +703,9 @@ function fn_save_infoProyeto(){
 						$img = "/img/logo-sin-fondo2.png";
 						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 						?>
-                        @if(count($selectedDocumentos) > 0)
-                            <img src="/img/derecho_revision/{{ $selectedDocumentos[2] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
-                            <input type="hidden" id="img_foto3" name="img_foto3" value="{{ $selectedDocumentos[2] }}" style="padding-left:10px" />
+                        @if(count($selectedDocumentos_fuhu) > 0)
+                            <img src="/img/derecho_revision/{{ $selectedDocumentos_fuhu[0] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                            <input type="hidden" id="img_foto3" name="img_foto3" value="{{ $selectedDocumentos_fuhu[0] }}" style="padding-left:10px" />
                         @else
 						<img src="<?php echo $img ?>" id="img_ruta3" width="140px" height="50px" alt="" style="margin-left:10px" />
 								
