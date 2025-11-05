@@ -43,7 +43,7 @@ class AgremiadoController extends Controller
     	});
 		*/
 		$this->middleware('auth');
-    	$this->middleware('can:agremiado')->only(['index']);
+    	$this->middleware('can:Nuevo Agremiado')->only(['index']);
 		$this->middleware('can:Consulta de Agremiado')->only(['consulta_agremiado']);
 		$this->middleware('can:Multas')->only(['consulta_multa']);
 		$this->middleware('can:Afiliciacion a Seguro')->only(['consulta_afiliacion_seguro']);
