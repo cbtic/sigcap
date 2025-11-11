@@ -22,6 +22,7 @@ use App\Models\Concepto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Auth;
+
 class CertificadoController extends Controller
 {
 	public function __construct(){

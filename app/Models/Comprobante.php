@@ -430,7 +430,8 @@ class Comprobante extends Model
 
         $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.direccion, p.correo, p.direccion_sunat
 		        from personas p
-		        Where p.numero_documento='".$numero_documento."'";
+		        Where p.numero_documento='".$numero_documento."'
+                and p.estado = '1' ";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];
@@ -439,8 +440,8 @@ class Comprobante extends Model
     function getPersonaRuc($numero_documento){
 
         $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, direccion,correo email
-		from personas p
-		Where p.numero_ruc='".$numero_documento."' or  p.numero_documento='".$numero_documento."'";
+                from personas p
+                Where p.numero_ruc='".$numero_documento."' or  p.numero_documento='".$numero_documento."'";
 		//echo $cad;
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];
@@ -451,7 +452,8 @@ class Comprobante extends Model
 
         $cad = "select id, direccion,email
 		        from empresas
-		        Where ruc='".$numero_documento."'";
+		        Where ruc='".$numero_documento."'
+                and estado = '1' ";
 		//echo $cad;
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];

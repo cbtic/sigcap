@@ -44,7 +44,7 @@ begin
 	inner join seguros_planes sp on sp.id = sap.id_plan and sp.estado=''1''
 	inner join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo =''14'' ';
 	
-	v_where = 'Where 1=1 and tc.id = ''48''';
+	v_where = 'Where 1=1 and tc.id = ''48'' and v.exonerado <> ''1'' ';
 	
 
 	If p_anio<>'' Then
