@@ -595,7 +595,7 @@ class CajaIngreso extends Model
                     from (
                             select  co.denominacion concepto,c.fecha fecha,	 c.tipo tipo_documento, c.serie serie, c.numero::varchar(20)  numero, c2.fecha fecha_ncd,c2.tipo tipo_documento_ncd, c2.serie serie_ncd, c2.numero::varchar(20)  numero_ncd, c.cod_tributario cod_tributario, c.destinatario destinatario ,
                             case when cd.afect_igv ='30' then 0 else sum((cd.pu * cd.cantidad)-cd.descuento) end * case when c.tipo='NC' then -1 else 1 end  imp_afecto,
-                            case when cd.afect_igv ='30' then sum((cd.pu_con_igv*cd.cantidad)-cd.descuento) else 0  end * case when c.tipo='NC' then -1 else 1 end imp_inafecto
+                            case when cd.afect_igv ='30' then sum((cd.pu_con_igv*cd.cantidad)-cd.descuento) else 0  end * case when c.tipo='NC' then -1 else 1 end imp_inafecto,
                             sum(cd.igv_total) * case when c.tipo='NC' then -1 else 1 end igv  ,sum(cd.importe) * case when c.tipo='NC' then -1 else 1 end total,c.id 
                             																																																																																		 															
                             from comprobantes c 
