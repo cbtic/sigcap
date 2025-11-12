@@ -314,6 +314,7 @@ class CajaIngreso extends Model
         if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
       
         $cad = "select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago,
+        
                 case when c.impuesto >0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_afecto,
                 case when c.impuesto =0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_inafecto
                 from comprobantes c
@@ -324,8 +325,8 @@ class CajaIngreso extends Model
             
                 union
                 select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago,
-                case when c.impuesto >0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_afecto,
-                case when c.impuesto =0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_inafecto
+                case when (select  cd.afect_igv 	from   comprobante_detalles cd where cd.id_comprobante=c.id   limit 1)::int=10 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_afecto,
+                case when (select  cd.afect_igv 	from   comprobante_detalles cd where cd.id_comprobante=c.id   limit 1)::int=30  then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_inafecto
                 from comprobantes c
                 where 1=1 "
                 .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." ' 
