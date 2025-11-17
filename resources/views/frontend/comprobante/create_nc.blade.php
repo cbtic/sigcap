@@ -534,6 +534,8 @@
                                                         if ($trans == 'FA' || $trans == 'FE' || $trans == 'FN') { ?>
                                                             <?php foreach ($facturad as $key => $fac) {                                                                 
                                                                 //		$smodulo = $fac['smodulo'];
+                                                              
+                                                               
                                                             ?>
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][id]" value="<?php echo $fac->id//$fac['id'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac->fecha//$fac['fecha'] ?>" />
@@ -547,21 +549,10 @@
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo ''//$fac['cod_contable'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac->id_concepto//$fac['id_concepto'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][cantidad]" value="<?php echo '1'//$fac['cantidad'] ?>" />
-                                                                
-                                                                <!--
-                                                                <input type="hidden" id="facturad_pu" name="facturad[<//?php echo $key ?>][importe]" value="<//?php echo $fac['pu'] ?>" />
-                                                                <input type="hidden" id="facturad_igv" name="facturad[<//?php echo $key ?>][igv]" value="<//?php echo $fac['igv_total'] ?>" />
-                                                                <input type="hidden" id="facturad_total" name="facturad[<//?php echo $key ?>][total]" value="<//?php echo $fac['importe'] ?>" />
-                                                                -->
                                                                 <input type="hidden" id="afectacion" name="facturad[<?php echo $key ?>][afectacion]" value="<?php echo $fac->afect_igv//$fac['afect_igv']?>" />
-
                                                                 <input type="hidden" id="afect_igv<?php echo $key?>" name="facturad[<?php echo $key ?>][afect_igv]" value="<?php echo $fac->afect_igv//$fac['afect_igv'] ?>" />                                            
                                                                 <input type="hidden" id="igv<?php echo $key?>" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac->igv_total//$fac['igv_total'] ?>" />                                                            
-                                                                <!--
-                                                                <input type="hidden" id="total<//?php echo $key?>" name="facturad[<//?php echo $key ?>][total]" value="<//?php echo $fac['importe'] ?>" />
-                                                            -->
-                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $importe ?>" />
-                                                                
+                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $importe ?>" />                                                                
                                                                 <input type="hidden" id="pu<?php echo $key?>" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac->pu//$fac['pu'] ?>" />
                                                                 <input type="hidden" id="pv<?php echo $key?>" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac->precio_venta//$fac['precio_venta'] ?>" />
                                                                 <input type="hidden" id="valor_venta_bruto<?php echo $key?>" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac->valor_venta_bruto//$fac['valor_venta_bruto'] ?>" />
@@ -575,23 +566,26 @@
 
                                                                                        
                                                                     <td class="text-center"><?php if ($trans == 'FA') {
-                                                                                                echo '1'; //$fac['cantidad'];
+                                                                                               echo  $fac['cantidad'];
                                                                                             }
                                                                                             if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo '1'; //$fac['cantidad'];
+                                                                                              echo  $fac['cantidad'];
                                                                                             } ?>
                                                                                             <input type="hidden" readonly name="cantidad[]"  id="cantidad<?php echo $key?>" value="<?php echo '1'//$fac['cantidad']; ?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                                             </td>
                                                                     <td class="text-left">
-                                                                        <input type="hidden" id="descripciones_" name="descripciones_" value="<?php echo  nl2br($descripciones) ?>" />
+                                                                        
                                                                         <?php
+                                                                        
                                                                         if ($trans == 'FA') {
-                                                                            echo nl2br($descripciones);//$fac['descripcion'];
+                                                                            echo $fac['descripcion'];
                                                                         }
                                                                         if ($trans == 'FE' || $trans == 'FN') {
-                                                                            echo nl2br($descripciones);//$fac['descripcion'];
+                                                                            echo $fac['descripcion'];
                                                                         } ?>
                                                                     </td>
+
+                                                                    
                                                                     
                                                                     <td class="text-right">                                                                        
                                                                         <input type="text" readonly name="importeantd[]"  id="importeantd<?php echo $key?>" value="<?php echo number_format($importe, 2)?>" placeholder="" class="form-control form-control-sm text-center"  >
