@@ -1687,19 +1687,20 @@
                     var totalNC= data[7];
 
                     var total_fac = $("#total_fac_").val();
-
+                    
                     
                     $('#serieNC').val(serieNC);
                     $('#numeroNC').val(numeroNC);
 
                     //ValorUnitario_ = Number(ValorUnitario_ );
 
-                    if(Number(total_fac) < Number(totalNC)){
+                  /*  if(Number(total_fac) < Number(totalNC)){
 
                         //alert("SI");
                         totalNC=Number(total_fac);
 
                     }
+                        */
             /*
                     alert(serie);
                     alert(numero);
@@ -1719,6 +1720,7 @@
 		                $("#idMedio0 option:not(:selected)").prop('disabled', true);
 		
                         //$("#idMedio0").val("91").trigger("change");
+                        
                         $("#monto0").val(totalNC);
                         $("#total_pagar").val(totalNC);
                         $("#nroOperacion0").val(id_comprobante_ncnd);

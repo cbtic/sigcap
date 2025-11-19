@@ -552,7 +552,7 @@
                                                                 <input type="hidden" id="afectacion" name="facturad[<?php echo $key ?>][afectacion]" value="<?php echo $fac->afect_igv//$fac['afect_igv']?>" />
                                                                 <input type="hidden" id="afect_igv<?php echo $key?>" name="facturad[<?php echo $key ?>][afect_igv]" value="<?php echo $fac->afect_igv//$fac['afect_igv'] ?>" />                                            
                                                                 <input type="hidden" id="igv<?php echo $key?>" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac->igv_total//$fac['igv_total'] ?>" />                                                            
-                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $importe ?>" />                                                                
+                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac->importe ?>" />                                                                
                                                                 <input type="hidden" id="pu<?php echo $key?>" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac->pu//$fac['pu'] ?>" />
                                                                 <input type="hidden" id="pv<?php echo $key?>" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac->precio_venta//$fac['precio_venta'] ?>" />
                                                                 <input type="hidden" id="valor_venta_bruto<?php echo $key?>" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac->valor_venta_bruto//$fac['valor_venta_bruto'] ?>" />
@@ -588,7 +588,7 @@
                                                                     
                                                                     
                                                                     <td class="text-right">                                                                        
-                                                                        <input type="text" readonly name="importeantd[]"  id="importeantd<?php echo $key?>" value="<?php echo number_format($importe, 2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                        <input type="text" readonly name="importeantd[]"  id="importeantd<?php echo $key?>" value="<?php echo number_format($fac->pu, 2)?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                     
                                                                     </td>
 
@@ -605,7 +605,7 @@
                                                                     </td>
 
                                                                     <td class="text-right">                                                                        
-                                                                        <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                        <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format($fac->pu_con_igv,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                     
                                                                     </td>
 

@@ -3996,14 +3996,18 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->where('descripcion', '<>', 'REDONDEO')->get();
+            ])->get();
+            //->where('descripcion', '<>', 'REDONDEO')->get();
 
             $descripciones = $facturad->pluck('descripcion')->implode("\n");
           
             
-           // print_r($descripciones); exit();                  
+            //echo($facturad); exit();                  
+            
+           /////////////////////////
+              $afectacion=$facturad[0]->afect_igv;
 
-            $afectacion=$facturad[0]->afect_igv;
+
             ///////////////////
            // $facturadR=$comprobante_model->getComprobanteDetalleById($id_origen);
             
@@ -4031,6 +4035,8 @@ class ComprobanteController extends Controller
 
             /////////////////////////////////
             //$facturad = $facturadR;
+
+            /////////////////////////////////
             $importe= $facturad[0]->importe;
         }
         else {
@@ -5388,7 +5394,7 @@ class ComprobanteController extends Controller
 
                 $factura_upd->save();
 
-
+//print_r ($tarifa); exit();
                 foreach ($tarifa as $key => $value) {
                     //echo "denominacion=>".$value['denominacion']."<br>";
                     if ($adelanto == 'S') {
