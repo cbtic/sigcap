@@ -1184,6 +1184,10 @@ function obtenerTitular(){
 				$("#total_pagar_abono").val(total.toFixed(2));
 				//$("#total_pagar_abono").val(monto_r.toFixed(2));
 			}
+			else {
+				$("#tr_total_pagar_abono").hide();
+				$("#total_pagar_abono").val(0);
+			}
 	
 			
 			//$("#precio_peso").val(total);
