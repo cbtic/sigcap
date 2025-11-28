@@ -1736,6 +1736,11 @@
                             $("#tr_total_pagar_abono").show();
 						    $("#total_pagar_abono").val(totalNC);
                         }
+                        else {
+                            $("#tr_total_pagar_abono").hide();
+						    $("#total_pagar_abono").val(0);
+                                //$("#tr_total_pagar_abono").hide();
+                        }
                         
                         //$("#total_pagar_abono").val(totalNC);
                     }
