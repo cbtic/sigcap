@@ -62,10 +62,13 @@ class IngresoController extends Controller
         $tipo_documento = $caja_model->getMaestroByTipo(16);
 
         //$date = (new DateTime)->format("Y");
-        $anio_actual = date("Y");
+        //$anio_actual = date("Y");
+        //$fecha_actual = date("YYYY-mm-ddd");
+        
 
 
-        $pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();                
+        //$pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();
+        $pronto_pago = ProntoPago::where("estado","1")->first();
         $concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
        // $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
 
