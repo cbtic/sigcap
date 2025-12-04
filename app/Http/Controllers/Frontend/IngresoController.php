@@ -1183,6 +1183,17 @@ class IngresoController extends Controller
 		echo json_encode($pago_pronto_pago);
 	}
 
+    public function valida_ultimo_pago_certificado($cap,$anio){
+		
+		$valorizacion_model = new Valorizacione;
+        
+        //$anio = Carbon::now()->year;
+        
+		$pago_pronto_pago = $valorizacion_model->getPagosCuotaConstancia($cap, $anio);
+		
+		echo json_encode($pago_pronto_pago);
+	}
+
     public function validar_pago($cap){
 		
 		$valorizacion_model = new Valorizacione;
