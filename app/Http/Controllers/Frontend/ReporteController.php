@@ -24,6 +24,37 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use DateTime;
+use TCPDF;
+
+class ReporteVentasPDF extends TCPDF
+{
+    public $titulo;
+    public $f_inicio;
+    public $f_fin;
+
+    public function Header()
+    {
+        $logo = public_path('img/logo_encabezado.jpg');
+        if (file_exists($logo)) {
+            $this->Image($logo, 10, 8, 40);
+        }
+
+        $this->SetFont('helvetica', 'B', 14);
+        $this->Cell(0, 10, $this->titulo, 0, 1, 'C');
+
+        $this->SetFont('helvetica', '', 9);
+        $this->Cell(0, 5, "De: {$this->f_inicio}   Hasta: {$this->f_fin}    TC: 3.84", 0, 1, 'C');
+
+        $this->SetY(40);
+    }
+
+    public function Footer()
+    {
+        $this->SetY(-12);
+        $this->SetFont('helvetica', 'I', 8);
+        $this->Cell(0, 10, "Página ".$this->getAliasNumPage()." de ".$this->getAliasNbPages(), 0, 0, 'R');
+    }
+}
 
 class ReporteController extends Controller
 {
@@ -308,15 +339,250 @@ class ReporteController extends Controller
 				
 				//var_dump($reporte_ventas);exit();
 				//print_r($venta);exit();
+
+				$pdf = new ReporteVentasPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+
+				$pdf->titulo   = $titulo;
+				$pdf->f_inicio = $f_inicio;
+				$pdf->f_fin    = $f_fin;
+
+				$pdf->SetCreator('FORESP');
+				$pdf->SetAuthor('FORESP');
+				$pdf->SetTitle($titulo);
+
+				// Márgenes
+				$pdf->SetMargins(10, 30, 10);
+				$pdf->SetHeaderMargin(10);
+				$pdf->SetFooterMargin(10);
+
+				// Header
+				$pdf->setPrintHeader(true);
+				$pdf->SetHeaderData('', 0, $titulo, "De: $f_inicio    Hasta: $f_fin    TC: 3.84");
+
+				// Footer
+				$pdf->setPrintFooter(true);
+
+				// Fuente
+				$pdf->SetFont('helvetica', '', 8);
+
+				$pdf->AddPage();
+
+				// -------------------------------------------------------
+				// ARMAR TABLA HTML (IDÉNTICA A LA QUE TENÍAS EN DOMPDF)
+				// -------------------------------------------------------
+				$html = '
+				<style>
+
+				table { font-size: 8px;border-spacing: 0; width: 100%; }
+				th { background-color: #eaeaea; font-weight: bold; border: 0.4px solid #888; padding: 4px; }
+				td { border: 0.4px solid #888; padding: 3px;}
+
+				th.num, td.num { text-align: right !important; }
+				</style>
+
+				<body>';
+
+					// =====================================
+					// SECCIÓN: TABLA COMPLETA
+					// =====================================
+
+					$html .= '
+				<table width="100%">
+				<tr>
+					<th width="12%">Emisión</th>
+					<th width="4%">TD</th>
+					<th width="4%">Serie</th>
+					<th width="4%">Número</th>
+					<th width="6%">Cod. Trib.</th>
+					<th width="30%">Destinatario</th>
+					<th width="6%">Afecto</th>
+					<th width="6%">Inafecto</th>
+					<th width="6%">IGV</th>
+					<th width="6%">Total</th>
+					<th width="8%">Cond.</th>
+					<th width="8%">Estado</th>
+				</tr>';
+
+					// acumuladores
+					$bo_af = $bo_in = $bo_igv = $bo_tot = 0;
+					$fa_af = $fa_in = $fa_igv = $fa_tot = 0;
+					$nc_af = $nc_in = $nc_igv = $nc_tot = 0;
+
+					// ===============================
+					//        BOLETAS
+					// ===============================
+					$html .= '<tr><td style="background:#eef8ff;font-weight:bold">BOLETAS</td></tr>';
+
+					foreach ($reporte_ventas as $d) {
+						if ($d->tipo != "BV") continue;
+
+						$html .= "
+				<tr>
+				<td>$d->fecha</td>
+				<td>$d->tipo</td>
+				<td>$d->serie</td>
+				<td>$d->numero</td>
+				<td>$d->cod_tributario</td>
+				<td>$d->destinatario</td>
+				<td  align='right'>".number_format($d->imp_afecto,2)."</td>
+				<td  align='right'>".number_format($d->imp_inafecto,2)."</td>
+				<td  align='right'>".number_format($d->impuesto,2)."</td>
+				<td  align='right'>".number_format($d->total,2)."</td>
+				<td>$d->forma_pago</td>
+				<td>$d->estado_pago</td>
+				</tr>";
+
+						$bo_af += $d->imp_afecto;
+						$bo_in += $d->imp_inafecto;
+						$bo_igv += $d->impuesto;
+						$bo_tot += $d->total;
+					}
+
+					$html .= "
+				<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><b>Total Boletas</b></td>
+				<td  align='right'><b>".number_format($bo_af,2)."</b></td>
+				<td  align='right'><b>".number_format($bo_in,2)."</b></td>
+				<td  align='right'><b>".number_format($bo_igv,2)."</b></td>
+				<td  align='right'><b>".number_format($bo_tot,2)."</b></td>
+				<td></td>
+				<td></td>
+				</tr>";
+
+					// ===============================
+					//        FACTURAS
+					// ===============================
+
+					$html .= '<tr><td style="background:#eef8ff;font-weight:bold">FACTURAS</td></tr>';
+
+					foreach ($reporte_ventas as $d) {
+						if ($d->tipo != "FT") continue;
+
+						$html .= "
+					<tr>
+					<td>$d->fecha</td>
+					<td>$d->tipo</td>
+					<td>$d->serie</td>
+					<td>$d->numero</td>
+					<td>$d->cod_tributario</td>
+					<td>$d->destinatario</td>
+					<td  align='right'>".number_format($d->imp_afecto,2)."</td>
+					<td  align='right'>".number_format($d->imp_inafecto,2)."</td>
+					<td  align='right'>".number_format($d->impuesto,2)."</td>
+					<td  align='right'>".number_format($d->total,2)."</td>
+					<td>$d->forma_pago</td>
+					<td>$d->estado_pago</td>
+					</tr>";
+
+							$fa_af += $d->imp_afecto;
+							$fa_in += $d->imp_inafecto;
+							$fa_igv += $d->impuesto;
+							$fa_tot += $d->total;
+						}
+
+						$html .= "
+					<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>Total Facturas</b></td>
+					<td  align='right'><b>".number_format($fa_af,2)."</b></td>
+					<td  align='right'><b>".number_format($fa_in,2)."</b></td>
+					<td  align='right'><b>".number_format($fa_igv,2)."</b></td>
+					<td  align='right'><b>".number_format($fa_tot,2)."</b></td>
+					<td></td>
+					<td></td>
+					</tr>";
+
+						// ===============================
+						//        NOTAS DE CRÉDITO
+						// ===============================
+
+						$html .= '<tr><td style="background:#eef8ff;font-weight:bold">NOTAS DE CRÉDITO</td></tr>';
+
+						foreach ($reporte_ventas as $d) {
+							if ($d->tipo != "NC") continue;
+
+							$html .= "
+					<tr>
+					<td>$d->fecha</td>
+					<td>$d->tipo</td>
+					<td>$d->serie</td>
+					<td>$d->numero</td>
+					<td>$d->cod_tributario</td>
+					<td>$d->destinatario</td>
+					<td  align='right'>".number_format($d->imp_afecto,2)."</td>
+					<td  align='right'>".number_format($d->imp_inafecto,2)."</td>
+					<td  align='right'>".number_format(-1*$d->impuesto,2)."</td>
+					<td  align='right'>".number_format(-1*$d->total,2)."</td>
+					<td>$d->forma_pago</td>
+					<td>$d->estado_pago</td>
+					</tr>";
+
+							$nc_af += $d->imp_afecto;
+							$nc_in += $d->imp_inafecto;
+							$nc_igv += -1 * $d->impuesto;
+							$nc_tot += -1 * $d->total;
+						}
+
+						$html .= "
+					<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>Total Notas Crédito</b></td>
+					<td  align='right'><b>".number_format($nc_af,2)."</b></td>
+					<td  align='right'><b>".number_format($nc_in,2)."</b></td>
+					<td  align='right'><b>".number_format($nc_igv,2)."</b></td>
+					<td  align='right'><b>".number_format($nc_tot,2)."</b></td>
+					<td></td>
+					<td></td>
+					</tr>";
+
+						// ===============================
+						//        TOTALES GENERALES
+						// ===============================
+						$html .= "
+					<tr style='background:#f1f1f1'>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>TOTALES GENERALES</b></td>
+					<td  align='right'><b>".number_format($bo_af+$fa_af+$nc_af,2)."</b></td>
+					<td  align='right'><b>".number_format($bo_in+$fa_in+$nc_in,2)."</b></td>
+					<td  align='right'><b>".number_format($bo_igv+$fa_igv+$nc_igv,2)."</b></td>
+					<td  align='right'><b>".number_format($bo_tot+$fa_tot+$nc_tot,2)."</b></td>
+					<td></td>
+					<td></td>
+					</tr>";
+
+					$html .= "</table></body>";
+
+					// enviar al PDF
+					$pdf->writeHTML($html, true, false, true, false, '');
+
+					$pdf->Output('reporte_ventas.pdf', 'I');
+
 		
-				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
+				/*$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
 				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
 				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
 				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros*/
 
 			}
 		}
