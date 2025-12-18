@@ -757,6 +757,7 @@ class Valorizacione extends Model
         where a.numero_cap ='".$cap."' and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$año_actual."' 
         --and v.pagado ='1'
         and id_modulo ='2'
+        and v.estado ='1'
         order by id desc";
 
 		//echo $cad;
