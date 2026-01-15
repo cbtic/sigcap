@@ -291,7 +291,7 @@ function valida_ultimo_pago(){
 		$('.loader').show();
 
 		$.ajax({
-			url: "/ingreso/valida_ultimo_pago/"+cap+"/"+anio,
+			url: "/ingreso/valida_ultimo_pago_certificado/"+cap+"/"+anio,
 			dataType: 'json',
 			success: function(result) {
 				
