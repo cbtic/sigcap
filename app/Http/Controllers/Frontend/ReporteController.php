@@ -599,12 +599,11 @@ class ReporteController extends Controller
 			if ($funcion=='rt'){
 				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 				$titulo = "REPORTE DE DEUDA TOTAL";
-
 				
 				//$usuario=$usuario_ingresos[0] ->usuario;
-
+				
 				//print_r($venta);exit();
-		
+				
 				//$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
 				//$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
