@@ -47,13 +47,26 @@ class AsientoPlanilla extends Model
     }
     
 
-    function getVouporID($periodo, $origen, $voucher,$ruc){
+    function getVouporID($periodo, $origen, $voucher,$ruc, $anio){
 
         $cad = "select id 
                 from planilla_siscont ps
-                Where ps.periodo='" . $periodo. "' and ps.origen='" . $origen . "' and ps.voucher='" . $voucher . "' and ruc='" . $ruc. "'";
+                Where ps.periodo='" . $periodo. "' and ps.origen='" . $origen . "' and ps.voucher='" . $voucher . "' and ruc='" . $ruc. "' and anio='" . $anio. "'" ;
 		//echo $cad;
 		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getFechaxPeriodo($periodo, $anio, $mes){
+
+        $cad = "select fecha_comprobante 
+                from planilla_delegados pd inner join planilla_delegado_detalles pdd on pdd.id_planilla =pd.id 
+                where id_periodo_comision ='" . $periodo. "' and periodo =".$anio. " and mes =" . $mes ." and fecha_comprobante is not null 
+                limit 1 ";
+                
+		//echo $cad;
+		$data = DB::select($cad);
+      
         return $data;
     }
 
@@ -107,10 +120,10 @@ class AsientoPlanilla extends Model
         return $data[0]->sp_generar_asiento_planilla;
     }
 
-    function InsertaVou($periodo,$origen,$voucher,$comprobante,$ruc ){
+    function InsertaVou($periodo,$origen,$voucher,$comprobante,$ruc,$anio){
 
-        $cad = "insert into planilla_siscont (periodo,origen,voucher,comprobante,ruc )
-                values ('".$periodo."','".$origen."','".$voucher."','".$comprobante."','" .$ruc . "') ";
+        $cad = "insert into planilla_siscont (periodo,origen,voucher,comprobante,ruc,anio) 
+                values ('".$periodo."','".$origen."','".$voucher."','".$comprobante."','" .$ruc . "','".$anio."') ";
 		
     
 		$data = DB::select($cad);

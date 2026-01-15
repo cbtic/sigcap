@@ -263,25 +263,28 @@ class AsientoPlanillaController extends Controller
 	}
 
 	public function importar_vou_siscont($periodo,$anio, $mes){ 
-		
-		$_mes=intval($mes);
-		$_anio=intval($anio);
+		$asiento_planilla_model = new AsientoPlanilla;
+		$fecha_comprobante = $asiento_planilla_model->getFechaxPeriodo($periodo,$anio, $mes);
+
+
+		$_mes= date("m", strtotime($fecha_comprobante[0]->fecha_comprobante)); 
+		$_anio=date("Y", strtotime($fecha_comprobante[0]->fecha_comprobante)); 
 		 
 		//$periodo = 1054;
-		if ($mes=='12'){
-			$_mes=1;
-			$_anio=$_anio+1;
-		}
-			else{
-				$_mes=$_mes+1;
-			}
+	//	if ($mes=='12'){
+	//		$_mes=1;
+	//			$_anio=$_anio+1;
+	//	}
+	//		else{
+	//			$_mes=$_mes+1;
+	//		}
 			
 		
 		$ch = curl_init('http://190.119.30.106:9090/planillas.php');
 		
 		$postData = [
 					'mes' => sprintf("%02d", $_mes),
-					'anio' => $anio
+					'anio' => $_anio
 				];
 		
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -307,8 +310,8 @@ class AsientoPlanillaController extends Controller
 		foreach($dataWebApi as $row){
 			
 
-			$asiento_planilla_model = new AsientoPlanilla;
-			$VouExiste = $asiento_planilla_model->getVouporID($row->MESV ,$row->T, $row->VOU,$row->RUT);
+			//$asiento_planilla_model = new AsientoPlanilla;
+			$VouExiste = $asiento_planilla_model->getVouporID($row->MESV ,$row->T, $row->VOU,$row->RUT,$row->ANIO);
 			
 			if(count($VouExiste)==0){
 				$asiento_planilla_model->InsertaVou(
@@ -316,7 +319,8 @@ class AsientoPlanillaController extends Controller
 					$row->T,
 					$row->VOU,
 					$row->NUMERO,
-					$row->RUT
+					$row->RUT,
+					$row->ANIO
 				);
 			}
 
