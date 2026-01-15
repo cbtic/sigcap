@@ -330,7 +330,6 @@ class AsientoPlanillaController extends Controller
 		$asiento_planilla_model = new AsientoPlanilla;
 			$asientoPlanilla = $asiento_planilla_model->AsignarVou( $periodo,$_anio, $_mes);
 
-			
 		
 	}
 
