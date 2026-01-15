@@ -1347,6 +1347,7 @@ function descargarExcel(id, por_usuario, tipo){
 	//var concepto = $('#concepto').val();
 	
 	if (fecha_cierre == "")fecha_cierre = 0;
+	if (fecha_consulta == "")fecha_consulta = 0;
 	if (id_concepto == "")id_concepto = 0;
 
 	location.href = '/reporte/exportar_lista_deuda/' + id + '/' + fecha_cierre + '/' + fecha_consulta + '/' +id_concepto;
