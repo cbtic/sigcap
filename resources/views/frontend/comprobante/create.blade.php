@@ -1731,6 +1731,17 @@
                         //$("#idMedio0").prop('disabled', true);
                         $("#btnElimina0").hide();
 
+                        if ($("#total_fac_").val() != Number(totalNC)){
+                            
+                            $("#tr_total_pagar_abono").show();
+						    $("#total_pagar_abono").val(totalNC);
+                        }
+                        else {
+                            $("#tr_total_pagar_abono").hide();
+						    $("#total_pagar_abono").val(0);
+                                //$("#tr_total_pagar_abono").hide();
+                        }
+                        
                         //$("#total_pagar_abono").val(totalNC);
                     }
                  

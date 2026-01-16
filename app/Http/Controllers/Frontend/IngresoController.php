@@ -62,10 +62,13 @@ class IngresoController extends Controller
         $tipo_documento = $caja_model->getMaestroByTipo(16);
 
         //$date = (new DateTime)->format("Y");
-        $anio_actual = date("Y");
+        //$anio_actual = date("Y");
+        //$fecha_actual = date("YYYY-mm-ddd");
+        
 
 
-        $pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();                
+        //$pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();
+        $pronto_pago = ProntoPago::where("estado","1")->first();
         $concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
        // $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
 
@@ -1176,6 +1179,17 @@ class IngresoController extends Controller
         $año_actual = Carbon::now()->year;
         
 		$pago_pronto_pago = $valorizacion_model->getPagosCuotaConstancia($cap, $año_actual);
+		
+		echo json_encode($pago_pronto_pago);
+	}
+
+    public function valida_ultimo_pago_certificado($cap,$anio){
+		
+		$valorizacion_model = new Valorizacione;
+        
+        //$anio = Carbon::now()->year;
+        
+		$pago_pronto_pago = $valorizacion_model->getPagosCuotaConstancia($cap, $anio);
 		
 		echo json_encode($pago_pronto_pago);
 	}

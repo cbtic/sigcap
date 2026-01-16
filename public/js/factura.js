@@ -1102,15 +1102,15 @@ function obtenerTitular(){
 
 					//alert (idMedio);
 
-					if(idMedio=='91'){
+					if(idMedio=='91'  ){
 						//monto = $("#total_fac_").val();
 						monto_r = redondeoContableAFavor(Number(monto), 1);
 
 						$("#monto"+ind).val(monto_r.toFixed(2));
 
 						if(monto!=monto_r){
-							$("#tr_total_pagar").show();
-							$("#total_pagar").val(monto_r.toFixed(2));
+							$("#tr_total_pagar_abono").show();
+							$("#total_pagar_abono").val(monto_r);
 						}
 	
 
@@ -1122,12 +1122,12 @@ function obtenerTitular(){
 
 						monto_r = Number(monto);
 
-						
-						$("#tr_total_pagar_abono").show();
-						$("#total_pagar_abono").val(monto_r);
+						if(monto!=monto_r){
+							$("#tr_total_pagar_abono").show();
+							$("#total_pagar_abono").val(monto_r);
 
 						//alert (monto.toFixed(2));
-						
+						}
 
 					}
 					/*
@@ -1175,6 +1175,20 @@ function obtenerTitular(){
 			$("#totalMedioPago").val(total.toFixed(2));
 			$("#total_pagar_abono").val(total.toFixed(2));
 			
+			//$("#monto"+ind).val(monto_r.toFixed(2));
+			
+			if(monto != $("#total_fac_").val()){
+				$("#tr_total_pagar_abono").show();
+				
+				//$("#tr_total_pagar").show();
+				$("#total_pagar_abono").val(total.toFixed(2));
+				//$("#total_pagar_abono").val(monto_r.toFixed(2));
+			}
+			else {
+				$("#tr_total_pagar_abono").hide();
+				$("#total_pagar_abono").val(0);
+			}
+	
 			
 			//$("#precio_peso").val(total);
 					

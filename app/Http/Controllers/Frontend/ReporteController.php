@@ -24,6 +24,37 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use DateTime;
+use TCPDF;
+
+class ReporteVentasPDF extends TCPDF
+{
+    public $titulo;
+    public $f_inicio;
+    public $f_fin;
+
+    public function Header()
+    {
+        $logo = public_path('img/logo_encabezado.jpg');
+        if (file_exists($logo)) {
+            $this->Image($logo, 10, 8, 40);
+        }
+
+        $this->SetFont('helvetica', 'B', 14);
+        $this->Cell(0, 10, $this->titulo, 0, 1, 'C');
+
+        $this->SetFont('helvetica', '', 9);
+        $this->Cell(0, 5, "De: {$this->f_inicio}   Hasta: {$this->f_fin}    TC: 3.84", 0, 1, 'C');
+
+        $this->SetY(40);
+    }
+
+    public function Footer()
+    {
+        $this->SetY(-12);
+        $this->SetFont('helvetica', 'I', 8);
+        $this->Cell(0, 10, "Página ".$this->getAliasNumPage()." de ".$this->getAliasNbPages(), 0, 0, 'R');
+    }
+}
 
 class ReporteController extends Controller
 {
@@ -308,15 +339,253 @@ class ReporteController extends Controller
 				
 				//var_dump($reporte_ventas);exit();
 				//print_r($venta);exit();
+
+				$pdf = new ReporteVentasPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+
+				$pdf->titulo   = $titulo;
+				$pdf->f_inicio = $f_inicio;
+				$pdf->f_fin    = $f_fin;
+
+				$pdf->SetCreator('SIGCAP');
+				$pdf->SetAuthor('SIGCAP');
+				$pdf->SetTitle($titulo);
+
+				// Márgenes
+				$pdf->SetMargins(10, 30, 10);
+				$pdf->SetHeaderMargin(10);
+				$pdf->SetFooterMargin(10);
+
+				// Header
+				$pdf->setPrintHeader(true);
+				$pdf->SetHeaderData('', 0, $titulo, "De: $f_inicio    Hasta: $f_fin    TC: 3.84");
+
+				// Footer
+				$pdf->setPrintFooter(true);
+
+				// Fuente
+				$pdf->SetFont('helvetica', '', 8);
+
+				$pdf->AddPage();
+
+				// -------------------------------------------------------
+				// ARMAR TABLA HTML (IDÉNTICA A LA QUE TENÍAS EN DOMPDF)
+				// -------------------------------------------------------
+				$html = '
+				<style>
+
+				table { font-size: 8px;border-spacing: 0; width: 100%; }
+				th { background-color: #eaeaea; font-weight: bold; border: 0.3px solid #888; padding: 4px; }
+				td { border: 0.3px solid #888; padding: 3px;}
+
+				.num { text-align: right !important; }
+				</style>
+
+				<body>';
+
+					// =====================================
+					// SECCIÓN: TABLA COMPLETA
+					// =====================================
+					$pdf->SetLineWidth(0.05);
+					$pdf->SetFont('helvetica','B',8);
+					$pdf->SetFillColor(219, 236, 220); // fondo gris
+					$pdf->Cell(20,6,'Emisión',1,0,'C',1);
+					$pdf->Cell(12,6,'TD',1,0,'C',1);
+					$pdf->Cell(15,6,'Serie',1,0,'C',1);
+					$pdf->Cell(15,6,'Número',1,0,'C',1);
+					$pdf->Cell(18,6,'Cod. Trib.',1,0,'C',1);
+					$pdf->Cell(60,6,'Destinatario',1,0,'C',1);
+					$pdf->Cell(18,6,'Afecto',1,0,'C',1);
+					$pdf->Cell(18,6,'Inafecto',1,0,'C',1);
+					$pdf->Cell(18,6,'IGV',1,0,'C',1);
+					$pdf->Cell(18,6,'Total',1,0,'C',1);
+					$pdf->Cell(15,6,'Cond.',1,0,'C',1);
+					$pdf->Cell(20,6,'Estado',1,0,'C',1);
+					$pdf->Ln();
+
+					// acumuladores
+					$bo_af = $bo_in = $bo_igv = $bo_tot = 0;
+					$fa_af = $fa_in = $fa_igv = $fa_tot = 0;
+					$nc_af = $nc_in = $nc_igv = $nc_tot = 0;
+
+					// ===============================
+					//        BOLETAS
+					// ===============================
+					$pdf->SetFont('helvetica','B',8);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(247,6,'BOLETAS',1,0,'L',1); // 212 = suma de todos los anchos de celdas
+					$pdf->Ln();
+
+					$pdf->SetFont('helvetica','',8);
+					$bo_af = $bo_in = $bo_igv = $bo_tot = 0;
+
+					foreach ($reporte_ventas as $d) {
+						if ($d->tipo != "BV") continue;
+
+						$lineasDest = $pdf->getNumLines($d->destinatario, 60);
+						$altoFila = 6 * $lineasDest;
+						
+						$fecha_formato = date('Y-m-d', strtotime($d->fecha));
+
+						$pdf->Cell(20, $altoFila, $fecha_formato, 1, 0, 'L');
+						$pdf->Cell(12, $altoFila, $d->tipo, 1, 0, 'C');
+						$pdf->Cell(15, $altoFila, $d->serie, 1, 0, 'C');
+						$pdf->Cell(15, $altoFila, $d->numero, 1, 0, 'C');
+						$pdf->Cell(18, $altoFila, $d->cod_tributario, 1, 0, 'C');
+						//$pdf->Cell(60, 6, $d->destinatario, 1, 0, 'L');
+						$pdf->MultiCell(60, $altoFila, $d->destinatario, 1, 'L', 0, 0);
+						$pdf->Cell(18, $altoFila, number_format($d->imp_afecto,2), 1, 0, 'R');
+						$pdf->Cell(18, $altoFila, number_format($d->imp_inafecto,2), 1, 0, 'R');
+						$pdf->Cell(18, $altoFila, number_format($d->impuesto,2), 1, 0, 'R');
+						$pdf->Cell(18, $altoFila, number_format($d->total,2), 1, 0, 'R');
+						$pdf->Cell(15, $altoFila, $d->forma_pago, 1, 0, 'C');
+						$pdf->Cell(20, $altoFila, $d->estado_pago, 1, 0, 'C');
+						$pdf->Ln();
+
+						$bo_af += $d->imp_afecto;
+						$bo_in += $d->imp_inafecto;
+						$bo_igv += $d->impuesto;
+						$bo_tot += $d->total;
+					}
+
+					$pdf->SetFont('helvetica','B',8);
+					$pdf->Cell(140,6,'Total Boletas',1,0,'L',1);
+					$pdf->Cell(18,6,number_format($bo_af,2),1,0,'R',1);
+					$pdf->Cell(18,6,number_format($bo_in,2),1,0,'R',1);
+					$pdf->Cell(18,6,number_format($bo_igv,2),1,0,'R',1);
+					$pdf->Cell(18,6,number_format($bo_tot,2),1,0,'R',1);
+					$pdf->Cell(35,6,'',1,0,'C',1); // Cond. + Estado combinadas
+					$pdf->Ln();
+
+					// ===============================
+					//        FACTURAS
+					// ===============================
+
+					$pdf->SetFont('helvetica','B',8);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(247,6,'FACTURAS',1,0,'L',1);
+					$pdf->Ln();
+
+					$pdf->SetFont('helvetica','',8);
+					$fa_af = $fa_in = $fa_igv = $fa_tot = 0;
+
+					foreach ($reporte_ventas as $d){
+						if($d->tipo != 'FT') continue;
+
+						$lineasDest = $pdf->getNumLines($d->destinatario, 60);
+						$altoFila = 6 * $lineasDest;
+						
+						$fecha_formato = date('Y-m-d', strtotime($d->fecha));
+
+						$pdf->Cell(20, $altoFila, $fecha_formato, 1, 0, 'L');
+						$pdf->Cell(12, $altoFila, $d->tipo, 1, 0, 'C');
+						$pdf->Cell(15, $altoFila, $d->serie, 1, 0, 'C');
+						$pdf->Cell(15, $altoFila, $d->numero, 1, 0, 'C');
+						$pdf->Cell(18, $altoFila, $d->cod_tributario, 1, 0, 'C');
+						//$pdf->Cell(60, $altoFila, $d->destinatario, 1, 0, 'L');
+						$pdf->MultiCell(60, $altoFila, $d->destinatario, 1, 'L', 0, 0);
+						$pdf->Cell(18, $altoFila, number_format($d->imp_afecto,2), 1, 0, 'R');
+						$pdf->Cell(18, $altoFila, number_format($d->imp_inafecto,2), 1, 0, 'R');
+						$pdf->Cell(18, $altoFila, number_format($d->impuesto,2), 1, 0, 'R');
+						$pdf->Cell(18, $altoFila, number_format($d->total,2), 1, 0, 'R');
+						$pdf->Cell(15, $altoFila, $d->forma_pago, 1, 0, 'C');
+						$pdf->Cell(20, $altoFila, $d->estado_pago, 1, 0, 'C');
+						$pdf->Ln();
+
+
+							$fa_af += $d->imp_afecto;
+							$fa_in += $d->imp_inafecto;
+							$fa_igv += $d->impuesto;
+							$fa_tot += $d->total;
+						}
+
+						$pdf->SetFont('helvetica','B',8);
+						$pdf->Cell(140,6,'Total Facturas',1,0,'L',1);
+						$pdf->Cell(18,6,number_format($fa_af,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($fa_in,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($fa_igv,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($fa_tot,2),1,0,'R',1);
+						$pdf->Cell(35,6,'',1,0,'C',1);
+						$pdf->Ln();
+
+						// ===============================
+						//        NOTAS DE CRÉDITO
+						// ===============================
+
+						$pdf->SetFont('helvetica','B',8);
+						$pdf->SetFillColor(255, 255, 255);
+						$pdf->Cell(247,6,'NOTAS DE CRÉDITO',1,0,'L',1);
+						$pdf->Ln();
+
+						$pdf->SetFont('helvetica','',8);
+						$nc_af = $nc_in = $nc_igv = $nc_tot = 0;
+
+						foreach ($reporte_ventas as $d){
+							if($d->tipo != 'NC') continue;
+
+							$lineasDest = $pdf->getNumLines($d->destinatario, 60);
+							$altoFila = 6 * $lineasDest;
+							
+							$fecha_formato = date('Y-m-d', strtotime($d->fecha));
+							
+							$pdf->Cell(20, $altoFila, $fecha_formato, 1, 0, 'L');
+							$pdf->Cell(12, $altoFila, $d->tipo, 1, 0, 'C');
+							$pdf->Cell(15, $altoFila, $d->serie, 1, 0, 'C');
+							$pdf->Cell(15, $altoFila, $d->numero, 1, 0, 'C');
+							$pdf->Cell(18, $altoFila, $d->cod_tributario, 1, 0, 'C');
+							//$pdf->Cell(60, $altoFila, $d->destinatario, 1, 0, 'L');
+							$pdf->MultiCell(60, $altoFila, $d->destinatario, 1, 'L', 0, 0);
+							$pdf->Cell(18, $altoFila, number_format($d->imp_afecto,2), 1, 0, 'R');
+							$pdf->Cell(18, $altoFila, number_format($d->imp_inafecto,2), 1, 0, 'R');
+							$pdf->Cell(18, $altoFila, number_format(-1*$d->impuesto,2), 1, 0, 'R');
+							$pdf->Cell(18, $altoFila, number_format(-1*$d->total,2), 1, 0, 'R');
+							$pdf->Cell(15, $altoFila, $d->forma_pago, 1, 0, 'C');
+							$pdf->Cell(20, $altoFila, $d->estado_pago, 1, 0, 'C');
+							$pdf->Ln();
+
+							$nc_af += $d->imp_afecto;
+							$nc_in += $d->imp_inafecto;
+							$nc_igv += -1 * $d->impuesto;
+							$nc_tot += -1 * $d->total;
+						}
+
+						$pdf->SetFont('helvetica','B',8);
+						$pdf->Cell(140,6,'Total Notas Crédito',1,0,'L',1);
+						$pdf->Cell(18,6,number_format($nc_af,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($nc_in,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($nc_igv,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($nc_tot,2),1,0,'R',1);
+						$pdf->Cell(35,6,'',1,0,'C',1);
+						$pdf->Ln();
+
+						// ===============================
+						//        TOTALES GENERALES
+						// ===============================
+						$pdf->SetFont('helvetica','B',8);
+						$pdf->SetFillColor(241, 241, 241);
+						$pdf->Cell(140,6,'TOTALES GENERALES',1,0,'L',1);
+						$pdf->Cell(18,6,number_format($bo_af+$fa_af+$nc_af,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($bo_in+$fa_in+$nc_in,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($bo_igv+$fa_igv+$nc_igv,2),1,0,'R',1);
+						$pdf->Cell(18,6,number_format($bo_tot+$fa_tot+$nc_tot,2),1,0,'R',1);
+						$pdf->Cell(35,6,'',1,0,'C',1);
+						$pdf->Ln();
+
+					//$html .= "</table></body>";
+
+					// enviar al PDF
+					//$pdf->writeHTML($html, true, false, true, false, '');
+
+					$pdf->Output('reporte_ventas.pdf', 'I');
+
 		
-				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
+				/*$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
 				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
 				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
 				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros*/
 
 			}
 		}
@@ -330,12 +599,11 @@ class ReporteController extends Controller
 			if ($funcion=='rt'){
 				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 				$titulo = "REPORTE DE DEUDA TOTAL";
-
 				
 				//$usuario=$usuario_ingresos[0] ->usuario;
-
+				
 				//print_r($venta);exit();
-		
+				
 				//$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
 				//$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
