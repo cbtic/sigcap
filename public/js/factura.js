@@ -560,8 +560,8 @@ function fn_save() {
             if(result.sw) {
                 $('#numerof').val(result.id_factura);
                 $('#divNumeroF').show();				
-                enviar_comprobante(result.id_factura);
-                location.href = urlApp+"/comprobante/ver/"+result.id_factura;
+                //enviar_comprobante(result.id_factura);
+                //location.href = urlApp+"/comprobante/ver/"+result.id_factura;
             } else {
                 alert(result.msg);
                 $('#guardar').show();

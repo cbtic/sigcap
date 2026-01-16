@@ -2301,8 +2301,8 @@ class ComprobanteController extends Controller
                     */
                     //print_r("-");
                     //print_r($total_redondeo);                     
-                    
-                    //exit();
+                    //print_r($id_tipo_afectacion_pp);
+                    exit();
 
 
                     $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total, 2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
