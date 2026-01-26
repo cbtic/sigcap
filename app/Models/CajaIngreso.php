@@ -716,7 +716,7 @@ class CajaIngreso extends Model
         
         if ($id_concepto!="") $concepto2 = " and c3.id = ".$id_concepto; 
 
-        $cad = "select c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe , to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
+        /* $cad = "select c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe , to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
         tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
         from agremiado_cuotas ac 
         inner join valorizaciones v on ac.id =v.pk_registro and v.id_modulo = '2'
@@ -729,8 +729,9 @@ class CajaIngreso extends Model
         where  id_agremiado = ".$id." 
         and v.pagado ='1'
         ".$concepto."
-        union all
-        select v2.id, c3.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto, to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante ,
+        union all */
+        $cad = "
+        select c3.id, c3.denominacion, ROW_NUMBER() OVER (PARTITION BY c3.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto, to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante ,
         tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v2.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
         from valorizaciones v2 
         inner join conceptos c3 on v2.id_concepto =c3.id
@@ -741,7 +742,8 @@ class CajaIngreso extends Model
         where v2.id_agremido = ".$id." 
         ".$concepto2."
         /*and v2.id_modulo = 6*/
-        and v2.pagado ='1'";
+        and v2.pagado ='1'
+        and v2.estado ='1'";
 
 		//echo $cad;
 		$data = DB::select($cad);
