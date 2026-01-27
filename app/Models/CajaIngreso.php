@@ -731,7 +731,7 @@ class CajaIngreso extends Model
         ".$concepto."
         union all */
         $cad = "
-        select c3.id, c3.denominacion, ROW_NUMBER() OVER (PARTITION BY c3.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto, to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante ,
+        select c3.id, c3.denominacion, ROW_NUMBER() OVER (PARTITION BY c3.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto importe, to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante ,
         tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v2.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
         from valorizaciones v2 
         inner join conceptos c3 on v2.id_concepto =c3.id
@@ -759,7 +759,7 @@ class CajaIngreso extends Model
 
         if ($id_concepto!="") $concepto2 = " and c2.id = ".$id_concepto; 
 
-        $cad = "select  distinct(c.denominacion)
+       /* $cad = "select  distinct(c.denominacion)
         from agremiado_cuotas ac 
         inner join valorizaciones v on ac.id =v.pk_registro and v.id_modulo = '2'
         inner join conceptos c on ac.id_concepto =c.id
@@ -767,8 +767,8 @@ class CajaIngreso extends Model
         where  id_agremiado = ".$id."
         and v.pagado = '1'
         ".$concepto." 
-        union all
-        select distinct(c2.denominacion)
+        union all */
+        $cad = " select distinct(c2.denominacion)
         from valorizaciones v2 
         inner join conceptos c2 on v2.id_concepto =c2.id
         where v2.id_agremido = ".$id." 

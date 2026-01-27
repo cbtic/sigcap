@@ -175,7 +175,7 @@
                 $total_monto_pagado = 0;
                 $total_monto_pendiente = 0;
 				foreach($datos_reporte_deudas as $key=>$r){
-                    //if ($k->denominacion == $r->denominacion):
+                    if ($k->denominacion == $r->denominacion):
                         $total_deuda +=  $r->importe;
                         if($r->estado_pago=='PENDIENTE'){
                             $total_monto_pendiente += $r->importe;
@@ -197,7 +197,7 @@
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->estado_pago?></td>
 				</tr>
 				<?php
-                    //endif;
+                    endif;
 				} 
 				?>
 				
