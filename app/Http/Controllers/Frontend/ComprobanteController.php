@@ -4753,13 +4753,55 @@ class ComprobanteController extends Controller
 
     }
 
-    public function getTipoDocPersona_nc($td){
+    public function getTipoDocPersona_nc($td, $dni){
         $tipoDoc = "";
+       
         if ($td == 'FT') {
             $tipoDoc = "6";
         } else {
-            $tipoDoc = "0";
+            if ($td == 'NC') {
+                $tipoDoc = "7";
+            } else {
+                if ($dni == '-') {
+                    $tipoDoc = "0";
+                } else {
+                    $persona = Persona::where('numero_documento', $dni)->get()[0];
+                    $tipoDocB = $persona->id_tipo_documento;
+                    //print_r($tipoDocB);exit();
+                    switch ($tipoDocB) {
+                        case "78":
+                            $tipoDoc = "1";
+                            break;
+                        case "84":
+                            $tipoDoc = "4";
+                            break;
+
+                        case "83":
+                            $tipoDoc = "7";
+                            break;
+
+                        case "260":
+                            $tipoDoc = "4";
+                            break;
+
+                        case "PTP/PTEP":
+                            $tipoDoc = "B";
+                            break;
+
+                            // incluir un codigo para el nuevo tipo CPP/CSR
+                        case "CPP/CSR":
+                            $tipoDoc = "F";
+                            break;
+
+                        default:
+                            $tipoDoc = "0";
+                    }
+
+                   // print_r($tipoDoc);exit();
+                }
+            }
         }
+
         return $tipoDoc;
     }
 
@@ -4947,7 +4989,7 @@ class ComprobanteController extends Controller
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
 		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
-		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona_nc($factura_nc->tipo);//"6";                
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona_nc($factura_nc->tipo,$factura_nc->cod_tributario);//"6";                
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
 
         //$data["direccionReceptor"] = $factura->direccion;
