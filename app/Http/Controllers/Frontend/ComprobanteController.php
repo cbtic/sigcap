@@ -2031,7 +2031,7 @@ class ComprobanteController extends Controller
 
                     $id_moneda = $value['id_moneda'];
                 }
-
+                       
 
                 /*
                 echo "ubicacion_id -> {$ubicacion_id}\n ";
@@ -2306,7 +2306,7 @@ class ComprobanteController extends Controller
                     //exit();
 
 
-                    $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total, 2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
+                    $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total, 2),   $ubicacion_id2,      $id_persona2,    $id_concepto, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
                     //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
                     //exit();
@@ -2608,6 +2608,9 @@ class ComprobanteController extends Controller
                             */
                         }
 
+                       
+
+                        
 
                         $valorizad_ = $request->valorizad;
                         $numero_documento_b = $request->numero_documento_b;
@@ -2632,6 +2635,7 @@ class ComprobanteController extends Controller
 
                                
                         }
+                      
 
                         $Concepto = Concepto::where('id', $id_concepto)->get()[0];
                         $codigo_concepto = $Concepto->codigo;

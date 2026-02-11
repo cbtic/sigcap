@@ -37,6 +37,7 @@ class Comprobante extends Model
     public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion, $id_user, $id_moneda, $id_nc)
     {
         try {
+           
             $cad = "Select sp_crud_factura_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $data = DB::select($cad, [
                 $serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, 
