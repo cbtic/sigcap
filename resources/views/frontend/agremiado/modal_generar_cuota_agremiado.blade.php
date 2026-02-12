@@ -322,7 +322,7 @@ function obtenerAgremiado() {
 							<div class="col-lg-2">
 								<div class="form-group">
 									<label class="control-label">Fecha Fin</label>
-									<input id="fecha_fin_" name="fecha_fin_" class="form-control form-control-sm" value="<?php echo date('Y').'-12-31'; ?>" disabled type="date">
+									<input id="fecha_fin_" name="fecha_fin_" class="form-control form-control-sm" value="<?php echo date('Y').'-12-31'; ?>"  type="date">
 									<input hidden id="fecha_fin" name="fecha_fin" class="form-control form-control-sm" value="<?php echo date('Y').'-12-31'; ?>" type="date">
 								
 								</div>
@@ -409,8 +409,9 @@ function obtenerAgremiado() {
 			
 			var idagremiado = $("#idagremiado_").val();
 			var fecha_inicio = $("#fecha_inicio").val();
-			var fecha_fin = $("#fecha_fin").val();
-			//alert(idagremiado);return false;
+			var fecha_fin = $("#fecha_fin_").val();
+			
+			//alert(fecha_fin);return false;
 
 			var partes = fecha_inicio.split("-");
 			var anio_inicio = partes[0];
