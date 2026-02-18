@@ -514,6 +514,18 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
 
 
                                                             </tr>
+                                                      
+                                                             @if((float)$redondeo <>0)
+                                                                <tr id="fila_total">
+                                                                    <td class="text-right" colspan="4">REDONDEO <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                    <td class="text-right"><span class="resaltado">{{ number_format($redondeo,2) }}</span></td>
+                                                                </tr>
+
+                                                                <tr id="fila_total">
+                                                                    <td class="text-right" colspan="4">TOTAL A PAGAR <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                    <td class="text-right"><span class="resaltado">{{ number_format($total_pagar,2) }}</span></td>
+                                                                </tr>
+                                                             @endif
                                                         </tbody>
                                                     </table>
                                                 </div>

@@ -2260,14 +2260,15 @@ class ComprobanteController extends Controller
 
                     //print_r("total_pagar_abono="); 
                     //print_r($total_pagar_abono); 
-
+                    
+                    //NO SE RECALCULA EL MONTO DE COMPROBANTE
                     if ($total_pagar_abono != "0" && $total_pagar_abono != "") {
 
-                        $total_pagar_abono = $request->total_pagar_abono;
-                        $total_g = $request->totalF;
-                        $total_abono = $total_pagar_abono - $total_g;
+                       // $total_pagar_abono = $request->total_pagar_abono;
+                       // $total_g = $request->totalF;
+                       // $total_abono = $total_pagar_abono - $total_g;
 
-                        $total = $total + $total_abono;
+                       // $total = $total + $total_abono;
                     }
 
 
@@ -3865,18 +3866,28 @@ class ComprobanteController extends Controller
             'serie' => $facd_serie,
             'numero' => $facd_numero,
             'tipo' => $facd_tipo
-        ])->get();
+        ])->where('item', '<>', 999)
+        ->get();
         //print_r($factura_detalles);
 
        // $model = new ComprobanteDetalle;
        // $comprobanteDetalle = $model->getMaestroByTipo(85);
 
        //print_r($factura);
+        $datos_redondeo = ComprobanteDetalle::where([
+            'serie' => $facd_serie,
+            'numero' => $facd_numero,
+            'tipo' => $facd_tipo,
+            'item' => 999
+        ])->get();
+
+        //$redondeo=$datos_redondeo[0]->importe;
+        $redondeo=$datos_redondeo->first()->importe ?? 0;
+        $total_pagar= $factura->total + $redondeo;
 
 
 
-
-        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'));
+        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja','datos_redondeo','redondeo','total_pagar'));
     }
 
 	public function listar_comprobante(Request $request){
