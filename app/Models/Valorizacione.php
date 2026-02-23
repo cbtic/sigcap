@@ -518,7 +518,7 @@ class Valorizacione extends Model
             	select (case when v2.estado = '1' then '0' else '1' end)
             	from valorizaciones v2 where v2.id = v.id 
             ) ,
-             v.codigo_fraccionamiento=0
+             codigo_fraccionamiento=0
             where v.id_persona = ".$id_persona."            
                 and v.pagado = '0'
                 and v.codigo_fraccionamiento = ".$codigo_fraccionamiento."
