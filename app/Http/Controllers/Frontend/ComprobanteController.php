@@ -4013,7 +4013,8 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
+            ])->where('item', '<>', 999)
+            ->get();
             //->where('descripcion', '<>', 'REDONDEO')->get();
 
             $descripciones = $facturad->pluck('descripcion')->implode("\n");
