@@ -23,7 +23,7 @@
 				</tr>
 		<?php
 		
-			if ($row->tipo_=="FT" || $row->tipo_=="BV" || $row->tipo_=="NC" || $row->tipo_=="ND") {
+			if ($row->tipo_=="FT" || $row->tipo_=="BV" || $row->tipo_=="NC" || $row->tipo_=="ND" || $row->tipo_=="RD") {
 				$total += $row->total;
 				$cantidad += $row->cantidad;
 			}

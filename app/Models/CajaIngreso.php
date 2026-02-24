@@ -159,7 +159,25 @@ class CajaIngreso extends Model
                 and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."' 
                 and c.id_forma_pago = 1
                 )  as reporte
-                group by situacion, tipo_,tipo";
+                group by situacion, tipo_,tipo 
+
+                union
+            	select situacion, tipo, tipo_, sum(total)total, 0 cantidad 
+                from( 
+                    select  'CANCELADO'  situacion, 
+                    'REDONDEO' tipo, 'RD' tipo_, cp.importe  total 
+                    from comprobantes c                                
+                 	inner join comprobante_detalles cp on cp.id_comprobante = c.id 
+                    where   1=1
+                    and c.id_usuario_inserta = ".$id_usuario."
+                    and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."'
+                    and c.id_forma_pago = 1
+                    and c.anulado = 'N'
+                     and cp.item=999
+
+                ) as reporte
+                group by situacion, tipo_,tipo
+                ";
 
 	    //echo($cad);
 
@@ -182,19 +200,7 @@ class CajaIngreso extends Model
              and c.id_forma_pago = 1
          ) as consulta
        group by condicion
-        union 
-       select condicion,  sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
-         from(
-               select  'REDONDEO' condicion,  0 total_us, 0/3.7 total_tc,  cp.importe total_soles
-             from comprobantes c                                
-                 inner join comprobante_detalles cp on cp.id_comprobante = c.id
-             where  c.id_usuario_inserta =".$id_usuario."
-             and TO_CHAR(c.fecha, 'dd-mm-yyyy')  = '".$fecha."'
-             and c.id_forma_pago = 1
-             and cp.item=999
-             
-         ) as consulta
-       group by condicion
+       
         ";
 
 		//echo $cad;
