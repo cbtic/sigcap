@@ -806,14 +806,18 @@ class CajaIngreso extends Model
         where  id_agremiado = ".$id."
         and v.pagado = '1'
         ".$concepto." 
-        union all */
+        union all
+
+        and v2.fecha < now()
+        
+        */
         $cad = " select distinct(c2.denominacion)
         from valorizaciones v2 
         inner join conceptos c2 on v2.id_concepto =c2.id
         where v2.id_agremido = ".$id." 
         and v2.pagado = '1'
         /*and v2.id_modulo = 6*/
-        and v2.fecha < now()
+        
         ".$concepto2." 
         order by denominacion asc";
 
