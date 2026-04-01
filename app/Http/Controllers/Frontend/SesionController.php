@@ -379,7 +379,7 @@ class SesionController extends Controller
 		
 		$id_delegado = $request->id_delegado;
 		$id_tipo = $request->id_tipo;
-		
+		///print_r($request); exit();	
 		if($request->id == 0){
 			$periodoComision = PeriodoComisione::find($id_periodo);
 			$fecha_inicio = $periodoComision->fecha_inicio;
@@ -515,7 +515,7 @@ class SesionController extends Controller
 			
 			$id_comision_sesion = $request->id;
 			$id_aprobar_pago = $request->id_aprobar_pago;
-			
+	//print_r($request);exit();
 			if(isset($request->id_delegado)){
 				foreach($id_delegado as $key=>$row){
 					
@@ -535,7 +535,7 @@ class SesionController extends Controller
 					$comisionSesionDelegado->id_aprobar_pago = $id_aprobar_pago_;
 					if($id_aprobar_pago_==2)$comisionSesionDelegado->fecha_aprobar_pago = Carbon::now()->format('Y-m-d');
 					$comisionSesionDelegado->save();
-
+					
 					if ($comisionSesionDelegado->coordinador==0){
 										$comisionSesionDelegado_model = new ComisionSesionDelegado();
 										$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndmes($comisionSesionDelegado->id_delegado,$comisionSesion->fecha_ejecucion,"","",$comisionSesion->id_comision,date('n', strtotime($comisionSesion->fecha_ejecucion)),date('Y', strtotime($comisionSesion->fecha_ejecucion))); 

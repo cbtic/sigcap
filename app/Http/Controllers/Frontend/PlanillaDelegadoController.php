@@ -628,6 +628,9 @@ class PlanillaDelegadoController extends Controller
 		$incio_periodo = Carbon::parse($periodo_actual->fecha_inicio);
 		$fin_periodo = Carbon::parse($periodo_actual->fecha_fin);
 
+		 $anios = range($incio_periodo->year, $fin_periodo->year);
+
+		/*
 		$period = CarbonPeriod::create($incio_periodo,'1 year', $fin_periodo);
 
 		$anios = [];
@@ -637,6 +640,7 @@ class PlanillaDelegadoController extends Controller
 		}
 
 		//dd($anios);exit();
+		*/
 		echo json_encode($anios);
 
 	}
