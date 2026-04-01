@@ -53,7 +53,8 @@ class PlanillaDelegado extends Model
         	$cad = "select importe_sesion monto
 		from planilla_delegados 
 		where /*periodo=(select to_char(fecha_fin,'yyyy') from periodo_comisiones pc where id=".$id_periodo.")::int
-		and*/ mes=".$mes."::int 
+		and*/ mes=".$mes."::int
+		and periodo= ".$anio."::int
 		and id_periodo_comision=".$id_periodo."
 		and estado='1'";
 		}
