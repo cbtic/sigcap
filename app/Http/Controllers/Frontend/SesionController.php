@@ -538,7 +538,12 @@ class SesionController extends Controller
 					
 					if ($comisionSesionDelegado->coordinador==0){
 										$comisionSesionDelegado_model = new ComisionSesionDelegado();
-										$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndmes($comisionSesionDelegado->id_delegado,$comisionSesion->fecha_ejecucion,"","",$comisionSesion->id_comision,date('n', strtotime($comisionSesion->fecha_ejecucion)),date('Y', strtotime($comisionSesion->fecha_ejecucion))); 
+										if($id_tipo[$key]==1){
+											$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndmes($comisionSesionDelegado->id_delegado,$comisionSesion->fecha_ejecucion,"","",$comisionSesion->id_comision,date('n', strtotime($comisionSesion->fecha_ejecucion)),date('Y', strtotime($comisionSesion->fecha_ejecucion))); 
+										}else{
+											$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndmes($comisionSesionDelegado->id_agremiado,$comisionSesion->fecha_ejecucion,"","",$comisionSesion->id_comision,date('n', strtotime($comisionSesion->fecha_ejecucion)),date('Y', strtotime($comisionSesion->fecha_ejecucion))); 
+										}
+										//$comisionSesionDelegados2 =$comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndmes($comisionSesionDelegado->id_delegado,$comisionSesion->fecha_ejecucion,"","",$comisionSesion->id_comision,date('n', strtotime($comisionSesion->fecha_ejecucion)),date('Y', strtotime($comisionSesion->fecha_ejecucion))); 
 				
 									foreach($comisionSesionDelegados2 as $row2){
 									

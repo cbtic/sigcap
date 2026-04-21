@@ -280,7 +280,7 @@ class AsientoPlanillaController extends Controller
 	//		}
 			
 		
-		$ch = curl_init('http://190.119.30.106:9090/planillas.php');
+		$ch = curl_init('http://119.30.106:9090/planillas.php');
 		
 		$postData = [
 					'mes' => sprintf("%02d", $_mes),
