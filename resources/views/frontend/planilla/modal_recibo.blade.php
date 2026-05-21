@@ -148,9 +148,17 @@ $(document).ready(function() {
         if($(this).is(':checked')){
             $('#numero_operacion').prop('readonly', false);
 			$('#fecha_operacion').prop('readonly', false);
+            var hoy = new Date();
+            var dia = String(hoy.getDate()).padStart(2, '0');
+            var mes = String(hoy.getMonth() + 1).padStart(2, '0');
+            var anio = hoy.getFullYear();
+            var fechaHoy = dia + '-' + mes + '-' + anio;
+            $('#fecha_cancelacion').val(fechaHoy);
+            $('#fecha_cancelacion').datepicker('update', hoy);
         } else {
             $('#numero_operacion').prop('readonly', true);
 			$('#fecha_operacion').prop('readonly', true);
+            $('#fecha_cancelacion').val('');
         }
     });
 

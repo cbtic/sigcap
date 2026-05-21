@@ -48,6 +48,7 @@ class AgremiadoController extends Controller
 		$this->middleware('can:Multas')->only(['consulta_multa']);
 		$this->middleware('can:Afiliciacion a Seguro')->only(['consulta_afiliacion_seguro']);
 		$this->middleware('can:Reporte Deudas')->only(['consulta_reporte_deuda']);
+		$this->middleware('can:Importar Agremiado')->only(['importar_agremiado']);
 	
 	}
 	
